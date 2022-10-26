@@ -18,7 +18,6 @@ public class PlayerShooting : MonoBehaviour
         {
             Shoot();
         }
-        
     }
 
     void Shoot()
