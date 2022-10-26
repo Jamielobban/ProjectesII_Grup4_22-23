@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -42,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
         {
             case State.Normal:
 
+                transform.DOScale((new Vector3(1f, 1f, 1f)), 0.0f);
+
                 movement.x = Input.GetAxisRaw("Horizontal");
                 movement.y = Input.GetAxisRaw("Vertical");
 
@@ -51,26 +54,27 @@ public class PlayerMovement : MonoBehaviour
                 if (Input.GetButtonDown("Dash"))
                 {
                     rollDir = moveDir;
-                    rollSpeed = 80f;
+                    rollSpeed = 90f;
                     state = State.Rolling;
-
                 }
 
                 break;
+
             case State.Rolling:
-                this.transform.localScale = new Vector3(1, 0.6f, 1);
+
+                transform.DOScale((new Vector3(0.8f, 0.8f, 1f)), 0.0f);
+                transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
+                sr.DOColor(dashColor, 0.0f);
+                sr.DOColor(OriginalColor, 0.5f);
                 trail.emitting = true;
-                sr.color = dashColor;
                 float rollSpeedDropMultiplier = 5f;
                 rollSpeed -= rollSpeed * rollSpeedDropMultiplier * Time.deltaTime;
-
+                //cam.DOShakePosition(0.4f, 1f, 1, 1, true, 0);
                 float rollSpeedMinimum = 50f;
                 if (rollSpeed < rollSpeedMinimum)
                 {
                     state = State.Normal;
                     trail.emitting = false;
-                    sr.color = OriginalColor;
-                    this.transform.localScale = new Vector3(1, 1, 1);
                 }
                 break;
         }
@@ -83,7 +87,6 @@ public class PlayerMovement : MonoBehaviour
         {
             case State.Normal:
                 rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-
                 lookDir = mousePos - rb.position;
                 float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
                 rb.rotation = angle;
