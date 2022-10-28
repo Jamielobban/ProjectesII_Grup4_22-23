@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
         }
-
+        
     }
 
     private void FixedUpdate()

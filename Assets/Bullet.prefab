@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3564426118514123476}
   - component: {fileID: 3555690854412876006}
   - component: {fileID: 1864319822537874140}
-  - component: {fileID: 8282780041863005892}
+  - component: {fileID: 1173597870550938370}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -118,13 +118,13 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.00000043173438, y: 0}
   serializedVersion: 2
   m_Radius: 6.500073
---- !u!114 &8282780041863005892
+--- !u!114 &1173597870550938370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,8 +133,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1821172425303555735}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2904c385e3957754f92466c29fa01949, type: 3}
+  m_Script: {fileID: 11500000, guid: a7b0db50396efb148992dbf092a428a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletToDestroy: {fileID: 1821172425303555735}
   collisionEffect: {fileID: 1383990659018448891, guid: 90d40582248e75143abb93179f421db5, type: 3}
+  whatIsDamageable:
+    serializedVersion: 2
+    m_Bits: 1024
+  whatIsMapColisionable:
+    serializedVersion: 2
+    m_Bits: 2048

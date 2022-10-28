@@ -26,6 +26,6 @@ public class BulletManager : MonoBehaviour
     {
         Instantiate(collisionEffect, transform.position, Quaternion.identity);
         Destroy(bulletToDestroy);
-      
+
     }
 }
