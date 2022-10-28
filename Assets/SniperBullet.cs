@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SniperBullet : Bullet
 {
+   
     protected override void Start()
     {
         base.Start();
@@ -27,6 +28,19 @@ public class SniperBullet : Bullet
             HitSomeone();
             enemyHit = false;
         }
+    }    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("MapLimit"))
+        {
+            base.Impact();
+        }
+        else  if (collision.CompareTag("Enemy"))
+        {
+            HitSomeone();
+        }        
+
     }
 
     private void HitSomeone()
