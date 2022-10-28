@@ -94,9 +94,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3500727867539295662}
   - component: {fileID: 3500727867539295661}
+  - component: {fileID: 1208448484388994669}
   - component: {fileID: 3500727867539295663}
   - component: {fileID: 3500727867539295657}
-  - component: {fileID: 1208448484388994669}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -173,6 +173,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1208448484388994669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3500727867539295635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 132d52d8cb0f839418ee63f8b487a6e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpeed: 15
+  timeBetweenShots: 0
+  startTimeBetweenShots: 2
+  enemyFirePoint: {fileID: 3500727868454015721}
+  enemyBulletPrefab: {fileID: 6991923551185597016, guid: 55bc242de3a36734393d1a851e536545, type: 3}
+  speed: 6
+  stoppingDistance: 3
+  retreatDistance: 2
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
+  coolDown: {r: 0, g: 0, b: 0, a: 0}
+  inRange: 0
 --- !u!50 &3500727867539295663
 Rigidbody2D:
   serializedVersion: 4
@@ -220,28 +243,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1208448484388994669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3500727867539295635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 132d52d8cb0f839418ee63f8b487a6e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSpeed: 15
-  timeBetweenShots: 0
-  startTimeBetweenShots: 2
-  enemyFirePoint: {fileID: 3500727868454015721}
-  enemyBulletPrefab: {fileID: 6991923551185597016, guid: 55bc242de3a36734393d1a851e536545, type: 3}
-  speed: 6
-  stoppingDistance: 3
-  retreatDistance: 2
-  originalColor: {r: 0, g: 0, b: 0, a: 0}
-  coolDown: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &3500727868454015720
 GameObject:
   m_ObjectHideFlags: 0

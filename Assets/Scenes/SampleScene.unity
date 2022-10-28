@@ -1240,6 +1240,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1701489064}
     m_Modifications:
     - target: {fileID: 1208448484388994669, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: knockback
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208448484388994669, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: coolDown.a
       value: 1
       objectReference: {fileID: 0}
@@ -1254,6 +1258,10 @@ PrefabInstance:
     - target: {fileID: 1208448484388994669, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: coolDown.r
       value: 0.6784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208448484388994669, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: knockbackPower
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 1208448484388994669, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: originalColor.a
@@ -1272,12 +1280,32 @@ PrefabInstance:
       value: 0.27058825
       objectReference: {fileID: 0}
     - target: {fileID: 1208448484388994669, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: retreatDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208448484388994669, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: stoppingDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208448484388994669, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: timeBetweenShots
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208448484388994669, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: startTimeBetweenShots
-      value: 10
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500727867127410965, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3500727867539295635, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500727867539295635, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3500727867539295660, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: coolDown.a
@@ -1381,7 +1409,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3500727867539295663, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LinearDrag
-      value: 1
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500727868454015720, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
