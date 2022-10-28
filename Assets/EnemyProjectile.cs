@@ -4,39 +4,28 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
-    public float speed;
+   
 
-    private Transform player;
+    //void Start()
+    //{
+    //    timeBetweenShots = startTimeBetweenShots;
+    //}
 
-    private Vector2 target;
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    if (timeBetweenShots <= 0)
+    //    {
+    //        GameObject enemyBullet = Instantiate(enemyBulletPrefab, enemyFirePoint.position, enemyFirePoint.rotation);
+    //        Rigidbody2D rb = enemyBullet.GetComponent<Rigidbody2D>();
+    //        rb.AddForce(enemyFirePoint.right * bulletSpeed, ForceMode2D.Impulse);
+    //        timeBetweenShots = startTimeBetweenShots;
+    //        Debug.Log("Dhoot");
+    //    }
+    //    else
+    //    {
+    //        timeBetweenShots -= Time.deltaTime;
+    //    }
+    //}
 
-        target = new Vector2(player.position.x, player.position.y);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
-
-        //if(transform.position.x == target.x && transform.position.y == target.y)
-        //{
-        //    DestroyProjectile();
-        //}
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            DestroyProjectile();
-        }
-    }
-
-    void DestroyProjectile()
-    {
-        Destroy(gameObject);
-    }
 }

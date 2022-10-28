@@ -17,6 +17,9 @@ public class BulletManager : MonoBehaviour
             case "Enemy":
                 Impact();
                 break;
+            case "Player":
+                Impact();
+                break;
             default:
                 break;
         }

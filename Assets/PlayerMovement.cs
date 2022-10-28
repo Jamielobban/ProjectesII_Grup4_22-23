@@ -39,11 +39,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         switch (state)
         {
             case State.Normal:
 
-                transform.DOScale((new Vector3(1f, 1f, 1f)), 0.0f);
 
                 movement.x = Input.GetAxisRaw("Horizontal");
                 movement.y = Input.GetAxisRaw("Vertical");
@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
                 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
                 moveDir = new Vector3(movement.x, movement.y).normalized;
 
+                transform.DOScale((new Vector3(1f, 1f, 1f)), 0.0f);
                 if (Input.GetButtonDown("Dash"))
                 {
                     rollDir = moveDir;
@@ -73,8 +74,9 @@ public class PlayerMovement : MonoBehaviour
                 float rollSpeedMinimum = 50f;
                 if (rollSpeed < rollSpeedMinimum)
                 {
-                    state = State.Normal;
+                    Debug.Log("Back to normal");
                     trail.emitting = false;
+                    state = State.Normal;
                 }
                 break;
         }
