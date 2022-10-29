@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Bullet : MonoBehaviour
 {
+    public bool powerUpOn;
 
     [SerializeField]
     protected GameObject collisionEffect;
@@ -11,27 +12,22 @@ public abstract class Bullet : MonoBehaviour
     [SerializeField]
     private LayerMask whatIsDamageable;
     [SerializeField]
-    private LayerMask whatIsMapColisionable;
+    protected LayerMask whatIsMapColisionable;
 
     protected float bulletDamage;
     protected float bulletSpeedMetresPerSec;
     protected float bulletRangeInMetres;
-    protected float bulletRadius;
-    protected bool enemyHit;
-
-    private bool hitSomething;
+    protected float bulletRadius;    
+    
     private bool outOfRange;
     private float timeShooted;
 
 
     protected virtual void Start()
     {
-        //Fer particulas
-
-        hitSomething = false;
+        //Fer particulas       
         outOfRange = false;
-        timeShooted = Time.time;
-        enemyHit = false;
+        timeShooted = Time.time;        
     }
 
     // Update is called once per frame

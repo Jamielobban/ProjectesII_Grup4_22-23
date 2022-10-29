@@ -11,8 +11,9 @@ public class Sniper : Weapon
 
         bulletsPerMagazine = 9;
         magazines = 3;
-        reloadTimeInSec = 2.1f;
-        fireRateinSec = 1.2f;
+        reloadTimeInSec = 3.8f;
+        fireRateinSec = 2.0f;
+        hasBoltSound = true;
 
         currentBulletsInMagazine = bulletsPerMagazine;
         currentMagazines = magazines;
