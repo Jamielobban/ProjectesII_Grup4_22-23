@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     }
     private State state;
 
+    private float enemyHealth;
     public float bulletSpeed;
 
     public float timeBetweenShots;
@@ -29,15 +30,18 @@ public class EnemyController : MonoBehaviour
 
     private Transform player;
 
+    public bool canShoot;
 
     private Rigidbody2D rb;
     private Vector2 movement;
     private SpriteRenderer sr;
 
+    public bool canSeePlayer;
     public bool inRange;
     public float knockbackPower;
     void Start()
     {
+        enemyHealth = 100;
         state = State.Chasing;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         sr = this.GetComponent<SpriteRenderer>();
@@ -48,6 +52,19 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        //RaycastHit2D hitInfo = Physics2D.Raycast(enemyFirePoint.position, transform.right);
+        //if (hitInfo.collider != null)
+        //{
+        //    if (hitInfo.collider.CompareTag("Player"))
+        //    {
+        //         Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.green);
+        //    }
+        //    if (hitInfo.collider.CompareTag("Wall"))
+        //    {
+        //        Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.red);
+        //    }           
+        //}
+
         switch (state)
         {
             case State.Chasing:
@@ -58,18 +75,36 @@ public class EnemyController : MonoBehaviour
                 }
                 break;
             case State.Firing:
+                RaycastHit2D hitInfo = Physics2D.Raycast(enemyFirePoint.position, transform.right);
+                if (hitInfo.collider != null)
+                {
+                    if (hitInfo.collider.CompareTag("Player"))
+                    {
+                        Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.green);
+                        canShoot = true;
+                    }
+                    if (hitInfo.collider.CompareTag("Wall"))
+                    {
+                        Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.red);
+                        canShoot = false;
+                        lastShoot = Time.time;
+                    }
+                }
                 if (!inRange)
                 {
                     state = State.Chasing;
                 }
-                else if (Time.time - lastShoot >= timeBetweenShots)
+                else if ((Time.time - lastShoot >= timeBetweenShots) && canShoot)
                 {
                     Shoot();
                     lastShoot = Time.time;
                 }
                 break;
             case State.Hit:
-                
+                if (enemyHealth <= 0)
+                {
+                    Destroy(this.gameObject);
+                }
                 sr.DOColor(originalColor, 0.6f);
                 rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
                 lastShoot = Time.time;
@@ -82,14 +117,14 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-                Vector3 direction = player.position - transform.position;
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                rb.rotation = angle;
+        Vector3 direction = player.position - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        rb.rotation = angle;
 
         switch (state)
         {
             case State.Chasing:
-                
+
 
                 if (Vector2.Distance(transform.position, player.position) > stoppingDistance)
                 {
@@ -139,6 +174,7 @@ public class EnemyController : MonoBehaviour
     {
         if(other.gameObject.tag == "Bullet")
         {
+            enemyHealth -= 20;
             sr.DOColor(Color.red, 0.0f);
             state = State.Hit;
         }

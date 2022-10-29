@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 500456483}
   m_Layer: 0
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 508688121}
   m_Layer: 0
   m_Name: Walls
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -705,7 +705,7 @@ GameObject:
   - component: {fileID: 1226440114}
   m_Layer: 0
   m_Name: firePoint
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1232,6 +1232,7 @@ MonoBehaviour:
   firePoint: {fileID: 1226440114}
   bulletPrefab: {fileID: 1821172425303555735, guid: aba6f2cf84acaeb4480e594c8c290a95, type: 3}
   bulletForce: 20
+  onShoot: {fileID: 0}
 --- !u!1001 &3500727868580972364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1281,7 +1282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1208448484388994669, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: retreatDistance
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1208448484388994669, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: stoppingDistance
@@ -1369,7 +1370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3500727867539295662, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10
+      value: 3.87
       objectReference: {fileID: 0}
     - target: {fileID: 3500727867539295662, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalPosition.z

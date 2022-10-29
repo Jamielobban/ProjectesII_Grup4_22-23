@@ -9,7 +9,8 @@ public class PlayerShooting : MonoBehaviour
     public GameObject bulletPrefab;
 
     public float bulletForce = 20f;
-    
+
+    public ParticleSystem onShoot;
 
     // Update is called once per frame
     void Update()
@@ -17,6 +18,7 @@ public class PlayerShooting : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
+            //Instantiate(onShoot, firePoint.position, firePoint.rotation);
         }
     }
 
