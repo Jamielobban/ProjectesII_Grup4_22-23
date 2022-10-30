@@ -52,19 +52,8 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        //RaycastHit2D hitInfo = Physics2D.Raycast(enemyFirePoint.position, transform.right);
-        //if (hitInfo.collider != null)
-        //{
-        //    if (hitInfo.collider.CompareTag("Player"))
-        //    {
-        //         Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.green);
-        //    }
-        //    if (hitInfo.collider.CompareTag("Wall"))
-        //    {
-        //        Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.red);
-        //    }           
-        //}
-        Debug.Log("am i working");
+
+       // Debug.Log("am i working");
         switch (state)
         {
             case State.Chasing:
@@ -170,10 +159,11 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.tag == "Bullet")
+        if (collision.gameObject.CompareTag("Bullet"))
         {
+            Debug.Log(("ive been hit"));
             enemyHealth -= 20;
             sr.DOColor(Color.red, 0.0f);
             state = State.Hit;

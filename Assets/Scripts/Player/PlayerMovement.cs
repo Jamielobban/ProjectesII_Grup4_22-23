@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Normal, Rolling
     }
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBar healthBar;
 
     private State state;
     public float moveSpeed = 5f;
@@ -34,7 +37,13 @@ public class PlayerMovement : MonoBehaviour
     {
         trail = GetComponent<TrailRenderer>();
         sr = GetComponent<SpriteRenderer>();
+    }
+
+    public void Start()
+    {
         state = State.Normal;
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
     // Update is called once per frame
     void Update()
@@ -97,6 +106,18 @@ public class PlayerMovement : MonoBehaviour
             default:
                 break;
         }
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            TakeDamage(20);
+        }
+    }
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
     }
 }
