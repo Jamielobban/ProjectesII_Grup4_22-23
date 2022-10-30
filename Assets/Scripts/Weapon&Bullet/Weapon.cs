@@ -86,7 +86,7 @@ public abstract class Weapon : MonoBehaviour
         startReloading = 0;
         outOfAmmo = false;
         reloading = false;
-        powerActive = false;
+        powerActive = true;
     }
 
     
