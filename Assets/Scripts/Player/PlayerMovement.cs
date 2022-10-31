@@ -119,5 +119,6 @@ public class PlayerMovement : MonoBehaviour
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+        cam.DOShakePosition(1f, new Vector3(10f, 10f, 0f), 10, 45, false, ShakeRandomnessMode.Harmonic);
     }
 }

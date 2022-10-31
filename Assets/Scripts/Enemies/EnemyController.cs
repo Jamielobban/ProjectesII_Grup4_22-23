@@ -95,9 +95,9 @@ public class EnemyController : MonoBehaviour
                     Destroy(this.gameObject);
                 }
                 sr.DOColor(originalColor, 0.6f);
-                rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
+                //rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
                 lastShoot = Time.time;
-                state = State.Chasing;
+                //state = State.Chasing;
                 break;
             default:
                 break;
@@ -150,7 +150,7 @@ public class EnemyController : MonoBehaviour
             GameObject enemyBullet = Instantiate(enemyBulletPrefab, enemyFirePoint.position, enemyFirePoint.rotation);
             Rigidbody2D rbBullet = enemyBullet.GetComponent<Rigidbody2D>();
             rbBullet.AddForce(enemyFirePoint.right * bulletSpeed, ForceMode2D.Impulse);
-            rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
+            //rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
         }
     }
 
@@ -163,10 +163,21 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            Debug.Log(("ive been hit"));
-            enemyHealth -= 20;
-            sr.DOColor(Color.red, 0.0f);
-            state = State.Hit;
+            //Debug.Log(("ive been hit"));
+            //enemyHealth -= 20;
+            //sr.DOColor(Color.red, 0.0f);
+            //state = State.Hit;
+            StartCoroutine(hitEnemy());
         }
+    }
+
+    private IEnumerator hitEnemy()
+    {
+        state = State.Hit;
+        rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(2);
+        enemyHealth -= 20;
+        sr.DOColor(Color.red, 0.0f);
+        state = State.Chasing;
     }
 }
