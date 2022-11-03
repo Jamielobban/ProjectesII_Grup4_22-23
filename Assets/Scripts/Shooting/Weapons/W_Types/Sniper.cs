@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class Sniper : Weapon
 {
+    protected override void CheckPowerUpShooting()
+    {
+        weaponBulletTypePrefab.GetComponent<Bullet>().powerUpOn = true;
+        mechanism.Shoot(weaponBulletTypePrefab, firePoint, weaponShoot, fireRateinSec); //firerate esta en dpm
+    }   
+
+
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
 
+        myType = WeaponsTypes.SNIPER;
+
         bulletsPerMagazine = 9;
         magazines = 3;
         reloadTimeInSec = 3.8f;
-        fireRateinSec = 2.0f;
-        hasBoltSound = true;
+
+        fireRateinSec = Random.Range(100f, 200f) * this.mechanism.GetFireRateMultiplier(myType);
+        
 
         currentBulletsInMagazine = bulletsPerMagazine;
         currentMagazines = magazines;
