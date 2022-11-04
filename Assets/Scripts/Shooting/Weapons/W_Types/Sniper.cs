@@ -4,36 +4,33 @@ using UnityEngine;
 
 public class Sniper : Weapon
 {
-    protected override void CheckPowerUpShooting()
-    {
-        weaponBulletTypePrefab.GetComponent<Bullet>().powerUpOn = true;
-        mechanism.Shoot(weaponBulletTypePrefab, firePoint, weaponShoot, fireRateinSec); //firerate esta en dpm
-    }   
-
-
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        base.Start();
-
-        myType = WeaponsTypes.SNIPER;
-
-        bulletsPerMagazine = 9;
-        magazines = 3;
+    public Sniper()
+    {        //bulletType = new SniperBullet();
+        bulletsPerMagazine = Random.Range(4,9);
+        magazines = Random.Range(2, 4);
+        fireRateinSec = Random.Range(100f, 200f) * this.mechanism.GetFireRateMultiplier(100f, 200f); //Aqui esta en dpm
+        fireRateinSec /= 60f; //Aqui es dps
+        fireRateinSec = 1 / fireRateinSec; //Aqui calculem el minim temps possible entre disparos
         reloadTimeInSec = 3.8f;
-
-        fireRateinSec = Random.Range(100f, 200f) * this.mechanism.GetFireRateMultiplier(myType);
-        
-
         currentBulletsInMagazine = bulletsPerMagazine;
         currentMagazines = magazines;
     }
-
-    // Update is called once per frame
-    protected override void Update()
+    protected override void CheckPowerUpShooting()
     {
-        base.Update();
+        bulletTypePrefab.GetComponent<Bullet>().powerUpOn = true;
+        mechanism.Shoot(bulletTypePrefab, firePoint, fireRateinSec);
     }
+
+    //protected override float GenerateBaseFireRate()
+    //{
+    //    throw new System.NotImplementedException();
+    //}
+
+
+    // Start is called before the first frame update
+    
+    // Update is called once per frame
+   
 
     
 }

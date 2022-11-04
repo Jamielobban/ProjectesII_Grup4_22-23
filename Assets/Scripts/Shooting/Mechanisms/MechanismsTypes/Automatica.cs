@@ -4,24 +4,34 @@ using UnityEngine;
 
 public class Automatica : Mechanism
 {    
-    public override void Shoot(GameObject bulletTypePrefab, Transform firePoint, AudioClip shootSound, float fireRateinSec)
+    public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec)
     {
-        
+        return false;
     }
-
-    public override float GetFireRateMultiplier(WeaponsTypes typeWeapon)
+    public override float GetFireRateMultiplier(float min, float max)
     {
-        switch (typeWeapon)
+        if (min == 225 && max == 275)
         {
-            case WeaponsTypes.GUN:
-                return 1.34f;
-                break;
-            case WeaponsTypes.SHOTGUN:
-                return 1.7f;
-                break;            
-            default:
-                break;
+            return 1.7f;
         }
+        else if (min == 660 && max == 700)
+        {
+            return 1.34f;
+
+        }
+
         return 0.0f;
+
+        //switch (typeWeapon)
+        //{
+        //    case WeaponsTypes.GUN:
+        //        return 1.34f;
+        //        break;
+        //    case WeaponsTypes.SHOTGUN:
+        //        return 1.7f;
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 }

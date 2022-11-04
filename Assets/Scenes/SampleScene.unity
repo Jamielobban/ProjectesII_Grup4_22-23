@@ -218,9 +218,8 @@ GameObject:
   m_Component:
   - component: {fileID: 500456482}
   - component: {fileID: 500456483}
-  - component: {fileID: 500456484}
   m_Layer: 9
-  m_Name: Sniper
+  m_Name: RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,7 +236,8 @@ Transform:
   m_LocalPosition: {x: 0.561, y: 0.212, z: 0}
   m_LocalScale: {x: 0.2497, y: 0.5763, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1226440114}
   m_Father: {fileID: 2090932362}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -293,23 +293,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &500456484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500456481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eba3d07e6f0f92b4288ced9bbccba08d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 1226440114}
-  weaponBulletTypePrefab: {fileID: 1821172425303555735, guid: aba6f2cf84acaeb4480e594c8c290a95, type: 3}
-  weaponShoot: {fileID: 8300000, guid: 33b294e58a0b6fa46b2b5ed114d145f5, type: 3}
-  boltSound: {fileID: 8300000, guid: f530ac66a78a30e428956b45b4271c84, type: 3}
-  reloadSound: {fileID: 8300000, guid: 98e82e93376cee44fa5e659a84aa5179, type: 3}
 --- !u!1 &508688120
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,13 +941,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1226440113}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.561, y: 0.748, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.93007094, z: 0}
+  m_LocalScale: {x: 4.004806, y: 1.7352073, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2090932362}
-  m_RootOrder: 1
+  m_Father: {fileID: 500456482}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1238316374
 GameObject:
@@ -2117,7 +2100,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 500456482}
-  - {fileID: 1226440114}
   m_Father: {fileID: 189257602}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
