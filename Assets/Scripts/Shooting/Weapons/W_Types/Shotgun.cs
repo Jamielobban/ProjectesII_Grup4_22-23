@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Shotgun : Weapon
 {
+    public Shotgun(Transform _firePoint) : base(_firePoint)
+    {
+
+    }
     protected override void CheckPowerUpShooting()
     {
         throw new System.NotImplementedException();
     }
 
-    protected override void Update()
+    public override void Update()
     {
         base.Update();
     }
+
 }

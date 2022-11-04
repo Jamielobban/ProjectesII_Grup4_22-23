@@ -5,13 +5,13 @@ using UnityEngine;
 
 //public enum WeaponsTypes { SNIPER, GUN, SHOTGUN, UNKNOWN };
 
-public abstract class Weapon : MonoBehaviour
+
+public abstract class Weapon /*: MonoBehaviour*/
 {
 
-    protected Mechanism mechanism;
-    [SerializeField]
-    protected Transform firePoint;
-    [SerializeField]protected GameObject bulletTypePrefab; 
+    protected Mechanism mechanism;    
+    public Transform firePoint;
+    public GameObject bulletTypePrefab; 
     //[SerializeField] protected AudioClip weaponShoot, boltSound, reloadSound;
 
 
@@ -38,7 +38,7 @@ public abstract class Weapon : MonoBehaviour
     private bool powerupAvailable;
 
 
-    public Weapon()
+    public Weapon(Transform _firePoint)
     {        
         startReloading = 0;
         timelastPowerupUse = 0;
@@ -46,6 +46,7 @@ public abstract class Weapon : MonoBehaviour
         reloading = false;
         powerActive = false;
         powerupAvailable = false;
+        firePoint = _firePoint;
     }
     
     
@@ -99,7 +100,7 @@ public abstract class Weapon : MonoBehaviour
     
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         //Debug.Log(powerActive);        
         CheckShooting();

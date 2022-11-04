@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Sniper : Weapon
 {
-    public Sniper()
-    {        //bulletType = new SniperBullet();
+    public Sniper(Transform _firePoint):base(_firePoint)    {   
+        WeaponGenerator.Instance.SetMechanismToWeapon(ref mechanism, 0);
         bulletsPerMagazine = Random.Range(4,9);
         magazines = Random.Range(2, 4);
         fireRateinSec = Random.Range(100f, 200f) * this.mechanism.GetFireRateMultiplier(100f, 200f); //Aqui esta en dpm
@@ -15,10 +15,16 @@ public class Sniper : Weapon
         currentBulletsInMagazine = bulletsPerMagazine;
         currentMagazines = magazines;
     }
+
     protected override void CheckPowerUpShooting()
     {
         bulletTypePrefab.GetComponent<Bullet>().powerUpOn = true;
         mechanism.Shoot(bulletTypePrefab, firePoint, fireRateinSec);
+    }
+
+    public override void Update()
+    {
+        base.Update();
     }
 
     //protected override float GenerateBaseFireRate()

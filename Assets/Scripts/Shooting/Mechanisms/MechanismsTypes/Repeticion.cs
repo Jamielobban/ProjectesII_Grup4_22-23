@@ -8,7 +8,7 @@ public class Repeticion : Mechanism
     {
         if (Input.GetButtonDown("Shoot") && Time.time - timeLastShoot >= fireRateinSec)
         {
-            Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
+            GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
             AudioManager.Instance.PlaySound(shootSound);
             AudioManager.Instance.PlaySound(boltSound, 0.5f);
             timeLastShoot = Time.time;
