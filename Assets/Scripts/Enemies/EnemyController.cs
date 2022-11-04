@@ -39,9 +39,12 @@ public class EnemyController : MonoBehaviour
     public bool canSeePlayer;
     public bool inRange;
     public float knockbackPower;
+
+    public int angleOfCone;
+    public int numberOfBursts;
     void Start()
     {
-        enemyHealth = 100;
+        enemyHealth = -1;
         state = State.Chasing;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         sr = this.GetComponent<SpriteRenderer>();
@@ -52,8 +55,12 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        //if (enemyHealth <= 0)
+        //{
+        //    DeathAnimation();
+        //}
 
-       // Debug.Log("am i working");
+        // Debug.Log("am i working");
         switch (state)
         {
             case State.Chasing:
@@ -92,7 +99,7 @@ public class EnemyController : MonoBehaviour
             case State.Hit:
                 if (enemyHealth <= 0)
                 {
-                    Destroy(this.gameObject);
+                    DeathAnimation();
                 }
                 sr.DOColor(originalColor, 0.6f);
                 //rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
@@ -143,20 +150,54 @@ public class EnemyController : MonoBehaviour
                 break;
         }
     }
+
     void Shoot()
+    {
+
+        for (int i = 0; i < numberOfBursts; i++)
+        {
+            StartCoroutine(Load(0.2f * i));
+        }
+
+        //reloading = true;
+        //enemyState = States.MOVEMENT;
+        //StartCoroutine(reload(reloadTime));
+
+    }
+
+    private IEnumerator Load(float waitTime)
     {
         if (inRange)
         {
-            GameObject enemyBullet = Instantiate(enemyBulletPrefab, enemyFirePoint.position, enemyFirePoint.rotation);
-            Rigidbody2D rbBullet = enemyBullet.GetComponent<Rigidbody2D>();
-            rbBullet.AddForce(enemyFirePoint.right * bulletSpeed, ForceMode2D.Impulse);
+            //GameObject enemyBullet = Instantiate(enemyBulletPrefab, enemyFirePoint.position, enemyFirePoint.rotation);
+            //Rigidbody2D rbBullet = enemyBullet.GetComponent<Rigidbody2D>();
+            //rbBullet.AddForce(enemyFirePoint.right * bulletSpeed, ForceMode2D.Impulse);
             //rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
+
+
+
+            yield return new WaitForSeconds(waitTime);
+            int par = 0;
+            if (angleOfCone % 2 == 0)
+                par = 5;
+
+
+            for (int i = 0, grados = ((angleOfCone / 2) * -10) + par; i < angleOfCone; i++, grados += 10)
+            {
+                GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
+                instance.transform.Rotate(0, 0, instance.transform.rotation.z + grados);
+
+                instance.GetComponent<Rigidbody2D>().AddForce(instance.transform.right * bulletSpeed, ForceMode2D.Impulse);
+                Destroy(instance, 3);
+            }
         }
     }
 
-    void knockbackOnHit()
+    void DeathAnimation()
     {
-
+        //rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
+        Invoke("DestroyGameObject", 2f);
+        sr.DOColor(Color.clear, 2f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -171,6 +212,10 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void DestroyGameObject()
+    {
+        Destroy(this.gameObject);
+    }
     private IEnumerator hitEnemy()
     {
         state = State.Hit;

@@ -8,8 +8,9 @@ public class PlayerMovement : MonoBehaviour
 
     private enum State
     {
-        Normal, Rolling
+        Normal, Rolling, Hit
     }
+
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBar healthBar;
@@ -17,26 +18,41 @@ public class PlayerMovement : MonoBehaviour
     private State state;
     public float moveSpeed = 5f;
 
-    public Rigidbody2D rb;
-    public SpriteRenderer sr;
+    private Rigidbody2D rb;
+    //public SpriteRenderer sr;
     public Camera cam;
 
     Vector2 movement;
-    Vector2 mousePos;
-    Vector2 lookDir;
+    //Vector2 mousePos;
+    //Vector2 lookDir;
     Vector3 moveDir;
     Vector3 rollDir;
 
+    public Transform weapon;
+
     private TrailRenderer trail;
     private float rollSpeed;
+
     public Color dashColor;
     public Color OriginalColor;
+    public Color hurtColor;
+    public Color invulnerableColor;
     //public Color midwayRoll;
 
+    public SpriteRenderer body;
+    //public LayerMask layerMask;
+
+    private int LayerIgnoreRaycast;
+    private int PlayerMask;
+    private float rollSpeedDropMultiplier = 5f;
+    private float rollSpeedMinimum = 50f;
+    public bool isInvulnerable;
     private void Awake()
     {
         trail = GetComponent<TrailRenderer>();
-        sr = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        LayerIgnoreRaycast = LayerMask.NameToLayer("IgnoreEverything");
+        PlayerMask = LayerMask.NameToLayer("Player");
     }
 
     public void Start()
@@ -56,8 +72,6 @@ public class PlayerMovement : MonoBehaviour
 
                 movement.x = Input.GetAxisRaw("Horizontal");
                 movement.y = Input.GetAxisRaw("Vertical");
-
-                mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
                 moveDir = new Vector3(movement.x, movement.y).normalized;
 
                 if (Input.GetButtonDown("Dash"))
@@ -71,23 +85,15 @@ public class PlayerMovement : MonoBehaviour
 
             case State.Rolling:
 
-                transform.DOScale((new Vector3(0.8f, 0.8f, 1f)), 0.0f);
-                transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
-                sr.DOColor(dashColor, 0.0f);
-                sr.DOColor(OriginalColor, 0.5f);
-                trail.emitting = true;
-                float rollSpeedDropMultiplier = 5f;
-                rollSpeed -= rollSpeed * rollSpeedDropMultiplier * Time.deltaTime;
-                //cam.DOShakePosition(0.4f, 1f, 1, 1, true, 0);
-                float rollSpeedMinimum = 50f;
+                OnRollingEffects();
                 if (rollSpeed < rollSpeedMinimum)
                 {
                     state = State.Normal;
+                    gameObject.layer = PlayerMask;
                     trail.emitting = false;
                 }
                 break;
         }
-        
     }
 
     private void FixedUpdate()
@@ -96,11 +102,10 @@ public class PlayerMovement : MonoBehaviour
         {
             case State.Normal:
                 rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-                lookDir = mousePos - rb.position;
-                float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-                rb.rotation = angle;
+
                 break;
             case State.Rolling:
+                rollSpeed -= rollSpeed * rollSpeedDropMultiplier * Time.deltaTime;
                 rb.velocity = rollDir * rollSpeed;
                 break;
             default:
@@ -112,13 +117,47 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
-            TakeDamage(20);
+            OnHit();
         }
     }
     void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
-        cam.DOShakePosition(1f, new Vector3(10f, 10f, 0f), 10, 45, false, ShakeRandomnessMode.Harmonic);
+        if (!isInvulnerable)
+        {
+            currentHealth -= damage;
+            healthBar.SetHealth(currentHealth);
+        }
+    }
+
+    void OnRollingEffects()
+    {
+        gameObject.layer = LayerIgnoreRaycast;
+        transform.DOScale((new Vector3(0.8f, 0.8f, 1f)), 0.0f);
+        transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
+        body.DOColor(dashColor, 0.0f);
+        body.DOColor(OriginalColor, 0.5f);
+        trail.emitting = true;
+    }
+
+    private void OnHit()
+    {
+        TakeDamage(20);
+        StartCoroutine(hurtAnimation());
+    }
+
+    private IEnumerator hurtAnimation()
+    {
+        isInvulnerable = true;
+        body.DOColor(hurtColor, 0.0f);
+        body.DOColor(invulnerableColor, 0.15f);
+        yield return new WaitForSeconds(0.20f);
+        body.DOColor(hurtColor, 0.0f);
+        body.DOColor(invulnerableColor, 0.15f);
+        yield return new WaitForSeconds(0.20f);
+        body.DOColor(hurtColor, 0.0f);
+        body.DOColor(invulnerableColor, 0.15f);
+        yield return new WaitForSeconds(0.20f);
+        body.DOColor(OriginalColor, 0.0f);
+        isInvulnerable = false;
     }
 }

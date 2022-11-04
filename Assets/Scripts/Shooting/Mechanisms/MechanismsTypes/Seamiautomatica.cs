@@ -8,8 +8,6 @@ public class Seamiautomatica : Mechanism
 
     public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec)
     {
-
-
         return false;
     }
     

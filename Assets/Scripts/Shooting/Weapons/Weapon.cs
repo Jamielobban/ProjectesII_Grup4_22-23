@@ -33,7 +33,7 @@ public abstract class Weapon : MonoBehaviour
 
     private float startReloading;    
     private bool reloading;
-    private bool outOfAmmo;
+    public bool outOfAmmo;
     private float timelastPowerupUse;
     private bool powerupAvailable;
 
@@ -99,7 +99,7 @@ public abstract class Weapon : MonoBehaviour
     
 
     // Update is called once per frame
-    protected virtual void Update()
+    void Update()
     {
         //Debug.Log(powerActive);        
         CheckShooting();
