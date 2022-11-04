@@ -6,11 +6,13 @@ public class RightHand : MonoBehaviour
 {
     Weapon weaponInHand, nextWeapon;
     [SerializeField] Transform firePoint;
+    [SerializeField]
+    SpriteRenderer sr;
 
     private void Start()
     {
         Debug.Log("Start");
-        nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint);
+        nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint, ref sr);
         
     }
 
@@ -19,7 +21,7 @@ public class RightHand : MonoBehaviour
         Debug.Log("Update");
         weaponInHand.Update();
 
-        if (weaponInHand.outOfAmmo)
+        if (weaponInHand.GetIfOutOffAmmo())
         {
             weaponInHand = nextWeapon;
             nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon();

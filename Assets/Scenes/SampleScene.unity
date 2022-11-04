@@ -189,10 +189,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaaa9e585f586d94fb878583794182d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefabs:
-  - {fileID: 1821172425303555735, guid: aba6f2cf84acaeb4480e594c8c290a95, type: 3}
-  - {fileID: 1821172425303555735, guid: aba6f2cf84acaeb4480e594c8c290a95, type: 3}
-  - {fileID: 1821172425303555735, guid: aba6f2cf84acaeb4480e594c8c290a95, type: 3}
 --- !u!4 &349445244
 Transform:
   m_ObjectHideFlags: 0
@@ -356,6 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1226440114}
+  sr: {fileID: 500456483}
 --- !u!114 &500456485
 MonoBehaviour:
   m_ObjectHideFlags: 0

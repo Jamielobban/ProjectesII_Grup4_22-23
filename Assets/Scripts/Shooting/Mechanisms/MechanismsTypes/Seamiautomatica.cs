@@ -17,7 +17,7 @@ public class Seamiautomatica : Mechanism
     {
         if (min == 100 && max == 200)
         {
-            return 2.0f;
+            return 1.5f;
         }
         else if (min == 225 && max == 275)
         {

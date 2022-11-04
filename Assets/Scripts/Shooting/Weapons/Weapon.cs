@@ -7,102 +7,21 @@ using UnityEngine;
 
 
 public abstract class Weapon /*: MonoBehaviour*/
-{
-
-    protected Mechanism mechanism;    
-    public Transform firePoint;
-    public GameObject bulletTypePrefab; 
-    //[SerializeField] protected AudioClip weaponShoot, boltSound, reloadSound;
-
-
-
-    //[SerializeField]
-    //protected GameObject weaponBulletTypePrefab;
-
-    //protected WeaponsTypes myType = WeaponsTypes.UNKNOWN;
-
-    protected int bulletsPerMagazine;
-    protected int magazines;
-    protected float reloadTimeInSec;
-    protected float fireRateinSec;
-    protected bool hasBoltSound;
-    protected bool powerActive;
-
-    protected int currentBulletsInMagazine;
-    protected int currentMagazines;
-
-    private float startReloading;    
-    private bool reloading;
-    public bool outOfAmmo;
-    private float timelastPowerupUse;
-    private bool powerupAvailable;
-
-
-    public Weapon(Transform _firePoint)
+{    
+    protected WeaponsData data;  
+    public Weapon(Transform _firePoint, ref SpriteRenderer _sr)
     {        
-        startReloading = 0;
-        timelastPowerupUse = 0;
-        outOfAmmo = false;
-        reloading = false;
-        powerActive = false;
-        powerupAvailable = false;
-        firePoint = _firePoint;
+        data.startReloading = 0f;
+        data.timelastPowerupUse = 0;
+        data.outOfAmmo = false;
+        data.reloading = false;
+        data.powerActive = false;
+        data.powerupAvailable = false;
+        data.firePoint = _firePoint;        
     }
     
-    
-
-
-    //private void Shoot()
-    //{
-    //    GameObject bullet = Instantiate(weaponBulletTypePrefab, firePoint.position, firePoint.rotation);
-    //    weaponBulletTypePrefab.GetComponent<Bullet>().powerUpOn = true;
-
-    //    if (powerActive)
-    //        bullet.GetComponent<Bullet>().powerUpOn = true;
-    //    else
-    //        bullet.GetComponent<Bullet>().powerUpOn = false;
-
-        //    AudioManager.Instance.PlaySound(weaponShoot);        
-
-
-        //    if (currentBulletsInMagazine != 0)
-        //        currentBulletsInMagazine--;
-
-        //    if(currentBulletsInMagazine == 0)
-        //    {
-        //        if(currentMagazines != 0)
-        //        {
-        //            currentBulletsInMagazine = bulletsPerMagazine;
-        //            currentMagazines--;                
-        //            AudioManager.Instance.PlaySound(reloadSound, 0.5f);
-        //            reloading = true;
-        //            startReloading = Time.time;
-        //        }
-        //        else
-        //        {
-        //            outOfAmmo = true;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (hasBoltSound)
-        //        {                
-        //            AudioManager.Instance.PlaySound(boltSound, 0.5f);
-        //        }
-        //    }
-
-
-        //    timeLastShoot = Time.time;
-
-   // }
-     
-
-    
-
-    // Update is called once per frame
     public virtual void Update()
-    {
-        //Debug.Log(powerActive);        
+    {        
         CheckShooting();
 
         InputsUpdate();
@@ -111,25 +30,21 @@ public abstract class Weapon /*: MonoBehaviour*/
 
     }
 
-
     private void CheckShooting()
     {
-        if (!outOfAmmo && !reloading)
+        Debug.Log(!data.outOfAmmo && !data.reloading);
+        if (!data.outOfAmmo && !data.reloading)
         {
-            if (!powerActive)
+            if (!data.powerActive)
             {                
-                if (mechanism.Shoot(bulletTypePrefab, firePoint, fireRateinSec))
+                if (data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec))
                 {
-                    currentBulletsInMagazine--;
-                    
-                }
-                
+                    LoadOrReloadWhenNeedIt();                    
+                }                
             }
             else
-            {               
-                
-                CheckPowerUpShooting();
-               
+            {        
+                CheckPowerUpShooting();               
             }            
             
         }
@@ -140,19 +55,19 @@ public abstract class Weapon /*: MonoBehaviour*/
 
     private void LogicUpdate()
     {
-        if (reloading && Time.time - startReloading >= reloadTimeInSec)
+        if (data.reloading && Time.time - data.startReloading >= data.reloadTimeInSec)
         {
-            startReloading = 0;
-            reloading = false;
+            data.startReloading = 0;
+            data.reloading = false;
         }
 
-        if (Time.time - timelastPowerupUse >= 20)
+        if (Time.time - data.timelastPowerupUse >= 20)
         {
-            powerupAvailable = true;
+            data.powerupAvailable = true;
         }
         else
         {
-            powerupAvailable = false;
+            data.powerupAvailable = false;
         }
     }
 
@@ -163,25 +78,25 @@ public abstract class Weapon /*: MonoBehaviour*/
 
         if (Input.GetButtonDown("UsePowerup"))
         {
-            if (powerActive || powerupAvailable)
+            if (data.powerActive || data.powerupAvailable)
             {
-               powerActive = !powerActive;
+               data.powerActive = !data.powerActive;
                 Debug.Log("PowerupStateChanged");
-                if (!powerActive)
+                if (!data.powerActive)
                 {
-                    timelastPowerupUse = Time.time;
+                    data.timelastPowerupUse = Time.time;
                 }
 
             }
 
         }
-        else if (Input.GetButtonDown("Reload") && currentBulletsInMagazine < bulletsPerMagazine)
+        else if (Input.GetButtonDown("Reload") && data.currentBulletsInMagazine < data.bulletsPerMagazine)
         {
-            currentBulletsInMagazine = bulletsPerMagazine;
-            currentMagazines--;
+            data.currentBulletsInMagazine = data.bulletsPerMagazine;
+            data.currentMagazines--;
             //AudioManager.Instance.PlaySound(reloadSound, 0.5f);
-            reloading = true;
-            startReloading = Time.time;
+            data.reloading = true;
+            data.startReloading = Time.time;
         }
 
 
@@ -189,23 +104,28 @@ public abstract class Weapon /*: MonoBehaviour*/
 
     private void LoadOrReloadWhenNeedIt()
     {
-        currentBulletsInMagazine--;
+        data.currentBulletsInMagazine--;
 
-        if(currentBulletsInMagazine == 0)
+        if(data.currentBulletsInMagazine == 0)
         {
-            if(currentMagazines == 0)
+            if(data.currentMagazines == 0)
             {
-                outOfAmmo = true;
+                data.outOfAmmo = true;
             }
             else
             {
-                currentBulletsInMagazine = bulletsPerMagazine;
-                currentMagazines--;
-                reloading = true;
+                data.currentBulletsInMagazine = data.bulletsPerMagazine;
+                data.currentMagazines--;
+                data.reloading = true;
             }
         }
     }
 
+    public bool GetIfOutOffAmmo()
+    {
+        return data.outOfAmmo;
+    }
+    
     
 }
 
