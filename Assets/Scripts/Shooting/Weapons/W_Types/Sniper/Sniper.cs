@@ -5,27 +5,47 @@ using UnityEngine;
 public abstract class Sniper : Weapon
 {
     
-    public Sniper(Transform _firePoint, ref SpriteRenderer _sr) :base(_firePoint,ref _sr) {   
+    public Sniper(Transform _firePoint) :base(_firePoint) {   
         data.bulletsPerMagazine = Random.Range(4,9);
         data.magazines = Random.Range(2, 4);       
-        data.reloadTimeInSec = 3.8f;
+        data.reloadTimeInSec = 3f;
+        data.maxTimeOnPowerup = 5;
         data.currentBulletsInMagazine = data.bulletsPerMagazine;
         data.currentMagazines = data.magazines;
         data.fireRateinSec = Random.Range(100f, 200f); //Aqui esta en dpm
-        data.weaponSprite = Resources.Load<Sprite>("Assets/Sprites/Square.png");        
-        data.bulletTypePrefab = Resources.Load<GameObject>("Assets/SniperBullet.prefab");
+        data.weaponSprite = Resources.Load<Sprite>("Sprites/Square");        
+        data.reloadSound = Resources.Load<AudioClip>("Sounds/Weapons/Sniper/Reload");
+        data.bulletTypePrefab = Resources.Load<GameObject>("Prefab/SniperBullet");
+        //Debug.Log(data.bulletTypePrefab);
     }
 
     protected override void CheckPowerUpShooting()
-    {
+    {        
         data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = true;
-        data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec);
+        if(data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound))
+        {
+            base.LoadOrReloadWhenNeedIt();
+        }
     }
 
     public override void Update()
     {
         base.Update();
-    }  
-    
+
+        if(Time.time - data.timelastPowerupEnter >= data.maxTimeOnPowerup && data.powerActive)
+        {
+            data.powerActive = false;
+            data.powerupAvailable = false;
+            data.fireRateinSec /= 0.5f;
+            data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = false;
+            data.timelastPowerupExit = Time.time;
+        }
+    }
+
+    protected override void ActionOnEnterPowerup()
+    {
+        data.fireRateinSec *= 0.5f;
+    }
+
 }
  

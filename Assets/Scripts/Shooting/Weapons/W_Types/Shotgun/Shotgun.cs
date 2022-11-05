@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shotgun : Weapon
 {
-    public Shotgun(Transform _firePoint, ref SpriteRenderer _sr) : base(_firePoint, ref _sr)
+    public Shotgun(Transform _firePoint) : base(_firePoint)
     {
 
     }

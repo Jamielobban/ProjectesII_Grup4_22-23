@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Automatica : Mechanism
 {    
-    public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec)
+    public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound)
     {
         return false;
     }

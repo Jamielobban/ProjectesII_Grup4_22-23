@@ -11,20 +11,19 @@ public class RightHand : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Start");
         nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint, ref sr);
-        
+        weaponInHand.SetWeaponHand(ref sr);
     }
 
     private void Update()
-    {
-        Debug.Log("Update");
+    {       
         weaponInHand.Update();
 
         if (weaponInHand.GetIfOutOffAmmo())
         {
             weaponInHand = nextWeapon;
-            nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon();
+            weaponInHand.SetWeaponHand(ref sr);
+            nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon(firePoint, ref sr);
         }
     }
 

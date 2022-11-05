@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class WeaponGenerator : MonoBehaviour
 {
-    Weapon[] weaponsTypes = new Weapon[3];
+
     //Mechanism[] mechanismTypes = new Mechanism[3] { new Automatica(), new Seamiautomatica(), new Repeticion() };
     //[SerializeField] GameObject[] bulletPrefabs = new GameObject[3];
 
-    Weapon nextWeapon;
+    int weaponInHandInt, nextWeaponInt;
 
     private int arrayPositionInHand;
     private int arrayPositionOfNext;
@@ -37,28 +37,73 @@ public class WeaponGenerator : MonoBehaviour
         //weaponsTypes = new Weapon[3] { new Sniper(firePoint), new Shotgun(firePoint), new Gun(firePoint) };
         
         int random = Random.Range(0, 0);
-        if(random == 0)
-        {
-            weaponInHand = ReturnSniperType(Random.Range(0, 2), firePoint, ref _sr);
-        }
-
-        random = Random.Range(0, 0);
-        int random2 = Random.Range(0, 3);
+        weaponInHandInt = random;
+        int random2 = Random.Range(2, 3);
 
         if (random == 0)
         {
-            return ReturnSniperType(random2, firePoint, ref _sr);
+            weaponInHand = ReturnSniperType(random2, firePoint);
+        }
+        else if(random == 1)
+        {
+            weaponInHand = ReturnShotgunType(random2, firePoint);
+        }
+        else if (random == 2)
+        {
+            weaponInHand = ReturnGunType(random2, firePoint);
         }
 
-        return ReturnSniperType(random2, firePoint, ref _sr);
+        random = Random.Range(0, 0);
+        nextWeaponInt = random;
+        random2 = Random.Range(1, 2);
+
+        if (random == 0)
+        {
+            return ReturnSniperType(random2, firePoint);            
+        }
+        else if (random == 1)
+        {
+            return ReturnShotgunType(random2, firePoint);
+        }
+        else if (random == 2)
+        {
+            return ReturnGunType(random2, firePoint);
+        }
+
+        return ReturnSniperType(random2, firePoint);
+        //random = Random.Range(0, 0);
+        //int random2 = Random.Range(0, 3);
+
+        //if (random == 0)
+        //{
+        //    return ReturnSniperType(random2, firePoint, ref _sr);
+        //}
+
+        //return ReturnSniperType(random2, firePoint, ref _sr);
 
     }
 
-    public Weapon ReturnMyNextWeapon()
+    public Weapon ReturnMyNextWeapon(Transform firePoint, ref SpriteRenderer _sr)
     {
-        arrayPositionInHand = arrayPositionOfNext;
-        do { arrayPositionOfNext = Random.Range(0, weaponsTypes.Length); } while (arrayPositionOfNext == arrayPositionInHand);
-        return weaponsTypes[arrayPositionOfNext];
+        weaponInHandInt = nextWeaponInt;
+        int random = Random.Range(0, 0);
+        nextWeaponInt = weaponInHandInt;
+        int random2 = Random.Range(0, 1);
+
+        if (random == 0)
+        {
+            return ReturnSniperType(random2, firePoint);
+        }
+        else if (random == 1)
+        {
+            return ReturnSniperType(random2, firePoint);
+        }
+        else if (random == 2)
+        {
+            return ReturnSniperType(random2, firePoint);
+        }
+
+        return ReturnSniperType(random2, firePoint);
     }
 
     //public void ResetArrayValues(Transform firePoint)
@@ -67,22 +112,60 @@ public class WeaponGenerator : MonoBehaviour
     //    mechanismTypes = new Mechanism[3] { new Automatica(), new Seamiautomatica(), new Repeticion() };
     //}
 
-    private Sniper ReturnSniperType(int whichType, Transform _firePoint, ref SpriteRenderer _sr)
+    private Sniper ReturnSniperType(int whichType, Transform _firePoint)
     {
         if(whichType == 0)
         {
-            return new SniperAuto(_firePoint,ref _sr);
+            return new SniperAuto(_firePoint);
         }
         else if(whichType == 1)
         {
-            return new SniperSemi(_firePoint, ref _sr);
+            return new SniperSemi(_firePoint);
 
         }
         else if(whichType == 2)
         {
-            return new SniperBolt(_firePoint, ref _sr);
+            return new SniperBolt(_firePoint);
         }
-        return new SniperBolt(_firePoint, ref _sr);
+        return new SniperBolt(_firePoint);
+
+    }
+
+    private Shotgun ReturnShotgunType(int whichType, Transform _firePoint)
+    {
+        if (whichType == 0)
+        {
+            return new ShotgunAuto(_firePoint);
+        }
+        else if (whichType == 1)
+        {
+            return new ShotgunSemiauto(_firePoint);
+
+        }
+        else if (whichType == 2)
+        {
+            return new ShotgunBolt(_firePoint);
+        }
+        return new ShotgunBolt(_firePoint);
+
+    }
+
+    private Gun ReturnGunType(int whichType, Transform _firePoint)
+    {
+        if (whichType == 0)
+        {
+            return new GunAuto(_firePoint);
+        }
+        else if (whichType == 1)
+        {
+            return new GunSemiauto(_firePoint);
+
+        }
+        else if (whichType == 2)
+        {
+            return new GunBolt(_firePoint);
+        }
+        return new GunBolt(_firePoint);
 
     }
 

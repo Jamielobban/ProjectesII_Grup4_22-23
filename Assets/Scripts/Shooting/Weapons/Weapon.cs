@@ -8,11 +8,12 @@ using UnityEngine;
 
 public abstract class Weapon /*: MonoBehaviour*/
 {    
-    protected WeaponsData data;  
-    public Weapon(Transform _firePoint, ref SpriteRenderer _sr)
+    protected WeaponsData data;    
+    public Weapon(Transform _firePoint)
     {        
         data.startReloading = 0f;
-        data.timelastPowerupUse = 0;
+        data.timelastPowerupExit = 0.0f;
+        data.timelastPowerupEnter = 0;
         data.outOfAmmo = false;
         data.reloading = false;
         data.powerActive = false;
@@ -21,7 +22,9 @@ public abstract class Weapon /*: MonoBehaviour*/
     }
     
     public virtual void Update()
-    {        
+    {
+        Debug.Log(data.powerupAvailable);     
+
         CheckShooting();
 
         InputsUpdate();
@@ -32,12 +35,12 @@ public abstract class Weapon /*: MonoBehaviour*/
 
     private void CheckShooting()
     {
-        Debug.Log(!data.outOfAmmo && !data.reloading);
+        
         if (!data.outOfAmmo && !data.reloading)
         {
             if (!data.powerActive)
             {                
-                if (data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec))
+                if (data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound))
                 {
                     LoadOrReloadWhenNeedIt();                    
                 }                
@@ -51,24 +54,24 @@ public abstract class Weapon /*: MonoBehaviour*/
     }
 
     protected abstract void CheckPowerUpShooting();    
+    public void SetWeaponHand(ref SpriteRenderer _sr)
+    {
+        _sr.sprite = data.weaponSprite;
+        _sr.color = data.weaponColor;
+    }
     //protected abstract float GenerateBaseFireRate();    
 
     private void LogicUpdate()
     {
-        if (data.reloading && Time.time - data.startReloading >= data.reloadTimeInSec)
-        {
-            data.startReloading = 0;
+        if (data.reloading && Time.time - data.startReloading >= data.reloadTimeInSec+0.5f)
+        {           
             data.reloading = false;
         }
 
-        if (Time.time - data.timelastPowerupUse >= 20)
+        if (Time.time - data.timelastPowerupExit >= 20 && !data.powerupAvailable)
         {
-            data.powerupAvailable = true;
-        }
-        else
-        {
-            data.powerupAvailable = false;
-        }
+            data.powerupAvailable = true;            
+        }       
     }
 
     
@@ -78,23 +81,19 @@ public abstract class Weapon /*: MonoBehaviour*/
 
         if (Input.GetButtonDown("UsePowerup"))
         {
-            if (data.powerActive || data.powerupAvailable)
+            if (!data.powerActive && data.powerupAvailable)
             {
-               data.powerActive = !data.powerActive;
-                Debug.Log("PowerupStateChanged");
-                if (!data.powerActive)
-                {
-                    data.timelastPowerupUse = Time.time;
-                }
-
+                data.powerActive = true;
+                ActionOnEnterPowerup();
+                data.timelastPowerupEnter = Time.time;               
             }
 
         }
-        else if (Input.GetButtonDown("Reload") && data.currentBulletsInMagazine < data.bulletsPerMagazine)
+        else if (Input.GetButtonDown("Reload") && data.currentBulletsInMagazine < data.bulletsPerMagazine && !data.outOfAmmo && data.currentMagazines > 0)
         {
             data.currentBulletsInMagazine = data.bulletsPerMagazine;
             data.currentMagazines--;
-            //AudioManager.Instance.PlaySound(reloadSound, 0.5f);
+            AudioManager.Instance.PlaySound(data.reloadSound, 0.5f);
             data.reloading = true;
             data.startReloading = Time.time;
         }
@@ -102,7 +101,7 @@ public abstract class Weapon /*: MonoBehaviour*/
 
     }
 
-    private void LoadOrReloadWhenNeedIt()
+    protected void LoadOrReloadWhenNeedIt()
     {
         data.currentBulletsInMagazine--;
 
@@ -114,8 +113,10 @@ public abstract class Weapon /*: MonoBehaviour*/
             }
             else
             {
+                AudioManager.Instance.PlaySound(data.reloadSound, 0.5f);
                 data.currentBulletsInMagazine = data.bulletsPerMagazine;
                 data.currentMagazines--;
+                data.startReloading = Time.time;
                 data.reloading = true;
             }
         }
@@ -126,6 +127,6 @@ public abstract class Weapon /*: MonoBehaviour*/
         return data.outOfAmmo;
     }
     
-    
+    protected virtual void ActionOnEnterPowerup(){}
 }
 

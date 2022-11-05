@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Repeticion : Mechanism
 {
-    public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec)
+    public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound)
     {
         if (Input.GetButtonDown("Shoot") && Time.time - timeLastShoot >= fireRateinSec)
         {
             GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
-            AudioManager.Instance.PlaySound(shootSound);
-            AudioManager.Instance.PlaySound(boltSound, 0.5f);
+            AudioManager.Instance.PlaySound(shootSound);            
             timeLastShoot = Time.time;
             return true;
         }

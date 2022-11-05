@@ -7,6 +7,7 @@ public struct WeaponsData
     public AudioClip shootSound;
     public AudioClip reloadSound;
     public Sprite weaponSprite;
+    public Color weaponColor;
     public Mechanism mechanism;
     public Transform firePoint;
     public GameObject bulletTypePrefab;
@@ -19,7 +20,9 @@ public struct WeaponsData
     public float reloadTimeInSec;
     public float fireRateinSec;
     public float startReloading;
-    public float timelastPowerupUse;
+    public float timelastPowerupEnter;
+    public float timelastPowerupExit;
+    public float maxTimeOnPowerup;
     
     public bool powerActive;
     public bool reloading;

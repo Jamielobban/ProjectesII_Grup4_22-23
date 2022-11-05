@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SniperAuto : Sniper
 {
-    public SniperAuto(Transform _firePoint, ref SpriteRenderer _sr) : base(_firePoint, ref _sr)
+    public SniperAuto(Transform _firePoint) : base(_firePoint)
     {
         //, new Repeticion()
         //WeaponGenerator.Instance.SetMechanismToWeapon(ref mechanism, 0);
@@ -12,6 +12,7 @@ public class SniperAuto : Sniper
         data.fireRateinSec *= 2f;
         data.fireRateinSec /= 60f; //Aqui es dps
         data.fireRateinSec = 1 / data.fireRateinSec; //Aqui calculem el minim temps possible entre disparos
-        _sr.color = Color.red;
+        data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Sniper/sniperAutomatic_effect");
+        data.weaponColor = Color.red;
     }
 }
