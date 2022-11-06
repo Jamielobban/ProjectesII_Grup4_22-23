@@ -36,9 +36,9 @@ public class WeaponGenerator : MonoBehaviour
     {
         //weaponsTypes = new Weapon[3] { new Sniper(firePoint), new Shotgun(firePoint), new Gun(firePoint) };
         
-        int random = Random.Range(0, 0);
+        int random = Random.Range(2, 3);
         weaponInHandInt = random;
-        int random2 = Random.Range(2, 3);
+        int random2 = Random.Range(0, 1);
 
         if (random == 0)
         {
@@ -53,9 +53,9 @@ public class WeaponGenerator : MonoBehaviour
             weaponInHand = ReturnGunType(random2, firePoint);
         }
 
-        random = Random.Range(0, 0);
+        random = Random.Range(2, 3);
         nextWeaponInt = random;
-        random2 = Random.Range(1, 2);
+        random2 = Random.Range(2, 3);
 
         if (random == 0)
         {
@@ -70,7 +70,7 @@ public class WeaponGenerator : MonoBehaviour
             return ReturnGunType(random2, firePoint);
         }
 
-        return ReturnSniperType(random2, firePoint);
+        throw new System.NotImplementedException();
         //random = Random.Range(0, 0);
         //int random2 = Random.Range(0, 3);
 
@@ -86,9 +86,9 @@ public class WeaponGenerator : MonoBehaviour
     public Weapon ReturnMyNextWeapon(Transform firePoint, ref SpriteRenderer _sr)
     {
         weaponInHandInt = nextWeaponInt;
-        int random = Random.Range(0, 0);
+        int random = Random.Range(2, 3);
         nextWeaponInt = weaponInHandInt;
-        int random2 = Random.Range(0, 1);
+        int random2 = Random.Range(1, 2);
 
         if (random == 0)
         {
@@ -96,14 +96,14 @@ public class WeaponGenerator : MonoBehaviour
         }
         else if (random == 1)
         {
-            return ReturnSniperType(random2, firePoint);
+            return ReturnShotgunType(random2, firePoint);
         }
         else if (random == 2)
         {
-            return ReturnSniperType(random2, firePoint);
+            return ReturnGunType(random2, firePoint);
         }
 
-        return ReturnSniperType(random2, firePoint);
+        throw new System.NotImplementedException();
     }
 
     //public void ResetArrayValues(Transform firePoint)
@@ -127,7 +127,8 @@ public class WeaponGenerator : MonoBehaviour
         {
             return new SniperBolt(_firePoint);
         }
-        return new SniperBolt(_firePoint);
+
+        throw new System.NotImplementedException();
 
     }
 
@@ -146,7 +147,8 @@ public class WeaponGenerator : MonoBehaviour
         {
             return new ShotgunBolt(_firePoint);
         }
-        return new ShotgunBolt(_firePoint);
+
+        throw new System.NotImplementedException();
 
     }
 
@@ -165,7 +167,8 @@ public class WeaponGenerator : MonoBehaviour
         {
             return new GunBolt(_firePoint);
         }
-        return new GunBolt(_firePoint);
+
+        throw new System.NotImplementedException();
 
     }
 

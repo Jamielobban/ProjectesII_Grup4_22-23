@@ -15,7 +15,7 @@ public abstract class Mechanism
     public abstract bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound);
     
 
-    public abstract float GetFireRateMultiplier(float min, float max);
+    //public abstract float GetFireRateMultiplier(float min, float max);
 
 }
   

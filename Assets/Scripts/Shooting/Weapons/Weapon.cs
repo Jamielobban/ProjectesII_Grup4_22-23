@@ -9,6 +9,7 @@ using UnityEngine;
 public abstract class Weapon /*: MonoBehaviour*/
 {    
     protected WeaponsData data;    
+
     public Weapon(Transform _firePoint)
     {        
         data.startReloading = 0f;
@@ -18,12 +19,13 @@ public abstract class Weapon /*: MonoBehaviour*/
         data.reloading = false;
         data.powerActive = false;
         data.powerupAvailable = false;
-        data.firePoint = _firePoint;        
+        data.firePoint = _firePoint;
     }
     
     public virtual void Update()
     {
         Debug.Log(data.powerupAvailable);     
+             
 
         CheckShooting();
 
