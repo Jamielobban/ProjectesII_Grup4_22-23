@@ -36,7 +36,7 @@ public class ShotgunBullet : Bullet
 
             //Transform originalFirePoint = this.transform;
             //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-            pelletsOnBullet[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBullet[i].transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+            pelletsOnBullet[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBullet[i].transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
             if (powerUpOn)
             {

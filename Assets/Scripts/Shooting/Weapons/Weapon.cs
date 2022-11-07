@@ -73,7 +73,7 @@ public abstract class Weapon /*: MonoBehaviour*/
             data.reloading = false;
         }
 
-        if (Time.time - data.timelastPowerupExit >= 20 && !data.powerupAvailable)
+        if (Time.time - data.timelastPowerupExit >= 5 && !data.powerupAvailable)
         {
             data.powerupAvailable = true;            
         }       

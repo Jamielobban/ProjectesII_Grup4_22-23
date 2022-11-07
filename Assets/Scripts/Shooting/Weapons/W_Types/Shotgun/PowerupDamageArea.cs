@@ -14,15 +14,15 @@ public class PowerupDamageArea : MonoBehaviour
     void Start()
     {
         startTime = Time.time;
-        sr.DOFade(1, timeActive);
+        sr.DOFade(0f, 0.7f);
     }
 
     private void Update()
     {
-        if(Time.time - startTime >= timeActive)
-        {
-            Destroy(this.gameObject);
-        }
+        //if(Time.time - startTime >= timeActive)
+        //{
+        //    Destroy(this.gameObject);
+        //}
     }
 
 }

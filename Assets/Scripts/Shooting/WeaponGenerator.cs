@@ -36,7 +36,7 @@ public class WeaponGenerator : MonoBehaviour
     {
         //weaponsTypes = new Weapon[3] { new Sniper(firePoint), new Shotgun(firePoint), new Gun(firePoint) };
         
-        int random = Random.Range(1, 2);
+        int random = Random.Range(2, 3);
         weaponInHandInt = random;
         int random2 = Random.Range(0, 1);
 
@@ -53,7 +53,7 @@ public class WeaponGenerator : MonoBehaviour
             weaponInHand = ReturnGunType(random2, firePoint);
         }
 
-        random = Random.Range(1, 2);
+        random = Random.Range(2, 3);
         nextWeaponInt = random;
         random2 = Random.Range(2, 3);
 
@@ -86,7 +86,7 @@ public class WeaponGenerator : MonoBehaviour
     public Weapon ReturnMyNextWeapon(Transform firePoint, ref SpriteRenderer _sr)
     {
         weaponInHandInt = nextWeaponInt;
-        int random = Random.Range(1, 2);
+        int random = Random.Range(2, 3);
         nextWeaponInt = weaponInHandInt;
         int random2 = Random.Range(1, 2);
 

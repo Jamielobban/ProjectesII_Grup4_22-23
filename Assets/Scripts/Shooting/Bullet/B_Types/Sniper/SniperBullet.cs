@@ -20,7 +20,7 @@ public class SniperBullet : Bullet
         rb = this.GetComponent<Rigidbody2D>();        
 
         Transform originalFirePoint = this.transform;
-        rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+        rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
     }
 
     protected override void Update()
