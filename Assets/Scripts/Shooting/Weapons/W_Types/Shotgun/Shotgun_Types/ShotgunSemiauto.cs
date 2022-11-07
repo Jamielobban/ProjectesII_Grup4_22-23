@@ -6,17 +6,14 @@ public class ShotgunSemiauto : Shotgun
 {
     public ShotgunSemiauto(Transform _firePoint) : base(_firePoint)
     {
-
-    }
-    public override void Update()
-    {
-        base.Update();
-    }
-
-    protected override void ActionOnEnterPowerup()
-    {
-        base.ActionOnEnterPowerup();
-    }
+        data.mechanism = new Seamiautomatica();
+        data.fireRateinSec *= 0.7f;
+        data.fireRateinSec /= 60f; //Aqui es dps
+        data.fireRateinSec = 1 / data.fireRateinSec; //Aqui calculem el minim temps possible entre disparos
+        data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Pistol/semiAutomaticPistol_effect");
+        data.weaponColor = Color.yellow;
+        
+    }    
 
     protected override void CheckPowerUpShooting()
     {

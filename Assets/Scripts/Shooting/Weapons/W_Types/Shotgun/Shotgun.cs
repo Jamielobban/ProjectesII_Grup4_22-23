@@ -6,16 +6,37 @@ public class Shotgun : Weapon
 {
     public Shotgun(Transform _firePoint) : base(_firePoint)
     {
-
+        data.bulletsPerMagazine = Random.Range(8, 15);
+        data.magazines = Random.Range(1, 2); // 2/3
+        data.reloadTimeInSec = 2f;
+        data.maxTimeOnPowerup = 8f;
+        data.currentBulletsInMagazine = data.bulletsPerMagazine;
+        data.currentMagazines = data.magazines;
+        data.fireRateinSec = Random.Range(225, 275); //Aqui esta en dpm
+        data.weaponSprite = Resources.Load<Sprite>("Sprites/HexagonPointedTop");
+        data.reloadSound = Resources.Load<AudioClip>("Sounds/Weapons/Pistol/gunreload");
+        data.bulletTypePrefab = Resources.Load<GameObject>("Prefab/ShotgunBullet");
+        
     }
     protected override void CheckPowerUpShooting()
     {
-        throw new System.NotImplementedException();
+        data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = true;
+        if (data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound))
+        {
+            base.LoadOrReloadWhenNeedIt();
+        }
     }
 
     public override void Update()
     {
         base.Update();
+
+        if (Time.time - data.timelastPowerupEnter >= data.maxTimeOnPowerup && data.powerActive)
+        {
+            data.powerActive = false;      
+            data.powerupAvailable = false;
+            data.timelastPowerupExit = Time.time;
+        }
     }
 
 }

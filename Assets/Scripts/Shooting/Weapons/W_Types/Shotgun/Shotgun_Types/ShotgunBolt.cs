@@ -6,18 +6,13 @@ public class ShotgunBolt : Shotgun
 {
     public ShotgunBolt(Transform _firePoint) : base(_firePoint)
     {
-
-    }
-    public override void Update()
-    {
-        base.Update();
-    }
-
-    protected override void ActionOnEnterPowerup()
-    {
-        base.ActionOnEnterPowerup();
-    }
-
+        data.mechanism = new Repeticion();
+        data.fireRateinSec *= 0.35f;
+        data.fireRateinSec /= 60f; //Aqui es dps
+        data.fireRateinSec = 1 / data.fireRateinSec; //Aqui calculem el minim temps possible entre disparos
+        data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Pistol/cerrojoPistol_effect");
+        data.weaponColor = Color.blue;        
+    }    
     protected override void CheckPowerUpShooting()
     {
         base.CheckPowerUpShooting();

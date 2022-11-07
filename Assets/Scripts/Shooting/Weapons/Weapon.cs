@@ -24,7 +24,10 @@ public abstract class Weapon /*: MonoBehaviour*/
     
     public virtual void Update()
     {
-        Debug.Log(data.powerupAvailable);     
+        if (data.powerupAvailable)
+        {
+            Debug.Log("available");
+        }    
              
 
         CheckShooting();
