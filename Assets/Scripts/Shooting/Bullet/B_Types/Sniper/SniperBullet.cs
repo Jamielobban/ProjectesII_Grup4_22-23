@@ -13,7 +13,7 @@ public class SniperBullet : Bullet
         base.Start();
 
         bulletDamage = 50;
-        bulletRangeInMetres = 10000;
+        bulletRangeInMetres = 150;
         bulletSpeedMetresPerSec = 30;
         bulletRadius = 0.23f;
 

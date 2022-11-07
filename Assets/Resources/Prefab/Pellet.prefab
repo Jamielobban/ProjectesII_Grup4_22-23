@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df0aa2c380b7424aade8c559cf7cdc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 4559767911520600550}
   sr: {fileID: 7626816794269177403}
   timeActive: 3
 --- !u!212 &7626816794269177403
@@ -177,6 +178,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   childExplosionArea: {fileID: 2332539363985405331}
+  sr: {fileID: 2357515963105649795}
 --- !u!61 &7926868319510766866
 BoxCollider2D:
   m_ObjectHideFlags: 0

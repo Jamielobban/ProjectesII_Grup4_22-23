@@ -10,7 +10,7 @@ public class ShotgunAuto : Shotgun
         data.fireRateinSec *= 1.1f;
         data.fireRateinSec /= 60f; //Aqui es dps
         data.fireRateinSec = 1 / data.fireRateinSec; //Aqui calculem el minim temps possible entre disparos
-        data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Pistol/gunAuto");
+        data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Shotgun/shotgunAutomatic_effect");
         data.weaponColor = Color.red;
         
     }   

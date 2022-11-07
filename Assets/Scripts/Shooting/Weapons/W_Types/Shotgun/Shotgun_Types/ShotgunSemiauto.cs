@@ -10,7 +10,7 @@ public class ShotgunSemiauto : Shotgun
         data.fireRateinSec *= 0.7f;
         data.fireRateinSec /= 60f; //Aqui es dps
         data.fireRateinSec = 1 / data.fireRateinSec; //Aqui calculem el minim temps possible entre disparos
-        data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Pistol/semiAutomaticPistol_effect");
+        data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Shotgun/shotgunSemi");
         data.weaponColor = Color.yellow;
         
     }    

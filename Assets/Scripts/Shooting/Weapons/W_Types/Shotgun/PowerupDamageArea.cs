@@ -6,6 +6,8 @@ using DG.Tweening;
 public class PowerupDamageArea : MonoBehaviour
 {
     [SerializeField]
+    GameObject parent;
+    [SerializeField]
     SpriteRenderer sr;
     [SerializeField]
     float timeActive;
@@ -13,16 +15,17 @@ public class PowerupDamageArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        timeActive = 0.7f;
         startTime = Time.time;
-        sr.DOFade(0f, 0.7f);
+        sr.DOFade(0f, timeActive);
     }
 
     private void Update()
     {
-        //if(Time.time - startTime >= timeActive)
-        //{
-        //    Destroy(this.gameObject);
-        //}
+        if (Time.time - startTime >= timeActive)
+        {
+            Destroy(parent);
+        }
     }
 
 }

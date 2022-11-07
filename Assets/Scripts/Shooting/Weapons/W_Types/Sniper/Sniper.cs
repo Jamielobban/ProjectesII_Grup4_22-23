@@ -40,6 +40,10 @@ public abstract class Sniper : Weapon
             data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = false;
             data.timelastPowerupExit = Time.time;
         }
+        if (!data.powerActive)
+        {
+            data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = false;
+        }
     }
 
     protected override void ActionOnEnterPowerup()

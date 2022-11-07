@@ -7,6 +7,8 @@ public class Pellet : Bullet
     private Rigidbody2D rb;
     [SerializeField]
     private GameObject childExplosionArea;
+    [SerializeField]
+    SpriteRenderer sr;
 
     protected override void Impact()
     {
@@ -39,7 +41,7 @@ public class Pellet : Bullet
         }
         else
         {
-            bulletRangeInMetres *= 2;
+            bulletRangeInMetres =15;
         }
 
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg - 90;
@@ -60,6 +62,8 @@ public class Pellet : Bullet
             {
                 Debug.Log("Hi");
                 HitSomeone();
+                sr.enabled = false;
+                this.GetComponent<Pellet>().enabled = false;
                 childExplosionArea.SetActive(true);
                 this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             }

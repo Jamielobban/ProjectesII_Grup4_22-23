@@ -14,9 +14,10 @@ public class Shotgun : Weapon
         data.currentMagazines = data.magazines;
         data.fireRateinSec = Random.Range(225, 275); //Aqui esta en dpm
         data.weaponSprite = Resources.Load<Sprite>("Sprites/HexagonPointedTop");
-        data.reloadSound = Resources.Load<AudioClip>("Sounds/Weapons/Pistol/gunreload");
+        data.reloadSound = Resources.Load<AudioClip>("Sounds/Weapons/Shotgun/ShotgunReload");
         data.bulletTypePrefab = Resources.Load<GameObject>("Prefab/ShotgunBullet");
-        
+
+
     }
     protected override void CheckPowerUpShooting()
     {
@@ -30,6 +31,11 @@ public class Shotgun : Weapon
     public override void Update()
     {
         base.Update();
+
+        if (!data.powerActive)
+        {
+            data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = false;
+        }
 
         if (Time.time - data.timelastPowerupEnter >= data.maxTimeOnPowerup && data.powerActive)
         {
