@@ -195,9 +195,9 @@ public class PlayerMovement : MonoBehaviour
                 if (rollSpeed < rollSpeedMinimum)
                 {
                     remainingBlinks--;
-                    gameObject.layer = PlayerMask;
                     trail.emitting = false;
                     body.DOColor(OriginalColor, 0.5f);
+                    gameObject.layer = PlayerMask;
                     state = State.Normal;
                     Debug.Log("Once");
                 }

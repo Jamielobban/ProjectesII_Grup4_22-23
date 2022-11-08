@@ -8,8 +8,8 @@ using UnityEngine;
 
 public abstract class Weapon /*: MonoBehaviour*/
 {    
-    protected WeaponsData data;    
-
+    protected WeaponsData data;
+    public float timer;
     public Weapon(Transform _firePoint)
     {        
         data.startReloading = 0f;
@@ -20,16 +20,54 @@ public abstract class Weapon /*: MonoBehaviour*/
         data.powerActive = false;
         data.powerupAvailable = false;
         data.firePoint = _firePoint;
+
     }
+
+    private WeaponUI weaponUI;
     
     public virtual void Update()
     {
+
         if (data.powerupAvailable)
         {
             //Debug.Log("available");
-        }    
-             
+            
+        }
 
+        Debug.Log(data.timePassed);
+        //Debug.Log(data.timePassed);
+        //if (data.timelastPowerupExit == 0)
+        //{
+        //    data.timelastPowerupEnter = Time.time;
+        //    data.timelastPowerupExit = Time.time;
+        //}
+        if (!data.powerActive)
+        {
+            data.timePassed = Time.time - data.timelastPowerupExit;
+        }
+        //else
+        //{
+        //    data.timePassed = 0;
+        //}
+
+        //Debug.Log(data.currentBulletsInMagazine);
+        //Debug.Log(data.bulletsPerMagazine);
+        //Debug.Log(data.currentMagazines);
+        //Debug.Log(data.fireRateinSec);
+        //Debug.Log(data.reloadTimeInSec);
+        //Debug.Log(data.timeLeftPowerup);
+        //Debug.Log(data.timePassed);
+
+
+
+        if (data.powerActive)
+        {
+            data.timeLeftPowerup = data.maxTimeOnPowerup - (Time.time - data.timelastPowerupEnter);
+            //Debug.Log(data.timeLeftPowerup);
+
+        }
+
+        //Debug.Log(data.timePassed);
         CheckShooting();
 
         InputsUpdate();
@@ -38,6 +76,39 @@ public abstract class Weapon /*: MonoBehaviour*/
 
     }
 
+    public float SetTimeLeftPowerup()
+    {
+        return data.maxTimeOnPowerup;
+    }
+    public float GetTimeLeftPowerup()
+    {
+        if (!data.powerActive)
+        {
+            return 0;
+        }
+        return data.timeLeftPowerup;
+    }
+    public float GetTime()
+    {
+        if (data.powerActive)
+        {
+            return 0;
+        }
+        return data.timePassed;
+    }
+    public bool GetState()
+    {
+        return data.powerActive;
+    }
+
+    public void SetTime(float timePassed)
+    {
+        data.timelastPowerupEnter = Time.time;
+        data.timelastPowerupExit = Time.time;
+        data.timelastPowerupExit -= timePassed;
+        //data.timelastPowerupEnter -= timePassed;
+    }
+    //
     private void CheckShooting()
     {
         
@@ -73,7 +144,7 @@ public abstract class Weapon /*: MonoBehaviour*/
             data.reloading = false;
         }
 
-        if (Time.time - data.timelastPowerupExit >= 5 && !data.powerupAvailable)
+        if (Time.time - data.timelastPowerupExit >= 20 && !data.powerupAvailable)
         {
             data.powerupAvailable = true;            
         }       

@@ -12,6 +12,7 @@ public class WeaponGenerator : MonoBehaviour
 
     private int arrayPositionInHand;
     private int arrayPositionOfNext;
+    public float totalTime;
 
     public static WeaponGenerator Instance { get; private set; }
 

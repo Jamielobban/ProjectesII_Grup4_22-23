@@ -84,26 +84,26 @@ public class EnemyController : MonoBehaviour
                 }
                 break;
             case State.Firing:
-                RaycastHit2D hitInfo = Physics2D.Raycast(enemyFirePoint.position, transform.right);
-                if (hitInfo.collider != null)
-                {
-                    if (hitInfo.collider.CompareTag("Player"))
-                    {
-                        Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.green);
-                        canShoot = true;
-                    }
-                    if (hitInfo.collider.CompareTag("MapLimit"))
-                    {
-                        Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.red);
-                        canShoot = false;
-                        lastShoot = Time.time;
-                    }
-                }
+                //RaycastHit2D hitInfo = Physics2D.Raycast(enemyFirePoint.position, transform.right);
+                //if (hitInfo.collider != null)
+                //{
+                //    if (hitInfo.collider.CompareTag("Player"))
+                //    {
+                //        Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.green);
+                //        canShoot = true;
+                //    }
+                //    if (hitInfo.collider.CompareTag("MapLimit"))
+                //    {
+                //        Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.red);
+                //        canShoot = false;
+                //        lastShoot = Time.time;
+                //    }
+                //}
                 if (!inRange)
                 {
                     state = State.Chasing;
                 }
-                else if ((Time.time - lastShoot >= timeBetweenShots) && canShoot)
+                else if ((Time.time - lastShoot >= timeBetweenShots))
                 {
                     if (metralleta)
                     {
@@ -190,11 +190,11 @@ public class EnemyController : MonoBehaviour
 
     void MachineGunShoot()
     {
-        float tempDistance = 0;
-        if (timeStartedShootingCrazy - Time.time >= 0)
-        {
-            tempDistance = stoppingDistance;
-            stoppingDistance = 30;
+        //float tempDistance = 0;
+        //if (timeStartedShootingCrazy - Time.time >= 0)
+        //{
+           // tempDistance = stoppingDistance;
+            //stoppingDistance = 30;
             //random machine gun
             GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
 
@@ -226,12 +226,12 @@ public class EnemyController : MonoBehaviour
 
                 }
             }
-        }
-        else
-        {
-            stoppingDistance = tempDistance;
-            state = State.Chasing;
-        }
+        //}
+        //else
+        //{
+        //    //stoppingDistance = tempDistance;
+        //    state = State.Chasing;
+        //}
     }
     private IEnumerator Load(float waitTime)
     {

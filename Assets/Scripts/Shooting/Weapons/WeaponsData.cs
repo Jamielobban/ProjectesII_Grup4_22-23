@@ -23,7 +23,9 @@ public struct WeaponsData
     public float timelastPowerupEnter;
     public float timelastPowerupExit;
     public float maxTimeOnPowerup;
-    
+    public float timePassed;
+    public float timeLeftPowerup;
+
     public bool powerActive;
     public bool reloading;
     public bool outOfAmmo;
