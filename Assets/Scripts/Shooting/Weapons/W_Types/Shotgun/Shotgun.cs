@@ -13,7 +13,7 @@ public class Shotgun : Weapon
         data.currentBulletsInMagazine = data.bulletsPerMagazine;
         data.currentMagazines = data.magazines;
         data.fireRateinSec = Random.Range(225, 275); //Aqui esta en dpm
-        data.weaponSprite = Resources.Load<Sprite>("Sprites/HexagonPointedTop");
+        data.weaponSprite = Resources.Load<Sprite>("Sprites/Shotgun");
         data.reloadSound = Resources.Load<AudioClip>("Sounds/Weapons/Shotgun/ShotgunReload");
         data.bulletTypePrefab = Resources.Load<GameObject>("Prefab/ShotgunBullet");
 

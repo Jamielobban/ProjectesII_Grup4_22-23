@@ -17,7 +17,7 @@ public class Gun : Weapon
         data.currentBulletsInMagazine = data.bulletsPerMagazine;
         data.currentMagazines = data.magazines;
         data.fireRateinSec = Random.Range(660f, 700f); //Aqui esta en dpm
-        data.weaponSprite = Resources.Load<Sprite>("Sprites/Circle"); 
+        data.weaponSprite = Resources.Load<Sprite>("Sprites/Pistol"); 
         data.reloadSound = Resources.Load<AudioClip>("Sounds/Weapons/Pistol/gunreload");
         data.bulletTypePrefab = Resources.Load<GameObject>("Prefab/GunBullet");
         secondHandPrefab = Resources.Load<GameObject>("Prefab/LeftHand");

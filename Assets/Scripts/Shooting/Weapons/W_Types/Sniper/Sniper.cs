@@ -13,7 +13,7 @@ public abstract class Sniper : Weapon
         data.currentBulletsInMagazine = data.bulletsPerMagazine;
         data.currentMagazines = data.magazines;
         data.fireRateinSec = Random.Range(100f, 200f); //Aqui esta en dpm
-        data.weaponSprite = Resources.Load<Sprite>("Sprites/Square");        
+        data.weaponSprite = Resources.Load<Sprite>("Sprites/Sniper");        
         data.reloadSound = Resources.Load<AudioClip>("Sounds/Weapons/Sniper/Reload");
         data.bulletTypePrefab = Resources.Load<GameObject>("Prefab/SniperBullet");
         //Debug.Log(data.bulletTypePrefab);
