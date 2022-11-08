@@ -28,6 +28,12 @@ public class RoomManager : MonoBehaviour
             }
             round++;
         }
+        else
+        {
+            //Debug.Log("All enemies are dead");
+            //this.gameObject.tag = "Default";
+            Destroy(gameObject);
+        }
 
     }
 
@@ -37,6 +43,7 @@ public class RoomManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            this.gameObject.tag = "RoomManager";
             Invoke("spawnRound", 1.1f);
             Destroy(this.GetComponent<BoxCollider2D>());
         }

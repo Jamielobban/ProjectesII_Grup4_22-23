@@ -101,19 +101,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132d52d8cb0f839418ee63f8b487a6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 0
-  timeBetweenShots: 0
+  bulletSpeed: 10
+  timeBetweenShots: 2
   lastShoot: 0
-  originalColor: {r: 0, g: 0, b: 0, a: 0}
-  enemyFirePoint: {fileID: 0}
-  enemyBulletPrefab: {fileID: 0}
-  speed: 5
-  stoppingDistance: 3
+  originalColor: {r: 0.735849, g: 0.107600555, b: 0.107600555, a: 1}
+  enemyFirePoint: {fileID: 4491323302402679602}
+  enemyBulletPrefab: {fileID: 6991923551185597016, guid: 55bc242de3a36734393d1a851e536545, type: 3}
+  speed: 6
+  stoppingDistance: 10
   retreatDistance: 2
   canShoot: 0
   canSeePlayer: 0
   inRange: 0
   knockbackPower: 0
+  angleOfCone: 4
+  numberOfBursts: 1
 --- !u!61 &1409296284934073179
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -172,7 +174,7 @@ GameObject:
   - component: {fileID: 4491323302402679602}
   m_Layer: 0
   m_Name: firePoint
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,7 +187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3045008420885621440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.017, y: 0.837, z: 0}
+  m_LocalPosition: {x: 0.857, y: 0.009, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -204,7 +206,7 @@ GameObject:
   - component: {fileID: 7460727901945008681}
   m_Layer: 0
   m_Name: w
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -217,7 +219,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6197470821849662029}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.617, z: -10.749996}
+  m_LocalPosition: {x: 0.6, y: 0.017, z: -10.749996}
   m_LocalScale: {x: 0.1875, y: 0.1875, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class EnemyController : MonoBehaviour
 {
-
+    public bool isAlive;
     private enum State
     {
         Chasing, Firing, Hit
@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
     public float bulletSpeed;
 
     public float timeBetweenShots;
+    public float timeStartedShootingCrazy;
     public float lastShoot;
 
     public Color originalColor;
@@ -42,6 +43,8 @@ public class EnemyController : MonoBehaviour
 
     public int angleOfCone;
     public int numberOfBursts;
+
+    public bool metralleta;
     void Start()
     {
         enemyHealth = -1;
@@ -61,6 +64,16 @@ public class EnemyController : MonoBehaviour
         //}
 
         // Debug.Log("am i working");
+        if (isAlive)
+        {
+            GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
+            if (GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Count == 0)
+            {
+                GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().spawnRound();
+            }
+            Destroy(this.gameObject);
+        }
+
         switch (state)
         {
             case State.Chasing:
@@ -92,7 +105,15 @@ public class EnemyController : MonoBehaviour
                 }
                 else if ((Time.time - lastShoot >= timeBetweenShots) && canShoot)
                 {
-                    Shoot();
+                    if (metralleta)
+                    {
+
+                        MachineGunShoot();
+                    }
+                    else
+                    {
+                        Shoot();
+                    }
                     lastShoot = Time.time;
                 }
                 break;
@@ -153,7 +174,6 @@ public class EnemyController : MonoBehaviour
 
     void Shoot()
     {
-
         for (int i = 0; i < numberOfBursts; i++)
         {
             StartCoroutine(Load(0.2f * i));
@@ -165,6 +185,54 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    int a = 0;
+    bool b = false;
+
+    void MachineGunShoot()
+    {
+        float tempDistance = 0;
+        if (timeStartedShootingCrazy - Time.time >= 0)
+        {
+            tempDistance = stoppingDistance;
+            stoppingDistance = 30;
+            //random machine gun
+            GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
+
+            //Metralleta
+            //instance.transform.Rotate(0, 0, instance.transform.rotation.z + Random.Range(-25,25));
+
+
+            //banda a banda
+            instance.transform.Rotate(0, 0, instance.transform.rotation.z + a);
+
+            instance.GetComponent<Rigidbody2D>().AddForce(instance.transform.right * bulletSpeed, ForceMode2D.Impulse);
+            Destroy(instance, 3);
+
+            //banda a banda
+            if (b)
+            {
+                a += 10;
+                if (a == 30)
+                {
+                    b = false;
+                }
+            }
+            else
+            {
+                a -= 10;
+                if (a == -30)
+                {
+                    b = true;
+
+                }
+            }
+        }
+        else
+        {
+            stoppingDistance = tempDistance;
+            state = State.Chasing;
+        }
+    }
     private IEnumerator Load(float waitTime)
     {
         if (inRange)
@@ -196,8 +264,9 @@ public class EnemyController : MonoBehaviour
     void DeathAnimation()
     {
         //rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
-        Invoke("DestroyGameObject", 2f);
-        sr.DOColor(Color.clear, 2f);
+        Invoke("DestroyGameObject", 1f);
+        isAlive = true;
+        sr.DOColor(Color.clear, 1f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     public int maxHealth = 100;
     public int currentHealth;
+    public bool isDead;
     private HealthBar healthBar;
     public dashCooldown dashUI1;
     public dashCooldown dashUI2;
@@ -64,7 +65,10 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+
     public float currentBlinkRechargeTime = 0f;
+    public float currentBlinkRechargeTime2 = 0f;
+    public float currentBlinkRechargeTime3 = 0f;
     [SerializeField] private int remainingBlinks;
     private void Awake()
     {
@@ -82,12 +86,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void Start()
     {
+        isDead = false;
         state = State.Normal;
         currentHealth = maxHealth;
     }
     // Update is called once per frame
     void Update()
     {
+        if (isDead)
+        {
+            moveDir = new Vector3(0, 0).normalized;
+
+        }
         //Debug.Log(Time.time);
         if ((Time.time - lastDash) >= timeBetweenDashes)
         {
@@ -101,8 +111,14 @@ public class PlayerMovement : MonoBehaviour
         //dashController();
         if (remainingBlinks == 2)
         {
-            currentBlinkRechargeTime += Time.deltaTime;
-            dashUI1.SetDashTimer(currentBlinkRechargeTime);
+            dashUI1.SetDashTimer(0);
+            //currentBlinkRechargeTime += Time.deltaTime;
+            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+            if ((Time.time - lastDash) >= timeBetweenDashes)
+            {
+                dashUI1.SetDashTimer(currentBlinkRechargeTime);
+                currentBlinkRechargeTime += Time.deltaTime;
+            }
             if (currentBlinkRechargeTime >= blinkRechargeTime)
             {
                 remainingBlinks++;
@@ -111,35 +127,36 @@ public class PlayerMovement : MonoBehaviour
         }
         if (remainingBlinks == 1)
         {
-            currentBlinkRechargeTime += Time.deltaTime;
-            //dashUI1.SetDashTimer(0);
-            dashUI2.SetDashTimer(currentBlinkRechargeTime);
-            if (currentBlinkRechargeTime >= blinkRechargeTime)
+            dashUI2.SetDashTimer(0);
+            //currentBlinkRechargeTime += Time.deltaTime;
+            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+            if ((Time.time - lastDash) >= timeBetweenDashes)
+            {
+                currentBlinkRechargeTime2 += Time.deltaTime;
+                dashUI2.SetDashTimer(currentBlinkRechargeTime2);
+            }
+            if (currentBlinkRechargeTime2 >= blinkRechargeTime)
             {
                 remainingBlinks++;
-                currentBlinkRechargeTime = 0f;
+                currentBlinkRechargeTime2 = 0f;
             }
         }
         if (remainingBlinks == 0)
         {
-            currentBlinkRechargeTime += Time.deltaTime;
-            //dashUI1.SetDashTimer(0);
-            //dashUI2.SetDashTimer(0);
-            dashUI3.SetDashTimer(currentBlinkRechargeTime);
-            if (currentBlinkRechargeTime >= blinkRechargeTime)
+            dashUI3.SetDashTimer(0);
+            //currentBlinkRechargeTime += Time.deltaTime;
+            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+            if ((Time.time - lastDash) >= timeBetweenDashes)
+            {
+                currentBlinkRechargeTime3 += Time.deltaTime;
+                dashUI3.SetDashTimer(currentBlinkRechargeTime3);
+            }
+            if (currentBlinkRechargeTime3 >= blinkRechargeTime)
             {
                 remainingBlinks++;
-                currentBlinkRechargeTime = 0f;
+                currentBlinkRechargeTime3 = 0f;
             }
         }
-
-
-        //if (remainingBlinks > 2)
-        //{
-        //    currentBlinkRechargeTime += Time.deltaTime;
-        //    dashUI1.SetDashTimer(currentBlinkRechargeTime);
-        //    Debug.Log("first one right?");
-        //}
 
         switch (state)
         {
@@ -147,9 +164,13 @@ public class PlayerMovement : MonoBehaviour
 
                 transform.DOScale((new Vector3(1f, 1f, 1f)), 0.0f);
 
-                movement.x = Input.GetAxisRaw("Horizontal");
-                movement.y = Input.GetAxisRaw("Vertical");
-                moveDir = new Vector3(movement.x, movement.y).normalized;
+                if (!isDead)
+                {
+                    movement.x = Input.GetAxisRaw("Horizontal");
+                    movement.y = Input.GetAxisRaw("Vertical");
+                    moveDir = new Vector3(movement.x, movement.y).normalized;
+                }
+
 
                 if (Input.GetButtonDown("Dash") && canDash)
                 {
@@ -164,7 +185,9 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
             case State.Rolling:
+                
                 if (remainingBlinks <= 0) { state = State.Normal; }
+
                 //remainingBlinks--;
                 OnRollingEffects();
 
@@ -187,6 +210,7 @@ public class PlayerMovement : MonoBehaviour
         switch (state)
         {
             case State.Normal:
+
                 rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
                 break;
             case State.Rolling:
@@ -225,8 +249,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnHit()
     {
-        TakeDamage(20);
-        StartCoroutine(hurtAnimation());
+        if (currentHealth <= 0)
+        {
+            isDead = true;  
+        }
+        else
+        {
+            TakeDamage(20);
+            StartCoroutine(hurtAnimation());
+        }
     }
 
     private IEnumerator hurtAnimation()
@@ -246,5 +277,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
+    private IEnumerator waitForUpdateDash(float time)
+    {
+        yield return new WaitForSeconds(time);
+        currentBlinkRechargeTime += Time.deltaTime;
+        dashUI1.SetDashTimer(currentBlinkRechargeTime);
+    }
 }

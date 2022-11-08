@@ -9,28 +9,31 @@ public class CircleTransition : MonoBehaviour
     public Transform player;
     private Canvas _canvas;
     public Image _image;
-
+    public PlayerMovement playerCheck;
     private Vector2 _playerCanvasPos;
 
     private void Awake()
     {
+
         _canvas = GetComponent<Canvas>();
     }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            OpenBlackScreen();
-        }
-        else if (Input.GetKeyDown((KeyCode.Alpha2)))
+        if (playerCheck.isDead)
         {
             CloseBlackScreen();
         }
+        //else if (Input.GetKeyDown((KeyCode.Alpha2)))
+        //{
+        //    CloseBlackScreen();
+        //}
     }
 
     private void Start()
     {
         DrawBlackScreen();
+        Invoke("OpenBlackScreen", 0.5f);
     }
 
     public void OpenBlackScreen()

@@ -26,7 +26,7 @@ public abstract class Weapon /*: MonoBehaviour*/
     {
         if (data.powerupAvailable)
         {
-            Debug.Log("available");
+            //Debug.Log("available");
         }    
              
 
