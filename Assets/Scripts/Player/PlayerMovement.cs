@@ -63,7 +63,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float blinkRechargeTime;
 
 
-
+    AudioClip playerDash;
+    AudioClip cantPress;
 
 
     public float currentBlinkRechargeTime = 0f;
@@ -82,6 +83,8 @@ public class PlayerMovement : MonoBehaviour
         dashUI2.SetMaxDashTimer(blinkRechargeTime);
         dashUI3.SetMaxDashTimer(blinkRechargeTime);
         healthBar.SetMaxHealth(maxHealth);
+        playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
+        cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
     }
 
     public void Start()
@@ -174,12 +177,20 @@ public class PlayerMovement : MonoBehaviour
 
                 if (Input.GetButtonDown("Dash") && canDash)
                 {
+                    if (remainingBlinks > 0)
+                    {
+                        AudioManager.Instance.PlaySound(playerDash);
+                        rollDir = moveDir;
+                        rollSpeed = 90f;
+                        lastDash = Time.time;
+                        currentBlinkRechargeTime = 0f;
+                        state = State.Rolling;
+                    }
+                    else
+                    {
+                        AudioManager.Instance.PlaySound(cantPress, 0.0f);
+                    }
 
-                    rollDir = moveDir;
-                    rollSpeed = 90f;
-                    lastDash = Time.time;
-                    currentBlinkRechargeTime = 0f;
-                    state = State.Rolling;
                 }
 
                 break;

@@ -33,8 +33,9 @@ public class RightHand : MonoBehaviour
             if(powerUpTimer.GetMaxTime() < 20)
             {
                 powerUpTimer.SetMaxTime(20);
-                
-            }            
+                firstTime = true;
+
+            }
             //Debug.Log("Normal");
             powerUpTimer.SetTime(weaponInHand.GetTime());
 
@@ -48,7 +49,7 @@ public class RightHand : MonoBehaviour
                 Debug.Log("Hola");
                 firstTime = false;
                 
-                firstTime1 = true;
+                
             }
             powerUpTimer.SetTime(weaponInHand.GetTimeLeftPowerup());
             //Debug.Log("Activated");
