@@ -7,7 +7,9 @@ public abstract class Bullet : MonoBehaviour
     public bool powerUpOn;
 
     [SerializeField]
-    protected GameObject collisionEffect;
+    protected GameObject collisionWallEffect;
+    [SerializeField]
+    protected GameObject collisionBloodEffect;
 
     [SerializeField]
     private LayerMask whatIsDamageable;
@@ -52,10 +54,23 @@ public abstract class Bullet : MonoBehaviour
 
     }
 
-    protected virtual void Impact()
+    protected virtual void ImpactWall()
     {
-        Instantiate(collisionEffect, transform.position, Quaternion.identity);
+        Instantiate(collisionWallEffect, transform.position, Quaternion.identity);
+        Destroy(this.gameObject);
+    }
+    protected virtual void ImpactBody()
+    {
+        Instantiate(collisionBloodEffect, transform.position, Quaternion.identity);
         Destroy(this.gameObject);
     }
 
+    protected virtual void HitSomeone()
+    {
+        Instantiate(collisionBloodEffect, transform.position, Quaternion.identity);
+    }
+    protected virtual void HitSomething()
+    {
+        Instantiate(collisionWallEffect, transform.position, Quaternion.identity);
+    }
 }

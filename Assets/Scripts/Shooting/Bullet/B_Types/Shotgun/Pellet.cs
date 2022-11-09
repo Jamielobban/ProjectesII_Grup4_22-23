@@ -9,11 +9,7 @@ public class Pellet : Bullet
     private GameObject childExplosionArea;
     [SerializeField]
     SpriteRenderer sr;
-
-    protected override void Impact()
-    {
-        base.Impact();
-    }
+    
 
     protected override void Start()
     {
@@ -52,16 +48,16 @@ public class Pellet : Bullet
     {
         if (collision.gameObject.CompareTag("MapLimit"))
         {
-            base.Impact();
+            base.ImpactWall();
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             if(!powerUpOn)
-                base.Impact();
+                base.ImpactBody();
             else
             {
                 Debug.Log("Hi");
-                HitSomeone();
+                base.HitSomeone();
                 sr.enabled = false;
                 this.GetComponent<Pellet>().enabled = false;
                 childExplosionArea.SetActive(true);
@@ -71,8 +67,5 @@ public class Pellet : Bullet
     }
 
 
-    private void HitSomeone()
-    {
-        Instantiate(collisionEffect, transform.position, Quaternion.identity);
-    }
+    
 }

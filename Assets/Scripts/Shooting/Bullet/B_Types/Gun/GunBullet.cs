@@ -34,17 +34,17 @@ public class GunBullet : Bullet
     {
         if (collision.gameObject.CompareTag("MapLimit"))
         {
-            base.Impact();            
+            base.ImpactWall();            
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            base.Impact();
+            base.ImpactBody();
         }
     }
 
 
-    private void HitSomeone()
-    {
-        Instantiate(collisionEffect, transform.position, Quaternion.identity);
-    }
+    //private void HitSomeone()
+    //{
+    //    Instantiate(collisionEffect, transform.position, Quaternion.identity);
+    //}
 }

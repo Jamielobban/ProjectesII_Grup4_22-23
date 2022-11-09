@@ -46,25 +46,22 @@ public class SniperBullet : Bullet
         if (collision.gameObject.CompareTag("MapLimit"))
         {
             if (!powerUpOn)
-                base.Impact();
+                base.ImpactWall();
             else
             {
-                Instantiate(collisionEffect, transform.position, Quaternion.identity);
+                base.HitSomething();
             }
 
 
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            HitSomeone();
+            base.HitSomeone();
         }
     }  
     
 
-    private void HitSomeone()
-    {        
-        Instantiate(collisionEffect, transform.position, Quaternion.identity);
-    }
+    
 
    
 }

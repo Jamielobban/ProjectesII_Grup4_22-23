@@ -47,7 +47,7 @@ public class EnemyController : MonoBehaviour
     public bool metralleta;
     void Start()
     {
-        enemyHealth = -1;
+        enemyHealth = 100;
         state = State.Chasing;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         sr = this.GetComponent<SpriteRenderer>();
