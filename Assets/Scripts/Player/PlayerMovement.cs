@@ -208,7 +208,6 @@ public class PlayerMovement : MonoBehaviour
                     remainingBlinks--;
                     trail.emitting = false;
                     body.DOColor(OriginalColor, 0.5f);
-                    gameObject.layer = PlayerMask;
                     state = State.Normal;
                     Debug.Log("Once");
                 }
@@ -251,6 +250,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnRollingEffects()
     {
+        StartCoroutine(waitForLayerChange(0.85f));
         gameObject.layer = LayerIgnoreRaycast;
         transform.DOScale((new Vector3(0.8f, 0.8f, 1f)), 0.0f);
         transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
@@ -293,5 +293,12 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(time);
         currentBlinkRechargeTime += Time.deltaTime;
         dashUI1.SetDashTimer(currentBlinkRechargeTime);
+    }
+
+    private IEnumerator waitForLayerChange(float waitTime)
+    {
+        gameObject.layer = LayerIgnoreRaycast;
+        yield return new WaitForSeconds(waitTime);
+        gameObject.layer = PlayerMask;
     }
 }

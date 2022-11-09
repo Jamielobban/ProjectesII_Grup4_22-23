@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1409296284934073179}
   - component: {fileID: 1409296284934073178}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Turret Enemy Wave
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,8 +101,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132d52d8cb0f839418ee63f8b487a6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlive: 0
+  enemyHealth: 0
   bulletSpeed: 10
   timeBetweenShots: 2
+  timeStartedShootingCrazy: 0
   lastShoot: 0
   originalColor: {r: 0.735849, g: 0.107600555, b: 0.107600555, a: 1}
   enemyFirePoint: {fileID: 4491323302402679602}
@@ -114,8 +117,9 @@ MonoBehaviour:
   canSeePlayer: 0
   inRange: 0
   knockbackPower: 0
-  angleOfCone: 4
+  angleOfCone: 40
   numberOfBursts: 1
+  metralleta: 0
 --- !u!61 &1409296284934073179
 BoxCollider2D:
   m_ObjectHideFlags: 0

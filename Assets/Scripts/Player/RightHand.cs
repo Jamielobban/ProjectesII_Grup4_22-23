@@ -12,6 +12,9 @@ public class RightHand : MonoBehaviour
 
     public PowerUpTimer powerUpTimer;
     public PowerUpTimer reloadBarTimer;
+
+    public GameObject powerUpBar;
+    public GameObject reloadBar;
     public TextMeshProUGUI bulletsInMagazine;
     public TextMeshProUGUI bulletsPerMagazine;
     public TextMeshProUGUI magazineNumber;
@@ -23,29 +26,40 @@ public class RightHand : MonoBehaviour
     public float timeToPass;
     private bool firstTime = true;
     private bool firstTime1 = true;
-    private bool firstTime3 = true;
+    public bool firstTime3 = true;
+
+    public bool isCharing;
+    public bool hasCharged;
+    public bool isGoingDown;
+
+
 
 
     private void Start()
     {
         nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint, ref sr);
         weaponInHand.SetWeaponHand(ref sr);
+        reloadBar.SetActive(false);
     }
 
     private void Update()
     {
+        //Reload Bar
         if (weaponInHand.GetReloadingState())
         {
+            reloadBar.SetActive(true);
             if (firstTime3)
             {
                 reloadBarTimer.SetMaxTime(weaponInHand.GetReloadTimeInSec() + 0.5f);
+                firstTime = false;
             }
                 reloadTimer += Time.deltaTime;
                 reloadBarTimer.SetTime(reloadTimer);
             if (reloadTimer > weaponInHand.GetReloadTimeInSec() + 0.5f)
             {
+                firstTime3 = true;
+                reloadBar.SetActive(false);
                 reloadTimer = 0f;
-                firstTime3 = false;
             }
         }
 
@@ -69,6 +83,11 @@ public class RightHand : MonoBehaviour
                 firstTime = false;
             }
             powerUpTimer.SetTime(weaponInHand.GetTimeLeftPowerup());
+            //powerUpBar.color = new Color(202,187,43,255);
+
+            //CBBC2B
+            //394AA6
+
             //Debug.Log("Activated");
         }
 

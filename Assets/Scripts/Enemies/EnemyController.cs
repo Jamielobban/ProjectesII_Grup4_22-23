@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
     }
     private State state;
 
-    private float enemyHealth;
+    public float enemyHealth;
     public float bulletSpeed;
 
     public float timeBetweenShots;
@@ -47,7 +47,6 @@ public class EnemyController : MonoBehaviour
     public bool metralleta;
     void Start()
     {
-        enemyHealth = 100;
         state = State.Chasing;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         sr = this.GetComponent<SpriteRenderer>();
@@ -199,11 +198,11 @@ public class EnemyController : MonoBehaviour
             GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
 
             //Metralleta
-            //instance.transform.Rotate(0, 0, instance.transform.rotation.z + Random.Range(-25,25));
+            instance.transform.Rotate(0, 0, instance.transform.rotation.z + Random.Range(-25,25));
 
 
             //banda a banda
-            instance.transform.Rotate(0, 0, instance.transform.rotation.z + a);
+            //instance.transform.Rotate(0, 0, instance.transform.rotation.z + a);
 
             instance.GetComponent<Rigidbody2D>().AddForce(instance.transform.right * bulletSpeed, ForceMode2D.Impulse);
             Destroy(instance, 3);
@@ -256,7 +255,7 @@ public class EnemyController : MonoBehaviour
                 instance.transform.Rotate(0, 0, instance.transform.rotation.z + grados);
 
                 instance.GetComponent<Rigidbody2D>().AddForce(instance.transform.right * bulletSpeed, ForceMode2D.Impulse);
-                Destroy(instance, 3);
+                //Destroy(instance, 3);
             }
         }
     }
