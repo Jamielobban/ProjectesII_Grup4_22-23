@@ -34,9 +34,8 @@ public abstract class Weapon /*: MonoBehaviour*/
 
 
     public virtual void Update()
-    {       
-
-        Debug.Log(data.timePassed);
+    {
+        //Debug.Log(data.timePassed);
         
         if (!data.powerActive)
         {
@@ -69,7 +68,24 @@ public abstract class Weapon /*: MonoBehaviour*/
         LogicUpdate();
 
     }
+    public float GetReloadTimeInSec()
+    {
+        return data.reloadTimeInSec;
+    }
+    public int GetBulletsInMagazine()
+    {
+        return data.currentBulletsInMagazine;
+    }
 
+    public int GetBulletsPerMagazine()
+    {
+        return data.bulletsPerMagazine;
+    }
+
+    public int GetCurrentMagazines()
+    {
+        return data.currentMagazines;
+    }
     public float SetTimeLeftPowerup()
     {
         return data.maxTimeOnPowerup;
@@ -95,6 +111,10 @@ public abstract class Weapon /*: MonoBehaviour*/
         return data.powerActive;
     }
 
+    public bool GetReloadingState()
+    {
+        return data.reloading;
+    }
     public void SetTime(float timePassed)
     {
         data.timelastPowerupEnter = Time.time;

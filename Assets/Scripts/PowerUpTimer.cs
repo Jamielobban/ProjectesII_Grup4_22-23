@@ -5,8 +5,7 @@ using UnityEngine.UI;
 public class PowerUpTimer : MonoBehaviour
 {
     public Slider timerBar;
-    
-    
+    public Text ammoDisplay;
 
     public void SetTime(float time)
     {
@@ -45,5 +44,9 @@ public class PowerUpTimer : MonoBehaviour
     {
         return timerBar.value == timerBar.maxValue;
     }
+
+    //public float SetBulletsInMagazine() {
+        
+    //}
 }
 
