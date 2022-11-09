@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class PowerUpTimer : MonoBehaviour
 {
     public Slider timerBar;
+    
+    
 
     public void SetTime(float time)
     {
@@ -14,7 +16,15 @@ public class PowerUpTimer : MonoBehaviour
 
         //}
     }
+    private void Start()
+    {
+        
+    }
+    private void Update()
+    {
+        
 
+    }
     public void SetMaxTime(float time)
     {
         timerBar.maxValue = time;

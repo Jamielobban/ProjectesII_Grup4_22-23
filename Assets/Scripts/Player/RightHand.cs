@@ -9,12 +9,16 @@ public class RightHand : MonoBehaviour
     [SerializeField] Transform firePoint;
     [SerializeField]  SpriteRenderer sr;
     public PowerUpTimer powerUpTimer;
+    
+
 
     //private delegate void OnPowerupDelegate();
     //private OnPowerupDelegate actionOnPowerup;
 
     public float timeToPass;
     private bool firstTime = true;
+    private bool firstTime1 = true;
+    
 
     private void Start()
     {
@@ -29,9 +33,12 @@ public class RightHand : MonoBehaviour
             if(powerUpTimer.GetMaxTime() < 20)
             {
                 powerUpTimer.SetMaxTime(20);
-            }
+                
+            }            
             //Debug.Log("Normal");
             powerUpTimer.SetTime(weaponInHand.GetTime());
+
+            
         }
         else
         {
@@ -40,6 +47,8 @@ public class RightHand : MonoBehaviour
                 powerUpTimer.SetMaxTime(weaponInHand.SetTimeLeftPowerup());
                 Debug.Log("Hola");
                 firstTime = false;
+                
+                firstTime1 = true;
             }
             powerUpTimer.SetTime(weaponInHand.GetTimeLeftPowerup());
             //Debug.Log("Activated");

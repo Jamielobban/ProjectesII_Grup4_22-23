@@ -10,6 +10,11 @@ public abstract class Weapon /*: MonoBehaviour*/
 {    
     protected WeaponsData data;
     public float timer;
+    protected AudioClip powerupEmpty;
+    protected AudioClip powerupMax;
+    protected AudioClip powerupPressed;
+    AudioClip nextWeapon;
+    bool firstEnter = true;
     public Weapon(Transform _firePoint)
     {        
         data.startReloading = 0f;
@@ -20,36 +25,29 @@ public abstract class Weapon /*: MonoBehaviour*/
         data.powerActive = false;
         data.powerupAvailable = false;
         data.firePoint = _firePoint;
+        powerupPressed = Resources.Load<AudioClip>("Sounds/Powerup/powerupPressed");
+        powerupEmpty = Resources.Load<AudioClip>("Sounds/Powerup/powerup0");
+        powerupMax = Resources.Load<AudioClip>("Sounds/Powerup/powerupMax");
+        nextWeapon = Resources.Load<AudioClip>("Sounds/NextWeapon/nextWeapon");
 
     }
 
-    private WeaponUI weaponUI;
-    
-    public virtual void Update()
-    {
 
-        if (data.powerupAvailable)
-        {
-            //Debug.Log("available");
-            
-        }
+    public virtual void Update()
+    {       
 
         Debug.Log(data.timePassed);
-        //Debug.Log(data.timePassed);
-        //if (data.timelastPowerupExit == 0)
-        //{
-        //    data.timelastPowerupEnter = Time.time;
-        //    data.timelastPowerupExit = Time.time;
-        //}
+        
         if (!data.powerActive)
         {
+            if(data.powerupAvailable && firstEnter)
+            {
+                AudioManager.Instance.PlaySound(powerupMax);
+                firstEnter = false;
+            }
             data.timePassed = Time.time - data.timelastPowerupExit;
         }
-        //else
-        //{
-        //    data.timePassed = 0;
-        //}
-
+        
         //Debug.Log(data.currentBulletsInMagazine);
         //Debug.Log(data.bulletsPerMagazine);
         //Debug.Log(data.currentMagazines);
@@ -58,16 +56,12 @@ public abstract class Weapon /*: MonoBehaviour*/
         //Debug.Log(data.timeLeftPowerup);
         //Debug.Log(data.timePassed);
 
-
-
         if (data.powerActive)
         {
             data.timeLeftPowerup = data.maxTimeOnPowerup - (Time.time - data.timelastPowerupEnter);
-            //Debug.Log(data.timeLeftPowerup);
-
+            firstEnter = true;
         }
-
-        //Debug.Log(data.timePassed);
+        
         CheckShooting();
 
         InputsUpdate();
@@ -161,7 +155,8 @@ public abstract class Weapon /*: MonoBehaviour*/
             {
                 data.powerActive = true;
                 ActionOnEnterPowerup();
-                data.timelastPowerupEnter = Time.time;               
+                data.timelastPowerupEnter = Time.time;     
+                AudioManager.Instance.PlaySound(powerupPressed);
             }
 
         }
@@ -200,9 +195,12 @@ public abstract class Weapon /*: MonoBehaviour*/
 
     public bool GetIfOutOffAmmo()
     {
+        if (data.outOfAmmo)
+            AudioManager.Instance.PlaySound(nextWeapon);
         return data.outOfAmmo;
     }
     
-    protected virtual void ActionOnEnterPowerup(){}
+    protected virtual void ActionOnEnterPowerup(){
+    }
 }
 

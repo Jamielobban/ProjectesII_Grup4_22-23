@@ -45,6 +45,7 @@ public class Gun : Weapon
             
             data.powerupAvailable = false;                    
             data.timelastPowerupExit = Time.time;
+            AudioManager.Instance.PlaySound(powerupEmpty);
         }
     }
 
