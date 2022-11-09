@@ -25,6 +25,7 @@ public struct WeaponsData
     public float maxTimeOnPowerup;
     public float timePassed;
     public float timeLeftPowerup;
+    public float amplitudeGain;
 
     public bool powerActive;
     public bool reloading;

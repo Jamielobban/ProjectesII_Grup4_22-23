@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: RoomTrigger
   m_TagString: RoomManager
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -51,6 +51,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   enemiesInRoom: []
+  wallToSpawn: {fileID: 0}
+  wallToSpawn2: {fileID: 0}
   enemiesInRound: 0100000003000000
 --- !u!61 &1295919187772756306
 BoxCollider2D:

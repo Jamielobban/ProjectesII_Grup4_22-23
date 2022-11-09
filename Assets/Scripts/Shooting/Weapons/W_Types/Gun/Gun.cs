@@ -20,6 +20,7 @@ public class Gun : Weapon
         data.weaponSprite = Resources.Load<Sprite>("Sprites/Pistol"); 
         data.reloadSound = Resources.Load<AudioClip>("Sounds/Weapons/Pistol/gunreload");
         data.bulletTypePrefab = Resources.Load<GameObject>("Prefab/GunBullet");
+        data.amplitudeGain = 0f;
         secondHandPrefab = Resources.Load<GameObject>("Prefab/LeftHand");
     }
 
@@ -28,7 +29,7 @@ public class Gun : Weapon
     {        
         //No gastar municio
 
-        data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound);
+        data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain);
         
 
 

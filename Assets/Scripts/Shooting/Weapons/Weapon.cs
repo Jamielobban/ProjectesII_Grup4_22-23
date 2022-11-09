@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 
 //public enum WeaponsTypes { SNIPER, GUN, SHOTGUN, UNKNOWN };
@@ -29,7 +30,6 @@ public abstract class Weapon /*: MonoBehaviour*/
         powerupEmpty = Resources.Load<AudioClip>("Sounds/Powerup/powerup0");
         powerupMax = Resources.Load<AudioClip>("Sounds/Powerup/powerupMax");
         nextWeapon = Resources.Load<AudioClip>("Sounds/NextWeapon/nextWeapon");
-
     }
 
 
@@ -130,7 +130,7 @@ public abstract class Weapon /*: MonoBehaviour*/
         {
             if (!data.powerActive)
             {                
-                if (data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound))
+                if (data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain))
                 {
                     LoadOrReloadWhenNeedIt();                    
                 }                
@@ -195,8 +195,8 @@ public abstract class Weapon /*: MonoBehaviour*/
     protected void LoadOrReloadWhenNeedIt()
     {
         data.currentBulletsInMagazine--;
-
-        if(data.currentBulletsInMagazine == 0)
+        //cinemachineShake.Instance.ShakeCamera(5f, .1f);
+        if (data.currentBulletsInMagazine == 0)
         {
             if(data.currentMagazines == 0)
             {

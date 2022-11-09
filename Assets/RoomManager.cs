@@ -11,6 +11,14 @@ public class RoomManager : MonoBehaviour
     bool EnterRoom = false;
     public int[] enemiesInRound;
     int round = 0;
+
+    public GameObject wallToSpawn;
+    public GameObject wallToSpawn2;
+    public void Start()
+    {
+        wallToSpawn.SetActive(false);
+        wallToSpawn2.SetActive(false);
+    }
     public void spawnRound()
     {
         //if (enemiesInRound[round] < enemy.Count)
@@ -32,6 +40,8 @@ public class RoomManager : MonoBehaviour
         {
             //Debug.Log("All enemies are dead");
             //this.gameObject.tag = "Default";
+            wallToSpawn.SetActive(false);
+            wallToSpawn2.SetActive(false);
             Destroy(gameObject);
         }
 
@@ -43,6 +53,8 @@ public class RoomManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            wallToSpawn.SetActive(true);
+            wallToSpawn2.SetActive(true);
             this.gameObject.tag = "RoomManager";
             Invoke("spawnRound", 1.1f);
             Destroy(this.GetComponent<BoxCollider2D>());

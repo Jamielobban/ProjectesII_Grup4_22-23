@@ -19,6 +19,6 @@ public class GunSemiauto : Gun
     {
         base.CheckPowerUpShooting();
 
-        temporalMechanism.Shoot(data.bulletTypePrefab, secondHandClone.GetComponent<LeftHand>().firePoint, data.fireRateinSec, data.shootSound);
+        temporalMechanism.Shoot(data.bulletTypePrefab, secondHandClone.GetComponent<LeftHand>().firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain);
     }
 }
