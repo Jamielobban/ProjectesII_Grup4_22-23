@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Wall
+  - Enemy
+  - MapLimit
+  - Bullet
+  - EnemyBullet
+  - RotatePoint
+  - EnemyList
+  - RoomManager
+  - Default
   layers:
   - Default
   - TransparentFX
@@ -13,14 +22,14 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Player
+  - Enemy
+  - MapLimit
+  - PlayerBullet
+  - IgnoreEverything
+  - SniperBulletPowerup
+  - RoomTrigger
   - 
   - 
   - 
