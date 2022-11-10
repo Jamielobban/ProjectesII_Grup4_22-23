@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     //public SpriteRenderer sr;
     public Camera cam;
+    public RightHand weaponHand;
 
     Vector2 movement;
     //Vector2 mousePos;
@@ -35,18 +36,17 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDir;
     Vector3 rollDir;
 
-    public Transform weapon;
-
     private TrailRenderer trail;
     private float rollSpeed;
 
-    private Color dashColor = new Color(255, 255, 255, 255);
+    public Color dashColor;
     public Color OriginalColor;
-    private Color hurtColor;
-    private Color invulnerableColor;
+    public Color hurtColor;
+    public Color invulnerableColor;
     //public Color midwayRoll;
 
     public SpriteRenderer body;
+    public SpriteRenderer weaponSprite;
     //public LayerMask layerMask;
 
     private int LayerIgnoreRaycast;
@@ -60,7 +60,8 @@ public class PlayerMovement : MonoBehaviour
     public bool canDash;
     public float timeBetweenDashes;
     private float lastDash;
-
+    public bool canMove = false;
+    public bool isMoving = false;
 
     [SerializeField] private int maxBlinks = 3;
     [SerializeField] private float blinkRechargeTime;
@@ -99,12 +100,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isDead)
-        {
-            moveDir = new Vector3(0, 0).normalized;
-
-        }
-        //Debug.Log(Time.time);
+        //Debug.Log(Time.
+ 
         if ((Time.time - lastDash) >= timeBetweenDashes)
         {
             canDash = true;
@@ -168,17 +165,26 @@ public class PlayerMovement : MonoBehaviour
         {
             case State.Normal:
 
-                transform.DOScale((new Vector3(1f, 1f, 1f)), 0.0f);
+                //transform.DOScale((new Vector3(1f, 1f, 1f)), 0.0f);
 
-                if (!isDead)
+                if (canMove && !isDead)
                 {
                     movement.x = Input.GetAxisRaw("Horizontal");
                     movement.y = Input.GetAxisRaw("Vertical");
                     moveDir = new Vector3(movement.x, movement.y).normalized;
+                    //
+                    if(moveDir.magnitude == 1)
+                    {
+                        isMoving = true;
+                    }
+                    else
+                    {
+                        isMoving = false;
+                    }
                 }
 
 
-                if (Input.GetButtonDown("Dash") && canDash)
+                if (Input.GetButtonDown("Dash") && canDash && isMoving)
                 {
                     if (remainingBlinks > 0)
                     {
@@ -211,6 +217,7 @@ public class PlayerMovement : MonoBehaviour
                     remainingBlinks--;
                     trail.emitting = false;
                     body.DOColor(OriginalColor, 0.5f);
+                    weaponSprite.DOColor(weaponHand.GetColor(), 0.5f);
                     state = State.Normal;
                     //Debug.Log("Once");
                 }
@@ -235,13 +242,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //if (collision.gameObject.CompareTag("EnemyBullet"))
-        //{
-        //    OnHit();
-        //}
-    }
     void TakeDamage(float damage)
     {
         if (!isInvulnerable)
@@ -257,9 +257,10 @@ public class PlayerMovement : MonoBehaviour
     {
         StartCoroutine(waitForLayerChange(0.85f));
         gameObject.layer = LayerIgnoreRaycast;
-        transform.DOScale((new Vector3(0.8f, 0.8f, 1f)), 0.0f);
+        transform.DOScale((new Vector3(0.9f, 0.7f, 1f)), 0.0f);
         transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
         body.DOColor(dashColor, 0.0f);
+        weaponSprite.DOColor(dashColor, 0.0f);
         trail.emitting = true;
     }
 
@@ -272,14 +273,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnHit(float damage)
     {
+        TakeDamage(damage);
+        StartCoroutine(hurtAnimation());
         if (currentHealth <= 0)
         {
-            isDead = true;  
-        }
-        else
-        {
-            TakeDamage(damage);
-            StartCoroutine(hurtAnimation());
+            isDead = true;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
     }
 
@@ -288,14 +287,21 @@ public class PlayerMovement : MonoBehaviour
         isInvulnerable = true;
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
+        weaponSprite.DOColor(hurtColor, 0.0f);
+        weaponSprite.DOColor(invulnerableColor, 0.15f);
         yield return new WaitForSeconds(0.20f);
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
+        weaponSprite.DOColor(hurtColor, 0.0f);
+        weaponSprite.DOColor(invulnerableColor, 0.15f);
         yield return new WaitForSeconds(0.20f);
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
+        weaponSprite.DOColor(hurtColor, 0.0f);
+        weaponSprite.DOColor(invulnerableColor, 0.15f);
         yield return new WaitForSeconds(0.20f);
         body.DOColor(OriginalColor, 0.0f);
+        weaponSprite.DOColor(weaponHand.GetColor(), 0.0f);
         isInvulnerable = false;
     }
 

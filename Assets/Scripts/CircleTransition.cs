@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CircleTransition : MonoBehaviour
 {
@@ -11,11 +12,11 @@ public class CircleTransition : MonoBehaviour
     public Image _image;
     public PlayerMovement playerCheck;
     private Vector2 _playerCanvasPos;
+    public PlayerMovement playerSignal;
 
     private void Awake()
     {
-
-        _canvas = GetComponent<Canvas>();
+           _canvas = GetComponent<Canvas>();
     }
 
     private void Update()
@@ -39,11 +40,13 @@ public class CircleTransition : MonoBehaviour
     public void OpenBlackScreen()
     {
         StartCoroutine(Transition(2, 0, 1));
+        StartCoroutine(setPlayerMovement());
     }
 
     public void CloseBlackScreen()
     {
         StartCoroutine(Transition(2, 1, 0));
+        Invoke("ResetCurrentScene", 3f);
     }
 
     private void DrawBlackScreen()
@@ -99,5 +102,16 @@ public class CircleTransition : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    private IEnumerator setPlayerMovement()
+    {
+        yield return new WaitForSeconds(1);
+        playerSignal.canMove = true;
+    }
+
+    public void ResetCurrentScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

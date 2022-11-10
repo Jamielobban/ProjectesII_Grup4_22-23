@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1295919187772756300}
   - component: {fileID: 1295919187772756301}
   - component: {fileID: 1295919187772756306}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: RoomTrigger
-  m_TagString: RoomManager
+  m_TagString: Default
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,9 +51,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   enemiesInRoom: []
+  enemiesInRound: 0100000003000000
   wallToSpawn: {fileID: 0}
   wallToSpawn2: {fileID: 0}
-  enemiesInRound: 0100000003000000
 --- !u!61 &1295919187772756306
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7931299525193305413
+--- !u!1001 &738873121966525391
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,27 +9,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1409296284934073189, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_Name
-      value: Big Fat Man
+      value: Sniper Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4.8
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -33.8
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalPosition.z
@@ -68,16 +60,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4891040840000462560, guid: 0fc2b21afbd510b4eb804ef24e729336, type: 3}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
-      propertyPath: metralleta
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: angleOfCone
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: bulletSpeed
-      value: 7
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: damageSound
@@ -85,23 +73,27 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 89e70a392fb07cf448a17d6316a50d9c, type: 3}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: enemyHealth
-      value: 2000
+      value: 105
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: numberOfBursts
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: enemyShootSound
       value: 
-      objectReference: {fileID: 8300000, guid: 34b60b4b54cf59a4daf15f641da33700, type: 3}
+      objectReference: {fileID: 8300000, guid: 0be2239e940d0044b8bc1b1825298edb, type: 3}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: retreatDistance
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: stoppingDistance
-      value: 25
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: timeBetweenShots
-      value: 0.1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: enemyBulletDamage

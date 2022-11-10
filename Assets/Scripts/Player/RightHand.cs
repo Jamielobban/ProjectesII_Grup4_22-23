@@ -174,6 +174,12 @@ public class RightHand : MonoBehaviour
         }
     }
 
+    //public void SetColor()
+    //{
 
-
+    //}
+    public Color GetColor()
+    {
+        return weaponInHand.GetWeaponColor();
+    }
 }

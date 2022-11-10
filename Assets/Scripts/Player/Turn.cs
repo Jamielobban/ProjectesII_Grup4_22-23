@@ -7,6 +7,7 @@ public class Turn : MonoBehaviour
     Vector2 mousePos;
     public Camera cam;    
     Transform childWithSpriteTransform;
+    public PlayerMovement playerTurn;
 
     //float weaponPosX = 0.65f, weaponPosZ = 0;
 
@@ -23,12 +24,18 @@ public class Turn : MonoBehaviour
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         //Debug.Log(mousePos);
 
-        Vector2 direc = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y);
-        transform.up = -direc;
-
-        if((direc.x < 0 && childWithSpriteTransform.localScale.x > 0) || (direc.x > 0 && childWithSpriteTransform.localScale.x < 0))
+        if (!playerTurn.isDead)
         {
-            childWithSpriteTransform.localScale = new Vector3(childWithSpriteTransform.localScale.x * -1, childWithSpriteTransform.localScale.y, childWithSpriteTransform.localScale.z);            
+            Vector2 direc = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y);
+            transform.up = -direc;
+            if ((direc.x < 0 && childWithSpriteTransform.localScale.x > 0) || (direc.x > 0 && childWithSpriteTransform.localScale.x < 0))
+            {
+                childWithSpriteTransform.localScale = new Vector3(childWithSpriteTransform.localScale.x * -1, childWithSpriteTransform.localScale.y, childWithSpriteTransform.localScale.z);
+            }
+        }
+        else
+        {
+            return;
         }
        
         //if (direc.x < 0)
