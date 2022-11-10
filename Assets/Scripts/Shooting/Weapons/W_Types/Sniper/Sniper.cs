@@ -22,7 +22,7 @@ public abstract class Sniper : Weapon
     protected override void CheckPowerUpShooting()
     {        
         data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = true;
-        if(data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain))
+        if(data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain, data.damageMultiplier))
         {
             base.LoadOrReloadWhenNeedIt();
         }

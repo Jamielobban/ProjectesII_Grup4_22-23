@@ -12,8 +12,9 @@ public class ShotgunAuto : Shotgun
         data.fireRateinSec = 1 / data.fireRateinSec; //Aqui calculem el minim temps possible entre disparos
         data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Shotgun/shotgunAutomatic_effect");
         data.weaponColor = Color.red;
-        
-    }   
+        data.damageMultiplier = 0.95f;
+        data.amplitudeGain = 1.25f;
+    }
     protected override void CheckPowerUpShooting()
     {
         base.CheckPowerUpShooting();

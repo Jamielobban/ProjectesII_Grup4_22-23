@@ -14,6 +14,7 @@ public class SniperSemi : Sniper {
         data.fireRateinSec = 1 / data.fireRateinSec; //Aqui calculem el minim temps possible entre disparos
         data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Sniper/sniperSemiAutomatic_effect");
         data.weaponColor = Color.yellow;
-
+        data.damageMultiplier = 1.25f;
+        data.amplitudeGain = 1.8f;
     }
 }

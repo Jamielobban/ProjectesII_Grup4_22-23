@@ -11,7 +11,9 @@ public class ShotgunBolt : Shotgun
         data.fireRateinSec /= 60f; //Aqui es dps
         data.fireRateinSec = 1 / data.fireRateinSec; //Aqui calculem el minim temps possible entre disparos
         data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Shotgun/shotgunCerrojo");
-        data.weaponColor = Color.blue;        
+        data.weaponColor = Color.blue;
+        data.damageMultiplier = 1.5f;
+        data.amplitudeGain = 1.7f;
     }    
     protected override void CheckPowerUpShooting()
     {

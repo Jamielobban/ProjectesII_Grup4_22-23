@@ -12,7 +12,7 @@ public abstract class Mechanism
         timeLastShoot = 0;
     }
     
-    public abstract bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound, float amplitudeGain);
+    public abstract bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound, float amplitudeGain, float damageMultiplier);
     
 
     //public abstract float GetFireRateMultiplier(float min, float max);

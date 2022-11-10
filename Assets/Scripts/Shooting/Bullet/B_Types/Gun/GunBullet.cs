@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class GunBullet : Bullet
 {
-    private Rigidbody2D rb;
+    private Rigidbody2D rb;    
 
     protected override void Start()
     {
         base.Start();
 
-        bulletDamage = 50;
+        bulletDamage = 20*_damageMultiplier;
         bulletRangeInMetres = 100;
         bulletSpeedMetresPerSec = 20;
         bulletRadius = 0.23f;
@@ -39,6 +39,7 @@ public class GunBullet : Bullet
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             base.ImpactBody();
+            collision.gameObject.SendMessage("GetDamage", bulletDamage);
         }
     }
 

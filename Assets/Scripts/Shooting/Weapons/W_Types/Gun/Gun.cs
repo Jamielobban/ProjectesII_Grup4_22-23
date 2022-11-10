@@ -29,8 +29,7 @@ public class Gun : Weapon
     {        
         //No gastar municio
 
-        data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain);
-        
+        data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain, data.damageMultiplier);     
 
 
     }

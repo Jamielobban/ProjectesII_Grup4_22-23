@@ -12,13 +12,15 @@ public class GunSemiauto : Gun
         data.fireRateinSec = 1 / data.fireRateinSec; //Aqui calculem el minim temps possible entre disparos
         data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Pistol/semiAutomaticPistol_effect"); 
         data.weaponColor = Color.yellow;
+        data.damageMultiplier = 2;
         temporalMechanism = new Seamiautomatica();
+        data.amplitudeGain = 1.25f;
     }
 
     protected override void CheckPowerUpShooting()
     {
         base.CheckPowerUpShooting();
 
-        temporalMechanism.Shoot(data.bulletTypePrefab, secondHandClone.GetComponent<LeftHand>().firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain);
+        temporalMechanism.Shoot(data.bulletTypePrefab, secondHandClone.GetComponent<LeftHand>().firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain, data.damageMultiplier);
     }
 }

@@ -15,14 +15,16 @@ public class GunAuto : Gun
         data.fireRateinSec = 1 / data.fireRateinSec; //Aqui calculem el minim temps possible entre disparos
         data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Pistol/gunAuto");
         data.weaponColor = Color.red;
+        data.damageMultiplier = 1.25f;
         temporalMechanism = new Automatica();
+        data.amplitudeGain = 1.1f;
     }
-        
+
     protected override void CheckPowerUpShooting()
     {
         base.CheckPowerUpShooting();
 
-        temporalMechanism.Shoot(data.bulletTypePrefab, secondHandClone.GetComponent<LeftHand>().firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain);
+        temporalMechanism.Shoot(data.bulletTypePrefab, secondHandClone.GetComponent<LeftHand>().firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain, data.damageMultiplier);
         
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Bullet : MonoBehaviour
 {
-    public bool powerUpOn;
+    public bool powerUpOn;    
 
     [SerializeField]
     protected GameObject collisionWallEffect;
@@ -19,22 +19,35 @@ public abstract class Bullet : MonoBehaviour
     protected float bulletDamage;
     protected float bulletSpeedMetresPerSec;
     protected float bulletRangeInMetres;
-    protected float bulletRadius;    
-    
-    private bool outOfRange;
-    private float timeShooted;
+    protected float bulletRadius;
+    protected float _damageMultiplier;
 
+    private bool firstTime = true;
+    private float timeShooted;
+    
+    public virtual void ApplyMultiplierToDamage(float multiplier)
+    {
+        _damageMultiplier = multiplier;        
+    }
+
+    
 
     protected virtual void Start()
     {
         //Fer particulas       
-        outOfRange = false;
-        timeShooted = Time.time;        
+        
+        timeShooted = Time.time;       
+        
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (firstTime)
+        {
+
+            firstTime = false;
+        }
 
         if (Time.time - timeShooted >= bulletRangeInMetres / bulletSpeedMetresPerSec)
         {

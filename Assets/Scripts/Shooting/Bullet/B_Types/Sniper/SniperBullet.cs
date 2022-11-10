@@ -7,12 +7,13 @@ public class SniperBullet : Bullet
     private Rigidbody2D rb;   
     [SerializeField]
     private GameObject childForCollisions;
-    
+        
+
     protected override void Start()
     {
         base.Start();
 
-        bulletDamage = 50;
+        bulletDamage = 80*_damageMultiplier;
         bulletRangeInMetres = 150;
         bulletSpeedMetresPerSec = 30;
         bulletRadius = 0.23f;
@@ -57,6 +58,7 @@ public class SniperBullet : Bullet
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             base.HitSomeone();
+            collision.gameObject.SendMessage("GetDamage", bulletDamage);
         }
     }  
     

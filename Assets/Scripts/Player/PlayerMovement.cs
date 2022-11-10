@@ -209,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
                     trail.emitting = false;
                     body.DOColor(OriginalColor, 0.5f);
                     state = State.Normal;
-                    Debug.Log("Once");
+                    //Debug.Log("Once");
                 }
                 break;
         }

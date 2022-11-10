@@ -130,7 +130,7 @@ public abstract class Weapon /*: MonoBehaviour*/
         {
             if (!data.powerActive)
             {                
-                if (data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain))
+                if (data.mechanism.Shoot(data.bulletTypePrefab, data.firePoint, data.fireRateinSec, data.shootSound, data.amplitudeGain, data.damageMultiplier))
                 {
                     LoadOrReloadWhenNeedIt();                    
                 }                
@@ -182,11 +182,16 @@ public abstract class Weapon /*: MonoBehaviour*/
         }
         else if (Input.GetButtonDown("Reload") && data.currentBulletsInMagazine < data.bulletsPerMagazine && !data.outOfAmmo && data.currentMagazines > 0)
         {
-            data.currentBulletsInMagazine = data.bulletsPerMagazine;
-            data.currentMagazines--;
-            AudioManager.Instance.PlaySound(data.reloadSound, 0.5f);
-            data.reloading = true;
-            data.startReloading = Time.time;
+            if (data.currentMagazines > 0 && data.currentBulletsInMagazine > 0)
+            {
+                data.currentBulletsInMagazine = data.bulletsPerMagazine;
+                data.currentMagazines--;
+                AudioManager.Instance.PlaySound(data.reloadSound, 0.5f);
+                data.reloading = true;
+                data.startReloading = Time.time;
+            }
+
+           
         }
 
 

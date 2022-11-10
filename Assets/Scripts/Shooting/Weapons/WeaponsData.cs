@@ -17,8 +17,10 @@ public struct WeaponsData
     public int currentBulletsInMagazine;
     public int currentMagazines;
 
+    public float damageMultiplier;
+
     public float reloadTimeInSec;
-    public float fireRateinSec;
+    public float fireRateinSec;    
     public float startReloading;
     public float timelastPowerupEnter;
     public float timelastPowerupExit;

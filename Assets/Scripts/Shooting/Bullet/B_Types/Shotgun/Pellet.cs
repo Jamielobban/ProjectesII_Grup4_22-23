@@ -10,12 +10,11 @@ public class Pellet : Bullet
     [SerializeField]
     SpriteRenderer sr;
     
-
     protected override void Start()
     {
         base.Start();
 
-        bulletDamage = 50;
+        bulletDamage = 34*_damageMultiplier;
         bulletRangeInMetres = 5;
         bulletSpeedMetresPerSec = 20;
         bulletRadius = 0.23f;
@@ -27,6 +26,11 @@ public class Pellet : Bullet
         //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
     }
 
+    public void SetDamageBUllet(float _multiplier)
+    {
+        bulletDamage = 34 * _multiplier;
+    }
+    
     protected override void Update()
     {
         base.Update();
@@ -56,12 +60,13 @@ public class Pellet : Bullet
                 base.ImpactBody();
             else
             {
-                Debug.Log("Hi");
+                //Debug.Log("Hi");
                 base.HitSomeone();
                 sr.enabled = false;
                 this.GetComponent<Pellet>().enabled = false;
                 childExplosionArea.SetActive(true);
                 this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+                collision.gameObject.SendMessage("GetDamage", bulletDamage);
             }
         }
     }

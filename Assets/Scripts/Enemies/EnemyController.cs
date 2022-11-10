@@ -54,6 +54,21 @@ public class EnemyController : MonoBehaviour
         lastShoot = 0;
     }
 
+    public void GetDamage(float damage)
+    {
+
+        if (enemyHealth <= damage)
+        {
+            enemyHealth = 0;            
+        }
+        else
+        {
+            enemyHealth -= damage;
+        }
+
+        Debug.Log(enemyHealth);
+
+    }
 
     void Update()
     {
@@ -268,29 +283,29 @@ public class EnemyController : MonoBehaviour
         sr.DOColor(Color.clear, 1f);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Bullet"))
-        {
-            //Debug.Log(("ive been hit"));
-            //enemyHealth -= 20;
-            //sr.DOColor(Color.red, 0.0f);
-            //state = State.Hit;
-            StartCoroutine(hitEnemy());
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Bullet"))
+    //    {
+    //        Debug.Log(("ive been hit"));
+    //        enemyHealth -= 20;
+    //        sr.DOColor(Color.red, 0.0f);
+    //        state = State.Hit;
+    //        StartCoroutine(hitEnemy());
+    //    }
+    //}
 
-    private void DestroyGameObject()
-    {
-        Destroy(this.gameObject);
-    }
-    private IEnumerator hitEnemy()
-    {
-        state = State.Hit;
-        rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(2);
-        enemyHealth -= 20;
-        sr.DOColor(Color.red, 0.0f);
-        state = State.Chasing;
-    }
+    //private void DestroyGameObject()
+    //{
+    //    Destroy(this.gameObject);
+    //}
+    //private IEnumerator hitEnemy()
+    //{
+    //    state = State.Hit;
+    //    rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
+    //    yield return new WaitForSeconds(2);
+    //    enemyHealth -= 20;
+    //    sr.DOColor(Color.red, 0.0f);
+    //    state = State.Chasing;
+    //}
 }

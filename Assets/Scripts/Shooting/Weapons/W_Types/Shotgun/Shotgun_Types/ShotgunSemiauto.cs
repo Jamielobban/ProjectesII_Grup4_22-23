@@ -12,8 +12,9 @@ public class ShotgunSemiauto : Shotgun
         data.fireRateinSec = 1 / data.fireRateinSec; //Aqui calculem el minim temps possible entre disparos
         data.shootSound = Resources.Load<AudioClip>("Sounds/Weapons/Shotgun/shotgunSemi");
         data.weaponColor = Color.yellow;
-        
-    }    
+        data.damageMultiplier = 1.2f;
+        data.amplitudeGain = 1.4f;
+    }
 
     protected override void CheckPowerUpShooting()
     {
