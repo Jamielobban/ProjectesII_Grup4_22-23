@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShotgunBullet : Bullet
 {
     GameObject[] pelletsOnBullet = new GameObject[5];
+    GameObject[] pelletsOnBulletPU = new GameObject[10];
     GameObject pelletPrefab;
     private Rigidbody2D rb;
     //private float _multiplier;
@@ -32,25 +33,53 @@ public class ShotgunBullet : Bullet
             pelletPrefab.GetComponent<Pellet>().powerUpOn = false;
         }
 
-        for (int i = 0, grados = -20; i < pelletsOnBullet.Length;i++,grados+=10){
-            pelletsOnBullet[i] = GameObject.Instantiate(pelletPrefab, transform.position, transform.rotation);
-            pelletsOnBullet[i].transform.Rotate(0, 0, pelletsOnBullet[i].transform.rotation.z + grados);
-
-            //Transform originalFirePoint = this.transform;
-            //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-            pelletsOnBullet[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBullet[i].transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-
-            if (powerUpOn)
+        if (!powerUpOn)
+        {
+            for (int i = 0, grados = -20; i < pelletsOnBullet.Length; i++, grados += 10)
             {
-                pelletsOnBullet[i].GetComponent<Pellet>().powerUpOn = true;
+                pelletsOnBullet[i] = GameObject.Instantiate(pelletPrefab, transform.position, transform.rotation);
+                pelletsOnBullet[i].transform.Rotate(0, 0, pelletsOnBullet[i].transform.rotation.z + grados);
+
+                //Transform originalFirePoint = this.transform;
+                //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+                pelletsOnBullet[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBullet[i].transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+
+                if (powerUpOn)
+                {
+                    pelletsOnBullet[i].GetComponent<Pellet>().powerUpOn = true;
+                }
+                else
+                {
+                    pelletsOnBullet[i].GetComponent<Pellet>().powerUpOn = false;
+                }
+                pelletsOnBullet[i].GetComponent<Pellet>().ApplyMultiplierToDamage(_damageMultiplier);
             }
-            else
-            {
-                pelletsOnBullet[i].GetComponent<Pellet>().powerUpOn = false;
-            }
-            pelletsOnBullet[i].GetComponent<Pellet>().ApplyMultiplierToDamage(_damageMultiplier);
+            Destroy(this.gameObject);
         }
-        Destroy(this.gameObject);
+        else
+        {
+            for (int i = 0, grados = -20; i < pelletsOnBulletPU.Length; i++, grados += 5)
+            {
+                pelletsOnBulletPU[i] = GameObject.Instantiate(pelletPrefab, transform.position, transform.rotation);
+                pelletsOnBulletPU[i].transform.Rotate(0, 0, pelletsOnBulletPU[i].transform.rotation.z + grados);
+
+                //Transform originalFirePoint = this.transform;
+                //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+                pelletsOnBulletPU[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBulletPU[i].transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+
+                if (powerUpOn)
+                {
+                    pelletsOnBulletPU[i].GetComponent<Pellet>().powerUpOn = true;
+                }
+                else
+                {
+                    pelletsOnBulletPU[i].GetComponent<Pellet>().powerUpOn = false;
+                }
+                pelletsOnBulletPU[i].GetComponent<Pellet>().ApplyMultiplierToDamage(_damageMultiplier);
+            }
+            Destroy(this.gameObject);
+        }
+        
     }
 
     protected override void Update()

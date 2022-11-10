@@ -114,14 +114,15 @@ MonoBehaviour:
   stoppingDistance: 10
   retreatDistance: 2
   enemyBulletDamage: 20
-  floorBlood: {fileID: 4891040840000462560, guid: 0fc2b21afbd510b4eb804ef24e729336, type: 3}
   canShoot: 0
+  enemyShootSound: {fileID: 8300000, guid: c322bf1c478c9d949a6cab98f97bba61, type: 3}
   canSeePlayer: 0
   inRange: 0
   knockbackPower: 0
   angleOfCone: 40
   numberOfBursts: 1
   damageSound: {fileID: 8300000, guid: 89e70a392fb07cf448a17d6316a50d9c, type: 3}
+  floorBlood: {fileID: 4891040840000462560, guid: 0fc2b21afbd510b4eb804ef24e729336, type: 3}
   metralleta: 0
 --- !u!61 &1409296284934073179
 BoxCollider2D:

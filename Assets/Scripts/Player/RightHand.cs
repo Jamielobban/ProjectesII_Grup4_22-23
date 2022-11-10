@@ -8,7 +8,7 @@ public class RightHand : MonoBehaviour
 {
     Weapon weaponInHand, nextWeapon;
     [SerializeField] Transform firePoint;
-    [SerializeField]  SpriteRenderer sr;
+    [SerializeField] SpriteRenderer sr;
 
     public PowerUpTimer powerUpTimer;
     public PowerUpTimer reloadBarTimer;
@@ -27,6 +27,7 @@ public class RightHand : MonoBehaviour
     private bool firstTime = true;
     private bool firstTime1 = true;
     public bool firstTime3 = true;
+    public bool firstTime4 = true;
 
     public bool isCharing;
     public bool hasCharged;
@@ -41,7 +42,7 @@ public class RightHand : MonoBehaviour
     enum PowerUpState { RELOADING, USING, FULL };
     PowerUpState powerUpState;
 
-    public Image actualWeaponUI, nextWeaponUI; 
+    public Image actualWeaponUI, nextWeaponUI;
 
     private void Start()
     {
@@ -70,6 +71,7 @@ public class RightHand : MonoBehaviour
         {
             case PowerUpState.RELOADING:
                 powerUpBarColor.color = reloadingColor;
+                firstTime4 = true;
                 break;
             case PowerUpState.FULL:
                 powerUpBarColor.color = fullChargeColor;
@@ -77,7 +79,12 @@ public class RightHand : MonoBehaviour
                 break;
             case PowerUpState.USING:
                 powerUpBarColor.color = usePowerUpColor;
-
+                if (firstTime4)
+                {
+                    Debug.Log(weaponInHand.GetTimeLeftPowerup());
+                    CinemachineShake.Instance.ShakeCamera(5f, weaponInHand.GetTimeLeftPowerup());
+                    firstTime4 = false;
+                }
                 break;
             default:
                 break;
@@ -91,8 +98,8 @@ public class RightHand : MonoBehaviour
                 reloadBarTimer.SetMaxTime(weaponInHand.GetReloadTimeInSec() + 0.5f);
                 firstTime = false;
             }
-                reloadTimer += Time.deltaTime;
-                reloadBarTimer.SetTime(reloadTimer);
+            reloadTimer += Time.deltaTime;
+            reloadBarTimer.SetTime(reloadTimer);
             if (reloadTimer > weaponInHand.GetReloadTimeInSec() + 0.5f)
             {
                 firstTime3 = true;
@@ -105,7 +112,7 @@ public class RightHand : MonoBehaviour
         if (!weaponInHand.GetState())
         {
 
-            if (powerUpTimer.GetMaxTime() < 20)
+            if (powerUpTimer.GetMaxTime() <= 20)
             {
                 powerUpTimer.SetMaxTime(20);
                 firstTime = true;
@@ -124,8 +131,7 @@ public class RightHand : MonoBehaviour
 
             powerUpTimer.SetTime(weaponInHand.GetTime());
         }
-         
-        if(weaponInHand.GetState())
+        if (weaponInHand.GetState())
         {
             powerUpState = PowerUpState.USING;
 
@@ -136,7 +142,6 @@ public class RightHand : MonoBehaviour
             }
 
             powerUpTimer.SetTime(weaponInHand.GetTimeLeftPowerup());
-
 
             //powerUpBar.color = new Color(202,187,43,255);
 
@@ -151,9 +156,9 @@ public class RightHand : MonoBehaviour
         bulletsPerMagazine.text = weaponInHand.GetBulletsPerMagazine().ToString();
         magazineNumber.text = weaponInHand.GetCurrentMagazines().ToString();
 
-       // Debug.Log(weaponInHand.GetBulletsInMagazine());
+        // Debug.Log(weaponInHand.GetBulletsInMagazine());
 
-       
+
         weaponInHand.Update();
 
         if (weaponInHand.GetIfOutOffAmmo())

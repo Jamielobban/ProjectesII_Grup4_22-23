@@ -28,6 +28,7 @@ public class EnemyController : MonoBehaviour
     public float stoppingDistance;
     public float retreatDistance;
 
+    public float enemyBulletDamage;    
 
     private Transform player;
 
@@ -36,6 +37,8 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
     private SpriteRenderer sr;
+
+    public AudioClip enemyShootSound;
 
     public bool canSeePlayer;
     public bool inRange;
@@ -59,7 +62,7 @@ public class EnemyController : MonoBehaviour
 
     public void GetDamage(BulletHitInfo impactInfo)
     {
-        //Debug.Log(damage);
+        
         AudioManager.Instance.PlaySound(damageSound);
         GameObject blood = GameObject.Instantiate(floorBlood, impactInfo.impactPosition, this.transform.rotation);
         blood.GetComponent<Transform>().localScale = transform.localScale*2;
@@ -74,7 +77,7 @@ public class EnemyController : MonoBehaviour
             enemyHealth -= impactInfo.damage;
         }
 
-        Debug.Log(enemyHealth);
+        //Debug.Log(enemyHealth);
 
     }
 
@@ -215,13 +218,14 @@ public class EnemyController : MonoBehaviour
         //float tempDistance = 0;
         //if (timeStartedShootingCrazy - Time.time >= 0)
         //{
-           // tempDistance = stoppingDistance;
-            //stoppingDistance = 30;
-            //random machine gun
-            GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
-
-            //Metralleta
-            instance.transform.Rotate(0, 0, instance.transform.rotation.z + Random.Range(-25,25));
+        // tempDistance = stoppingDistance;
+        //stoppingDistance = 30;
+        //random machine gun
+        GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
+        instance.GetComponent<EnemyProjectile>().bulletDamage = enemyBulletDamage;
+        AudioManager.Instance.PlaySound(enemyShootSound);
+        //Metralleta
+        instance.transform.Rotate(0, 0, instance.transform.rotation.z + Random.Range(-25,25));
 
 
             //banda a banda
@@ -275,6 +279,8 @@ public class EnemyController : MonoBehaviour
             for (int i = 0, grados = ((angleOfCone / 2) * -10) + par; i < angleOfCone; i++, grados += 10)
             {
                 GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
+                instance.GetComponent<EnemyProjectile>().bulletDamage = enemyBulletDamage;
+                AudioManager.Instance.PlaySound(enemyShootSound);
                 instance.transform.Rotate(0, 0, instance.transform.rotation.z + grados);
 
                 instance.GetComponent<Rigidbody2D>().AddForce(instance.transform.right * bulletSpeed, ForceMode2D.Impulse);

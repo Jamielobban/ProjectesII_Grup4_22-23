@@ -200,8 +200,12 @@ public abstract class Weapon /*: MonoBehaviour*/
                 data.reloading = true;
                 data.startReloading = Time.time;
             }
-
            
+        }
+        else if (Input.GetButtonDown("PassWeapon"))
+        {
+            data.outOfAmmo = true;
+            data.timePassed = 0;
         }
 
 

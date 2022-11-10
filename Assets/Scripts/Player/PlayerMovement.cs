@@ -265,7 +265,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void GetDamage(float damage)
     {
-        Debug.Log(damage);
+        //Debug.Log(damage);
         OnHit(damage);
 
     }

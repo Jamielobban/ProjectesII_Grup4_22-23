@@ -380,6 +380,10 @@ PrefabInstance:
       propertyPath: EnemyPrefab
       value: 
       objectReference: {fileID: 8930414981940649310, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+    - target: {fileID: 1602158541302279488, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
+      propertyPath: enemySpawnSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c889a9a98ed16ca4384862ea2d2dd11d, type: 3}
     - target: {fileID: 4575900913035887074, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
       propertyPath: m_Name
       value: EnemySpawner (1)
@@ -1089,12 +1093,13 @@ MonoBehaviour:
   magazineNumber: {fileID: 991365685}
   timeToPass: 0
   firstTime3: 1
+  firstTime4: 1
   isCharing: 0
   hasCharged: 0
   isGoingDown: 0
   reloadingColor: {r: 0.4339623, g: 0.14533643, b: 0.31843472, a: 1}
   fullChargeColor: {r: 0.14115341, g: 0.49056602, b: 0.4808969, a: 1}
-  usePowerUpColor: {r: 0.5471698, g: 0.31300026, b: 0.13163047, a: 1}
+  usePowerUpColor: {r: 0.745283, g: 0.42490944, b: 0.17928976, a: 1}
   actualWeaponUI: {fileID: 771615639}
   nextWeaponUI: {fileID: 1906814519}
 --- !u!1 &508688120
@@ -2161,6 +2166,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1602158541302279488, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
+      propertyPath: enemySpawnSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c889a9a98ed16ca4384862ea2d2dd11d, type: 3}
     - target: {fileID: 4575900913035887074, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
       propertyPath: m_Name
       value: EnemySpawner (4)
@@ -2579,6 +2588,10 @@ PrefabInstance:
       propertyPath: EnemyPrefab
       value: 
       objectReference: {fileID: 8930414981940649310, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+    - target: {fileID: 1602158541302279488, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
+      propertyPath: enemySpawnSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c889a9a98ed16ca4384862ea2d2dd11d, type: 3}
     - target: {fileID: 4575900913035887074, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
       propertyPath: m_Name
       value: EnemySpawner (2)
@@ -3871,6 +3884,10 @@ PrefabInstance:
       propertyPath: EnemyPrefab
       value: 
       objectReference: {fileID: 8930414981940649310, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+    - target: {fileID: 1602158541302279488, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
+      propertyPath: enemySpawnSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c889a9a98ed16ca4384862ea2d2dd11d, type: 3}
     - target: {fileID: 4575900913035887074, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
       propertyPath: m_Icon
       value: 
@@ -5088,6 +5105,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1602158541302279488, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
+      propertyPath: enemySpawnSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c889a9a98ed16ca4384862ea2d2dd11d, type: 3}
     - target: {fileID: 4575900913035887074, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
       propertyPath: m_Name
       value: EnemySpawner (3)
@@ -5523,6 +5544,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1602158541302279488, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
+      propertyPath: enemySpawnSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c889a9a98ed16ca4384862ea2d2dd11d, type: 3}
     - target: {fileID: 4575900913035887074, guid: 9b0f2bfa0b5d0734281b6196d852b468, type: 3}
       propertyPath: m_Name
       value: EnemySpawner (5)

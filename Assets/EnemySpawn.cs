@@ -9,6 +9,7 @@ public class EnemySpawn : MonoBehaviour
     GameObject Enemy;
     private SpriteRenderer spawn;
     GameObject parent;
+    public AudioClip enemySpawnSound;
     private void Awake()
     {
         spawn = GetComponent<SpriteRenderer>();
@@ -25,6 +26,7 @@ public class EnemySpawn : MonoBehaviour
 
     public void SpawnAnimation()
     {
+        AudioManager.Instance.PlaySound(enemySpawnSound);
         spawn.DOColor(Color.red, 1f);
         Invoke("SpawnEnemy", 1f);
     }
