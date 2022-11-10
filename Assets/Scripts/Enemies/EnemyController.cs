@@ -44,6 +44,9 @@ public class EnemyController : MonoBehaviour
     public int angleOfCone;
     public int numberOfBursts;
 
+    public AudioClip damageSound;
+    public GameObject floorBlood;
+
     public bool metralleta;
     void Start()
     {
