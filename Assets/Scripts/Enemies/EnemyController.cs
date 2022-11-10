@@ -28,9 +28,7 @@ public class EnemyController : MonoBehaviour
     public float stoppingDistance;
     public float retreatDistance;
 
-    public float enemyBulletDamage;
 
-    public GameObject floorBlood;
     private Transform player;
 
     public bool canShoot;
@@ -45,7 +43,6 @@ public class EnemyController : MonoBehaviour
 
     public int angleOfCone;
     public int numberOfBursts;
-    public AudioClip damageSound;
 
     public bool metralleta;
     void Start()
@@ -57,25 +54,20 @@ public class EnemyController : MonoBehaviour
         lastShoot = 0;
     }
 
-    public void GetDamage(float damage, Transform positionImpact)
+    public void GetDamage(float damage)
     {
-        //Debug.Log(damage);
-        AudioManager.Instance.PlaySound(damageSound);
-        GameObject blood = GameObject.Instantiate(floorBlood, positionImpact.position, this.transform.rotation);
-        blood.GetComponent<Transform>().localScale = transform.localScale*2;
 
         if (enemyHealth <= damage)
         {
-            enemyHealth = 0;            
+            enemyHealth = 0;
+            isAlive = true;
         }
         else
         {
             enemyHealth -= damage;
         }
 
-        state = State.Hit;
-
-       
+        Debug.Log(enemyHealth);
 
     }
 
@@ -220,7 +212,7 @@ public class EnemyController : MonoBehaviour
             //stoppingDistance = 30;
             //random machine gun
             GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
-            instance.GetComponent<EnemyProjectile>().bulletDamage = enemyBulletDamage;
+
             //Metralleta
             instance.transform.Rotate(0, 0, instance.transform.rotation.z + Random.Range(-25,25));
 
@@ -276,8 +268,8 @@ public class EnemyController : MonoBehaviour
             for (int i = 0, grados = ((angleOfCone / 2) * -10) + par; i < angleOfCone; i++, grados += 10)
             {
                 GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
-                instance.GetComponent<EnemyProjectile>().bulletDamage = enemyBulletDamage;
                 instance.transform.Rotate(0, 0, instance.transform.rotation.z + grados);
+
                 instance.GetComponent<Rigidbody2D>().AddForce(instance.transform.right * bulletSpeed, ForceMode2D.Impulse);
                 //Destroy(instance, 3);
             }
@@ -304,10 +296,10 @@ public class EnemyController : MonoBehaviour
     //    }
     //}
 
-    private void DestroyGameObject()
-    {
-        Destroy(this.gameObject);
-    }
+    //private void DestroyGameObject()
+    //{
+    //    Destroy(this.gameObject);
+    //}
     //private IEnumerator hitEnemy()
     //{
     //    state = State.Hit;

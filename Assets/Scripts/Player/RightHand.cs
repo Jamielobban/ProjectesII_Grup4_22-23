@@ -41,6 +41,7 @@ public class RightHand : MonoBehaviour
     enum PowerUpState { RELOADING, USING, FULL };
     PowerUpState powerUpState;
 
+    public Image actualWeaponUI, nextWeaponUI; 
 
     private void Start()
     {
@@ -48,11 +49,23 @@ public class RightHand : MonoBehaviour
         weaponInHand.SetWeaponHand(ref sr);
         reloadBar.SetActive(false);
         powerUpBarColor = powerUpBar.GetComponent<Image>();
-        
+
+        UpdateUIWeapons();
+
     }
 
+    void UpdateUIWeapons()
+    {
+        actualWeaponUI.sprite = weaponInHand.GetSprite();
+        nextWeaponUI.sprite = nextWeapon.GetSprite();
+
+        actualWeaponUI.color = weaponInHand.GetWeaponColor();
+        nextWeaponUI.color = nextWeapon.GetWeaponColor();
+    }
     private void Update()
     {
+
+
         switch (powerUpState)
         {
             case PowerUpState.RELOADING:
@@ -150,6 +163,8 @@ public class RightHand : MonoBehaviour
             weaponInHand.SetTime(timeToPass);
             nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon(firePoint, ref sr);
             firstTime = true;
+            UpdateUIWeapons();
+
         }
     }
 
