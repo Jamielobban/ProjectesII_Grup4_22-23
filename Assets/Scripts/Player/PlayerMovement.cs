@@ -13,12 +13,14 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public int maxHealth = 100;
-    public int currentHealth;
+    public float currentHealth;
     public bool isDead;
     private HealthBar healthBar;
     public dashCooldown dashUI1;
     public dashCooldown dashUI2;
     public dashCooldown dashUI3;
+
+    public GameObject floorBlood;
 
     public State state;
     public float moveSpeed = 5f;
@@ -53,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
     private float rollSpeedMinimum = 50f;
     public bool isInvulnerable;
 
+    public AudioClip damageSound;
 
     public bool canDash;
     public float timeBetweenDashes;
@@ -234,16 +237,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("EnemyBullet"))
-        {
-            OnHit();
-        }
+        //if (collision.gameObject.CompareTag("EnemyBullet"))
+        //{
+        //    OnHit();
+        //}
     }
-    void TakeDamage(int damage)
+    void TakeDamage(float damage)
     {
         if (!isInvulnerable)
         {
             currentHealth -= damage;
+            GameObject.Instantiate(floorBlood, this.transform.position, this.transform.rotation);
+            AudioManager.Instance.PlaySound(damageSound);
             healthBar.SetHealth(currentHealth);
         }
     }
@@ -258,7 +263,14 @@ public class PlayerMovement : MonoBehaviour
         trail.emitting = true;
     }
 
-    private void OnHit()
+    public void GetDamage(float damage)
+    {
+        Debug.Log(damage);
+        OnHit(damage);
+
+    }
+
+    private void OnHit(float damage)
     {
         if (currentHealth <= 0)
         {
@@ -266,7 +278,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            TakeDamage(20);
+            TakeDamage(damage);
             StartCoroutine(hurtAnimation());
         }
     }

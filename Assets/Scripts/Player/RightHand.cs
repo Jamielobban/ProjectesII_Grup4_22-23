@@ -32,7 +32,14 @@ public class RightHand : MonoBehaviour
     public bool hasCharged;
     public bool isGoingDown;
 
+    public Color reloadingColor;
+    public Color fullChargeColor;
+    public Color usePowerUpColor;
 
+    Image powerUpBarColor;
+
+    enum PowerUpState { RELOADING, USING, FULL };
+    PowerUpState powerUpState;
 
 
     private void Start()
@@ -40,10 +47,28 @@ public class RightHand : MonoBehaviour
         nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint, ref sr);
         weaponInHand.SetWeaponHand(ref sr);
         reloadBar.SetActive(false);
+        powerUpBarColor = powerUpBar.GetComponent<Image>();
+        
     }
 
     private void Update()
     {
+        switch (powerUpState)
+        {
+            case PowerUpState.RELOADING:
+                powerUpBarColor.color = reloadingColor;
+                break;
+            case PowerUpState.FULL:
+                powerUpBarColor.color = fullChargeColor;
+
+                break;
+            case PowerUpState.USING:
+                powerUpBarColor.color = usePowerUpColor;
+
+                break;
+            default:
+                break;
+        }
         //Reload Bar
         if (weaponInHand.GetReloadingState())
         {
@@ -66,23 +91,39 @@ public class RightHand : MonoBehaviour
         //Weapon powerup UI
         if (!weaponInHand.GetState())
         {
-            if(powerUpTimer.GetMaxTime() < 20)
+
+            if (powerUpTimer.GetMaxTime() < 20)
             {
                 powerUpTimer.SetMaxTime(20);
                 firstTime = true;
 
             }
-            //Debug.Log("Normal");
+            if (powerUpBarColor.fillAmount == 1)
+            {
+                powerUpState = PowerUpState.FULL;
+
+            }
+            else
+            {
+                powerUpState = PowerUpState.RELOADING;
+
+            }
+
             powerUpTimer.SetTime(weaponInHand.GetTime());
         }
         else
         {
+            powerUpState = PowerUpState.USING;
+
             if (firstTime)
             {
                 powerUpTimer.SetMaxTime(weaponInHand.SetTimeLeftPowerup());
                 firstTime = false;
             }
+
             powerUpTimer.SetTime(weaponInHand.GetTimeLeftPowerup());
+
+
             //powerUpBar.color = new Color(202,187,43,255);
 
             //CBBC2B

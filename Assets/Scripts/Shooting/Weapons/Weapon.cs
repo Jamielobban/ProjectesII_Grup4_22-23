@@ -77,6 +77,16 @@ public abstract class Weapon /*: MonoBehaviour*/
         return data.currentBulletsInMagazine;
     }
 
+    public Sprite GetSprite()
+    {
+        return data.weaponSprite;
+    }
+
+    public Color GetWeaponColor()
+    {
+        return data.weaponColor;
+    }
+
     public int GetBulletsPerMagazine()
     {
         return data.bulletsPerMagazine;

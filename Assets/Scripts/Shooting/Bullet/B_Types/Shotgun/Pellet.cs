@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Pellet : Bullet
 {
-    private Rigidbody2D rb;
-    [SerializeField]
-    private GameObject childExplosionArea;
+    private Rigidbody2D rb;    
     [SerializeField]
     SpriteRenderer sr;
     
@@ -37,7 +35,7 @@ public class Pellet : Bullet
 
         if (!powerUpOn)
         {
-            childExplosionArea.SetActive(false);
+           
         }
         else
         {
@@ -56,18 +54,9 @@ public class Pellet : Bullet
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            if(!powerUpOn)
-                base.ImpactBody();
-            else
-            {
-                //Debug.Log("Hi");
-                base.HitSomeone();
-                sr.enabled = false;
-                this.GetComponent<Pellet>().enabled = false;
-                childExplosionArea.SetActive(true);
-                this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-                collision.gameObject.SendMessage("GetDamage", bulletDamage);
-            }
+            collision.gameObject.SendMessage("GetDamage", bulletDamage);
+            base.ImpactBody();           
+            
         }
     }
 

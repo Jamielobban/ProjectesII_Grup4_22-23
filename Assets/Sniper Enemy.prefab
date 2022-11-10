@@ -56,6 +56,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: floorBlood
+      value: 
+      objectReference: {fileID: 4891040840000462560, guid: 0fc2b21afbd510b4eb804ef24e729336, type: 3}
+    - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: angleOfCone
       value: 1
       objectReference: {fileID: 0}
@@ -64,8 +68,12 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: damageSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 89e70a392fb07cf448a17d6316a50d9c, type: 3}
+    - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: enemyHealth
-      value: 35
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: retreatDistance
@@ -78,6 +86,10 @@ PrefabInstance:
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: timeBetweenShots
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: enemyBulletDamage
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}

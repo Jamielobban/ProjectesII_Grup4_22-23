@@ -8,8 +8,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1859936831163064488, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: floorBlood
+      value: 
+      objectReference: {fileID: 4891040840000462560, guid: 0fc2b21afbd510b4eb804ef24e729336, type: 3}
+    - target: {fileID: 1859936831163064488, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: damageSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 89e70a392fb07cf448a17d6316a50d9c, type: 3}
+    - target: {fileID: 1859936831163064488, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: enemyHealth
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859936831163064488, guid: 5ac03940db506904caaf262e27842002, type: 3}
       propertyPath: retreatDistance
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859936831163064488, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: enemyBulletDamage
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1859936831163064489, guid: 5ac03940db506904caaf262e27842002, type: 3}
       propertyPath: m_RootOrder
@@ -57,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1859936831163064490, guid: 5ac03940db506904caaf262e27842002, type: 3}
       propertyPath: m_Name
-      value: Square
+      value: Shotgun Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ac03940db506904caaf262e27842002, type: 3}

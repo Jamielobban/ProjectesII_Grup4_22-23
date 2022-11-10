@@ -1005,7 +1005,7 @@ MonoBehaviour:
   sr: {fileID: 500456483}
   powerUpTimer: {fileID: 1403094673}
   reloadBarTimer: {fileID: 439238023}
-  powerUpBar: {fileID: 0}
+  powerUpBar: {fileID: 1301878163}
   reloadBar: {fileID: 439238022}
   bulletsInMagazine: {fileID: 1261489611}
   bulletsPerMagazine: {fileID: 66236068}
@@ -1015,6 +1015,9 @@ MonoBehaviour:
   isCharing: 0
   hasCharged: 0
   isGoingDown: 0
+  reloadingColor: {r: 0.4339623, g: 0.14533643, b: 0.31843472, a: 1}
+  fullChargeColor: {r: 0.14115341, g: 0.49056602, b: 0.4808969, a: 1}
+  usePowerUpColor: {r: 0.5471698, g: 0.31300026, b: 0.13163047, a: 1}
 --- !u!1 &508688120
 GameObject:
   m_ObjectHideFlags: 0
@@ -4837,6 +4840,7 @@ MonoBehaviour:
   dashUI1: {fileID: 615417642}
   dashUI2: {fileID: 1108515592}
   dashUI3: {fileID: 1265208864}
+  floorBlood: {fileID: 4891040840000462560, guid: 0fc2b21afbd510b4eb804ef24e729336, type: 3}
   state: 0
   moveSpeed: 9.5
   cam: {fileID: 519420031}
@@ -4844,6 +4848,7 @@ MonoBehaviour:
   OriginalColor: {r: 0.003921569, g: 0.78431374, b: 0.03137255, a: 1}
   body: {fileID: 2090932361}
   isInvulnerable: 0
+  damageSound: {fileID: 8300000, guid: c1603fa995318a547ad50c439336a821, type: 3}
   canDash: 0
   timeBetweenDashes: 0.5
   maxBlinks: 3

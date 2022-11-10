@@ -5,8 +5,7 @@ using DG.Tweening;
 
 public class PowerupDamageArea : MonoBehaviour
 {
-    [SerializeField]
-    GameObject parent;
+    
     [SerializeField]
     SpriteRenderer sr;
     [SerializeField]
@@ -24,7 +23,7 @@ public class PowerupDamageArea : MonoBehaviour
     {
         if (Time.time - startTime >= timeActive)
         {
-            Destroy(parent);
+            Destroy(this.gameObject);
         }
     }
 

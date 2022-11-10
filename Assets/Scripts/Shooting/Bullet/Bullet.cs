@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class Bullet : MonoBehaviour
 {
-    public bool powerUpOn;    
+    public bool powerUpOn;
+    protected BulletHitInfo bulletInfo;
 
     [SerializeField]
     protected GameObject collisionWallEffect;

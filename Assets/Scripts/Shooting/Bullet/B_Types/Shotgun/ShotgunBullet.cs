@@ -7,7 +7,7 @@ public class ShotgunBullet : Bullet
     GameObject[] pelletsOnBullet = new GameObject[5];
     GameObject pelletPrefab;
     private Rigidbody2D rb;
-    private float _multiplier;
+    //private float _multiplier;
 
     
     protected override void Start()
@@ -48,7 +48,7 @@ public class ShotgunBullet : Bullet
             {
                 pelletsOnBullet[i].GetComponent<Pellet>().powerUpOn = false;
             }
-            pelletsOnBullet[i].GetComponent<Pellet>().ApplyMultiplierToDamage(_multiplier);
+            pelletsOnBullet[i].GetComponent<Pellet>().ApplyMultiplierToDamage(_damageMultiplier);
         }
         Destroy(this.gameObject);
     }

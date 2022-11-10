@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAlive: 0
-  enemyHealth: 0
+  enemyHealth: 100
   bulletSpeed: 10
   timeBetweenShots: 2
   timeStartedShootingCrazy: 0
@@ -113,12 +113,15 @@ MonoBehaviour:
   speed: 6
   stoppingDistance: 10
   retreatDistance: 2
+  enemyBulletDamage: 20
+  floorBlood: {fileID: 4891040840000462560, guid: 0fc2b21afbd510b4eb804ef24e729336, type: 3}
   canShoot: 0
   canSeePlayer: 0
   inRange: 0
   knockbackPower: 0
   angleOfCone: 40
   numberOfBursts: 1
+  damageSound: {fileID: 8300000, guid: 89e70a392fb07cf448a17d6316a50d9c, type: 3}
   metralleta: 0
 --- !u!61 &1409296284934073179
 BoxCollider2D:
