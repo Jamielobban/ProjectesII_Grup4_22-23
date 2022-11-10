@@ -58,7 +58,9 @@ public class SniperBullet : Bullet
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             base.HitSomeone();
-            collision.gameObject.SendMessage("GetDamage", bulletDamage);
+            bulletInfo.damage = bulletDamage;
+            bulletInfo.impactPosition = transform.position;
+            collision.gameObject.SendMessage("GetDamage", bulletInfo);
         }
     }  
     

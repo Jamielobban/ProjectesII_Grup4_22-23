@@ -54,17 +54,21 @@ public class EnemyController : MonoBehaviour
         lastShoot = 0;
     }
 
-    public void GetDamage(float damage)
+    public void GetDamage(BulletHitInfo impactInfo)
     {
+        //Debug.Log(damage);
+        AudioManager.Instance.PlaySound(damageSound);
+        GameObject blood = GameObject.Instantiate(floorBlood, impactInfo.impactPosition, this.transform.rotation);
+        blood.GetComponent<Transform>().localScale = transform.localScale*2;
 
-        if (enemyHealth <= damage)
+        if (enemyHealth <= impactInfo.damage)
         {
             enemyHealth = 0;
             isAlive = true;
         }
         else
         {
-            enemyHealth -= damage;
+            enemyHealth -= impactInfo.damage;
         }
 
         Debug.Log(enemyHealth);

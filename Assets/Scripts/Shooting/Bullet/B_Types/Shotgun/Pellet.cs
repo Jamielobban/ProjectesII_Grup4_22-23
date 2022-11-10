@@ -54,7 +54,9 @@ public class Pellet : Bullet
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.gameObject.SendMessage("GetDamage", bulletDamage);
+            bulletInfo.damage = bulletDamage;
+            bulletInfo.impactPosition = transform.position;
+            collision.gameObject.SendMessage("GetDamage", bulletInfo);
             base.ImpactBody();           
             
         }

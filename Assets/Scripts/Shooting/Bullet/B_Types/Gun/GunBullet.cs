@@ -39,7 +39,9 @@ public class GunBullet : Bullet
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             base.ImpactBody();
-            collision.gameObject.SendMessage("GetDamage", bulletDamage);
+            bulletInfo.damage = bulletDamage;
+            bulletInfo.impactPosition = transform.position;
+            collision.gameObject.SendMessage("GetDamage", bulletInfo);
         }
     }
 
