@@ -77,7 +77,6 @@ MonoBehaviour:
   whatIsMapColisionable:
     serializedVersion: 2
     m_Bits: 2048
-  childExplosionArea: {fileID: 0}
   sr: {fileID: 2357515963105649795}
 --- !u!61 &7926868319510766866
 BoxCollider2D:
@@ -92,7 +91,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.033072233, y: 0.010585785}
+  m_Offset: {x: 0.033058405, y: 0.010580063}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -103,7 +102,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.504498, y: 10.384193}
+  m_Size: {x: 9.208122, y: 12.085266}
   m_EdgeRadius: 0
 --- !u!1 &4599948838450315205
 GameObject:
@@ -131,7 +130,7 @@ Transform:
   m_GameObject: {fileID: 4599948838450315205}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.65, y: 0.8, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.91, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5282233126544142458}

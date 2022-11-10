@@ -15,6 +15,8 @@ public class GunBolt : Gun
         data.damageMultiplier = 4.5f;
         temporalMechanism = new Repeticion();
         data.amplitudeGain = 1.5f;
+        data.bulletsPerMagazine -= 5;
+        data.currentBulletsInMagazine = data.bulletsPerMagazine;
     }
 
     protected override void CheckPowerUpShooting()

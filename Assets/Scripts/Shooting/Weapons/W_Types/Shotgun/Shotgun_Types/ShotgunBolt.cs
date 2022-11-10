@@ -14,6 +14,8 @@ public class ShotgunBolt : Shotgun
         data.weaponColor = Color.blue;
         data.damageMultiplier = 1.5f;
         data.amplitudeGain = 1.7f;
+        data.bulletsPerMagazine -= 4;
+        data.currentBulletsInMagazine = data.bulletsPerMagazine;
     }    
     protected override void CheckPowerUpShooting()
     {

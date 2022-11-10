@@ -163,6 +163,12 @@ public class RightHand : MonoBehaviour
 
         if (weaponInHand.GetIfOutOffAmmo())
         {
+            if (reloadBar.activeSelf)
+            {
+                firstTime3 = true;
+                reloadBar.SetActive(false);
+                reloadTimer = 0f;
+            }
             timeToPass = weaponInHand.GetTime();
             weaponInHand = nextWeapon;
             weaponInHand.SetWeaponHand(ref sr);

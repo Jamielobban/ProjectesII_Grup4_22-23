@@ -16,6 +16,8 @@ public class SniperBolt : Sniper
         data.weaponColor = Color.blue;
         data.damageMultiplier = 1.5f;
         data.amplitudeGain = 2f;
+        data.bulletsPerMagazine -= 2;
+        data.currentBulletsInMagazine = data.bulletsPerMagazine;
     }
 
 

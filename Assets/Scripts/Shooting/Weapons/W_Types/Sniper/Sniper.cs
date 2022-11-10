@@ -6,8 +6,8 @@ public abstract class Sniper : Weapon
 {
     
     public Sniper(Transform _firePoint) :base(_firePoint) {   
-        data.bulletsPerMagazine = Random.Range(4,9);
-        data.magazines = Random.Range(2, 4);       
+        data.bulletsPerMagazine = Random.Range(6,9);
+        data.magazines = Random.Range(1, 3);       
         data.reloadTimeInSec = 3f;
         data.maxTimeOnPowerup = 5;
         data.currentBulletsInMagazine = data.bulletsPerMagazine;

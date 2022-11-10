@@ -21,6 +21,7 @@ public class LeftHand : MonoBehaviour
     {
         rotatePoint = GameObject.FindGameObjectWithTag("RotatePoint");
         cam = Camera.main;        
+        
     }
     void Update()
     {

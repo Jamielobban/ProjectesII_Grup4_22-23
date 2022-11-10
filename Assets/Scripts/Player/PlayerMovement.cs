@@ -46,14 +46,17 @@ public class PlayerMovement : MonoBehaviour
     //public Color midwayRoll;
 
     public SpriteRenderer body;
-    public SpriteRenderer weaponSprite;
+    public SpriteRenderer[]weaponSprites;
     //public LayerMask layerMask;
+
+    public GameObject rotatePoint;
 
     private int LayerIgnoreRaycast;
     private int PlayerMask;
     private float rollSpeedDropMultiplier = 5f;
     private float rollSpeedMinimum = 50f;
     public bool isInvulnerable;
+    
 
     public AudioClip damageSound;
 
@@ -101,7 +104,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //Debug.Log(Time.
- 
+        weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
+
         if ((Time.time - lastDash) >= timeBetweenDashes)
         {
             canDash = true;
@@ -169,6 +173,11 @@ public class PlayerMovement : MonoBehaviour
 
                 if (canMove && !isDead)
                 {
+                    if (Input.GetButtonDown("Heal"))
+                    {
+                        currentHealth = 99999;
+                        healthBar.SetHealth(currentHealth);
+                    }
                     movement.x = Input.GetAxisRaw("Horizontal");
                     movement.y = Input.GetAxisRaw("Vertical");
                     moveDir = new Vector3(movement.x, movement.y).normalized;
@@ -217,7 +226,10 @@ public class PlayerMovement : MonoBehaviour
                     remainingBlinks--;
                     trail.emitting = false;
                     body.DOColor(OriginalColor, 0.5f);
-                    weaponSprite.DOColor(weaponHand.GetColor(), 0.5f);
+                    for(int i = 0; i < weaponSprites.Length; i++)
+                    {
+                        weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
+                    }
                     state = State.Normal;
                     //Debug.Log("Once");
                 }
@@ -260,7 +272,10 @@ public class PlayerMovement : MonoBehaviour
         transform.DOScale((new Vector3(0.9f, 0.7f, 1f)), 0.0f);
         transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
         body.DOColor(dashColor, 0.0f);
-        weaponSprite.DOColor(dashColor, 0.0f);
+        for (int i = 0; i < weaponSprites.Length; i++)
+        {
+            weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
+        }
         trail.emitting = true;
     }
 
@@ -287,22 +302,44 @@ public class PlayerMovement : MonoBehaviour
         isInvulnerable = true;
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
-        weaponSprite.DOColor(hurtColor, 0.0f);
-        weaponSprite.DOColor(invulnerableColor, 0.15f);
+        for (int i = 0; i < weaponSprites.Length; i++)
+        {
+            weaponSprites[i].DOColor(hurtColor, 0.0f);
+        }
+        for (int i = 0; i < weaponSprites.Length; i++)
+        {
+            weaponSprites[i].DOColor(invulnerableColor, 0.15f);
+        }        
         yield return new WaitForSeconds(0.20f);
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
-        weaponSprite.DOColor(hurtColor, 0.0f);
-        weaponSprite.DOColor(invulnerableColor, 0.15f);
+        for (int i = 0; i < weaponSprites.Length; i++)
+        {
+            weaponSprites[i].DOColor(hurtColor, 0.0f);
+        }
+        for (int i = 0; i < weaponSprites.Length; i++)
+        {
+            weaponSprites[i].DOColor(invulnerableColor, 0.15f);
+        }
         yield return new WaitForSeconds(0.20f);
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
-        weaponSprite.DOColor(hurtColor, 0.0f);
-        weaponSprite.DOColor(invulnerableColor, 0.15f);
+        for (int i = 0; i < weaponSprites.Length; i++)
+        {
+            weaponSprites[i].DOColor(hurtColor, 0.0f);
+        }
+        for (int i = 0; i < weaponSprites.Length; i++)
+        {
+            weaponSprites[i].DOColor(invulnerableColor, 0.15f);
+        }
         yield return new WaitForSeconds(0.20f);
         body.DOColor(OriginalColor, 0.0f);
-        weaponSprite.DOColor(weaponHand.GetColor(), 0.0f);
+        for (int i = 0; i < weaponSprites.Length; i++)
+        {
+            weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
+        }
         isInvulnerable = false;
+        
     }
 
 
