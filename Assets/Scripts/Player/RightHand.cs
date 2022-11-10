@@ -124,7 +124,8 @@ public class RightHand : MonoBehaviour
 
             powerUpTimer.SetTime(weaponInHand.GetTime());
         }
-        else
+         
+        if(weaponInHand.GetState())
         {
             powerUpState = PowerUpState.USING;
 
