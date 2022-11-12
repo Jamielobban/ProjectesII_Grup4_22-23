@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WeaponGenerator : MonoBehaviour
 {
-
+    [SerializeField]
+    WeaponValues[] weaponsValues = new WeaponValues[9]; //Sniper, shotgun, Pistol - Auto, Semi, Bolt
     //Mechanism[] mechanismTypes = new Mechanism[3] { new Automatica(), new Seamiautomatica(), new Repeticion() };
     //[SerializeField] GameObject[] bulletPrefabs = new GameObject[3];
 
@@ -33,14 +34,19 @@ public class WeaponGenerator : MonoBehaviour
 
     }
 
-    public Weapon SetMyInitialWeaponAndReturnMyNext(ref Weapon weaponInHand, Transform firePoint, ref SpriteRenderer _sr)
+    private void Start()
+    {
+        
+    }
+
+    public Weapon SetMyInitialWeaponAndReturnMyNext(ref Weapon weaponInHand, Transform firePoint)
     {
         //weaponsTypes = new Weapon[3] { new Sniper(firePoint), new Shotgun(firePoint), new Gun(firePoint) };
 
-        int random = Random.Range(0, 3);
+        int random = Random.Range(1, 2);//0 1
         //int random = 2;
         weaponInHandInt = random;
-        int random2 = Random.Range(0, 3);
+        int random2 = Random.Range(0, 1);// 2 3
 
         if (random == 0)
         {
@@ -56,9 +62,10 @@ public class WeaponGenerator : MonoBehaviour
         }
 
         //random = 2;
-        do { random = Random.Range(0, 3); } while (weaponInHandInt == random);       
+        /*do {*/
+        random = 0;//Random.Range(0, 1);/* } while (weaponInHandInt == random);  */     
         nextWeaponInt = random;
-        random2 = Random.Range(0, 3);
+        random2 = Random.Range(2, 3);
 
 
         if (random == 0)
@@ -87,13 +94,13 @@ public class WeaponGenerator : MonoBehaviour
 
     }
 
-    public Weapon ReturnMyNextWeapon(Transform firePoint, ref SpriteRenderer _sr)
+    public Weapon ReturnMyNextWeapon(Transform firePoint)
     {
         weaponInHandInt = nextWeaponInt;
-        int random = Random.Range(0, 3);
-        do { random = Random.Range(0, 3); } while (random == weaponInHandInt);
+        int random = Random.Range(2, 3);
+        do { random = Random.Range(2, 3); } while (random == weaponInHandInt);
         nextWeaponInt = random;
-        int random2 = Random.Range(0, 3);
+        int random2 = Random.Range(0, 1);
 
         if (random == 0)
         {
@@ -121,16 +128,16 @@ public class WeaponGenerator : MonoBehaviour
     {
         if(whichType == 0)
         {
-            return new SniperAuto(_firePoint);
+            return new SniperAuto(_firePoint, weaponsValues[0]);
         }
         else if(whichType == 1)
         {
-            return new SniperSemi(_firePoint);
+            return new SniperSemi(_firePoint, weaponsValues[1]);
 
         }
         else if(whichType == 2)
         {
-            return new SniperBolt(_firePoint);
+            return new SniperBolt(_firePoint, weaponsValues[2]);
         }
 
         throw new System.NotImplementedException();
@@ -141,16 +148,16 @@ public class WeaponGenerator : MonoBehaviour
     {
         if (whichType == 0)
         {
-            return new ShotgunAuto(_firePoint);
+            return new ShotgunAuto(_firePoint, weaponsValues[3]);
         }
         else if (whichType == 1)
         {
-            return new ShotgunSemiauto(_firePoint);
+            return new ShotgunSemiauto(_firePoint, weaponsValues[4]);
 
         }
         else if (whichType == 2)
         {
-            return new ShotgunBolt(_firePoint);
+            return new ShotgunBolt(_firePoint, weaponsValues[5]);
         }
 
         throw new System.NotImplementedException();
@@ -161,16 +168,16 @@ public class WeaponGenerator : MonoBehaviour
     {
         if (whichType == 0)
         {
-            return new GunAuto(_firePoint);
+            return new GunAuto(_firePoint, weaponsValues[6]);
         }
         else if (whichType == 1)
         {
-            return new GunSemiauto(_firePoint);
+            return new GunSemiauto(_firePoint, weaponsValues[7]);
 
         }
         else if (whichType == 2)
         {
-            return new GunBolt(_firePoint);
+            return new GunBolt(_firePoint, weaponsValues[8]);
         }
 
         throw new System.NotImplementedException();

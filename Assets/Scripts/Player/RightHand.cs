@@ -46,13 +46,13 @@ public class RightHand : MonoBehaviour
 
     private void Start()
     {
-        nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint, ref sr);
+        nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint);
         weaponInHand.SetWeaponHand(ref sr);
         reloadBar.SetActive(false);
         powerUpBarColor = powerUpBar.GetComponent<Image>();
 
         UpdateUIWeapons();
-
+        powerUpState = PowerUpState.RELOADING;
     }
 
     void UpdateUIWeapons()
@@ -81,7 +81,7 @@ public class RightHand : MonoBehaviour
                 powerUpBarColor.color = usePowerUpColor;
                 if (firstTime4)
                 {
-                    Debug.Log(weaponInHand.GetTimeLeftPowerup());
+                    //Debug.Log(weaponInHand.GetTimeLeftPowerup());
                     CinemachineShake.Instance.ShakeCamera(5f, weaponInHand.GetTimeLeftPowerup());
                     firstTime4 = false;
                 }
@@ -163,6 +163,7 @@ public class RightHand : MonoBehaviour
 
         if (weaponInHand.GetIfOutOffAmmo())
         {
+            Debug.Log("in");
             if (reloadBar.activeSelf)
             {
                 firstTime3 = true;
@@ -173,7 +174,7 @@ public class RightHand : MonoBehaviour
             weaponInHand = nextWeapon;
             weaponInHand.SetWeaponHand(ref sr);
             weaponInHand.SetTime(timeToPass);
-            nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon(firePoint, ref sr);
+            nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon(firePoint);
             firstTime = true;
             UpdateUIWeapons();
 
