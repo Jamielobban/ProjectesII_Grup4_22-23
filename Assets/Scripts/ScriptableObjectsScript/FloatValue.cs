@@ -10,7 +10,8 @@ public class FloatValue : ScriptableObject, ISerializationCallbackReceiver
 
     public float InitialValue { get { return initialValue; } }
 
-    [HideInInspector]
+    [Header("Change just for ingame testing")]
+
     public float RuntimeValue;
     public void OnAfterDeserialize()
     {
@@ -18,5 +19,10 @@ public class FloatValue : ScriptableObject, ISerializationCallbackReceiver
     }
     public void OnBeforeSerialize()
     {
+    }
+
+    public void RestartValues()
+    {
+        RuntimeValue = initialValue;
     }
 }

@@ -11,7 +11,8 @@ public class IntValue : ScriptableObject, ISerializationCallbackReceiver
     public int InitialValue { get { return initialValue; } }
 
 
-    [HideInInspector]
+    [Header("Change just for ingame testing")]
+
     public int RuntimeValue;
     public void OnAfterDeserialize()
     {
@@ -19,5 +20,10 @@ public class IntValue : ScriptableObject, ISerializationCallbackReceiver
     }
     public void OnBeforeSerialize()
     {
+    }
+
+    public void RestartValues()
+    {
+        RuntimeValue = initialValue;
     }
 }

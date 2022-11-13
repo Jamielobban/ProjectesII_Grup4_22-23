@@ -11,7 +11,8 @@ public class BoolValue : ScriptableObject, ISerializationCallbackReceiver
     public bool InitialValue { get { return initialValue; } }
 
 
-    [HideInInspector]
+    [Header("Change just for ingame testing")]
+
     public bool RuntimeValue;
     public void OnAfterDeserialize()
     {
@@ -19,5 +20,10 @@ public class BoolValue : ScriptableObject, ISerializationCallbackReceiver
     }
     public void OnBeforeSerialize()
     {
+    }
+
+    public void RestartValues()
+    {
+        RuntimeValue = initialValue;
     }
 }

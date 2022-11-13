@@ -21,3 +21,4 @@ public class ShotgunSemiauto : Shotgun
         base.CheckPowerUpShooting();
     }
 }
+ 

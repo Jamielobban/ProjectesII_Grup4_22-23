@@ -28,6 +28,26 @@ public class WeaponValues : ScriptableObject
     public BoolValue powerActive;   
     public BoolValue reloading;    
     public BoolValue outOfAmmo;    
-    public BoolValue powerupAvailable;       
+    public BoolValue powerupAvailable;
+    
+    public void RestartValues()
+    {
+        bulletsInMagazine.RestartValues();
+        magazinesInWeapon.RestartValues();
+        damageMultiplier.RestartValues();
+        reloadTimeInSec.RestartValues();
+        fireRateinSec.RestartValues();
+        maxTimeOnPowerup.RestartValues();
+        amplitudeGain.RestartValues();
+        startReloading.RestartValues();
+        timelastPowerupEnter.RestartValues();
+        timelastPowerupExit.RestartValues();
+        timePassed.RestartValues();
+        timeLeftPowerup.RestartValues();
+        powerActive.RestartValues();
+        reloading.RestartValues();
+        outOfAmmo.RestartValues();
+        powerupAvailable.RestartValues();
+    }
 
 }

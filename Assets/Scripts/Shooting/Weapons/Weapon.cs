@@ -27,6 +27,7 @@ public abstract class Weapon
     {        
         firePoint = _firePoint;
         data = _data;
+        data.RestartValues();
         powerupPressed = Resources.Load<AudioClip>("Sounds/Powerup/powerupPressed");
         powerupEmpty = Resources.Load<AudioClip>("Sounds/Powerup/powerup0");
         powerupMax = Resources.Load<AudioClip>("Sounds/Powerup/powerupMax");

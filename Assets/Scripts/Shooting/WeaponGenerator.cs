@@ -97,10 +97,10 @@ public class WeaponGenerator : MonoBehaviour
     public Weapon ReturnMyNextWeapon(Transform firePoint)
     {
         weaponInHandInt = nextWeaponInt;
-        int random = Random.Range(2, 3);
-        do { random = Random.Range(2, 3); } while (random == weaponInHandInt);
+        int random = Random.Range(0, 3);
+        do { random = Random.Range(0, 3); } while (random == weaponInHandInt);
         nextWeaponInt = random;
-        int random2 = Random.Range(0, 1);
+        int random2 = Random.Range(0, 3);
 
         if (random == 0)
         {
