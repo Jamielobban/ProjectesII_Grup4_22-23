@@ -15,7 +15,7 @@ public class SniperBullet : Bullet
 
         bulletDamage = 80*_damageMultiplier;
         bulletRangeInMetres = 150;
-        bulletSpeedMetresPerSec = 150;
+        bulletSpeedMetresPerSec = 100;
         bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();        

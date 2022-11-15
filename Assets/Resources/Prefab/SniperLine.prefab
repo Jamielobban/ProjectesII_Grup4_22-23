@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5983372869825450939}
-  - component: {fileID: 7660880835320092252}
   - component: {fileID: 8588069091112194823}
+  - component: {fileID: 7550277348818941248}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -33,26 +33,6 @@ Transform:
   m_Father: {fileID: 2941749680607597870}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
---- !u!95 &7660880835320092252
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767545922951144895}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8f8f7d522154a024886e36f120e11e34, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &8588069091112194823
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -94,17 +74,37 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -136107641, guid: a0d9e8feef8e6fa4ea7329f23b2f8ac7, type: 3}
+  m_Sprite: {fileID: 639897424, guid: 85f8dd3dcac118a4bac6e237fe5f72d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 0.50097656}
+  m_Size: {x: 1.0039216, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7550277348818941248
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767545922951144895}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bc37b1bd992b9de41ae06eca8f074c8c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1774155558844206833
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +132,7 @@ Transform:
   m_GameObject: {fileID: 1774155558844206833}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2240478214419303478}
@@ -260,10 +260,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4093b59b63a88f4cb8e2da574a34eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerUpOn: 0
+  collisionWallEffect: {fileID: 0}
+  collisionBloodEffect: {fileID: 0}
+  whatIsDamageable:
+    serializedVersion: 2
+    m_Bits: 0
+  whatIsMapColisionable:
+    serializedVersion: 2
+    m_Bits: 0
   mapLimit:
     serializedVersion: 2
     m_Bits: 2048
   shootBullet: {fileID: 1821172425303555735, guid: aba6f2cf84acaeb4480e594c8c290a95, type: 3}
+  shootPowerUpBullet: {fileID: 0}
   damageMultiplier: 0
   shootSound: {fileID: 0}
 --- !u!1 &5751073839443877466
