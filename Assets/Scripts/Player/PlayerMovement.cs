@@ -191,7 +191,11 @@ public class PlayerMovement : MonoBehaviour
                         isMoving = false;
                     }
                 }
-
+                else
+                {
+                    movement.x = 0;
+                    movement.y = 0;
+                }
 
                 if (Input.GetButtonDown("Dash") && canDash && isMoving)
                 {

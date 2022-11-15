@@ -7,15 +7,15 @@ public class SniperBullet : Bullet
     private Rigidbody2D rb;   
     [SerializeField]
     private GameObject childForCollisions;
-        
 
+    public LayerMask enemy;
     protected override void Start()
     {
         base.Start();
 
         bulletDamage = 80*_damageMultiplier;
         bulletRangeInMetres = 150;
-        bulletSpeedMetresPerSec = 30;
+        bulletSpeedMetresPerSec = 150;
         bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();        
@@ -27,6 +27,8 @@ public class SniperBullet : Bullet
     protected override void Update()
     {
         base.Update();
+
+
 
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg - 90;
         transform.rotation = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1));
@@ -42,18 +44,14 @@ public class SniperBullet : Bullet
 
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("MapLimit"))
-        {
-            if (!powerUpOn)
-                base.ImpactWall();
-            else
-            {
-                base.HitSomething();
-            }
-
-
+        {          
+          
+          base.ImpactWall();
+            
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {

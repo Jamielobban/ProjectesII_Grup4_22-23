@@ -20,13 +20,22 @@ public class GunBullet : Bullet
         Transform originalFirePoint = this.transform;
         rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
     }
-
+    private void FixedUpdate()
+    {
+        Vector2 normalizedVel = rb.velocity.normalized;
+        float waveVariation1 = 0.8f * Mathf.Sin(Time.time * rb.velocity.magnitude);
+        float waveVariation2 = 0.8f * Mathf.Sin(Time.time * rb.velocity.magnitude + Mathf.PI);
+        transform.position = new Vector3(transform.position.x + normalizedVel.y * waveVariation2, transform.position.y + normalizedVel.x * waveVariation1, transform.position.z);
+    }
     protected override void Update()
     {
         base.Update();
 
-        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg - 90;
-        transform.rotation = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1));
+
+
+
+        //float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg - 90;
+        //transform.rotation = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1));
                
     }
 

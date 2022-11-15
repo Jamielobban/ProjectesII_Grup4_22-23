@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShotgunBullet : Bullet
 {
-    GameObject[] pelletsOnBullet = new GameObject[5];
+    GameObject[] pelletsOnBullet = new GameObject[8];
     GameObject[] pelletsOnBulletPU = new GameObject[10];
     GameObject pelletPrefab;
     private Rigidbody2D rb;
@@ -35,14 +35,14 @@ public class ShotgunBullet : Bullet
 
         if (!powerUpOn)
         {
-            for (int i = 0, grados = -20; i < pelletsOnBullet.Length; i++, grados += 10)
+            for (int i = 0, grados = -15; i < pelletsOnBullet.Length; i++, grados += 3)
             {
                 pelletsOnBullet[i] = GameObject.Instantiate(pelletPrefab, transform.position, transform.rotation);
-                pelletsOnBullet[i].transform.Rotate(0, 0, pelletsOnBullet[i].transform.rotation.z + grados);
+                pelletsOnBullet[i].transform.Rotate(0, 0, pelletsOnBullet[i].transform.rotation.z + Random.Range(-20,20));
 
                 //Transform originalFirePoint = this.transform;
                 //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-                pelletsOnBullet[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBullet[i].transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+                pelletsOnBullet[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBullet[i].transform.up * -Random.Range(25, 35), ForceMode2D.Impulse);
 
                 if (powerUpOn)
                 {
@@ -58,14 +58,14 @@ public class ShotgunBullet : Bullet
         }
         else
         {
-            for (int i = 0, grados = -20; i < pelletsOnBulletPU.Length; i++, grados += 5)
+            for (int i = 0, grados = -15; i < pelletsOnBulletPU.Length; i++, grados += 5)
             {
                 pelletsOnBulletPU[i] = GameObject.Instantiate(pelletPrefab, transform.position, transform.rotation);
                 pelletsOnBulletPU[i].transform.Rotate(0, 0, pelletsOnBulletPU[i].transform.rotation.z + grados);
 
                 //Transform originalFirePoint = this.transform;
                 //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-                pelletsOnBulletPU[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBulletPU[i].transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+                pelletsOnBulletPU[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBulletPU[i].transform.up * -Random.Range(15, 25), ForceMode2D.Impulse);
 
                 if (powerUpOn)
                 {
