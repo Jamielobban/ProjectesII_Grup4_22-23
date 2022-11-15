@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class SniperLineBullet : MonoBehaviour
+public class SniperLineBullet : Bullet
 {
 
 
@@ -17,11 +17,25 @@ public class SniperLineBullet : MonoBehaviour
     bool charge;
 
     public GameObject shootBullet;
+    public GameObject shootPowerUpBullet;
+
     public float damageMultiplier;
 
     public AudioClip shootSound;
+
     void Start()
     {
+
+        if (powerUpOn)
+        {
+            StartCoroutine(normalShoot(1.2f));
+
+        }
+        else
+        {
+        StartCoroutine(normalShoot(0.6f));
+        }
+
         player = GameObject.FindGameObjectWithTag("Player");
 
         this.transform.SetParent(GameObject.FindGameObjectWithTag("RotatePoint").transform);
@@ -31,17 +45,33 @@ public class SniperLineBullet : MonoBehaviour
         player.GetComponent<PlayerMovement>().canMove = false;
 
         charge = true;
-        StartCoroutine(chargeTime(0.6f));
     }
 
-
-    private IEnumerator chargeTime(float time)
+    private IEnumerator powerUpShoot(float time)
     {
 
         yield return new WaitForSeconds(time);
         player.GetComponent<PlayerMovement>().canMove = true;
         charge = false;
-        this.transform.SetParent(null);
+
+
+        AudioManager.Instance.PlaySound(shootSound);
+
+        GameObject shoot = GameObject.Instantiate(shootPowerUpBullet, transform.position, transform.rotation);
+
+        shoot.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
+        Destroy(this.gameObject,0.3f);
+
+    }
+
+
+    
+    private IEnumerator normalShoot(float time)
+    {
+
+        yield return new WaitForSeconds(time);
+        player.GetComponent<PlayerMovement>().canMove = true;
+        charge = false;
 
 
         AudioManager.Instance.PlaySound(shootSound);
@@ -50,14 +80,21 @@ public class SniperLineBullet : MonoBehaviour
 
         shoot.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
 
-        Destroy(this.gameObject);
+        Destroy(this.gameObject, 0.3f);
     }
 
 
     void Update()
     {
 
-        if(charge)
+        if (powerUpOn)
+        {
+
+        }
+        else
+        {
+
+        if (charge)
         {
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, -transform.up, 500, mapLimit);
 
@@ -69,6 +106,10 @@ public class SniperLineBullet : MonoBehaviour
         {       
             bullet.positionCount = 0;
         }
+
+        }
+
+
 
 
     }
