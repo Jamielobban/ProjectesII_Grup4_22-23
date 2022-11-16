@@ -19,21 +19,24 @@ public class SniperLineBullet : Bullet
     public GameObject shootBullet;
     public GameObject shootPowerUpBullet;
 
-    public float damageMultiplier;
+    public Animator muzzleShoot;
 
     public AudioClip shootSound;
-
     void Start()
     {
 
+
         if (powerUpOn)
         {
-            StartCoroutine(normalShoot(1.2f));
+            StartCoroutine(powerUpShoot(1.2f));
 
+            muzzleShoot.speed = 0.6f;
         }
         else
         {
-        StartCoroutine(normalShoot(0.6f));
+            StartCoroutine(normalShoot(0.6f));
+
+            muzzleShoot.speed = 1.2f;
         }
 
         player = GameObject.FindGameObjectWithTag("Player");
@@ -55,11 +58,10 @@ public class SniperLineBullet : Bullet
         charge = false;
 
 
-        AudioManager.Instance.PlaySound(shootSound);
 
         GameObject shoot = GameObject.Instantiate(shootPowerUpBullet, transform.position, transform.rotation);
 
-        shoot.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
+        shoot.GetComponent<Bullet>().ApplyMultiplierToDamage(GetDamageMultiplier());
         Destroy(this.gameObject,0.3f);
 
     }
@@ -73,12 +75,12 @@ public class SniperLineBullet : Bullet
         player.GetComponent<PlayerMovement>().canMove = true;
         charge = false;
 
-
         AudioManager.Instance.PlaySound(shootSound);
+
 
         GameObject shoot = GameObject.Instantiate(shootBullet, transform.position, transform.rotation);
 
-        shoot.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
+        shoot.GetComponent<Bullet>().ApplyMultiplierToDamage(GetDamageMultiplier());
 
         Destroy(this.gameObject, 0.3f);
     }
@@ -87,12 +89,6 @@ public class SniperLineBullet : Bullet
     void Update()
     {
 
-        if (powerUpOn)
-        {
-
-        }
-        else
-        {
 
         if (charge)
         {
@@ -105,8 +101,6 @@ public class SniperLineBullet : Bullet
         else
         {       
             bullet.positionCount = 0;
-        }
-
         }
 
 

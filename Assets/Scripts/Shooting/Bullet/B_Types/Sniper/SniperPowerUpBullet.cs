@@ -2,68 +2,96 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SniperPowerUpBullet : Bullet
+public class SniperPowerUpBullet : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    [SerializeField]
-    private GameObject childForCollisions;
+    GameObject[] enemies;
+    Transform enemyPosition;
+    public GameObject marcador;
 
-    public LayerMask enemy;
-    protected override void Start()
+
+    bool canShoot;
+    GameObject marc;
+
+    private void Start()
     {
-        base.Start();
-
-        bulletDamage = 80 * _damageMultiplier;
-        bulletRangeInMetres = 150;
-        bulletSpeedMetresPerSec = 100;
-        bulletRadius = 0.23f;
-
-        rb = this.GetComponent<Rigidbody2D>();
-
-        Transform originalFirePoint = this.transform;
-        rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+        canShoot = false;
+        StartCoroutine(findEnemy(0.05f));    
     }
 
-    protected override void Update()
+    private IEnumerator endPowerUp(float time)
     {
-        base.Update();
+        yield return new WaitForSeconds(time);
+        Debug.Log("afwf");
+        Time.timeScale = 1;
+        canShoot = false;
+        Destroy(marc);
+    }
+    private IEnumerator findEnemy(float time)
+    {
 
-
-
-        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg - 90;
-        transform.rotation = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1));
-
-        if (!powerUpOn)
+        yield return new WaitForSeconds(time);
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemies.Length > 0)
         {
-            childForCollisions.SetActive(false);
+            int enemy = Random.Range(0, enemies.Length-1);
+            enemyPosition = enemies[enemy].transform;
+
+
+            Time.timeScale = 0.05f;
+            canShoot = true;
+            StartCoroutine(endPowerUp(0.5f * Time.timeScale));
         }
-        else
-        {
-            childForCollisions.SetActive(true);
-        }
+
+
 
     }
+    private void Update()
+    {
+        if(canShoot && Input.GetButtonDown("Shoot"))
+        {
+            this.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+
+            //Vector3 relativePos = enemyPosition.position - transform.position;
+
+            //float angle = Mathf.Atan2(relativePos.y, relativePos.x) * Mathf.Rad2Deg - rotation;
+
+            //Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            Vector3 from = transform.up;
+            Vector3 to = enemyPosition.position - transform.position;
+
+            float angle = Vector3.SignedAngle(from, to, transform.forward);
+            this.transform.parent.Rotate(0.0f, 0.0f, angle);
 
 
+            this.transform.parent.GetComponent<Rigidbody2D>().AddForce(this.transform.parent.up * this.transform.parent.GetComponent<Bullet>().GetSpeed(), ForceMode2D.Impulse);
+
+
+            StartCoroutine(endPowerUp(0));
+
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("MapLimit"))
+        if(collision.gameObject.tag == "Enemy")
         {
+            StartCoroutine(endPowerUp(0));
 
-            base.ImpactWall();
+            enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            if(enemies.Length >1)
+            {
+            StartCoroutine(findEnemy(0));
+
+            }
+
 
         }
-        else if (collision.gameObject.CompareTag("Enemy"))
+        else if (collision.gameObject.tag == "MapLimit")
         {
-            base.HitSomeone();
-            bulletInfo.damage = bulletDamage;
-            bulletInfo.impactPosition = transform.position;
-            collision.gameObject.SendMessage("GetDamage", bulletInfo);
+            StartCoroutine(endPowerUp(0.01f));
+
         }
+
     }
-
-
-
-
-
 }

@@ -261,21 +261,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpOn: 0
-  collisionWallEffect: {fileID: 0}
-  collisionBloodEffect: {fileID: 0}
+  collisionWallEffect: {fileID: 1383990659018448891, guid: 90d40582248e75143abb93179f421db5, type: 3}
+  collisionBloodEffect: {fileID: 5096148057906189823, guid: 4a122dcc68153794295f6953dd91521e, type: 3}
   whatIsDamageable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   whatIsMapColisionable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   mapLimit:
     serializedVersion: 2
     m_Bits: 2048
   shootBullet: {fileID: 1821172425303555735, guid: aba6f2cf84acaeb4480e594c8c290a95, type: 3}
-  shootPowerUpBullet: {fileID: 0}
-  damageMultiplier: 0
-  shootSound: {fileID: 0}
+  shootPowerUpBullet: {fileID: 1821172425303555735, guid: 4985581433c27ad49a2b5e343537a951, type: 3}
+  muzzleShoot: {fileID: 7550277348818941248}
+  shootSound: {fileID: 8300000, guid: 065002934b725464f881097ab699330a, type: 3}
 --- !u!1 &5751073839443877466
 GameObject:
   m_ObjectHideFlags: 0

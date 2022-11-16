@@ -31,7 +31,14 @@ public abstract class Bullet : MonoBehaviour
         _damageMultiplier = multiplier;        
     }
 
-    
+    public float GetDamageMultiplier()
+    {
+        return _damageMultiplier;
+    }
+    public float GetSpeed()
+    {
+        return bulletSpeedMetresPerSec;
+    }
 
     protected virtual void Start()
     {
