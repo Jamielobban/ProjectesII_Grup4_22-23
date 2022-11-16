@@ -87,29 +87,7 @@ public class GunBullet : Bullet
         
         
         
-    }
-    private void FixedUpdate()
-    {
-        //float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-        //float waveVariation =  0.2f * Mathf.Sin(Time.time * 40);
-        //transform.position = new Vector3(transform.position.x + Mathf.Sin(angle) * waveVariation, transform.position.y + Mathf.Cos(angle) * waveVariation, transform.position.z);
-        Vector2 normalizedVel = rb.velocity.normalized;
-        float waveVariation1 = 0.8f *  Mathf.Sin(Time.time*rb.velocity.magnitude);
-        float waveVariation2 = 0.8f *  Mathf.Sin(Time.time*rb.velocity.magnitude + Mathf.PI);
-        transform.position = new Vector3(transform.position.x + normalizedVel.y * waveVariation2, transform.position.y + normalizedVel.x * waveVariation1, transform.position.z);
-
-        
-
-
-        //float waveInPiAngle= 1f * Mathf.Sin(Time.time*10 );
-        //float waveVariationForAngle = 1 - Mathf.Sin(angle);
-         
-        ////float waveVariation = 0.8f *  Mathf.Sin(Time.time*30);
-       
-        //transform.tr
-        //transform.position = new Vector3(Mathf.Sin(angle) * waveVariation, Mathf.Cos(angle)*waveVariation, transform.position.z);
-       
-    }
+    }    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("MapLimit"))

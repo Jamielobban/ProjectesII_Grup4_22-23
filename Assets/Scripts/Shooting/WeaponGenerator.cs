@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponGenerator : MonoBehaviour
 {
     [SerializeField]
-    WeaponValues[] weaponsValues = new WeaponValues[9]; //Sniper, shotgun, Pistol - Auto, Semi, Bolt
+    WeaponValues[] weaponsValues = new WeaponValues[10]; //Sniper, shotgun, Pistol - Auto, Semi, Bolt
     //Mechanism[] mechanismTypes = new Mechanism[3] { new Automatica(), new Seamiautomatica(), new Repeticion() };
     //[SerializeField] GameObject[] bulletPrefabs = new GameObject[3];
 
@@ -43,7 +43,7 @@ public class WeaponGenerator : MonoBehaviour
     {
         //weaponsTypes = new Weapon[3] { new Sniper(firePoint), new Shotgun(firePoint), new Gun(firePoint) };
 
-        int random = Random.Range(1, 2);//0 1
+        int random = Random.Range(3, 4);//0 1
         //int random = 2;
         weaponInHandInt = random;
         int random2 = Random.Range(0, 1);// 2 3
@@ -59,6 +59,10 @@ public class WeaponGenerator : MonoBehaviour
         else if (random == 2)
         {
             weaponInHand = ReturnGunType(random2, firePoint);
+        }
+        else if(random == 3)
+        {
+            weaponInHand = new SineGun(firePoint, weaponsValues[9]);
         }
 
         //random = 2;

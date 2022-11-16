@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf8c338b6acc5bf4ebe7b6ceb18b5abb, type: 3}
+  m_Name: SineGunValues
+  m_EditorClassIdentifier: 
+  shootSound: {fileID: 8300000, guid: 5c3022c16501c3b45bf0888cf3df6e2c, type: 3}
+  reloadSound: {fileID: 8300000, guid: df68021993f28ed4c8b10b97eb4e08e2, type: 3}
+  weaponSprite: {fileID: 21300000, guid: 4418a6577186a3d4ebc1fd5b98faf0c4, type: 3}
+  weaponColor: {r: 0, g: 1, b: 0, a: 1}
+  bulletTypePrefab: {fileID: 8135951468331754527, guid: 896f67da1e18c84468bc411315fb4e35, type: 3}
+  bulletsInMagazine: {fileID: 11400000, guid: 6e39713ce12e1df4f9ac25f10ccb5f2a, type: 2}
+  magazinesInWeapon: {fileID: 11400000, guid: f67ed51a54417fc45b5cb14564e5fa51, type: 2}
+  damageMultiplier: {fileID: 11400000, guid: 0da5adfdf31fa9f428bbb15402188c08, type: 2}
+  reloadTimeInSec: {fileID: 11400000, guid: 3c1280c70bba720458b9f6e410ff03b0, type: 2}
+  fireRateinSec: {fileID: 11400000, guid: 0da160300eee43b43bba8b6757b83527, type: 2}
+  maxTimeOnPowerup: {fileID: 11400000, guid: 356f68e4c03c1ee40ba742cbeace782f, type: 2}
+  amplitudeGain: {fileID: 11400000, guid: 755ab8c6a4279c240b9c865b73c21b74, type: 2}
+  startReloading: {fileID: 11400000, guid: c1ab9f4da6d6af34588538278958908e, type: 2}
+  timelastPowerupEnter: {fileID: 11400000, guid: 509b216287c0ba442821e4f22e91e5c4, type: 2}
+  timelastPowerupExit: {fileID: 11400000, guid: 685fbff3cb684ee428807df9bc09ce0f, type: 2}
+  timePassed: {fileID: 11400000, guid: c552984061297cd4d94951e949737c77, type: 2}
+  timeLeftPowerup: {fileID: 11400000, guid: f6d5fe271c3d1d143a64df3daebccd09, type: 2}
+  powerActive: {fileID: 11400000, guid: 4ff4bd553906a8846987c42b007427a9, type: 2}
+  reloading: {fileID: 11400000, guid: 3c508cdc2cf02e343a92ec80df737b9b, type: 2}
+  outOfAmmo: {fileID: 11400000, guid: e13db096f60e55d4fb32c55ce447c2c6, type: 2}
+  powerupAvailable: {fileID: 11400000, guid: 6161c233cf781a24c8151a60832a2272, type: 2}
