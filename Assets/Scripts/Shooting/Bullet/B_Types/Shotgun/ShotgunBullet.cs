@@ -5,8 +5,9 @@ using UnityEngine;
 public class ShotgunBullet : Bullet
 {
     GameObject[] pelletsOnBullet = new GameObject[8];
-    GameObject[] pelletsOnBulletPU = new GameObject[10];
+    GameObject[] pelletsOnBulletPU = new GameObject[12];
     GameObject pelletPrefab;
+    GameObject powerupPelletPrefab;
     private Rigidbody2D rb;
     //private float _multiplier;
 
@@ -16,13 +17,14 @@ public class ShotgunBullet : Bullet
         base.Start();
 
         bulletDamage = 50*_damageMultiplier;
-        bulletRangeInMetres = 10;
+        bulletRangeInMetres = 5;
         bulletSpeedMetresPerSec = 20;
         bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();        
 
         pelletPrefab = Resources.Load<GameObject>("Prefab/Pellet");
+        powerupPelletPrefab = Resources.Load<GameObject>("Prefab/ShotgunPelletPowerup");
 
         if (powerUpOn)
         {
@@ -54,10 +56,12 @@ public class ShotgunBullet : Bullet
                 }
                 pelletsOnBullet[i].GetComponent<Pellet>().ApplyMultiplierToDamage(_damageMultiplier);
             }
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
         else
         {
+            GameObject pelletOnPowerUp = Instantiate(powerupPelletPrefab, transform.position, transform.rotation);
+            pelletOnPowerUp.GetComponent<Rigidbody2D>().AddForce(pelletOnPowerUp.transform.up * -35, ForceMode2D.Impulse);
             for (int i = 0, grados = -15; i < pelletsOnBulletPU.Length; i++, grados += 5)
             {
                 pelletsOnBulletPU[i] = GameObject.Instantiate(pelletPrefab, transform.position, transform.rotation);
@@ -65,7 +69,14 @@ public class ShotgunBullet : Bullet
 
                 //Transform originalFirePoint = this.transform;
                 //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+
                 pelletsOnBulletPU[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBulletPU[i].transform.up * -Random.Range(15, 25), ForceMode2D.Impulse);
+
+                //GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
+                //instance.GetComponent<EnemyProjectile>().bulletDamage = enemyBulletDamage;
+                //AudioManager.Instance.PlaySound(enemyShootSound);
+                //instance.transform.Rotate(0, 0, instance.transform.rotation.z + grados);
+                //instance.GetComponent<Rigidbody2D>().AddForce(instance.transform.right * bulletSpeed, ForceMode2D.Impulse);
 
                 if (powerUpOn)
                 {

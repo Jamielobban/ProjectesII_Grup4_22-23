@@ -7,19 +7,19 @@ public class Pellet : Bullet
     private Rigidbody2D rb;    
     [SerializeField]
     SpriteRenderer sr;
-    
+
+
     protected override void Start()
     {
         base.Start();
 
         bulletDamage = 34*_damageMultiplier;
-        bulletRangeInMetres = 5;
+        bulletRangeInMetres = 500;
         bulletSpeedMetresPerSec = 20;
         bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();
 
-        
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
     }
@@ -39,7 +39,7 @@ public class Pellet : Bullet
         }
         else
         {
-            bulletRangeInMetres =15;
+            
         }
 
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg - 90;
