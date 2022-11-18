@@ -89,6 +89,7 @@ public class SniperPowerUpBullet : MonoBehaviour
         }
         else if (collision.gameObject.tag == "MapLimit")
         {
+            Resources.Load<FloatValue>("ScriptableObjects/Weapons/Snipers/SniperBolt/SnB_FloatValues/SnB_MaxTimePowerup").RuntimeValue = 0.01f;
             StartCoroutine(endPowerUp(0.01f));
 
         }

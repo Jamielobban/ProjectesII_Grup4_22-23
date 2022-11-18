@@ -34,8 +34,8 @@ public class SineBullet : Bullet
 
         base.Start();
 
-        lastEnter = 0;
-        bulletRangeInMetres = 60;
+        lastEnter = 0; 
+        bulletRangeInMetres = 90;//6s
         bulletSpeedMetresPerSec = 15;//20
         bulletRadius = 0.23f;        
         counter = 0;
@@ -49,14 +49,12 @@ public class SineBullet : Bullet
 
 
 
-
-
-        if (!powerUpOn)
+        if (powerUpOn)
         {
             rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
-            betaBullet.GetComponent<BetaBullet>().powerUpOn = false;
-            alfaBullet.GetComponent<AlfaBullet>().powerUpOn = false;
+            betaBullet.GetComponent<BetaBullet>().powerUpOn = true;
+            alfaBullet.GetComponent<AlfaBullet>().powerUpOn = true;
 
             GameObject betaBulletClone = GameObject.Instantiate(betaBullet, transform.position, transform.rotation);
             betaBulletClone.GetComponent<BetaBullet>().originBullet = this.gameObject;
@@ -69,10 +67,12 @@ public class SineBullet : Bullet
         else
         {
             transform.rotation = Quaternion.Euler(0, 0, 1);
-            alfaBulletChild.GetComponent<AlfaBullet>().powerUpOn = true;
-            betaBulletChild.GetComponent<BetaBullet>().powerUpOn = true;
+            alfaBulletChild.GetComponent<AlfaBullet>().powerUpOn = false;
+            betaBulletChild.GetComponent<BetaBullet>().powerUpOn = false;
             betaBulletChild.GetComponent<BetaBullet>().originBullet = this.gameObject;
+            betaBulletChild.GetComponent<BetaBullet>().ApplyMultiplierToDamage(1);
             alfaBulletChild.GetComponent<AlfaBullet>().originBullet = this.gameObject;
+            alfaBulletChild.GetComponent<AlfaBullet>().ApplyMultiplierToDamage(1);
             alfaBulletChild.SetActive(true);
             betaBulletChild.SetActive(true);
         }
@@ -81,23 +81,30 @@ public class SineBullet : Bullet
 
     protected override void Update()
     {
-        if (powerUpOn)
+        if (!powerUpOn)
         {
-            transform.position = GameObject.FindGameObjectWithTag("Player").transform.position; /*Camera.main.GetComponent<Cinemachine.CinemachineBrain>().ActiveVirtualCamera.Follow.position;*/
-            //transform.rotation = Quaternion.Euler(0, 0, 1);
+            transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;      
+            base.Update();
+        }
+        else
+        {
+            if (Time.time - timeShooted >= bulletRangeInMetres / bulletSpeedMetresPerSec)
+            {
+                ResetBalls();
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        if (powerUpOn)
+        if (!powerUpOn)
         {
             if(Time.time - lastEnter >= 0.01f)
             {
                 counter += ballsSpeed* 360 * 0.01f;                
                 transform.rotation = Quaternion.Euler(0, 0, counter);
                 lastEnter = Time.time;
-                Debug.Log(counter);
+                //Debug.Log(counter);
             }
 
         }
@@ -119,104 +126,14 @@ public class SineBullet : Bullet
     }
 
 
-
+    void ResetBalls()
+    {
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        this.gameObject.SetActive(false);
+    }
 
 
 }
 
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
 
-//public class SineBullet : Bullet
-//{
-//    private Rigidbody2D rb;
-//    Transform originalFirePoint;
-//    [SerializeField]
-//    GameObject betaBulletPrefab;
-//    [SerializeField]
-//    GameObject alfaBulletPrefab;
-//    [SerializeField]
-//    GameObject betaBulletChild;
-//    [SerializeField]
-//    GameObject alfaBulletChild;
-//    private Dictionary<int, Vector3> enemiesInfo = new Dictionary<int, Vector3>();
-
-//    protected override void Start()
-//    {
-//        base.Start();
-
-//        //bulletDamage = 20 * _damageMultiplier;
-//        bulletRangeInMetres = 60;
-//        bulletSpeedMetresPerSec = 15;//20
-//        bulletRadius = 0.23f;
-
-//        rb = this.GetComponent<Rigidbody2D>();
-
-//        originalFirePoint = this.transform;
-//        //originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-15, 15));
-
-//        //Debug.Log(rb.velocity);
-//        //originalVector = rb.velocity;
-
-
-
-
-
-//        if (!powerUpOn)
-//        {
-//            rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-
-//            betaBulletPrefab.GetComponent<BetaBullet>().powerUpOn = false;
-//            alfaBulletPrefab.GetComponent<AlfaBullet>().powerUpOn = false;
-
-//            GameObject betaBulletClone = GameObject.Instantiate(betaBulletPrefab, transform.position, transform.rotation);
-//            betaBulletClone.GetComponent<BetaBullet>().originBullet = this.gameObject;
-//            betaBulletClone.GetComponent<Rigidbody2D>().AddForce(betaBulletClone.transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-
-//            GameObject alfaBulletulletClone = GameObject.Instantiate(alfaBulletPrefab, transform.position, transform.rotation);
-//            alfaBulletulletClone.GetComponent<AlfaBullet>().originBullet = this.gameObject;
-//            alfaBulletulletClone.GetComponent<Rigidbody2D>().AddForce(alfaBulletulletClone.transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-//        }
-//        else
-//        {
-//            alfaBulletChild.GetComponent<AlfaBullet>().powerUpOn = true;
-//            betaBulletChild.GetComponent<BetaBullet>().powerUpOn = true;
-//            betaBulletChild.GetComponent<BetaBullet>().originBullet = this.gameObject;
-//            alfaBulletChild.GetComponent<AlfaBullet>().originBullet = this.gameObject;
-//            alfaBulletChild.SetActive(true);
-//            betaBulletChild.SetActive(true);
-//        }
-
-
-
-//    }
-
-//    protected override void Update()
-//    {
-//        if (powerUpOn)
-//        {
-//            transform.position = Camera.main.GetComponent<Cinemachine.CinemachineBrain>().ActiveVirtualCamera.Follow.position;
-//        }
-//    }
-//    public bool CheckBlackHole(int id, Vector3 position)
-//    {
-//        if (enemiesInfo.ContainsKey(id))
-//        {
-//            Destroy(this.gameObject);
-//            return true;
-//        }
-//        if (enemiesInfo.Count >= 1)
-//        {
-//            Destroy(this.gameObject);
-//        }
-//        enemiesInfo.Add(id, position);
-//        return false;
-//    }
-
-
-
-
-
-//}
 

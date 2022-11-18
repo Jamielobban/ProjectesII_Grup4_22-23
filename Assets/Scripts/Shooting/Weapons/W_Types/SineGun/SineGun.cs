@@ -48,7 +48,5 @@ public class SineGun : Weapon
     protected override void CheckPowerUpShooting()
     {
         
-
-
     }
 }

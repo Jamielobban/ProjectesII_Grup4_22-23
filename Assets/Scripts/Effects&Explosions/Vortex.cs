@@ -78,11 +78,17 @@ public class Vortex : MonoBehaviour
                     enemiesInside.Remove(collision.gameObject.GetInstanceID());
                     collision.gameObject.GetComponent<EnemyController>().isDeath = true;
                     absorbAudioSource.PlayOneShot(vortexAbsorb);
+                    timeActive++;
+                    this.transform.localScale *= 1.2f;
                 }
             }
         }
         
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        collision.attachedRigidbody.velocity = Vector3.zero;
+    }
 
-    
+
 }

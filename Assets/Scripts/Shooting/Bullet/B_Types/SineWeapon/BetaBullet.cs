@@ -24,7 +24,7 @@ public class BetaBullet : Bullet{
     {
         base.Start();
 
-        bulletDamage = 10 * _damageMultiplier;
+        bulletDamage = 30 * _damageMultiplier;
         bulletRangeInMetres = 60;
         bulletSpeedMetresPerSec = 15; //20
         bulletRadius = 0.23f;
@@ -42,7 +42,7 @@ public class BetaBullet : Bullet{
     // Update is called once per frame     
     private void FixedUpdate()
     {       
-        if (!powerUpOn)
+        if (powerUpOn)
         {
             Vector2 normalizedVel = rb.velocity.normalized;
             float waveVariation1 = 0.8f * Mathf.Sin(timePassed * 20 + Mathf.PI * multiplier);//float waveVariation1 = 0.8f * Mathf.Sin(Time.time * rb.velocity.magnitude + Mathf.PI);
@@ -64,15 +64,16 @@ public class BetaBullet : Bullet{
 
     protected override void Update()
     {
-        if (!powerUpOn)
+        if (powerUpOn)
         {
             base.Update();
         }
+        Debug.Log(bulletDamage);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!powerUpOn)
+        if (powerUpOn)
         {
             if (collision.gameObject.CompareTag("MapLimit"))
             {
@@ -84,18 +85,31 @@ public class BetaBullet : Bullet{
                 {
                     GameObject vortex = Instantiate(blackHole, this.transform.position, this.transform.rotation);
                 }
-                bulletInfo.damage = bulletDamage;
-                bulletInfo.impactPosition = transform.position;
-                collision.gameObject.SendMessage("GetDamage", bulletInfo);
+                //bulletInfo.damage = bulletDamage;
+                //bulletInfo.impactPosition = transform.position;
+                //collision.gameObject.SendMessage("GetDamage", bulletInfo);
                 base.ImpactBody();                
 
             }
         }
         else
         {
+            if (collision.gameObject.CompareTag("MapLimit"))
+            {
+                base.HitSomething();
+            }
+            else if (collision.gameObject.CompareTag("Enemy"))
+            {                
+                bulletInfo.damage = bulletDamage;
+                bulletInfo.impactPosition = transform.position;
+                collision.gameObject.SendMessage("GetDamage", bulletInfo);
+                base.HitSomeone();
+                Debug.Log("NOPU");
 
-        }       
+            }
+        }      
 
 
     }
+    
 }

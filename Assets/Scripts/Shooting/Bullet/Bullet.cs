@@ -24,7 +24,7 @@ public abstract class Bullet : MonoBehaviour
     protected float _damageMultiplier;
 
     private bool firstTime = true;
-    private float timeShooted;
+    protected float timeShooted;
     
     public virtual void ApplyMultiplierToDamage(float multiplier)
     {
