@@ -22,19 +22,33 @@ public class SineGun : Weapon
             data.timelastPowerupExit.RuntimeValue = Time.time;
             AudioManager.Instance.PlaySound(powerupEmpty);
         }
-        if (!data.powerActive)
+        if (!data.powerActive.RuntimeValue)
         {
             data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = false;
+        }
+        else
+        {
+            data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = true;
         }
     }
 
     protected override void ActionOnEnterPowerup()
     {
         base.ActionOnEnterPowerup();
+
+        data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = true; 
+
+        GameObject bullet = GameObject.Instantiate(data.bulletTypePrefab, firePoint.position, firePoint.rotation);
+        bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(data.damageMultiplier.RuntimeValue);
+        AudioManager.Instance.PlaySound(data.shootSound);
+        CinemachineShake.Instance.ShakeCamera(5f, .1f);
+        CinemachineShake.Instance.ShakeCamera(5f * data.amplitudeGain.RuntimeValue, .1f);
     }
 
     protected override void CheckPowerUpShooting()
     {
-        throw new System.NotImplementedException();
+        
+
+
     }
 }

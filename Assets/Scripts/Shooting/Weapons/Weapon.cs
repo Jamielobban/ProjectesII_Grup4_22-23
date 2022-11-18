@@ -161,7 +161,7 @@ public abstract class Weapon
             data.reloading.RuntimeValue = false;
         }
 
-        if (Time.time - data.timelastPowerupExit.RuntimeValue >= 20 && !data.powerupAvailable.RuntimeValue)
+        if (Time.time - data.timelastPowerupExit.RuntimeValue >= 1 && !data.powerupAvailable.RuntimeValue)
         {
             data.powerupAvailable.RuntimeValue = true;            
         }       

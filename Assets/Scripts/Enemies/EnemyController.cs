@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class EnemyController : MonoBehaviour
 {
-    public bool isAlive;
+    public bool isDeath;
     private enum State
     {
         Chasing, Firing, Hit
@@ -70,7 +70,7 @@ public class EnemyController : MonoBehaviour
         if (enemyHealth <= impactInfo.damage)
         {
             enemyHealth = 0;
-            isAlive = true;
+            isDeath = true;
         }
         else
         {
@@ -89,7 +89,7 @@ public class EnemyController : MonoBehaviour
         //}
 
         // Debug.Log("am i working");
-        if (isAlive)
+        if (isDeath)
         {
             GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
             if (GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Count == 0)
@@ -293,7 +293,7 @@ public class EnemyController : MonoBehaviour
     {
         //rb.AddForce(transform.right * -knockbackPower, ForceMode2D.Impulse);
         Invoke("DestroyGameObject", 1f);
-        isAlive = true;
+        isDeath = true;
         sr.DOColor(Color.clear, 1f);
     }
 
