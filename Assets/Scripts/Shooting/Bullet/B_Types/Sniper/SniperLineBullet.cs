@@ -45,7 +45,6 @@ public class SniperLineBullet : Bullet
 
         bullet = GetComponent<LineRenderer>();
       
-        player.GetComponent<PlayerMovement>().canMove = false;
 
         charge = true;
     }
@@ -54,7 +53,6 @@ public class SniperLineBullet : Bullet
     {
 
         yield return new WaitForSeconds(time);
-        player.GetComponent<PlayerMovement>().canMove = true;
         charge = false;
 
 

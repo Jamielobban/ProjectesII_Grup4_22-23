@@ -14,8 +14,14 @@ public class RoomManager : MonoBehaviour
 
     public GameObject wallToSpawn;
     public GameObject wallToSpawn2;
+
+    public GameObject room;
+
+    GameObject cameraPos;
+
     public void Start()
     {
+        cameraPos = GameObject.FindGameObjectWithTag("CameraPos");
         wallToSpawn.SetActive(false);
         wallToSpawn2.SetActive(false);
     }
@@ -53,6 +59,7 @@ public class RoomManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            cameraPos.GetComponent<CameraPos>().x = room;
             wallToSpawn.SetActive(true);
             wallToSpawn2.SetActive(true);
             this.gameObject.tag = "RoomManager";
