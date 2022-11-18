@@ -14,7 +14,8 @@ public class AlfaBullet : Bullet
     private float timePassed;
     
     public float m_RotationSpeed;
-    private RelativeJoint2D relativeJoint;
+    //private RelativeJoint2D relativeJoint;
+    float lastTimeEnter;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -31,30 +32,17 @@ public class AlfaBullet : Bullet
         bulletRadius = 0.23f;
         timePassed = 1;
         multiplier = 0;
-        relativeJoint = GetComponent<RelativeJoint2D>();
+        //relativeJoint = GetComponent<RelativeJoint2D>();
         rb = this.GetComponent<Rigidbody2D>();
+        lastTimeEnter = Time.time;        
+        //if (powerUpOn)
+        //{
+        //    relativeJoint.attachedRigidbody.inertia = 0.5f;
+        //}        
 
-        //relativeJoint.connectedBody = originBullet.GetComponent<Rigidbody2D>();
-        if (powerUpOn)
-        {
-            relativeJoint.attachedRigidbody.inertia = 0.5f;
-        }
-        //{            
-        //    relativeJoint.enabled = true;            
-        //    
-        //}
-        //else
-        //{            
-        //    relativeJoint.enabled = false;
-        //}
-
-    }
-    // Update is called once per frame    
+    }        
     private void FixedUpdate()
-    {
-        //float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-        //float waveVariation =  0.2f * Mathf.Sin(Time.time * 40);
-        //transform.position = new Vector3(transform.position.x + Mathf.Sin(angle) * waveVariation, transform.position.y + Mathf.Cos(angle) * waveVariation, transform.position.z);
+    {        
 
         if (!powerUpOn)
         {
@@ -67,54 +55,15 @@ public class AlfaBullet : Bullet
             multiplier = 1;
         }
         else
-        {
-
-            //transform.RotateAround(Camera.main.GetComponent<Cinemachine.CinemachineBrain>().ActiveVirtualCamera.Follow.position, Vector3.forward, 20);
-            //Debug.Log(Camera.main.GetComponent<Cinemachine.CinemachineBrain>().ActiveVirtualCamera.Follow.position);
-            relativeJoint.angularOffset += (720*Time.deltaTime);
+        {            
+            if (Time.time - lastTimeEnter >= 0.01)
+            {                
+                lastTimeEnter = Time.time;
+            }
             
         }
 
-
-        //
-
-        //Transform _pivot;
-        //Vector3 _offsetDirection;
-        //float _distance;
-
-        //public void SetPivot(Transform pivot)
-        //{
-        //    if (pivot != null)
-        //    {
-        //        _pivot = pivot;
-        //        _offsetDirection = transform.position - pivot.position;
-        //        _distance = _offsetDirection.magnitude;
-        //    }
-        //    else
-        //    {
-        //        _pivot = null;
-        //    }
-        //}
-
-        //void Update()
-        //{
-        //    if (_pivot == null) return;
-
-        //    Quaternion rotate = Quaternion.Euler(0, 0, rotationSpeed * Time.deltaTime);
-
-        //    _offsetDirection = (rotate * _offsetDirection).normalized;
-
-        //    transform.position = _pivot.position + _offset * _distance;
-        //}
-    }
-
-    //float waveInPiAngle= 1f * Mathf.Sin(Time.time*10 );
-    //float waveVariationForAngle = 1 - Mathf.Sin(angle);
-
-    ////float waveVariation = 0.8f *  Mathf.Sin(Time.time*30);
-
-    //transform.tr
-    //transform.position = new Vector3(Mathf.Sin(angle) * waveVariation, Mathf.Cos(angle)*waveVariation, transform.position.z);
+    }    
 
 
     protected override void Update()
@@ -141,8 +90,7 @@ public class AlfaBullet : Bullet
                 bulletInfo.damage = bulletDamage;
                 bulletInfo.impactPosition = transform.position;
                 collision.gameObject.SendMessage("GetDamage", bulletInfo);
-                base.ImpactBody();
-                // Debug.Log(collision.gameObject.transform.position);
+                base.ImpactBody();                
 
             }
         }

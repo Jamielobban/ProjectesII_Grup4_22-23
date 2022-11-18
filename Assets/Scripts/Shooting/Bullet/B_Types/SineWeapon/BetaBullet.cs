@@ -16,7 +16,8 @@ public class BetaBullet : Bullet{
     public GameObject originBullet;
 
     public float m_RotationSpeed;
-    private RelativeJoint2D relativeJoint;
+    //private RelativeJoint2D relativeJoint;
+    float lastTimeEnter;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -30,29 +31,17 @@ public class BetaBullet : Bullet{
         timePassed = 1;
         rb = this.GetComponent<Rigidbody2D>();
         multiplier = 0;
-        relativeJoint = GetComponent<RelativeJoint2D>();
+        //relativeJoint = GetComponent<RelativeJoint2D>();
         //relativeJoint.connectedBody = originBullet.GetComponent<Rigidbody2D>();
-        if (powerUpOn)
-        {
-            relativeJoint.attachedRigidbody.inertia = 0.5f;
-        }
-        //{
-        //    relativeJoint.enabled = true;            
-        //    
-        //}
-        //else
-        //{            
-        //    relativeJoint.enabled = false;
-        //}
-
+        lastTimeEnter = Time.time;
+        //if (powerUpOn)
+        //{           
+        //    relativeJoint.attachedRigidbody.inertia = 0.5f;   
+        //}       
     }
-
     // Update is called once per frame     
     private void FixedUpdate()
-    {
-        //float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
-        //float waveVariation =  0.2f * Mathf.Sin(Time.time * 40);
-        //transform.position = new Vector3(transform.position.x + Mathf.Sin(angle) * waveVariation, transform.position.y + Mathf.Cos(angle) * waveVariation, transform.position.z);
+    {       
         if (!powerUpOn)
         {
             Vector2 normalizedVel = rb.velocity.normalized;
@@ -64,23 +53,13 @@ public class BetaBullet : Bullet{
             multiplier = 1;
         }
         else
-        {
-            //transform.RotateAround(Camera.main.GetComponent<Cinemachine.CinemachineBrain>().ActiveVirtualCamera.Follow.position, Vector3.forward, 20);
-            //Debug.Log(Camera.main.GetComponent<Cinemachine.CinemachineBrain>().ActiveVirtualCamera.Follow.position);
-            relativeJoint.angularOffset += (720*Time.deltaTime);
-
+        {            
+            if(Time.time - lastTimeEnter >= 0.01)
+            {
+                //relativeJoint.angularOffset += (360/100f);
+                lastTimeEnter = Time.time;
+            }
         }
-
-
-
-        //float waveInPiAngle= 1f * Mathf.Sin(Time.time*10 );
-        //float waveVariationForAngle = 1 - Mathf.Sin(angle);
-
-        ////float waveVariation = 0.8f *  Mathf.Sin(Time.time*30);
-
-        //transform.tr
-        //transform.position = new Vector3(Mathf.Sin(angle) * waveVariation, Mathf.Cos(angle)*waveVariation, transform.position.z);
-
     }
 
     protected override void Update()
@@ -108,17 +87,14 @@ public class BetaBullet : Bullet{
                 bulletInfo.damage = bulletDamage;
                 bulletInfo.impactPosition = transform.position;
                 collision.gameObject.SendMessage("GetDamage", bulletInfo);
-                base.ImpactBody();
-                // Debug.Log(collision.gameObject.transform.position);
+                base.ImpactBody();                
 
             }
         }
         else
         {
 
-        }
-
-        
+        }       
 
 
     }
