@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class SniperPowerUpBullet : MonoBehaviour
 {
-    GameObject[] enemies;
-    Transform enemyPosition;
+    public GameObject[] enemies;
+    GameObject enemyPosition;
     public GameObject marcador;
 
-
+    int maxRebotes;
     bool canShoot;
     GameObject marc;
 
     private void Start()
     {
+        maxRebotes = 0;
+        enemies = new GameObject[0];
         canShoot = false;
-        StartCoroutine(findEnemy(0.05f));    
+        StartCoroutine(findEnemy(0.05f));
     }
 
     private IEnumerator endPowerUp(float time)
@@ -30,16 +33,21 @@ public class SniperPowerUpBullet : MonoBehaviour
     {
 
         yield return new WaitForSeconds(time);
+        if (enemies.Length > 0)
+        {
+            clearArray();
+        }
+
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if (enemies.Length > 0)
         {
-            int enemy = Random.Range(0, enemies.Length-1);
-            enemyPosition = enemies[enemy].transform;
+            int enemy = Random.Range(0, enemies.Length - 1);
+            enemyPosition = enemies[enemy];
 
 
-            Time.timeScale = 0.05f;
+            Time.timeScale = 0.1f;
             canShoot = true;
-            StartCoroutine(endPowerUp(0.5f * Time.timeScale));
+            StartCoroutine(endPowerUp(5f * Time.timeScale));
         }
 
 
@@ -47,7 +55,7 @@ public class SniperPowerUpBullet : MonoBehaviour
     }
     private void Update()
     {
-        if(canShoot && Input.GetButtonDown("Shoot"))
+        if (canShoot && Input.GetButtonDown("Shoot"))
         {
             this.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
 
@@ -58,7 +66,7 @@ public class SniperPowerUpBullet : MonoBehaviour
             //Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
 
             Vector3 from = transform.up;
-            Vector3 to = enemyPosition.position - transform.position;
+            Vector3 to = enemyPosition.transform.position - transform.position;
 
             float angle = Vector3.SignedAngle(from, to, transform.forward);
             this.transform.parent.Rotate(0.0f, 0.0f, angle);
@@ -71,19 +79,41 @@ public class SniperPowerUpBullet : MonoBehaviour
 
         }
     }
+    void clearArray()
+    {
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i] = null;
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
             StartCoroutine(endPowerUp(0));
 
+
+            clearArray();
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-            if(enemies.Length >1)
+            if (enemies.Length > 1)
             {
-            StartCoroutine(findEnemy(0));
+                StartCoroutine(findEnemy(0));
 
             }
+            else if (enemies.Length == 1 && collision.gameObject != null)
+            {
+
+                this.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                this.transform.parent.GetComponent<Rigidbody2D>().AddForce(this.transform.parent.up * -this.transform.parent.GetComponent<Bullet>().GetSpeed(), ForceMode2D.Impulse);
+                StartCoroutine(findEnemy(0.05f));
+
+
+            }
+
+
+
+
 
 
         }
