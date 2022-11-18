@@ -7,8 +7,8 @@ public abstract class Bullet : MonoBehaviour
     public bool powerUpOn;
     protected BulletHitInfo bulletInfo;
 
-    [SerializeField]
-    protected GameObject collisionWallEffect;
+    //[SerializeField]
+    public GameObject collisionWallEffect;
     [SerializeField]
     protected GameObject collisionBloodEffect;
 

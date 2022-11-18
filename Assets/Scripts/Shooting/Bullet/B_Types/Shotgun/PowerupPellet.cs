@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pellet : Bullet
+public class PowerupPellet : Bullet
 {
-    private Rigidbody2D rb;    
+    private Rigidbody2D rb;
     [SerializeField]
     SpriteRenderer sr;
 
@@ -13,7 +13,7 @@ public class Pellet : Bullet
     {
         base.Start();
 
-        bulletDamage = 34*_damageMultiplier;
+        bulletDamage = 75 * _damageMultiplier;
         bulletRangeInMetres = 500;
         bulletSpeedMetresPerSec = 20;
         bulletRadius = 0.23f;
@@ -26,22 +26,12 @@ public class Pellet : Bullet
 
     public void SetDamageBUllet(float _multiplier)
     {
-        bulletDamage = 34 * _multiplier;
+        bulletDamage = 75 * _multiplier;
     }
-    
+
     protected override void Update()
     {
         base.Update();
-
-        if (!powerUpOn)
-        {
-           
-        }
-        else
-        {
-            
-        }
-
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg - 90;
         transform.rotation = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1));
     }
@@ -51,17 +41,16 @@ public class Pellet : Bullet
         if (collision.gameObject.CompareTag("MapLimit"))
         {
             base.ImpactWall();
-            Debug.Log("Hit the wall");
+            Destroy(this.gameObject);
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             bulletInfo.damage = bulletDamage;
             bulletInfo.impactPosition = transform.position;
             collision.gameObject.SendMessage("GetDamage", bulletInfo);
-            base.ImpactBody();           
+            base.ImpactBody();
+            Destroy(this.gameObject);
+
         }
     }
-
-
-    
 }
