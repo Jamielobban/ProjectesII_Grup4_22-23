@@ -52,8 +52,8 @@ public class CircleTransition : MonoBehaviour
     private void DrawBlackScreen()
     {
 
-        var screenWidth = Screen.width;
-        var screenHeight = Screen.height;
+        var screenWidth = Screen.width*2;
+        var screenHeight = Screen.height*2;
         var playerScreenPos = Camera.main.WorldToScreenPoint(player.position);
 
         var canvasRect = _canvas.GetComponent<RectTransform>().rect;
