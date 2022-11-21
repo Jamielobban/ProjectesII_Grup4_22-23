@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    public bool currentRoom = false;
+    //public bool currentRoom = false;
 
     private int lastNumberEnemiesInRoom;
    
@@ -45,7 +45,7 @@ public class RoomManager : MonoBehaviour
             }
             lastNumberEnemiesInRoom = enemiesInRoom.Count;
         }
-        if (!currentRoom)
+        if (!this.gameObject.CompareTag("RoomManager"))
         {
             kills = 0;
         }
@@ -84,7 +84,7 @@ public class RoomManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            currentRoom = true;
+            //currentRoom = true;
             cameraPos.GetComponent<CameraPos>().x = room;
             wallToSpawn.SetActive(true);
             wallToSpawn2.SetActive(true);
@@ -96,10 +96,10 @@ public class RoomManager : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            currentRoom = false;
-            //Destroy(gameObject);
-        }
+        //if (collision.CompareTag("Player"))
+        //{
+        //    currentRoom = false;
+        //    //Destroy(gameObject);
+        //}
     }
 }

@@ -1,24 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 
 public class ChallengeManager : MonoBehaviour
 {
-    enum ChallengeGameState { PICKCHALLENGE, SHOWCHALLENGEINSCREEN, WAITINGCHOICE, WAITINGRESULT, WAITINGTIMENEWCHALLENGE };
-
-    [SerializeField]
-    List<ChallengeController> allGameChallenges = new List<ChallengeController>();
-    ChallengeController currentChallenge;
-    ChallengeGameState stateController;
-    bool challengeAccepted;
-    float lastTimeChallengeExit;
     [SerializeField]
     float timeBetweenChallenges;
-    float timeGameStart;
-    ChallengeValue valueDependingOnTimePlayed;
+    enum ChallengeGameState { PICKCHALLENGE, SHOWCHALLENGEINSCREEN, WAITINGCHOICE, WAITINGRESULT, WAITINGTIMENEWCHALLENGE };
 
     ChallengeController actualChallenge;
-    int actualChallengeIndex;
+
+    List<ChallengeController> allGameChallenges = new List<ChallengeController>();
+
+    ChallengeValue valueDependingOnTimePlayed;
+    ChallengeGameState stateController;    
+    float lastTimeChallengeExit;    
+    float timeGameStart;
+
+    
+
     public ChallengeManager()
     {
         AddToList(new KillsLow(), new KillsMediumLow(), new KillsMedium(), new KillsMediumHigh(), new KillsMediumHigh());
@@ -27,10 +29,9 @@ public class ChallengeManager : MonoBehaviour
     private void Start()
     {
         stateController = ChallengeGameState.WAITINGTIMENEWCHALLENGE;
-        timeBetweenChallenges = Random.Range(5, 8);
-        challengeAccepted = false;
+        timeBetweenChallenges = Random.Range(5, 8);        
         lastTimeChallengeExit = Time.time;
-        timeGameStart = Time.time;
+        timeGameStart = Time.time;        
 
         DontDestroyOnLoad(this);
 
@@ -38,6 +39,7 @@ public class ChallengeManager : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(stateController);
 
         if(Time.time - timeGameStart <= 120) //2 min o menys
         {
@@ -69,9 +71,7 @@ public class ChallengeManager : MonoBehaviour
                 WaitingTimeNewChallengeLogicUpdate();
                 break;
             case ChallengeGameState.PICKCHALLENGE:
-                actualChallenge = PickChallengeFromPool();
-                actualChallenge.Start();
-                stateController = ChallengeGameState.SHOWCHALLENGEINSCREEN;
+                PickChallengeFromPool();
                 break;
             case ChallengeGameState.SHOWCHALLENGEINSCREEN:
                 ShowChallengeInScreen();
@@ -96,12 +96,21 @@ public class ChallengeManager : MonoBehaviour
         }
     }
 
-    ChallengeController PickChallengeFromPool()
+    void PickChallengeFromPool()
     {
-        ChallengeController challengeToReturn;
-        do {actualChallengeIndex = Random.Range(0, allGameChallenges.Count); challengeToReturn = allGameChallenges[actualChallengeIndex]; } while (challengeToReturn.challenge.value != valueDependingOnTimePlayed);
-        Debug.Log(challengeToReturn.challenge.value);
-        return challengeToReturn;
+        //ChallengeController challengeToReturn;
+        List<ChallengeController> checkChallengesAvailable = allGameChallenges.Where(challenge => challenge.challenge.value == valueDependingOnTimePlayed).ToList();
+        if(checkChallengesAvailable.Count != 0)
+        {            
+            actualChallenge = checkChallengesAvailable[Random.Range(0, checkChallengesAvailable.Count)];
+            Debug.Log(actualChallenge.challenge.value);
+            stateController = ChallengeGameState.SHOWCHALLENGEINSCREEN;
+        }
+        else
+        {
+            
+        }        
+        
     }
 
     void WaitingChallengeResult()
@@ -116,8 +125,8 @@ public class ChallengeManager : MonoBehaviour
             {
                 ApplyChallengePunishment();                
             }
-            allGameChallenges.RemoveAt(actualChallengeIndex);
-            timeBetweenChallenges = Random.Range(5, 8);
+            allGameChallenges.RemoveAt(allGameChallenges.IndexOf(actualChallenge));
+            timeBetweenChallenges = Random.Range(3, 4);
             stateController = ChallengeGameState.WAITINGTIMENEWCHALLENGE;
             lastTimeChallengeExit = Time.time;
         }
@@ -127,6 +136,7 @@ public class ChallengeManager : MonoBehaviour
     {
         stateController = ChallengeGameState.WAITINGCHOICE;
         QuestionDialogUI.Instance.ShowQuestion(actualChallenge.challenge.challengeText, () => {
+            actualChallenge.Start();
             stateController = ChallengeGameState.WAITINGRESULT;
         }, () => {
             lastTimeChallengeExit = Time.time;

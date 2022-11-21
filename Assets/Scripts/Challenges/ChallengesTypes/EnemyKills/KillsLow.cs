@@ -11,7 +11,7 @@ public class KillsLow : EnemyKillsInTime
 
         System.Random r = new System.Random();
 
-        int rand = r.Next(0, 2);
+        int rand = r.Next(0, 1);
         int number;
 
         if (rand == 0)
