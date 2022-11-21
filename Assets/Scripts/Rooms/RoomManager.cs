@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
+    public bool currentRoom = false;
+
+    private int lastNumberEnemiesInRoom;
+   
+    public int kills = 0;
+
     public List<GameObject> enemySpawners;
 
     public List<GameObject> enemiesInRoom;
@@ -24,6 +30,25 @@ public class RoomManager : MonoBehaviour
         cameraPos = GameObject.FindGameObjectWithTag("CameraPos");
         wallToSpawn.SetActive(false);
         wallToSpawn2.SetActive(false);
+        lastNumberEnemiesInRoom = enemiesInRoom.Count;
+        
+    }
+
+    private void Update()
+    {
+        if(lastNumberEnemiesInRoom != enemiesInRoom.Count)
+        {
+            int difference = lastNumberEnemiesInRoom - enemiesInRoom.Count;
+            if(difference > 0)
+            {
+                kills += difference;
+            }
+            lastNumberEnemiesInRoom = enemiesInRoom.Count;
+        }
+        if (!currentRoom)
+        {
+            kills = 0;
+        }
     }
     public void spawnRound()
     {
@@ -45,7 +70,7 @@ public class RoomManager : MonoBehaviour
         else
         {
             //Debug.Log("All enemies are dead");
-            //this.gameObject.tag = "Default";
+            this.gameObject.tag = "Default";
             wallToSpawn.SetActive(false);
             wallToSpawn2.SetActive(false);
             Destroy(gameObject);
@@ -59,12 +84,22 @@ public class RoomManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            currentRoom = true;
             cameraPos.GetComponent<CameraPos>().x = room;
             wallToSpawn.SetActive(true);
             wallToSpawn2.SetActive(true);
             this.gameObject.tag = "RoomManager";
             Invoke("spawnRound", 1.1f);
-            Destroy(this.GetComponent<BoxCollider2D>());
+            //Destroy(this.GetComponent<BoxCollider2D>());
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            currentRoom = false;
+            //Destroy(gameObject);
         }
     }
 }

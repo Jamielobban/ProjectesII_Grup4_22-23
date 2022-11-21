@@ -106,7 +106,7 @@ public class AlfaBullet : Bullet
                 bulletInfo.impactPosition = transform.position;
                 collision.gameObject.SendMessage("GetDamage", bulletInfo);
                 base.HitSomeone();
-                Debug.Log("NOPU");
+                //Debug.Log("NOPU");
 
             }
         }

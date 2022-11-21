@@ -68,7 +68,7 @@ public class BetaBullet : Bullet{
         {
             base.Update();
         }
-        Debug.Log(bulletDamage);
+        //Debug.Log(bulletDamage);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -104,7 +104,7 @@ public class BetaBullet : Bullet{
                 bulletInfo.impactPosition = transform.position;
                 collision.gameObject.SendMessage("GetDamage", bulletInfo);
                 base.HitSomeone();
-                Debug.Log("NOPU");
+                //Debug.Log("NOPU");
 
             }
         }      
