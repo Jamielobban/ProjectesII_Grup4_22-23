@@ -24,7 +24,7 @@ public class Turn : MonoBehaviour
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         //Debug.Log(mousePos);
 
-        if (!playerTurn.isDead)
+        if (!playerTurn.isDead && Time.timeScale != 0)
         {
             Vector2 direc = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y);
             transform.up = -direc;

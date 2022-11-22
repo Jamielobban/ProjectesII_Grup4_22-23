@@ -11,6 +11,8 @@ public class QuestionDialogUI : MonoBehaviour
     private TextMeshProUGUI textMeshPro;
     private Button yesBtn;
     private Button noBtn;
+    Action _yesAction;
+    Action _noAction;
 
     private void Awake()
     {
@@ -33,14 +35,33 @@ public class QuestionDialogUI : MonoBehaviour
         gameObject.SetActive(true);
 
         textMeshPro.text = questionText;
-        yesBtn.onClick.AddListener( () =>{
-            Hide();
-            yesAction();
-        });
-        noBtn.onClick.AddListener(() => {
-            Hide();
-            noAction();
-        });
+
+        _yesAction = yesAction;
+        _noAction = noAction;
+
+        Time.timeScale = 0;
+        //yesBtn.onClick.AddListener( () =>{
+        //    Hide();
+        //    yesAction();           
+        //});
+        //noBtn.onClick.AddListener(() => {
+        //    Hide();
+        //    noAction();            
+        //});
+    }
+
+    public void YesBtn()
+    {
+        Hide();
+        _yesAction();
+        Time.timeScale = 1;
+
+    }
+    public void NoBtn()
+    {
+        Hide();
+        _noAction();
+        Time.timeScale = 1;
     }
 
     private void Hide()
