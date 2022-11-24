@@ -39,7 +39,7 @@ public class ChallengeManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(stateController);
+        //Debug.Log(stateController);
 
         if(Time.time - timeGameStart <= 120) //2 min o menys
         {
@@ -142,18 +142,21 @@ public class ChallengeManager : MonoBehaviour
             lastTimeChallengeExit = Time.time;
             stateController = ChallengeGameState.WAITINGTIMENEWCHALLENGE;
         });
+        QuestionDialogUI.Instance.SetActualChallengeDifficulty(actualChallenge.challenge.value);
     }    
 
     void ApplyChallengePerk()
     {
         //TODO:
         Debug.Log("Achived");
+        QuestionDialogUI.Instance.GetComponent<QuestionDialogUI>().ApplySelectionReward();
     }
 
     void ApplyChallengePunishment()
     {
         //TODO:
         Debug.Log("Lose");
+        QuestionDialogUI.Instance.GetComponent<QuestionDialogUI>().ApplySelectionPunishment();
 
     }
 
