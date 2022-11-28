@@ -189,4 +189,9 @@ public class RightHand : MonoBehaviour
     {
         return weaponInHand.GetWeaponColor();
     }
+
+    public Weapon GetWeaponInHand()
+    {
+        return weaponInHand;
+    }
 }

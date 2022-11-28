@@ -234,5 +234,10 @@ public abstract class Weapon
     
     protected virtual void ActionOnEnterPowerup(){
     }
+
+    public float GetFireRate()
+    {
+        return data.fireRateinSec.InitialValue;
+    }
 }
 

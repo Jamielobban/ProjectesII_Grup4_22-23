@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf8c338b6acc5bf4ebe7b6ceb18b5abb, type: 3}
+  m_Name: FlamethrowerValues
+  m_EditorClassIdentifier: 
+  shootSound: {fileID: 0}
+  reloadSound: {fileID: 0}
+  weaponSprite: {fileID: 21300000, guid: 25e2eb5f648cad742ac89246478e5eeb, type: 3}
+  weaponColor: {r: 0.46791452, g: 0.09242612, b: 0.6320754, a: 0}
+  bulletTypePrefab: {fileID: 0}
+  bulletsInMagazine: {fileID: 11400000, guid: a0c5b4acffaf30345a00860342a18665, type: 2}
+  magazinesInWeapon: {fileID: 11400000, guid: 5793e5ceceab6914a9a46f09cd762beb, type: 2}
+  damageMultiplier: {fileID: 11400000, guid: 119d49bfe4a7da843b6e7c0add9337c5, type: 2}
+  reloadTimeInSec: {fileID: 11400000, guid: 5b0ccd12271615c42bac5aceabc6d590, type: 2}
+  fireRateinSec: {fileID: 11400000, guid: 6d1b812e53cf1bc4fbca484d2a92aba8, type: 2}
+  maxTimeOnPowerup: {fileID: 11400000, guid: 1755a592caedd4740a39bafd04885645, type: 2}
+  amplitudeGain: {fileID: 11400000, guid: ffd67f1bd2c82ac438f90a22a934ee3c, type: 2}
+  startReloading: {fileID: 11400000, guid: c1f37b5cd6bb51f4590cdc020dcd5a2b, type: 2}
+  timelastPowerupEnter: {fileID: 11400000, guid: 5380af7277a978e48b36c27371c36b7a, type: 2}
+  timelastPowerupExit: {fileID: 11400000, guid: 6c1b38b845329f64baf77d39b3f1d35a, type: 2}
+  timePassed: {fileID: 11400000, guid: b1f6923e79caf19418fb02fc75c3f205, type: 2}
+  timeLeftPowerup: {fileID: 11400000, guid: ab91087abaa2bb24b8edbe5654cc4851, type: 2}
+  powerActive: {fileID: 11400000, guid: 7e9e048cf6fa9cf4ab972ccc6b6154e7, type: 2}
+  reloading: {fileID: 11400000, guid: a128b1c228b4bdb488dc27172399240a, type: 2}
+  outOfAmmo: {fileID: 11400000, guid: 6907c124c1e1cbc429d959bf8c8fb82b, type: 2}
+  powerupAvailable: {fileID: 11400000, guid: b1a8009144068f340bfa1072bdf908df, type: 2}
