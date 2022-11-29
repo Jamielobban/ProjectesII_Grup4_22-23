@@ -62,7 +62,7 @@ public class EnemyController : MonoBehaviour
 
     public void GetDamage(BulletHitInfo impactInfo)
     {
-        
+        Debug.Log("In");
         AudioManager.Instance.PlaySound(damageSound);
         GameObject blood = GameObject.Instantiate(floorBlood, impactInfo.impactPosition, this.transform.rotation);
         blood.GetComponent<Transform>().localScale = transform.localScale*2;
@@ -296,6 +296,8 @@ public class EnemyController : MonoBehaviour
         isDeath = true;
         sr.DOColor(Color.clear, 1f);
     }
+
+    
 
     //private void OnTriggerEnter2D(Collider2D collision)
     //{
