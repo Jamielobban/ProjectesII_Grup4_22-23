@@ -34,7 +34,7 @@ public class ChallengeManager : MonoBehaviour
         timeGameStart = Time.time;        
 
         DontDestroyOnLoad(this);
-
+        
     }
 
     private void Update()

@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using UnityEngine.ParticleSystemJobs;
 
 public class FlameThrowerBullet : Bullet
 {
     private Rigidbody2D rb;
     
+    
 
-    void Start()
+    protected override void Start()
     {
-        bulletDamage = 10 * _damageMultiplier;
+        timeShooted = Time.time;     
+
+        bulletDamage = 1f * _damageMultiplier;
         bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
         bulletSpeedMetresPerSec = 1;
         bulletRadius = 0.23f;
@@ -17,7 +22,17 @@ public class FlameThrowerBullet : Bullet
         rb = this.GetComponent<Rigidbody2D>();
 
         Transform originalFirePoint = this.transform;
+
+    }
+
+    protected override void Update()
+    {
+        //base.Update();
+        //timeShooted = Time.time;        
         
     }
-        
+    public float GetFlamesDamage()
+    {
+        return bulletDamage;
+    }
 }

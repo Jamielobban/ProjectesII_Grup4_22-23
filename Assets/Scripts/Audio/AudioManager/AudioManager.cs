@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] AudioSource sfxAudioSource, musicAudioSource;
+    [SerializeField] AudioSource sfxAudioSource, musicAudioSource, sfxLoop;
 
     public static AudioManager Instance { get; private set; }
 
@@ -34,6 +34,11 @@ public class AudioManager : MonoBehaviour
     {
         sfxAudioSource.clip = clip;
         sfxAudioSource.PlayDelayed(delay);
+    }
+    public AudioSource PlaySoundLoop(AudioClip clip)
+    {
+        sfxLoop.PlayOneShot(clip);
+        return sfxLoop;
     }
 
     private void ToggleMusic()

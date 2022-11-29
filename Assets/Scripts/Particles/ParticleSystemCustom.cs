@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParticleSystem : MonoBehaviour
+public class ParticleSystemCustom : MonoBehaviour
 {
-    private ParticleSystem ps;
+    private ParticleSystemCustom ps;
     [SerializeField]
     private float duration;
     private float startTime;
