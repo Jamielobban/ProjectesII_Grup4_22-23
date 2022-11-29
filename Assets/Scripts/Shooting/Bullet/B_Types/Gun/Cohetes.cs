@@ -13,7 +13,7 @@ public class Cohetes : Bullet
     {
         bulletDamage = 25 * _damageMultiplier;
         bulletRangeInMetres = 150;
-        bulletSpeedMetresPerSec = 15;
+        bulletSpeedMetresPerSec = 25;
         bulletRadius = 0.23f;
 
         this.transform.Rotate(0,0, this.transform.rotation.z + Random.RandomRange(-5, 5));
@@ -22,7 +22,7 @@ public class Cohetes : Bullet
         GameObject explosion = Instantiate(muzzle, this.transform.position, this.transform.rotation);
         Destroy(explosion, 0.2f);
 
-        StartCoroutine(teledirigir(0.5f));
+        StartCoroutine(teledirigir(0.4f));
     }
 
     private IEnumerator teledirigir(float time)
