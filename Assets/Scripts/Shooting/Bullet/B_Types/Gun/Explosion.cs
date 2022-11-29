@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Explosion : Bullet
 {
+    public int damage;
     // Start is called before the first frame update
     void Start()
     {
-        bulletDamage = 50 * _damageMultiplier;
+        bulletDamage = damage * _damageMultiplier;
+
         Destroy(this.gameObject, 0.6f);
 
     }

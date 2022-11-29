@@ -90,7 +90,7 @@ public class RoomManager : MonoBehaviour
             wallToSpawn2.SetActive(true);
             this.gameObject.tag = "RoomManager";
             Invoke("spawnRound", 1.1f);
-            //Destroy(this.GetComponent<BoxCollider2D>());
+            Destroy(this.GetComponent<BoxCollider2D>());
         }
     }
 
