@@ -52,14 +52,16 @@ public abstract class Weapon
         {
             data.timeLeftPowerup.RuntimeValue = data.maxTimeOnPowerup.RuntimeValue - (Time.time - data.timelastPowerupEnter.RuntimeValue);
             firstEnter = true;
-        }
-        
-        CheckShooting();
+        }        
 
         InputsUpdate();
 
         LogicUpdate();
 
+    }
+    public virtual void FixedUpdate()
+    {
+        CheckShooting();
     }
     public float GetReloadTimeInSec()
     {

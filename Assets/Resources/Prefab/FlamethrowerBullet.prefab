@@ -135,7 +135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
       propertyPath: TriggerModule.inside
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
       propertyPath: TriggerModule.enabled
@@ -175,7 +175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
       propertyPath: TriggerModule.primitives.Array.size
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
       propertyPath: InitialModule.startLifetime.minScalar
@@ -193,6 +193,34 @@ PrefabInstance:
       propertyPath: TriggerModule.primitives.Array.data[2]
       value: 
       objectReference: {fileID: 8930414981940649309, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+    - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
+      propertyPath: TriggerModule.primitives.Array.data[3]
+      value: 
+      objectReference: {fileID: 9052078452103636515, guid: 0ac195edf6147c04da53a33a63c156fb, type: 3}
+    - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
+      propertyPath: TriggerModule.primitives.Array.data[4]
+      value: 
+      objectReference: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+    - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
+      propertyPath: TriggerModule.primitives.Array.data[5]
+      value: 
+      objectReference: {fileID: 7829323728058951430, guid: 4c631369e8e14904181f165950bffe0e, type: 3}
+    - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
+      propertyPath: TriggerModule.primitives.Array.data[6]
+      value: 
+      objectReference: {fileID: 7068625538978854263, guid: a5697c53472362e40b8f00f300673f61, type: 3}
+    - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
+      propertyPath: TriggerModule.primitives.Array.data[7]
+      value: 
+      objectReference: {fileID: 8405310305926585268, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+    - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
+      propertyPath: TriggerModule.primitives.Array.data[8]
+      value: 
+      objectReference: {fileID: 4937640059466145002, guid: 6fbb0af1d15b8814592f7908f48e7764, type: 3}
+    - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
+      propertyPath: TriggerModule.primitives.Array.data[9]
+      value: 
+      objectReference: {fileID: 1859936831163064489, guid: 5ac03940db506904caaf262e27842002, type: 3}
     - target: {fileID: 682386699002711679, guid: b36980eb5c5b00a40b50de22f1cbe174, type: 3}
       propertyPath: CollisionModule.multiplyColliderForceByCollisionAngle
       value: 0
@@ -222,3 +250,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTag: Enemy
+  timeBurningActive: 4
+  timeBetweenBurnings: 1
+  burnDamage: 2.5

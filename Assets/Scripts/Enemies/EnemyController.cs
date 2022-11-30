@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
+using System.Threading.Tasks;
 
 public class EnemyController : MonoBehaviour
 {
@@ -36,7 +38,7 @@ public class EnemyController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 movement;
-    private SpriteRenderer sr;
+    public  SpriteRenderer sr;
 
     public AudioClip enemyShootSound;
 
@@ -50,6 +52,14 @@ public class EnemyController : MonoBehaviour
     public AudioClip damageSound;
     public GameObject floorBlood;
 
+    public HealthStateTypes actualHealthState;
+    public float durationActualState;
+    public float timeEnterLastState;
+    public float lastTimeDamagedByHealthState ;
+    public float timeBetweenDamagesByHealthState ;
+    public float damageActualHealthStateApply ;
+    public float timeAddedToHealthState = 0;
+
     public bool metralleta;
     void Start()
     {
@@ -58,29 +68,229 @@ public class EnemyController : MonoBehaviour
         sr = this.GetComponent<SpriteRenderer>();
         rb = this.GetComponent<Rigidbody2D>();
         lastShoot = 0;
+        originalColor = sr.color;
+        actualHealthState = HealthStateTypes.NORMAL;
     }
 
-    public void GetDamage(BulletHitInfo impactInfo)
+    //public void GetDamage(BulletHitInfo impactInfo)
+    //{
+    //    Debug.Log("In");
+    //    AudioManager.Instance.PlaySound(damageSound);
+    //    GameObject blood = GameObject.Instantiate(floorBlood, impactInfo.impactPosition, this.transform.rotation);
+    //    blood.GetComponent<Transform>().localScale = transform.localScale*2;
+
+    //    if (enemyHealth <= impactInfo.damage)
+    //    {
+    //        enemyHealth = 0;
+    //        isDeath = true;
+    //    }
+    //    else
+    //    {
+    //        enemyHealth -= impactInfo.damage;
+    //    }
+
+    //    //Debug.Log(enemyHealth);
+        
+    //}
+    public HealthStateTypes GetActualHealthState()
     {
-        Debug.Log("In");
-        AudioManager.Instance.PlaySound(damageSound);
-        GameObject blood = GameObject.Instantiate(floorBlood, impactInfo.impactPosition, this.transform.rotation);
-        blood.GetComponent<Transform>().localScale = transform.localScale*2;
+        return actualHealthState;
+    }
 
-        if (enemyHealth <= impactInfo.damage)
-        {
-            enemyHealth = 0;
-            isDeath = true;
-        }
-        else
-        {
-            enemyHealth -= impactInfo.damage;
-        }
+    public void GetDamage(Action damageAction)
+    {
+        damageAction();
+        //Debug.Log("In");
+        //AudioManager.Instance.PlaySound(damageSound);
+        //GameObject blood = GameObject.Instantiate(floorBlood, impactInfo.impactPosition, this.transform.rotation);
+        //blood.GetComponent<Transform>().localScale = transform.localScale * 2;
 
+        //if (enemyHealth <= impactInfo.damage)
+        //{
+        //    enemyHealth = 0;
+        //    isDeath = true;
+        //}
+        //else
+        //{
+        //    enemyHealth -= impactInfo.damage;
+        //}
         //Debug.Log(enemyHealth);
 
     }
+    //public void ChangeHealthState(float durationTimeNewState, float timeBetweenDamagingByState, float damagePerTimeValueHealthState,HealthStateTypes newHealthState)
+    //{
+    //    switch (newHealthState)
+    //    {
+    //        case HealthStateTypes.BURNED:                
+    //            sr.color = Color.red;                
+    //            break;
+    //        case HealthStateTypes.FREEZE:
+    //            sr.color = Color.blue;                
+    //            break;
+    //        case HealthStateTypes.PARALYZED:
+    //            sr.color = Color.yellow;                
+    //            break;            
+    //        default:
+    //            break;
+    //    }
 
+    //    actualHealthState = newHealthState;        
+    //    durationActualState = durationTimeNewState;
+    //    timeEnterLastState = Time.time;
+    //    timeBetweenDamagesByHealthState = timeBetweenDamagingByState;
+    //    damageActualHealthStateApply = damagePerTimeValueHealthState;
+
+    //    StartCoroutine(ApplyHealtHStateDamageWhileItsActive(durationTimeNewState));
+    //}
+
+    public void SetLastEnter()
+    {
+        timeEnterLastState = Time.time;
+    }
+
+    //void ApplyHealtHStateDamageWhileItsActive(float durationTimeNewState, float timeBetweenDamagingByState, float damagePerTimeValueHealthState, HealthStateTypes newHealthState)
+    //{
+    //    switch (newHealthState)
+    //    {
+    //        case HealthStateTypes.BURNED:
+    //            sr.color = Color.red;
+    //            break;
+    //        case HealthStateTypes.FREEZE:
+    //            sr.color = Color.blue;
+    //            break;
+    //        case HealthStateTypes.PARALYZED:
+    //            sr.color = Color.yellow;
+    //            break;
+    //        default:
+    //            break;
+    //    }
+
+    //    actualHealthState = newHealthState;
+
+    //}
+
+    public float AddTimeToHealthState()
+    {
+        var aux = timeEnterLastState - Time.time;
+        timeEnterLastState = Time.time;
+        return aux;
+    }
+
+    public async void ApplyNewHealthStateConsequences(float durationTimeNewState, float timeBetweenDamagingByState, float damagePerTimeValueHealthState, HealthStateTypes newHealthState)
+    {
+        timeEnterLastState = Time.time;
+        timeAddedToHealthState = 0;
+
+        switch (newHealthState)
+        {
+            case HealthStateTypes.BURNED:
+                sr.color = Color.red;
+                break;
+            case HealthStateTypes.FREEZE:
+                sr.color = Color.blue;
+                break;
+            case HealthStateTypes.PARALYZED:
+                sr.color = Color.yellow;
+                break;
+            default:
+                break;
+        }
+
+        actualHealthState = newHealthState;
+
+        var timeEnd = durationTimeNewState + Time.time;
+
+        while (Time.time< timeEnd + timeAddedToHealthState) 
+        {
+            if (enemyHealth <= damageActualHealthStateApply)
+            {
+                enemyHealth = 0;
+                isDeath = true;
+            }
+            else
+            {
+                enemyHealth -= damageActualHealthStateApply;
+                AudioManager.Instance.PlaySound(damageSound);
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(timeBetweenDamagingByState));
+
+        }
+
+        if(!isDeath)
+            BackToNormalState();
+    }
+
+
+    //public IEnumerator ApplyHealtHStateDamageWhileItsActive(float durationTimeNewState, float timeBetweenDamagingByState, float damagePerTimeValueHealthState, HealthStateTypes newHealthState)
+    //{
+    //    switch (newHealthState)
+    //    {
+    //        case HealthStateTypes.BURNED:
+    //            sr.color = Color.red;
+    //            break;
+    //        case HealthStateTypes.FREEZE:
+    //            sr.color = Color.blue;
+    //            break;
+    //        case HealthStateTypes.PARALYZED:
+    //            sr.color = Color.yellow;
+    //            break;
+    //        default:
+    //            break;
+    //    }
+
+    //    actualHealthState = newHealthState;
+
+    //    var end = durationTimeNewState + Time.time;
+    //    var end2 = timeBetweenDamagesByHealthState + Time.time;
+
+    //    //if (enemyHealth <= damageActualHealthStateApply)
+    //    //{
+    //    //    enemyHealth = 0;
+    //    //    isDeath = true;
+    //    //}
+    //    //else
+    //    //{
+    //    //    enemyHealth -= damageActualHealthStateApply;
+    //    //    AudioManager.Instance.PlaySound(damageSound);
+    //    //}
+
+    //    while (Time.time < end)
+    //    {
+    //        if (enemyHealth <= damageActualHealthStateApply)
+    //        {
+    //            enemyHealth = 0;
+    //            isDeath = true;
+    //        }
+    //        else
+    //        {
+    //            enemyHealth -= damageActualHealthStateApply;
+    //            AudioManager.Instance.PlaySound(damageSound);
+    //        }
+
+        
+    //        yield return new WaitWhile(() => Time.time > end2);
+
+    //        end2 = timeBetweenDamagesByHealthState + Time.time;
+
+
+
+
+    //    }
+
+    //    BackToNormalState();        
+    //}
+
+    void BackToNormalState()
+    {
+        timeEnterLastState = 0;
+        actualHealthState = HealthStateTypes.NORMAL;
+        sr.color = originalColor;
+        damageActualHealthStateApply = 0;
+        timeBetweenDamagesByHealthState = 0;
+        durationActualState = 0;
+        timeAddedToHealthState = 0;
+    }
     void Update()
     {
         //if (enemyHealth <= 0)
@@ -88,7 +298,39 @@ public class EnemyController : MonoBehaviour
         //    DeathAnimation();
         //}
 
-        // Debug.Log("am i working");
+
+        //Debug.Log(actualHealthState);
+        //if(actualHealthState != HealthStateTypes.NORMAL)
+        //{
+        //    if(Time.time - timeEnterLastState >= durationActualState)
+        //    {
+        //        Debug.Log("a");
+        //        actualHealthState = HealthStateTypes.NORMAL;
+        //        sr.color = originalColor;
+        //        lastTimeDamagedByHealthState = 0;
+        //        timeBetweenDamagesByHealthState = 0;
+        //        damageActualHealthStateApply = 0;
+        //    }
+        //    else if(actualHealthState == HealthStateTypes.BURNED)
+        //    {
+                
+
+        //        if (Time.time - lastTimeDamagedByHealthState >= timeBetweenDamagesByHealthState)
+        //        {
+        //            if (enemyHealth <= damageActualHealthStateApply)
+        //            {
+        //                enemyHealth = 0;
+        //                isDeath = true;
+        //            }
+        //            else
+        //            {
+        //                enemyHealth -= damageActualHealthStateApply;
+        //                AudioManager.Instance.PlaySound(damageSound);
+        //            }
+        //        }
+        //    }
+        //}
+
         if (isDeath)
         {
             GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
@@ -225,7 +467,7 @@ public class EnemyController : MonoBehaviour
         instance.GetComponent<EnemyProjectile>().bulletDamage = enemyBulletDamage;
         AudioManager.Instance.PlaySound(enemyShootSound);
         //Metralleta
-        instance.transform.Rotate(0, 0, instance.transform.rotation.z + Random.Range(-25,25));
+        instance.transform.Rotate(0, 0, instance.transform.rotation.z + UnityEngine.Random.Range(-25,25));
 
 
             //banda a banda

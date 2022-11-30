@@ -9,7 +9,7 @@ public class Flow : Mechanism
     private GameObject lastBullet;
     private AudioSource whereLoopIsPlayed;
     
-    private Dictionary<int, GameObject> bulletsWaitingToBeDestroyed = new Dictionary<int, GameObject>();    
+      
 
     public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound, float amplitudeGain, float damageMultiplier)
     {

@@ -181,6 +181,10 @@ public class RightHand : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        weaponInHand.FixedUpdate();
+    }
     //public void SetColor()
     //{
 

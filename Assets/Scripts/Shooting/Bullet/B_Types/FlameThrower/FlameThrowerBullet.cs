@@ -14,7 +14,7 @@ public class FlameThrowerBullet : Bullet
     {
         timeShooted = Time.time;     
 
-        bulletDamage = 1f * _damageMultiplier;
+        bulletDamage = 0.5f * _damageMultiplier;
         bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
         bulletSpeedMetresPerSec = 1;
         bulletRadius = 0.23f;
