@@ -20,11 +20,12 @@ public class ElectricConnection : MonoBehaviour
 
     [SerializeField]
     private ElectricDistanceCheck distanceLmao;
-    private void Start()
+    private void Awake()
     {
-            allEnemies.Add(FindObjectOfType<EnemyController>());
-            allLines = new List<LineController>();
         
+            allEnemies.AddRange(FindObjectsOfType<EnemyController>());
+            allLines = new List<LineController>();
+
             newLine = Instantiate(linePrefab);
             allLines.Add(newLine);
     }
@@ -33,6 +34,11 @@ public class ElectricConnection : MonoBehaviour
         if (distanceLmao.isInRange)
         {
             newLine.AssignTarget(origin.position, allEnemies[0].transform);
+        }
+        if (distanceLmao.justLeft)
+        {
+            distanceLmao.justLeft = false;
+            Destroy(newLine.gameObject);
         }
     }
 }

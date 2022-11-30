@@ -8,9 +8,11 @@ public class ElectricDistanceCheck : MonoBehaviour
     private ElectricConnection ec;
 
     public bool isInRange;
+    public bool justLeft;
     void Start()
     {
         isInRange = false;
+        justLeft = false;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,6 +29,7 @@ public class ElectricDistanceCheck : MonoBehaviour
         {
             Debug.Log("LEFT");
             isInRange = false;
+            justLeft = true;
         }
     }
 }
