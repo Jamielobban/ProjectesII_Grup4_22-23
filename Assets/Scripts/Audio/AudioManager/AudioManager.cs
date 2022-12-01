@@ -57,7 +57,7 @@ public class AudioManager : MonoBehaviour
 
         clone.GetComponent<AudioSource>().PlayDelayed(delay);
 
-        WaitToAddInToDictionary(clip, delay, clone);
+        StartCoroutine(WaitToAddInToDictionary(clip, delay, clone));
         
     }
 
@@ -68,7 +68,7 @@ public class AudioManager : MonoBehaviour
 
         clone.GetComponent<AudioSource>().PlayDelayed(delay);
 
-        WaitToAddInToDictionary(clip, delay, clone);
+        StartCoroutine(WaitToAddInToDictionary(clip, delay, clone));
 
     }
 

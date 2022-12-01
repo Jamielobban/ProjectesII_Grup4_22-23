@@ -11,6 +11,7 @@ public class WeaponValues : ScriptableObject
     public Sprite weaponSprite;    
     public Color weaponColor;      
     public GameObject bulletTypePrefab;    
+
     public IntValue bulletsInMagazine;    
     public IntValue magazinesInWeapon;    
     public FloatValue damageMultiplier;    
@@ -18,6 +19,11 @@ public class WeaponValues : ScriptableObject
     public FloatValue fireRateinSec;    
     public FloatValue maxTimeOnPowerup;
     public FloatValue amplitudeGain;
+
+    public IntValue bulletsInMagazinePowerup;    
+    public FloatValue damageMultiplierPowerup;
+    public FloatValue reloadTimeInSecPowerup;
+    public FloatValue fireRateinSecPowerup;
 
     [Header("Default InGame variables")]
     public FloatValue startReloading;    
@@ -37,6 +43,12 @@ public class WeaponValues : ScriptableObject
         damageMultiplier.RestartValues();
         reloadTimeInSec.RestartValues();
         fireRateinSec.RestartValues();
+
+        bulletsInMagazinePowerup.RestartValues();        
+        damageMultiplierPowerup.RestartValues();
+        reloadTimeInSecPowerup.RestartValues();
+        fireRateinSecPowerup.RestartValues();
+
         maxTimeOnPowerup.RestartValues();
         amplitudeGain.RestartValues();
         startReloading.RestartValues();
@@ -48,6 +60,7 @@ public class WeaponValues : ScriptableObject
         reloading.RestartValues();
         outOfAmmo.RestartValues();
         powerupAvailable.RestartValues();
+
     }
 
     

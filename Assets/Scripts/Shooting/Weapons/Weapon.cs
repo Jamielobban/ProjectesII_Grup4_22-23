@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using System.Threading.Tasks;
+using System;
+
 
 public abstract class Weapon 
 {
@@ -17,11 +20,11 @@ public abstract class Weapon
 
     protected Mechanism weaponMechanism;
     protected Transform firePoint;
-    
-    
+
+    public float powerupRechargeTime = 20;
     public float timer;
     bool firstEnter = true;
-
+    bool reloading = false;
 
     public Weapon(Transform _firePoint, WeaponValues _data)
     {        
@@ -32,41 +35,130 @@ public abstract class Weapon
         powerupEmpty = Resources.Load<AudioClip>("Sounds/Powerup/powerup0");
         powerupMax = Resources.Load<AudioClip>("Sounds/Powerup/powerupMax");
         nextWeapon = Resources.Load<AudioClip>("Sounds/NextWeapon/nextWeapon");
+        PowerupCharge();
     }
 
 
     public virtual void Update()
-    {        
-        
-        if (!data.powerActive.RuntimeValue)
-        {
-            if(data.powerupAvailable.RuntimeValue && firstEnter)
-            {
-                AudioManager.Instance.PlaySound(powerupMax, GameObject.FindGameObjectWithTag("Player").transform);
-                firstEnter = false;
-            }
-            data.timePassed.RuntimeValue = Time.time - data.timelastPowerupExit.RuntimeValue;
-        }        
+    {
 
-        if (data.powerActive.RuntimeValue)
-        {
-            data.timeLeftPowerup.RuntimeValue = data.maxTimeOnPowerup.RuntimeValue - (Time.time - data.timelastPowerupEnter.RuntimeValue);
-            firstEnter = true;
-        }        
+        //if (!data.powerActive.RuntimeValue)
+        //{
+        //    if(data.powerupAvailable.RuntimeValue && firstEnter)
+        //    {
+        //        AudioManager.Instance.PlaySound(powerupMax, GameObject.FindGameObjectWithTag("Player").transform);
+        //        firstEnter = false;
+        //    }
+        //    data.timePassed.RuntimeValue = Time.time - data.timelastPowerupExit.RuntimeValue;
+        //}        
 
-        InputsUpdate();
+        //if (data.powerActive.RuntimeValue)
+        //{
+        //    data.timeLeftPowerup.RuntimeValue = data.maxTimeOnPowerup.RuntimeValue - (Time.time - data.timelastPowerupEnter.RuntimeValue);
+        //    firstEnter = true;
+        //}        
+
+        //InputsUpdate();
+
+        //LogicUpdate();
 
         LogicUpdate();
 
     }
+
+    private void LogicUpdate()
+    {
+        if (data.powerActive.RuntimeValue)
+        {
+            if (data.bulletsInMagazinePowerup.RuntimeValue <= 0 && !data.reloading.RuntimeValue)
+            {
+                data.reloading.RuntimeValue = true;
+                Reloading(data.reloadTimeInSecPowerup.InitialValue, data.bulletsInMagazinePowerup);
+            }
+        }
+        else
+        {
+            if (data.bulletsInMagazine.RuntimeValue <= 0 && !data.reloading.RuntimeValue)
+            {
+                data.reloading.RuntimeValue = true;
+                Reloading(data.reloadTimeInSec.InitialValue, data.bulletsInMagazine);
+            }
+        }
+        
+    }
+
+
+    private void InputsUpdate()
+    {
+
+        if (Input.GetButtonDown("UsePowerup"))
+        {
+            if (!data.powerActive.RuntimeValue && data.powerupAvailable.RuntimeValue)
+            {
+                data.powerActive.RuntimeValue = true;
+                PowerupEnding();                
+            }
+
+        }
+        else if (Input.GetButtonDown("Reload"))// && data.bulletsInMagazine.RuntimeValue < data.bulletsInMagazine.InitialValue && !data.outOfAmmo.RuntimeValue && data.magazinesInWeapon.RuntimeValue > 0 && !data.reloading.RuntimeValue)
+        {
+            if (data.powerActive)
+            {
+                if(data.bulletsInMagazinePowerup.InitialValue > data.bulletsInMagazine.RuntimeValue && !data.reloading.RuntimeValue)
+                {
+                    data.reloading.RuntimeValue = true;
+                    Reloading(data.reloadTimeInSecPowerup.InitialValue, data.bulletsInMagazinePowerup);
+                }
+            }
+            else
+            {
+                if (data.bulletsInMagazinePowerup.InitialValue > data.bulletsInMagazine.RuntimeValue && !data.reloading.RuntimeValue && data.magazinesInWeapon.RuntimeValue > 0)
+                {
+                    data.reloading.RuntimeValue = true;
+                    Reloading(data.reloadTimeInSec.InitialValue, data.bulletsInMagazine);
+                }
+            }            
+
+        }
+        else if (Input.GetButtonDown("PassWeapon"))
+        {
+            data.outOfAmmo.RuntimeValue = true;
+            //data.timePassed.RuntimeValue = 0;
+        }
+
+
+    }
+
+    private async void Reloading(float reloadWaitTime, IntValue magazineReloaded)
+    {
+        await Task.Delay(TimeSpan.FromSeconds(reloadWaitTime));
+        data.reloading.RuntimeValue = false;
+        magazineReloaded.RestartValues();
+    }
+
+    private async void PowerupCharge()
+    {
+
+        await Task.Delay(TimeSpan.FromSeconds(powerupRechargeTime));
+        data.powerupAvailable.RuntimeValue = true;
+        data.bulletsInMagazinePowerup.RestartValues();
+    }
+
+    private async void PowerupEnding()
+    {
+        await Task.Delay(TimeSpan.FromSeconds(data.maxTimeOnPowerup.InitialValue));
+        data.powerActive.RuntimeValue = false;
+        PowerupCharge();
+    }
+
     public virtual void FixedUpdate()
     {
         CheckShooting();
     }
-    public float GetReloadTimeInSec()
-    {
-        return data.reloadTimeInSec.RuntimeValue;
-    }
+    //public float GetReloadTimeInSec()
+    //{
+    //    return data.reloadTimeInSec.RuntimeValue;
+    //}
     public int GetBulletsInMagazine()
     {
         return data.bulletsInMagazine.RuntimeValue;
@@ -95,22 +187,22 @@ public abstract class Weapon
     {
         return data.maxTimeOnPowerup.RuntimeValue;
     }
-    public float GetTimeLeftPowerup()
-    {
-        if (!data.powerActive.RuntimeValue)
-        {
-            return 0;
-        }
-        return data.timeLeftPowerup.RuntimeValue;
-    }
-    public float GetTime()
-    {
-        if (data.powerActive.RuntimeValue)
-        {
-            return 0;
-        }
-        return data.timePassed.RuntimeValue;
-    }
+    //public float GetTimeLeftPowerup()
+    //{
+    //    if (!data.powerActive.RuntimeValue)
+    //    {
+    //        return 0;
+    //    }
+    //    return data.timeLeftPowerup.RuntimeValue;
+    //}
+    //public float GetTime()
+    //{
+    //    if (data.powerActive.RuntimeValue)
+    //    {
+    //        return 0;
+    //    }
+    //    return data.timePassed.RuntimeValue;
+    //}
     public bool GetState()
     {
         return data.powerActive.RuntimeValue;
@@ -120,13 +212,13 @@ public abstract class Weapon
     {
         return data.reloading.RuntimeValue;
     }
-    public void SetTime(float timePassed)
-    {
-        data.timelastPowerupEnter.RuntimeValue = Time.time;
-        data.timelastPowerupExit.RuntimeValue = Time.time;
-        data.timelastPowerupExit.RuntimeValue -= timePassed;
-        //data.timelastPowerupEnter -= timePassed;
-    }
+    //public void SetTime(float timePassed)
+    //{
+    //    data.timelastPowerupEnter.RuntimeValue = Time.time;
+    //    data.timelastPowerupExit.RuntimeValue = Time.time;
+    //    data.timelastPowerupExit.RuntimeValue -= timePassed;
+    //    //data.timelastPowerupEnter -= timePassed;
+    //}
     //
     private void CheckShooting()
     {
@@ -154,57 +246,7 @@ public abstract class Weapon
         _sr.sprite = data.weaponSprite;
         _sr.color = data.weaponColor;
     }
-    //protected abstract float GenerateBaseFireRate();    
-
-    private void LogicUpdate()
-    {
-        if (data.reloading.RuntimeValue && Time.time - data.startReloading.RuntimeValue >= data.reloadTimeInSec.RuntimeValue +0.5f)
-        {           
-            data.reloading.RuntimeValue = false;
-        }
-
-        if (Time.time - data.timelastPowerupExit.RuntimeValue >= 20 && !data.powerupAvailable.RuntimeValue)
-        {
-            data.powerupAvailable.RuntimeValue = true;            
-        }       
-    }
-
-    
-
-    private void InputsUpdate()
-    {  
-
-        if (Input.GetButtonDown("UsePowerup"))
-        {
-            if (!data.powerActive.RuntimeValue && data.powerupAvailable.RuntimeValue)
-            {
-                data.powerActive.RuntimeValue = true;
-                ActionOnEnterPowerup();
-                data.timelastPowerupEnter.RuntimeValue = Time.time;     
-                AudioManager.Instance.PlaySound(powerupPressed, GameObject.FindGameObjectWithTag("Player").transform);
-            }
-
-        }
-        else if (Input.GetButtonDown("Reload") && data.bulletsInMagazine.RuntimeValue < data.bulletsInMagazine.InitialValue && !data.outOfAmmo.RuntimeValue && data.magazinesInWeapon.RuntimeValue > 0)
-        {
-            if (data.magazinesInWeapon.RuntimeValue > 0 && data.bulletsInMagazine.RuntimeValue > 0)
-            {
-                data.bulletsInMagazine.RuntimeValue = data.bulletsInMagazine.InitialValue;
-                data.magazinesInWeapon.RuntimeValue--;
-                AudioManager.Instance.PlaySoundDelayed(data.reloadSound, 0.5f, GameObject.FindGameObjectWithTag("Player").transform);
-                data.reloading.RuntimeValue = true;
-                data.startReloading.RuntimeValue = Time.time;
-            }
-           
-        }
-        else if (Input.GetButtonDown("PassWeapon"))
-        {
-            data.outOfAmmo.RuntimeValue = true;
-            data.timePassed.RuntimeValue = 0;
-        }
-
-
-    }
+    //protected abstract float GenerateBaseFireRate();   
 
     protected void LoadOrReloadWhenNeedIt()
     {
