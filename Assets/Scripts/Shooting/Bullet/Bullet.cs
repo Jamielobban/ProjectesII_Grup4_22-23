@@ -35,6 +35,11 @@ public abstract class Bullet : MonoBehaviour
     {
         return _damageMultiplier;
     }
+    public float GetBUlletDamage()
+    {
+        return bulletDamage;
+    }
+
     public float GetSpeed()
     {
         return bulletSpeedMetresPerSec;

@@ -54,24 +54,19 @@ public class FlamesColision : MonoBehaviour
             
             other.GetComponent<EnemyController>().GetDamage(() =>
             {
-                
-                
-                //if (other.GetComponent<EnemyController>().enemyHealth <= GetComponentInParent<FlameThrowerBullet>().GetFlamesDamage())
-                //{
-                //    other.GetComponent<EnemyController>().enemyHealth = 0;
-                //    other.GetComponent<EnemyController>().isDeath = true;
-                //}
-                //else
-                //{
-                //    other.GetComponent<EnemyController>().enemyHealth -= GetComponentInParent<FlameThrowerBullet>().GetFlamesDamage();
-                //}
+               
+                GameObject blood = GameObject.Instantiate((GameObject)Resources.Load("Prefab/DamageArea"), other.transform.position, other.transform.rotation);
+                blood.GetComponent<Transform>().localScale = other.transform.localScale * 2;
 
-
-
-
-
-                
-                Debug.Log(other.GetComponent<EnemyController>().GetActualHealthState() != HealthStateTypes.BURNED);
+                if (other.GetComponent<EnemyController>().enemyHealth <= this.GetComponentInParent<Bullet>().GetBUlletDamage())
+                {
+                    other.GetComponent<EnemyController>().enemyHealth = 0;
+                    other.GetComponent<EnemyController>().isDeath = true;
+                }
+                else
+                {
+                    other.GetComponent<EnemyController>().enemyHealth -= this.GetComponentInParent<Bullet>().GetBUlletDamage();
+                }
 
                 if (other.GetComponent<EnemyController>().GetActualHealthState() != HealthStateTypes.BURNED )
                 {                    

@@ -211,6 +211,9 @@ public class EnemyController : MonoBehaviour
             {
                 enemyHealth -= damageActualHealthStateApply;
                 AudioManager.Instance.PlaySound(damageSound);
+                GameObject fire = (GameObject)Resources.Load("Prefab/FireDamage");                
+                GameObject.Instantiate(fire, this.transform, false);
+                fire.transform.localScale = new Vector3(sr.gameObject.transform.localScale.x * 3, sr.gameObject.transform.localScale.y * 3, 1);
             }
 
             await Task.Delay(TimeSpan.FromSeconds(timeBetweenDamagingByState));
