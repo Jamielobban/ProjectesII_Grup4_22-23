@@ -58,7 +58,7 @@ public class Flow : Mechanism
                 timeLastShoot = Time.time;
                 return true;
                // Debug.Log("Off1");
-                AudioManager.Instance.PlaySound(shootSound);
+                AudioManager.Instance.PlaySound(shootSound, firePoint.position);
             }                            
                      //Si no estem apretant es queda igual
            // Debug.Log("off2");

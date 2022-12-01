@@ -24,7 +24,7 @@ public class SniperBolt : Sniper
         bullet.GetComponent<Bullet>().powerUpOn = true; ;
 
         bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
-        AudioManager.Instance.PlaySound(shootSound);
+        AudioManager.Instance.PlaySound(shootSound,firePoint.position);
         CinemachineShake.Instance.ShakeCamera(5f, .1f);
         CinemachineShake.Instance.ShakeCamera(5f * amplitudeGain, .1f);
     }

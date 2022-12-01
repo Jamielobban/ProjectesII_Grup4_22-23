@@ -35,7 +35,7 @@ public class Flamethrower : Weapon
             data.powerActive.RuntimeValue = false;
             data.powerupAvailable.RuntimeValue = false;
             data.timelastPowerupExit.RuntimeValue = Time.time;
-            AudioManager.Instance.PlaySound(powerupEmpty);
+            AudioManager.Instance.PlaySound(powerupEmpty, GameObject.FindGameObjectWithTag("Player").transform);
         }
     }
 }

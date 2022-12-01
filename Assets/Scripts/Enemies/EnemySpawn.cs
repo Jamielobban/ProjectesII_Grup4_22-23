@@ -26,7 +26,7 @@ public class EnemySpawn : MonoBehaviour
 
     public void SpawnAnimation()
     {
-        AudioManager.Instance.PlaySound(enemySpawnSound);
+        AudioManager.Instance.PlaySound(enemySpawnSound, this.transform.position);
         spawn.DOColor(Color.red, 1f);
         Invoke("SpawnEnemy", 1f);
     }

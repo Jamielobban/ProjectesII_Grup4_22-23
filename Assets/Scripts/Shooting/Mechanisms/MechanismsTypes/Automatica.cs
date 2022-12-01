@@ -10,7 +10,7 @@ public class Automatica : Mechanism
         {
             GameObject bullet = GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
             bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
-            AudioManager.Instance.PlaySound(shootSound);
+            AudioManager.Instance.PlaySound(shootSound, firePoint.position);
             timeLastShoot = Time.time;
             CinemachineShake.Instance.ShakeCamera(5f*amplitudeGain, .1f);
             return true;

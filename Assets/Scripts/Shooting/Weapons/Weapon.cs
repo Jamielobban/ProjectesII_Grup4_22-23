@@ -42,7 +42,7 @@ public abstract class Weapon
         {
             if(data.powerupAvailable.RuntimeValue && firstEnter)
             {
-                AudioManager.Instance.PlaySound(powerupMax);
+                AudioManager.Instance.PlaySound(powerupMax, GameObject.FindGameObjectWithTag("Player").transform);
                 firstEnter = false;
             }
             data.timePassed.RuntimeValue = Time.time - data.timelastPowerupExit.RuntimeValue;
@@ -181,7 +181,7 @@ public abstract class Weapon
                 data.powerActive.RuntimeValue = true;
                 ActionOnEnterPowerup();
                 data.timelastPowerupEnter.RuntimeValue = Time.time;     
-                AudioManager.Instance.PlaySound(powerupPressed);
+                AudioManager.Instance.PlaySound(powerupPressed, GameObject.FindGameObjectWithTag("Player").transform);
             }
 
         }
@@ -191,7 +191,7 @@ public abstract class Weapon
             {
                 data.bulletsInMagazine.RuntimeValue = data.bulletsInMagazine.InitialValue;
                 data.magazinesInWeapon.RuntimeValue--;
-                AudioManager.Instance.PlaySound(data.reloadSound, 0.5f);
+                AudioManager.Instance.PlaySoundDelayed(data.reloadSound, 0.5f, GameObject.FindGameObjectWithTag("Player").transform);
                 data.reloading.RuntimeValue = true;
                 data.startReloading.RuntimeValue = Time.time;
             }
@@ -218,7 +218,7 @@ public abstract class Weapon
             }
             else
             {
-                AudioManager.Instance.PlaySound(data.reloadSound, 0.5f);
+                AudioManager.Instance.PlaySoundDelayed(data.reloadSound, 0.5f, GameObject.FindGameObjectWithTag("Player").transform);
                 data.bulletsInMagazine.RuntimeValue = data.bulletsInMagazine.InitialValue;
                 data.magazinesInWeapon.RuntimeValue--;
                 data.startReloading.RuntimeValue = Time.time;
@@ -230,7 +230,7 @@ public abstract class Weapon
     public bool GetIfOutOffAmmo()
     {
         if (data.outOfAmmo.RuntimeValue)
-            AudioManager.Instance.PlaySound(nextWeapon);
+            AudioManager.Instance.PlaySound(nextWeapon, GameObject.FindGameObjectWithTag("Player").transform);
         return data.outOfAmmo.RuntimeValue;
     }
     

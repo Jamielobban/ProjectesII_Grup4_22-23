@@ -39,7 +39,7 @@ public abstract class Sniper : Weapon
             //data.fireRateinSec /= 0.5f;
             //data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = false;
             data.timelastPowerupExit.RuntimeValue = Time.time;
-            AudioManager.Instance.PlaySound(powerupEmpty);
+            AudioManager.Instance.PlaySound(powerupEmpty,firePoint.position);
         }
         if (!data.powerActive)
         {

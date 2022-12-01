@@ -201,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (remainingBlinks > 0)
                     {
-                        AudioManager.Instance.PlaySound(playerDash);
+                        AudioManager.Instance.PlaySound(playerDash, this.gameObject.transform);
                         rollDir = moveDir;
                         rollSpeed = 90f;
                         lastDash = Time.time;
@@ -210,7 +210,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else
                     {
-                        AudioManager.Instance.PlaySound(cantPress, 0.0f);
+                        AudioManager.Instance.PlaySound(cantPress, this.gameObject.transform);
                     }
 
                 }
@@ -264,7 +264,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentHealth -= damage;
             GameObject.Instantiate(floorBlood, this.transform.position, this.transform.rotation);
-            AudioManager.Instance.PlaySound(damageSound);
+            AudioManager.Instance.PlaySound(damageSound, this.gameObject.transform);
             healthBar.SetHealth(currentHealth);
         }
     }

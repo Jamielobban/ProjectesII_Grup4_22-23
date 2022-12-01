@@ -73,7 +73,7 @@ public class SniperLineBullet : Bullet
         player.GetComponent<PlayerMovement>().canMove = true;
         charge = false;
 
-        AudioManager.Instance.PlaySound(shootSound);
+        AudioManager.Instance.PlaySound(shootSound, transform.position);
 
 
         GameObject shoot = GameObject.Instantiate(shootBullet, transform.position, transform.rotation);
