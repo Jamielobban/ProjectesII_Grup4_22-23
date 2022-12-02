@@ -48,17 +48,32 @@ public class SniperBullet : Bullet
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("MapLimit"))
-        {          
-          
-          base.ImpactWall();
-            
+        {
+
+            base.ImpactWall();
+
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             base.HitSomeone();
-            bulletInfo.damage = bulletDamage;
-            bulletInfo.impactPosition = transform.position;
-            collision.gameObject.SendMessage("GetDamage", bulletInfo);
+            //bulletInfo.damage = bulletDamage;
+            //bulletInfo.impactPosition = transform.position;
+            collision.GetComponent<EnemyController>().GetDamage(() =>
+            {
+                AudioManager.Instance.PlaySound(collision.GetComponent<EnemyController>().damageSound, this.transform.position);
+                GameObject blood = GameObject.Instantiate(collision.GetComponent<EnemyController>().floorBlood, this.transform.position, this.transform.rotation);
+                blood.GetComponent<Transform>().localScale = transform.localScale * 2;
+
+                if (collision.GetComponent<EnemyController>().enemyHealth <= bulletDamage)
+                {
+                    collision.GetComponent<EnemyController>().enemyHealth = 0;
+                    collision.GetComponent<EnemyController>().isDeath = true;
+                }
+                else
+                {
+                    collision.GetComponent<EnemyController>().enemyHealth -= bulletDamage;
+                }
+            });
         }
     }  
     

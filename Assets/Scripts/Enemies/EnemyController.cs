@@ -176,20 +176,24 @@ public class EnemyController : MonoBehaviour
         return aux;
     }
 
-    public async void ApplyNewHealthStateConsequences(float durationTimeNewState, float timeBetweenDamagingByState, float damagePerTimeValueHealthState, HealthStateTypes newHealthState)
+    public IEnumerator ApplyNewHealthStateConsequences(float durationTimeNewState, float timeBetweenDamagingByState, float damagePerTimeValueHealthState, HealthStateTypes newHealthState)
     {
         timeEnterLastState = Time.time;
         timeAddedToHealthState = 0;
+        GameObject feedbackObject = null;
 
         switch (newHealthState)
         {
             case HealthStateTypes.BURNED:
+                feedbackObject = (GameObject)Resources.Load("Prefab/FireDamage");
                 sr.color = Color.red;
                 break;
             case HealthStateTypes.FREEZE:
+                feedbackObject = (GameObject)Resources.Load("Prefab/FreezeDamage");
                 sr.color = Color.blue;
                 break;
             case HealthStateTypes.PARALYZED:
+                feedbackObject = (GameObject)Resources.Load("Prefab/ParalyzedDamage");
                 sr.color = Color.yellow;
                 break;
             default:
@@ -200,23 +204,28 @@ public class EnemyController : MonoBehaviour
 
         var timeEnd = durationTimeNewState + Time.time;
 
-        while (Time.time< timeEnd + timeAddedToHealthState) 
+        Debug.Log(timeAddedToHealthState);
+
+        while (Time.time < timeEnd + timeAddedToHealthState) 
         {
             if (enemyHealth <= damageActualHealthStateApply)
             {
                 enemyHealth = 0;
                 isDeath = true;
+                yield break;
             }
             else
             {
                 enemyHealth -= damageActualHealthStateApply;
                 AudioManager.Instance.PlaySound(damageSound, this.gameObject.transform);
-                GameObject fire = (GameObject)Resources.Load("Prefab/FireDamage");                
-                GameObject.Instantiate(fire, this.transform, false);
-                fire.transform.localScale = new Vector3(sr.gameObject.transform.localScale.x * 3, sr.gameObject.transform.localScale.y * 3, 1);
+                if (feedbackObject != null)
+                {
+                    GameObject.Instantiate(feedbackObject, this.transform, false);
+                    feedbackObject.transform.localScale = new Vector3(sr.gameObject.transform.localScale.x * 3, sr.gameObject.transform.localScale.y * 3, 1);
+                }
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(timeBetweenDamagingByState));
+            yield return new WaitForSeconds(timeBetweenDamagingByState);
 
         }
 

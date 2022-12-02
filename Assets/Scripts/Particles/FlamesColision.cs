@@ -67,13 +67,14 @@ public class FlamesColision : MonoBehaviour
                 {
                     other.GetComponent<EnemyController>().enemyHealth -= this.GetComponentInParent<Bullet>().GetBUlletDamage();
                 }
-
+                Debug.Log(other.GetComponent<EnemyController>().actualHealthState);
                 if (other.GetComponent<EnemyController>().GetActualHealthState() != HealthStateTypes.BURNED )
                 {                    
-                    other.GetComponent<EnemyController>().ApplyNewHealthStateConsequences(timeBurningActive, timeBetweenBurnings, burnDamage, HealthStateTypes.BURNED);                    
+                    other.GetComponent<EnemyController>().StartCoroutine(other.GetComponent<EnemyController>().ApplyNewHealthStateConsequences(timeBurningActive, timeBetweenBurnings, burnDamage, HealthStateTypes.BURNED));                    
                 }
                 else
                 {
+                    Debug.Log("In");
                     other.GetComponent<EnemyController>().timeAddedToHealthState += other.GetComponent<EnemyController>().AddTimeToHealthState();
                 }
                        
