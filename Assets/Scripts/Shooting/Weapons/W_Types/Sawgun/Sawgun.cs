@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricGun : Weapon
+public class Sawgun : Weapon
 {
-    public List<GameObject> bulletsOut;
-
-    public ElectricGun(Transform _firePoint, WeaponValues _data) : base(_firePoint, _data)
+    public Sawgun(Transform _firePoint, WeaponValues _data) : base(_firePoint, _data)
     {
         weaponMechanism = new Automatica();
     }
@@ -14,8 +12,6 @@ public class ElectricGun : Weapon
     public override void Update()
     {
         base.Update();
-
-        Debug.Log(bulletsOut);
 
         if (Time.time - data.timelastPowerupEnter.RuntimeValue >= data.maxTimeOnPowerup.RuntimeValue && data.powerActive.RuntimeValue)
         {
@@ -40,7 +36,7 @@ public class ElectricGun : Weapon
     {
         base.ActionOnEnterPowerup();
 
-        data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = true;
+        data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = true; 
 
         GameObject bullet = GameObject.Instantiate(data.bulletTypePrefab, firePoint.position, firePoint.rotation);
         bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(data.damageMultiplier.RuntimeValue);
@@ -51,6 +47,6 @@ public class ElectricGun : Weapon
 
     protected override void CheckPowerUpShooting()
     {
-
+        
     }
 }

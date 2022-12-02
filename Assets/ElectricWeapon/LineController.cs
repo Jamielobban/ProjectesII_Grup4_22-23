@@ -35,6 +35,7 @@ public class LineController : MonoBehaviour
         if (ec.isInRange)
         {
             lineRenderer.SetPosition(1, target.position);
+            GenerateMeshCollider();
         }
 
 
@@ -49,6 +50,28 @@ public class LineController : MonoBehaviour
             lineRenderer.material.SetTexture("_MainTex", textures[animationStep]);
 
             fpsCounter = 0f;
+        }
+    }
+    public void GenerateMeshCollider()
+    {
+        MeshCollider collider = GetComponent<MeshCollider>();
+
+        if(collider == null)
+        {
+            collider = gameObject.AddComponent<MeshCollider>();
+        }
+        Mesh mesh = new Mesh();
+        lineRenderer.BakeMesh(mesh);
+        collider.sharedMesh = mesh;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(("yo"));
+        if (collision.CompareTag("Player"))
+        {
+            Debug.Log("SHOCKEDLMAO");
+          
         }
     }
 }

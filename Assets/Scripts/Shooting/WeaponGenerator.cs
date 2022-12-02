@@ -43,7 +43,7 @@ public class WeaponGenerator : MonoBehaviour
     {
         //weaponsTypes = new Weapon[3] { new Sniper(firePoint), new Shotgun(firePoint), new Gun(firePoint) };
 
-        int random = Random.Range(4, 5);//0 1
+        int random = Random.Range(5, 6);//0 1
         //int random = 2;
         weaponInHandInt = random;
         int random2 = Random.Range(0, 1);// 2 3
@@ -67,6 +67,10 @@ public class WeaponGenerator : MonoBehaviour
         else if (random == 4)
         {
             weaponInHand = new ElectricGun(firePoint, weaponsValues[10]);
+        }
+        else if (random == 5)
+        {
+            weaponInHand = new Sawgun(firePoint, weaponsValues[11]);
         }
 
         //random = 2;

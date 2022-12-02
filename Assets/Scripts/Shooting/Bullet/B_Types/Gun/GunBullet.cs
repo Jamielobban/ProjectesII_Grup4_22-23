@@ -6,6 +6,8 @@ public class GunBullet : Bullet
 {
     private Rigidbody2D rb;   
     Transform originalFirePoint;
+
+    
     
     protected override void Start()
     {

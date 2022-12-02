@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
-public class ElectricBullet : Bullet
+public class Saw : Bullet
 {
     private Rigidbody2D rb;
     private ElectricGun thisGun;
@@ -23,13 +24,14 @@ public class ElectricBullet : Bullet
 
         originalFirePoint = this.transform;
         originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-15, 15));
-        rb.AddForce(originalFirePoint.up  * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+        rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
     }
 
     // Update is called once per frame
     protected override void Update()
     {
+        //transform.DORotate(new Vector3(1f, 1f, 1f * Time.deltaTime), 5f, RotateMode.LocalAxisAdd);
         base.Update();
     }
 }
