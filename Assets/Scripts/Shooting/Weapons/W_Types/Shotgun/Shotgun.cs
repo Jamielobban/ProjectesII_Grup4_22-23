@@ -42,7 +42,7 @@ public class Shotgun : Weapon
             data.powerActive.RuntimeValue = false;      
             data.powerupAvailable.RuntimeValue = false;
             data.timelastPowerupExit.RuntimeValue = Time.time;
-            AudioManager.Instance.PlaySound(powerupEmpty, GameObject.FindGameObjectWithTag("Player").transform);
+            AudioManager.Instance.PlaySound(powerupEmpty, player.transform);
         }
     }
 

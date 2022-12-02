@@ -36,6 +36,14 @@ public class ElectricConnection : MonoBehaviour
     }
     private void Update()
     {
-        newLine.AssignTarget(origin.position, allEnemies[0].transform);
+        if (allEnemies == null || allEnemies.Count == 0)
+        {
+            return;
+        }
+        else
+        {
+            newLine.AssignTarget(origin.position, allEnemies[0].transform);
+
+        }
     }
 }

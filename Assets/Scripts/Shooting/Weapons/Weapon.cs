@@ -17,14 +17,16 @@ public abstract class Weapon
 
     protected Mechanism weaponMechanism;
     protected Transform firePoint;
-    
+
+    protected GameObject player;
     
     public float timer;
     bool firstEnter = true;
 
 
     public Weapon(Transform _firePoint, WeaponValues _data)
-    {        
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
         firePoint = _firePoint;
         data = _data;
         data.RestartValues();
@@ -42,7 +44,7 @@ public abstract class Weapon
         {
             if(data.powerupAvailable.RuntimeValue && firstEnter)
             {
-                AudioManager.Instance.PlaySound(powerupMax, GameObject.FindGameObjectWithTag("Player").transform);
+                AudioManager.Instance.PlaySound(powerupMax, player.transform);
                 firstEnter = false;
             }
             data.timePassed.RuntimeValue = Time.time - data.timelastPowerupExit.RuntimeValue;
@@ -181,7 +183,7 @@ public abstract class Weapon
                 data.powerActive.RuntimeValue = true;
                 ActionOnEnterPowerup();
                 data.timelastPowerupEnter.RuntimeValue = Time.time;     
-                AudioManager.Instance.PlaySound(powerupPressed, GameObject.FindGameObjectWithTag("Player").transform);
+                AudioManager.Instance.PlaySound(powerupPressed, player.transform);
             }
 
         }
@@ -191,7 +193,7 @@ public abstract class Weapon
             {
                 data.bulletsInMagazine.RuntimeValue = data.bulletsInMagazine.InitialValue;
                 data.magazinesInWeapon.RuntimeValue--;
-                AudioManager.Instance.PlaySoundDelayed(data.reloadSound, 0.5f, GameObject.FindGameObjectWithTag("Player").transform);
+                AudioManager.Instance.PlaySoundDelayed(data.reloadSound, 0.5f, player.transform);
                 data.reloading.RuntimeValue = true;
                 data.startReloading.RuntimeValue = Time.time;
             }
@@ -218,7 +220,7 @@ public abstract class Weapon
             }
             else
             {
-                AudioManager.Instance.PlaySoundDelayed(data.reloadSound, 0.5f, GameObject.FindGameObjectWithTag("Player").transform);
+                AudioManager.Instance.PlaySoundDelayed(data.reloadSound, 0.5f, player.transform);
                 data.bulletsInMagazine.RuntimeValue = data.bulletsInMagazine.InitialValue;
                 data.magazinesInWeapon.RuntimeValue--;
                 data.startReloading.RuntimeValue = Time.time;
@@ -230,7 +232,7 @@ public abstract class Weapon
     public bool GetIfOutOffAmmo()
     {
         if (data.outOfAmmo.RuntimeValue)
-            AudioManager.Instance.PlaySound(nextWeapon, GameObject.FindGameObjectWithTag("Player").transform);
+            AudioManager.Instance.PlaySound(nextWeapon, player.transform);
         return data.outOfAmmo.RuntimeValue;
     }
     

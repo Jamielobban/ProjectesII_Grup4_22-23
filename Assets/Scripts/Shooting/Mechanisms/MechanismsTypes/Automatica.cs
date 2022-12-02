@@ -12,7 +12,6 @@ public class Automatica : Mechanism
             bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
             AudioManager.Instance.PlaySound(shootSound, firePoint.position);
             timeLastShoot = Time.time;
-            CinemachineShake.Instance.ShakeCamera(5f*amplitudeGain, .1f);
             return true;
         }
         return false;

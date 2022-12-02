@@ -17,14 +17,13 @@ public class LineController : MonoBehaviour
 
     private Transform target;
 
-    private ElectricDistanceCheck ec;
-
+    private ElectricConnection ec;
     private float distanceBetween;
 
     private Vector3 startPositionVec;
     private void Awake()
     {
-        ec = FindObjectOfType<ElectricDistanceCheck>();
+        ec = FindObjectOfType<ElectricConnection>();
         lineRenderer = GetComponent<LineRenderer>();
 
     }
@@ -38,10 +37,16 @@ public class LineController : MonoBehaviour
     }
     private void Update()
     {
-        //if (ec.isInRange)
-        //{
+        if(ec.allEnemies == null || ec.allEnemies.Count == 0)
+        {
+            return;
+        }
+        else
+        {
+
             lineRenderer.SetPosition(1, target.position);
             GenerateMeshCollider();
+        }
         //}
 
         distanceBetween = Vector3.Distance(startPositionVec,target.position);

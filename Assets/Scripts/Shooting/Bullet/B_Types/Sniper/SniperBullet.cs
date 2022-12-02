@@ -22,6 +22,8 @@ public class SniperBullet : Bullet
 
         Transform originalFirePoint = this.transform;
         rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+        CinemachineShake.Instance.ShakeCamera(40f, .2f);
+
     }
 
     protected override void Update()

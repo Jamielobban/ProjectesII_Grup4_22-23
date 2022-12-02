@@ -20,7 +20,7 @@ public class SineGun : Weapon
             //data.fireRateinSec /= 0.5f;
             //data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = false;
             data.timelastPowerupExit.RuntimeValue = Time.time;
-            AudioManager.Instance.PlaySound(powerupEmpty, GameObject.FindGameObjectWithTag("Player").transform);
+            AudioManager.Instance.PlaySound(powerupEmpty, player.transform.transform);
         }
         if (!data.powerActive.RuntimeValue)
         {
@@ -40,7 +40,7 @@ public class SineGun : Weapon
 
         GameObject bullet = GameObject.Instantiate(data.bulletTypePrefab, firePoint.position, firePoint.rotation);
         bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(data.damageMultiplier.RuntimeValue);
-        AudioManager.Instance.PlaySound(data.shootSound, GameObject.FindGameObjectWithTag("Player").transform);
+        AudioManager.Instance.PlaySound(data.shootSound, bullet.transform.position);
         CinemachineShake.Instance.ShakeCamera(5f, .1f);
         CinemachineShake.Instance.ShakeCamera(5f * data.amplitudeGain.RuntimeValue, .1f);
     }

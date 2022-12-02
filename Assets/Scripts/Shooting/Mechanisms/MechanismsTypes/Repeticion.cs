@@ -15,9 +15,7 @@ public class Repeticion : Mechanism
             GameObject bullet = GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
             bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
             AudioManager.Instance.PlaySound(shootSound, firePoint.transform.position);
-            CinemachineShake.Instance.ShakeCamera(5f, .1f);
             timeLastShoot = Time.time;
-            CinemachineShake.Instance.ShakeCamera(5f*amplitudeGain, .1f);
    
 
             return true;
