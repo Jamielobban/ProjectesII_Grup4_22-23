@@ -9,6 +9,7 @@ public class ElectricGun : Weapon
     public ElectricGun(Transform _firePoint, WeaponValues _data) : base(_firePoint, _data)
     {
         weaponMechanism = new Automatica();
+        //_data.bulletTypePrefab.GetComponent<ElectricBullet>().thisGun = this;
     }
 
     public override void Update()

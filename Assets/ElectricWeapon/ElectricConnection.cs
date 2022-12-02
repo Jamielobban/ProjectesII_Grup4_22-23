@@ -21,6 +21,9 @@ public class ElectricConnection : MonoBehaviour
     [SerializeField]
     private ElectricDistanceCheck distanceLmao;
 
+    [SerializeField]
+    private LineController line;
+
     private bool isntConnected;
     private void Awake()
     {
@@ -33,19 +36,6 @@ public class ElectricConnection : MonoBehaviour
     }
     private void Update()
     {
-        //if(allEnemies.Count > 1)
-        //{
-        //    allEnemies.RemoveAt(1);
-        //}
-        if (distanceLmao.isInRange)
-        {
-            //allEnemies.Add(enemy);
-            newLine.AssignTarget(origin.position, allEnemies[0].transform);
-        }
-        if (distanceLmao.justLeft)
-        {
-            distanceLmao.justLeft = false;
-            Destroy(newLine.gameObject);
-        }
+        newLine.AssignTarget(origin.position, allEnemies[0].transform);
     }
 }

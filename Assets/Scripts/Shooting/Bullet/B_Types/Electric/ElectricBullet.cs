@@ -5,14 +5,13 @@ using UnityEngine;
 public class ElectricBullet : Bullet
 {
     private Rigidbody2D rb;
-    private ElectricGun thisGun;
+    public ElectricGun thisGun;
     Transform originalFirePoint;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
 
-        //thisGun.bulletsOut.Add(this.gameObject);
 
         bulletDamage = 20 * _damageMultiplier;
         bulletRangeInMetres = 100;
@@ -22,7 +21,7 @@ public class ElectricBullet : Bullet
         rb = this.GetComponent<Rigidbody2D>();
 
         originalFirePoint = this.transform;
-        originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-15, 15));
+        originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-5, 5));
         rb.AddForce(originalFirePoint.up  * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
     }
@@ -31,6 +30,13 @@ public class ElectricBullet : Bullet
     protected override void Update()
     {
         base.Update();
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("MapLimit"))
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
 

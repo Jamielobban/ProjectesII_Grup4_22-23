@@ -8,6 +8,7 @@ public class Saw : Bullet
     private Rigidbody2D rb;
     private ElectricGun thisGun;
     Transform originalFirePoint;
+    public bool isAlive;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -17,7 +18,7 @@ public class Saw : Bullet
 
         bulletDamage = 20 * _damageMultiplier;
         bulletRangeInMetres = 100;
-        bulletSpeedMetresPerSec = 20;
+        bulletSpeedMetresPerSec = 30;
         bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();
@@ -31,8 +32,11 @@ public class Saw : Bullet
     // Update is called once per frame
     protected override void Update()
     {
-        //transform.DORotate(new Vector3(1f, 1f, 1f * Time.deltaTime), 5f, RotateMode.LocalAxisAdd);
+
+
         base.Update();
+        bulletSpeedMetresPerSec -= 3f * Time.deltaTime;
+
     }
 }
 

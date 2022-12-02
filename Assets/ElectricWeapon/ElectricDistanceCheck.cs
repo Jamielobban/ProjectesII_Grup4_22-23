@@ -23,7 +23,7 @@ public class ElectricDistanceCheck : MonoBehaviour
         Debug.Log(("FOUND SEOMTHING"));
         if (collision.CompareTag("Bullet") && !isntConnected)
         {
-            Debug.Log("FOUND");
+            //Debug.Log("FOUND");
             ec.allEnemies = new List<GameObject>();
             ec.allEnemies.Add(collision.GetComponentInParent<ElectricBullet>().gameObject);
             isInRange = true;
@@ -35,7 +35,7 @@ public class ElectricDistanceCheck : MonoBehaviour
     {
         if (collision.CompareTag("Bullet"))
         {
-            Debug.Log("LEFT");
+            //Debug.Log("LEFT");
             isInRange = false;
             justLeft = true;
         }

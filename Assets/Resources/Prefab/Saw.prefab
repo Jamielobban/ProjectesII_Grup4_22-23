@@ -108,6 +108,7 @@ MonoBehaviour:
   whatIsMapColisionable:
     serializedVersion: 2
     m_Bits: 2048
+  isAlive: 0
 --- !u!50 &8372755283922730693
 Rigidbody2D:
   serializedVersion: 4
@@ -121,7 +122,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 0.1
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: f4f9bdc0cd7cb1843ba0b54430311903, type: 2}

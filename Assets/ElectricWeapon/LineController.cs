@@ -18,26 +18,39 @@ public class LineController : MonoBehaviour
     private Transform target;
 
     private ElectricDistanceCheck ec;
+
+    private float distanceBetween;
+
+    private Vector3 startPositionVec;
     private void Awake()
     {
         ec = FindObjectOfType<ElectricDistanceCheck>();
         lineRenderer = GetComponent<LineRenderer>();
+
     }
 
     public void AssignTarget(Vector3 startPosition, Transform newTarget)
     {
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, startPosition);
+        startPositionVec = startPosition;
         target = newTarget;
     }
     private void Update()
     {
-        if (ec.isInRange)
-        {
+        //if (ec.isInRange)
+        //{
             lineRenderer.SetPosition(1, target.position);
             GenerateMeshCollider();
-        }
+        //}
 
+        distanceBetween = Vector3.Distance(startPositionVec,target.position);
+
+        Debug.Log(distanceBetween);
+        if(distanceBetween >= 10.0f)
+        {
+            Destroy(this.gameObject);
+        }
 
         fpsCounter += Time.deltaTime;
         if (fpsCounter >= 1f / fps)
@@ -63,16 +76,6 @@ public class LineController : MonoBehaviour
         Mesh mesh = new Mesh();
         lineRenderer.BakeMesh(mesh);
         collider.sharedMesh = mesh;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log(("yo"));
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("SHOCKEDLMAO");
-          
-        }
     }
 }
 

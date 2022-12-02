@@ -8,16 +8,16 @@ public class EchoEffect : MonoBehaviour
     public float startTimeBetweenSpawns;
 
     public GameObject echo;
-    private PlayerMovement player;
+    private Saw thisSaw;
 
     private void Start()
     {
-        player = GetComponent<PlayerMovement>();
+        thisSaw = GetComponent<Saw>();
     }
 
     private void Update()
     {
-        if (player.isMoving)
+        if (thisSaw.isAlive)
         {
             if(timeBewteenSpawns <= 0)
             {
