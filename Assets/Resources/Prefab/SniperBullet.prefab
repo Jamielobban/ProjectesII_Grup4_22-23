@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpOn: 0
-  collisionWallEffect: {fileID: 1383990659018448891, guid: 90d40582248e75143abb93179f421db5, type: 3}
+  collisionWallEffect: {fileID: 7015824860921572072, guid: dba11980a5f6abd46bddeda50471e23e, type: 3}
   collisionBloodEffect: {fileID: 5096148057906189823, guid: 4a122dcc68153794295f6953dd91521e, type: 3}
   whatIsDamageable:
     serializedVersion: 2
@@ -130,7 +130,7 @@ MonoBehaviour:
   childForCollisions: {fileID: 1341938989703861646}
   enemy:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
 --- !u!61 &1213065512113233398
 BoxCollider2D:
   m_ObjectHideFlags: 0
