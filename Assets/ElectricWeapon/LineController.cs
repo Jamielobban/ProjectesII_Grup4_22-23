@@ -20,12 +20,12 @@ public class LineController : MonoBehaviour
     private ElectricConnection ec;
     private float distanceBetween;
 
+
     private Vector3 startPositionVec;
-    private void Awake()
+    private void Start()
     {
         ec = FindObjectOfType<ElectricConnection>();
         lineRenderer = GetComponent<LineRenderer>();
-
     }
 
     public void AssignTarget(Vector3 startPosition, Transform newTarget)
@@ -37,13 +37,14 @@ public class LineController : MonoBehaviour
     }
     private void Update()
     {
-        if(ec.allEnemies == null || ec.allEnemies.Count == 0)
+        if(ec.allEnemies == null || ec.allEnemies.Count == 0) 
         {
             return;
         }
         else
         {
 
+            ec.isConnected = true;
             lineRenderer.SetPosition(1, target.position);
             GenerateMeshCollider();
         }
@@ -51,9 +52,11 @@ public class LineController : MonoBehaviour
 
         distanceBetween = Vector3.Distance(startPositionVec,target.position);
 
-        Debug.Log(distanceBetween);
+        //Debug.Log(distanceBetween);
         if(distanceBetween >= 10.0f)
         {
+            ec.isConnected = false;
+            ec.allLines.Clear();
             Destroy(this.gameObject);
         }
 

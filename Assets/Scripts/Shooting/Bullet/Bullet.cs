@@ -107,13 +107,15 @@ public abstract class Bullet : MonoBehaviour
     {
         //this.speed = speed;
         //this.travelDistance = travelDistance;
-        Debug.Log(rb == null);
+        
         //attackDetails.damageAmount = damage;        
         originalFirePoint = referenceTransform;
-        Debug.Log(originalFirePoint == null);
+        //Debug.Log(originalFirePoint == null);
 
         if (bulletData.ApplyShootForce)
+        {
             this.GetComponent<Rigidbody2D>().AddForce(originalFirePoint.up * -bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+        }
 
     }
 }

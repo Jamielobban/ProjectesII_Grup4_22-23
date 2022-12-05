@@ -20,11 +20,12 @@ public class ElectricDistanceCheck : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(("FOUND SEOMTHING"));
+        //Debug.Log(("FOUND SEOMTHING"));
         if (collision.CompareTag("Bullet") && !isntConnected)
         {
             //Debug.Log("FOUND");
             ec.allEnemies = new List<GameObject>();
+
             ec.allEnemies.Add(collision.GetComponentInParent<ElectricBullet>().gameObject);
             isInRange = true;
             isntConnected = true;

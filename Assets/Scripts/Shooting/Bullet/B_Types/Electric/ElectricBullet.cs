@@ -18,9 +18,7 @@ public class ElectricBullet : Bullet
         //bulletSpeedMetresPerSec = 20;
         //bulletRadius = 0.23f;
 
-        rb = this.GetComponent<Rigidbody2D>();
-
-        originalFirePoint = this.transform;
+               
         originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-5, 5));
         //rb.AddForce(originalFirePoint.up  * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 

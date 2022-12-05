@@ -6,7 +6,7 @@ public class ElectricConnection : MonoBehaviour
 {
     public List<GameObject> allEnemies;
 
-    private List<LineController> allLines;
+    public  List<LineController> allLines;
 
     [SerializeField]
     private LineController linePrefab;
@@ -24,10 +24,10 @@ public class ElectricConnection : MonoBehaviour
     [SerializeField]
     private LineController line;
 
-    private bool isntConnected;
+    public bool isConnected = false;
     private void Awake()
     {
-        isntConnected = false;
+        isConnected = false;
         //allEnemies.AddRange(FindObjectsOfType<EnemyController>());
         allLines = new List<LineController>();
 
@@ -36,7 +36,8 @@ public class ElectricConnection : MonoBehaviour
     }
     private void Update()
     {
-        if (allEnemies == null || allEnemies.Count == 0)
+        
+        if (allEnemies == null || allEnemies.Count == 0 || !isConnected)
         {
             return;
         }

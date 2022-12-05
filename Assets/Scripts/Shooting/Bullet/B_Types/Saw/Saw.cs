@@ -6,7 +6,7 @@ using DG.Tweening;
 public class Saw : Bullet
 {
     //private Rigidbody2D rb;
-    private ElectricGun thisGun;
+    
     //Transform originalFirePoint;
     public bool isAlive;
     // Start is called before the first frame update
@@ -25,7 +25,7 @@ public class Saw : Bullet
         //bulletSpeedMetresPerSec = 30;
         //bulletRadius = 0.23f;
 
-        rb = this.GetComponent<Rigidbody2D>();
+        //rb = this.GetComponent<Rigidbody2D>();
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
 
@@ -41,7 +41,7 @@ public class Saw : Bullet
 
 
         base.Update();
-        bulletData.bulletSpeedMetresPerSec -= 3f * Time.deltaTime;
+        //bulletData.bulletSpeedMetresPerSec -= 3f * Time.deltaTime;
 
     }
 }

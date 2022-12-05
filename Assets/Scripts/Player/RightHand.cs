@@ -163,7 +163,7 @@ public class RightHand : MonoBehaviour
 
         if (weaponInHand.GetIfOutOffAmmo())
         {
-            Debug.Log("in");
+            //Debug.Log("in");
             if (reloadBar.activeSelf)
             {
                 firstTime3 = true;

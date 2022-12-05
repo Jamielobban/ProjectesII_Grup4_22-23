@@ -90,6 +90,7 @@ MonoBehaviour:
   whatIsMapColisionable:
     serializedVersion: 2
     m_Bits: 2048
+  bulletData: {fileID: 11400000, guid: d3f6a1aa4a35bf74c9b278965c408c8c, type: 2}
 --- !u!50 &870950452274636063
 Rigidbody2D:
   serializedVersion: 4
@@ -202,10 +203,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allEnemies: []
+  allLines: []
   linePrefab: {fileID: 562445145974567705, guid: f698f12f4124a314894cb061f6295ec4, type: 3}
   origin: {fileID: 1184435576471712943}
   weaponIsOn: 0
   distanceLmao: {fileID: 523080821671433208}
+  line: {fileID: 562445145974567705, guid: f698f12f4124a314894cb061f6295ec4, type: 3}
+  isConnected: 0
 --- !u!1 &6589712635219377777
 GameObject:
   m_ObjectHideFlags: 0

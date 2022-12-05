@@ -9,6 +9,8 @@ public class Automatica : Mechanism
         if (Input.GetButton("Shoot") && Time.time - timeLastShoot >= fireRateinSec)
         {
             GameObject bullet = GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
+            //Debug.Log(bullet.transform.position);
+
             bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
             AudioManager.Instance.PlaySound(shootSound, firePoint.position);
             timeLastShoot = Time.time;
