@@ -19,7 +19,7 @@ public class BalasExplosivas : Bullet
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
 
-        transform.Rotate(0, 0, transform.rotation.z + Random.Range(-10, 10));
+        //transform.Rotate(0, 0, transform.rotation.z + Random.Range(-10, 10));
 
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);

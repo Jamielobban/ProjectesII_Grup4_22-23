@@ -30,7 +30,8 @@ public class Saw : Bullet
         bulletData.bulletDamage *= bulletData._damageMultiplier;
 
 
-        originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-15, 15));
+        //originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-15, 15));
+
         //rb.AddForce(originalFirePoint.up * -bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
     }

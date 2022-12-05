@@ -14,6 +14,10 @@ public class Explosion : Bullet
 
     }
 
+    protected override void Update()
+    {
+    }
+
     // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D collision)
     {

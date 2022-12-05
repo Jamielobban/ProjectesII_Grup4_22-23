@@ -18,6 +18,8 @@ public abstract class Bullet : MonoBehaviour
     protected LayerMask whatIsMapColisionable;
 
     protected Transform originalFirePoint;
+
+    [SerializeField]
     protected Rigidbody2D rb;
 
     
@@ -103,18 +105,25 @@ public abstract class Bullet : MonoBehaviour
         Instantiate(collisionWallEffect, transform.position, Quaternion.identity);
     }
 
-    public void FireProjectile(Transform referenceTransform)
+    public void FireProjectile(/*Transform referenceTransform*/)
     {
         //this.speed = speed;
         //this.travelDistance = travelDistance;
-        
-        //attackDetails.damageAmount = damage;        
-        originalFirePoint = referenceTransform;
-        //Debug.Log(originalFirePoint == null);
 
+        //attackDetails.damageAmount = damage;        
+
+        //originalFirePoint = referenceTransform;
+        originalFirePoint = this.transform;
+        originalFirePoint.Rotate(0f, 0f, originalFirePoint.transform.rotation.z + Random.Range(bulletData.minRangeTransform, bulletData.maxRangeTransform));
+        
+        //Debug.Log(originalFirePoint == null);
+        Debug.Log(bulletData);
         if (bulletData.ApplyShootForce)
         {
+            Debug.Log(originalFirePoint);
+            Debug.Log("in");
             this.GetComponent<Rigidbody2D>().AddForce(originalFirePoint.up * -bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+            
         }
 
     }

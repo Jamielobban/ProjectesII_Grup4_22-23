@@ -18,7 +18,7 @@ public class Cohetes : Bullet
         bulletData.bulletDamage *= bulletData._damageMultiplier;
 
 
-        this.transform.Rotate(0,0, this.transform.rotation.z + Random.RandomRange(-5, 5));
+        //this.transform.Rotate(0,0, this.transform.rotation.z + Random.RandomRange(-5, 5));
 
         //this.GetComponent<Rigidbody2D>().AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
         GameObject explosion = Instantiate(muzzle, this.transform.position, this.transform.rotation);
@@ -36,12 +36,27 @@ public class Cohetes : Bullet
         explosion.GetComponent<Bullet>().ApplyMultiplierToDamage(bulletData._damageMultiplier);
 
         GameObject misil1 = Instantiate(teledirigido, this.transform.position, this.transform.rotation);
+        misil1.GetComponent<Bullet>().FireProjectile();
+
+        misil1.transform.Rotate(0f, 0f, misil1.transform.rotation.z + 0);
+
+        misil1.GetComponent<Rigidbody2D>().AddForce(misil1.transform.up * -misil1.GetComponent<Bullet>().bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
         misil1.GetComponent<Bullet>().ApplyMultiplierToDamage(bulletData._damageMultiplier);
 
         GameObject misil2 = Instantiate(teledirigido, this.transform.position, this.transform.rotation);
+        misil2.GetComponent<Bullet>().FireProjectile();
+
+        misil2.transform.Rotate(0f, 0f, misil2.transform.rotation.z + 6);
+
+        misil2.GetComponent<Rigidbody2D>().AddForce(misil2.transform.up * -misil2.GetComponent<Bullet>().bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
         misil2.GetComponent<Bullet>().ApplyMultiplierToDamage(bulletData._damageMultiplier);
 
         GameObject misil3 = Instantiate(teledirigido, this.transform.position, this.transform.rotation);
+        misil3.GetComponent<Bullet>().FireProjectile();
+
+        misil3.transform.Rotate(0f, 0f, misil3.transform.rotation.z - 6);
+
+        misil3.GetComponent<Rigidbody2D>().AddForce(misil3.transform.up * -misil3.GetComponent<Bullet>().bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
         misil3.GetComponent<Bullet>().ApplyMultiplierToDamage(bulletData._damageMultiplier);
 
         Destroy(this.gameObject);

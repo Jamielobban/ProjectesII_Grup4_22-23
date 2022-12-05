@@ -13,10 +13,12 @@ public class Repeticion : Mechanism
         {
 
             GameObject bullet = GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
+            bullet.GetComponent<Bullet>().FireProjectile(/*firePoint*/);
+
             bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
             AudioManager.Instance.PlaySound(shootSound, firePoint.transform.position);
             timeLastShoot = Time.time;
-            bullet.GetComponent<Bullet>().FireProjectile(firePoint);
+
 
             return true;
         }

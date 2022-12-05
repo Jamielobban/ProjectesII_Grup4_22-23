@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newBulletData", menuName = "Data/Bullet Data/Base Data")]
 public class D_Bullet : ScriptableObject
 {
+    public float minRangeTransform, maxRangeTransform;    
+    public float minRangeVelocity, maxRangeVeclocity;    
     public float bulletDamage;
     public float bulletSpeedMetresPerSec;
     public float bulletRangeInMetres;

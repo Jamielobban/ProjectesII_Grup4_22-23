@@ -19,7 +19,7 @@ public class ElectricBullet : Bullet
         //bulletRadius = 0.23f;
 
                
-        originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-5, 5));
+        //originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-5, 5));
         //rb.AddForce(originalFirePoint.up  * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
     }

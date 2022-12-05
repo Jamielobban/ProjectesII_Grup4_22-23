@@ -60,6 +60,8 @@ public class SniperLineBullet : Bullet
         GameObject shoot = GameObject.Instantiate(shootPowerUpBullet, transform.position, transform.rotation);
 
         shoot.GetComponent<Bullet>().ApplyMultiplierToDamage(GetDamageMultiplier());
+        shoot.GetComponent<Bullet>().FireProjectile(/*this.transform*/);
+
         Destroy(this.gameObject,0.3f);
 
     }
@@ -79,6 +81,7 @@ public class SniperLineBullet : Bullet
         GameObject shoot = GameObject.Instantiate(shootBullet, transform.position, transform.rotation);
 
         shoot.GetComponent<Bullet>().ApplyMultiplierToDamage(GetDamageMultiplier());
+        shoot.GetComponent<Bullet>().FireProjectile(/*this.transform*/);
 
         Destroy(this.gameObject, 0.3f);
     }
