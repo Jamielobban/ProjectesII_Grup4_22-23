@@ -17,32 +17,34 @@ public abstract class Bullet : MonoBehaviour
     [SerializeField]
     protected LayerMask whatIsMapColisionable;
 
-    protected float bulletDamage;
-    protected float bulletSpeedMetresPerSec;
-    protected float bulletRangeInMetres;
-    protected float bulletRadius;
-    protected float _damageMultiplier;
+    protected Transform originalFirePoint;
+    protected Rigidbody2D rb;
+
+    
+    public D_Bullet bulletData;
+
+   
 
     private bool firstTime = true;
     protected float timeShooted;
     
     public virtual void ApplyMultiplierToDamage(float multiplier)
     {
-        _damageMultiplier = multiplier;        
+        bulletData._damageMultiplier = multiplier;        
     }
 
     public float GetDamageMultiplier()
     {
-        return _damageMultiplier;
+        return bulletData._damageMultiplier;
     }
     public float GetBUlletDamage()
     {
-        return bulletDamage;
+        return bulletData.bulletDamage;
     }
 
     public float GetSpeed()
     {
-        return bulletSpeedMetresPerSec;
+        return bulletData.bulletSpeedMetresPerSec;
     }
 
     protected virtual void Start()
@@ -51,6 +53,7 @@ public abstract class Bullet : MonoBehaviour
         
         timeShooted = Time.time;       
         
+
     }
 
     // Update is called once per frame
@@ -62,7 +65,7 @@ public abstract class Bullet : MonoBehaviour
             firstTime = false;
         }
 
-        if (Time.time - timeShooted >= bulletRangeInMetres / bulletSpeedMetresPerSec)
+        if (Time.time - timeShooted >= bulletData.bulletRangeInMetres / bulletData.bulletSpeedMetresPerSec)
         {
             Destroy(this.gameObject);
 
@@ -98,5 +101,19 @@ public abstract class Bullet : MonoBehaviour
     protected virtual void HitSomething()
     {
         Instantiate(collisionWallEffect, transform.position, Quaternion.identity);
+    }
+
+    public void FireProjectile(Transform referenceTransform)
+    {
+        //this.speed = speed;
+        //this.travelDistance = travelDistance;
+        Debug.Log(rb == null);
+        //attackDetails.damageAmount = damage;        
+        originalFirePoint = referenceTransform;
+        Debug.Log(originalFirePoint == null);
+
+        if (bulletData.ApplyShootForce)
+            this.GetComponent<Rigidbody2D>().AddForce(originalFirePoint.up * -bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+
     }
 }

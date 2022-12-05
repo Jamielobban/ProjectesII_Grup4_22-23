@@ -9,7 +9,7 @@ public class ShotgunBullet : Bullet
     GameObject pelletPrefab;
     GameObject powerupPelletPrefab;
     //public GameObject powerUpPelletCollisions;
-    private Rigidbody2D rb;
+    
     //private float _multiplier;
     private Pellet pellet;
 
@@ -17,15 +17,18 @@ public class ShotgunBullet : Bullet
     {
         base.Start();
 
-        bulletDamage = 34*_damageMultiplier;
-        bulletRangeInMetres = 5;
-        bulletSpeedMetresPerSec = 20;
-        bulletRadius = 0.23f;
+        //bulletDamage = 34*_damageMultiplier;
+        //bulletRangeInMetres = 5;
+        //bulletSpeedMetresPerSec = 20;
+        //bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();        
 
         pelletPrefab = Resources.Load<GameObject>("Prefab/Pellet");
         powerupPelletPrefab = Resources.Load<GameObject>("Prefab/BigPelletPowerup");
+
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
+
 
         if (powerUpOn)
         {
@@ -46,7 +49,9 @@ public class ShotgunBullet : Bullet
 
                 //Transform originalFirePoint = this.transform;
                 //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+
                 pelletsOnBullet[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBullet[i].transform.up * -Random.Range(25, 35), ForceMode2D.Impulse);
+                //pelletsOnBullet[i].GetComponent<Bullet>().FireProjectile(originalFirePoint);
 
                 if (powerUpOn)
                 {
@@ -57,7 +62,7 @@ public class ShotgunBullet : Bullet
                 {
                     pelletsOnBullet[i].GetComponent<Pellet>().powerUpOn = false;
                 }
-                pelletsOnBullet[i].GetComponent<Pellet>().ApplyMultiplierToDamage(_damageMultiplier);
+                pelletsOnBullet[i].GetComponent<Pellet>().ApplyMultiplierToDamage(bulletData._damageMultiplier);
             }
             //Destroy(this.gameObject);
         }
@@ -76,6 +81,8 @@ public class ShotgunBullet : Bullet
                 //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
                 pelletsOnBulletPU[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBulletPU[i].transform.up * -Random.Range(15, 25), ForceMode2D.Impulse);
+                //pelletsOnBulletPU[i].GetComponent<Bullet>().FireProjectile(originalFirePoint);
+
 
                 //GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
                 //instance.GetComponent<EnemyProjectile>().bulletDamage = enemyBulletDamage;
@@ -91,7 +98,7 @@ public class ShotgunBullet : Bullet
                 {
                     pelletsOnBulletPU[i].GetComponent<Pellet>().powerUpOn = false;
                 }
-                pelletsOnBulletPU[i].GetComponent<Pellet>().ApplyMultiplierToDamage(_damageMultiplier);
+                pelletsOnBulletPU[i].GetComponent<Pellet>().ApplyMultiplierToDamage(bulletData._damageMultiplier);
             }
             //Destroy(this.gameObject);
         }

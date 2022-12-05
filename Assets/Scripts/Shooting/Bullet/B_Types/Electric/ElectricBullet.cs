@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class ElectricBullet : Bullet
 {
-    private Rigidbody2D rb;
+    
     public ElectricGun thisGun;
-    Transform originalFirePoint;
+    
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
 
-
-        bulletDamage = 20 * _damageMultiplier;
-        bulletRangeInMetres = 100;
-        bulletSpeedMetresPerSec = 20;
-        bulletRadius = 0.23f;
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
+        //bulletDamage = 20 * _damageMultiplier;
+        //bulletRangeInMetres = 100;
+        //bulletSpeedMetresPerSec = 20;
+        //bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();
 
         originalFirePoint = this.transform;
         originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-5, 5));
-        rb.AddForce(originalFirePoint.up  * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+        //rb.AddForce(originalFirePoint.up  * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Misil : Bullet
 {
-    Rigidbody2D rb;
+    
     GameObject[] enemies;
     public GameObject enemy;
     float minRotation;
@@ -13,14 +13,16 @@ public class Misil : Bullet
     // Start is called before the first frame update
     void Start()
     {
-        bulletDamage = 10 * _damageMultiplier;
-        bulletRangeInMetres = 1000000000;
-        bulletSpeedMetresPerSec = 50;
-        bulletRadius = 0.23f;
+        //bulletDamage = 10 * _damageMultiplier;
+        //bulletRangeInMetres = 1000000000;
+        //bulletSpeedMetresPerSec = 50;
+        //bulletRadius = 0.23f;
 
         enemy = null;
 
         minRotation = 0;
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
+
         rb = this.GetComponent<Rigidbody2D>();
         this.transform.Rotate(0, 0, this.transform.rotation.z + Random.RandomRange(-20, 20));
 
@@ -45,7 +47,7 @@ public class Misil : Bullet
         //}
 
   
-         this.GetComponent<Rigidbody2D>().AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+         //this.GetComponent<Rigidbody2D>().AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
     }
 
@@ -83,7 +85,7 @@ public class Misil : Bullet
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             base.ImpactBody();
-            bulletInfo.damage = bulletDamage;
+            bulletInfo.damage = bulletData.bulletDamage;
             bulletInfo.impactPosition = transform.position;
             collision.gameObject.SendMessage("GetDamage", bulletInfo);
         }

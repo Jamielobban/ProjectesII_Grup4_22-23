@@ -6,8 +6,7 @@ public class AlfaBullet : Bullet
 {
     [SerializeField]
     GameObject blackHole;
-    
-    private Rigidbody2D rb;    
+        
     private int multiplier;
     public GameObject originBullet;
 
@@ -26,10 +25,13 @@ public class AlfaBullet : Bullet
         //Debug.Log(rb.velocity);
 
 
-        bulletDamage = 30 * _damageMultiplier;
-        bulletRangeInMetres = 60;
-        bulletSpeedMetresPerSec = 15; //20
-        bulletRadius = 0.23f;
+        //bulletDamage = 30 * _damageMultiplier;
+        //bulletRangeInMetres = 60;
+        //bulletSpeedMetresPerSec = 15; //20
+        //bulletRadius = 0.23f;
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
+
+
         timePassed = 1;
         multiplier = 0;
         //relativeJoint = GetComponent<RelativeJoint2D>();
@@ -102,7 +104,7 @@ public class AlfaBullet : Bullet
             }
             else if (collision.gameObject.CompareTag("Enemy"))
             {
-                bulletInfo.damage = bulletDamage;
+                bulletInfo.damage = bulletData.bulletDamage;
                 bulletInfo.impactPosition = transform.position;
                 collision.gameObject.SendMessage("GetDamage", bulletInfo);
                 base.HitSomeone();

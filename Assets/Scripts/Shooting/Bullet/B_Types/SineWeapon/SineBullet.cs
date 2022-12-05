@@ -12,8 +12,7 @@ public class SineBullet : Bullet
     //GameObject alfaBullet;
     //private Dictionary<int, Vector3> enemiesInfo = new Dictionary<int, Vector3>();
 
-    private Rigidbody2D rb;
-    Transform originalFirePoint;
+    
     [SerializeField]
     GameObject betaBullet;
     [SerializeField]
@@ -35,11 +34,14 @@ public class SineBullet : Bullet
         base.Start();
 
         lastEnter = 0; 
-        bulletRangeInMetres = 90;//6s
-        bulletSpeedMetresPerSec = 15;//20
-        bulletRadius = 0.23f;        
+        //bulletRangeInMetres = 90;//6s
+        //bulletSpeedMetresPerSec = 15;//20
+        //bulletRadius = 0.23f;        
         counter = 0;
         rb = this.GetComponent<Rigidbody2D>();
+
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
+
 
         originalFirePoint = this.transform;
         //originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-15, 15));
@@ -51,18 +53,18 @@ public class SineBullet : Bullet
 
         if (powerUpOn)
         {
-            rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+            //rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
             betaBullet.GetComponent<BetaBullet>().powerUpOn = true;
             alfaBullet.GetComponent<AlfaBullet>().powerUpOn = true;
 
             GameObject betaBulletClone = GameObject.Instantiate(betaBullet, transform.position, transform.rotation);
             betaBulletClone.GetComponent<BetaBullet>().originBullet = this.gameObject;
-            betaBulletClone.GetComponent<Rigidbody2D>().AddForce(betaBulletClone.transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+            //betaBulletClone.GetComponent<Rigidbody2D>().AddForce(betaBulletClone.transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
             GameObject alfaBulletulletClone = GameObject.Instantiate(alfaBullet, transform.position, transform.rotation);
             alfaBulletulletClone.GetComponent<AlfaBullet>().originBullet = this.gameObject;
-            alfaBulletulletClone.GetComponent<Rigidbody2D>().AddForce(alfaBulletulletClone.transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+            //alfaBulletulletClone.GetComponent<Rigidbody2D>().AddForce(alfaBulletulletClone.transform.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
         }
         else
         {
@@ -88,7 +90,7 @@ public class SineBullet : Bullet
         }
         else
         {
-            if (Time.time - timeShooted >= bulletRangeInMetres / bulletSpeedMetresPerSec)
+            if (Time.time - timeShooted >= bulletData.bulletRangeInMetres / bulletData.bulletSpeedMetresPerSec)
             {
                 ResetBalls();
             }

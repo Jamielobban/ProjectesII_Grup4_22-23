@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pellet : Bullet
-{
-    private Rigidbody2D rb;    
+{       
     [SerializeField]
     SpriteRenderer sr;
 
@@ -13,12 +12,14 @@ public class Pellet : Bullet
     {
         base.Start();
 
-        bulletDamage = 34*_damageMultiplier;
-        bulletRangeInMetres = 500;
-        bulletSpeedMetresPerSec = 20;
-        bulletRadius = 0.23f;
+        //bulletDamage = 34*_damageMultiplier;
+        //bulletRangeInMetres = 500;
+        //bulletSpeedMetresPerSec = 20;
+        //bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();
+
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
 
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
@@ -26,7 +27,7 @@ public class Pellet : Bullet
 
     public void SetDamageBUllet(float _multiplier)
     {
-        bulletDamage = 34 * _multiplier;
+        bulletData.bulletDamage = 34 * _multiplier;
     }
     
     protected override void Update()
@@ -55,7 +56,7 @@ public class Pellet : Bullet
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            bulletInfo.damage = bulletDamage;
+            bulletInfo.damage = bulletData.bulletDamage;
             bulletInfo.impactPosition = transform.position;
             collision.gameObject.SendMessage("GetDamage", bulletInfo);
             base.ImpactBody();           

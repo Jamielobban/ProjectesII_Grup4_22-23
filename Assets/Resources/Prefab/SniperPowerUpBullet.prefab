@@ -271,6 +271,7 @@ MonoBehaviour:
   whatIsMapColisionable:
     serializedVersion: 2
     m_Bits: 2048
+  bulletData: {fileID: 11400000, guid: 4f229dacd6aee564fa2d8208c2f469c8, type: 2}
   childForCollisions: {fileID: 1341938989703861646}
   enemy:
     serializedVersion: 2
@@ -425,6 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 768544ab45232044787dd7896e842f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies: []
   marcador: {fileID: 1611777901023467629, guid: d2692fd33472e9445a7fc023cda71896, type: 3}
 --- !u!61 &367364321752775966
 BoxCollider2D:

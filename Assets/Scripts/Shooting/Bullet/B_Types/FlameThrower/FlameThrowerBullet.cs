@@ -5,23 +5,23 @@ using System.Linq;
 using UnityEngine.ParticleSystemJobs;
 
 public class FlameThrowerBullet : Bullet
-{
-    private Rigidbody2D rb;
-    
-    
+{ 
 
     protected override void Start()
     {
-        timeShooted = Time.time;     
+        timeShooted = Time.time;
 
-        bulletDamage = 0.5f * _damageMultiplier;
-        bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
-        bulletSpeedMetresPerSec = 1;
-        bulletRadius = 0.23f;
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
+        bulletData.bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
+
+        //bulletDamage = 0.5f * _damageMultiplier;
+        //bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
+        //bulletSpeedMetresPerSec = 1;
+        //bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();
 
-        Transform originalFirePoint = this.transform;
+        
 
     }
 
@@ -33,6 +33,6 @@ public class FlameThrowerBullet : Bullet
     }
     public float GetFlamesDamage()
     {
-        return bulletDamage;
+        return bulletData.bulletDamage;
     }
 }

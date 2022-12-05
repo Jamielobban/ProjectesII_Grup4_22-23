@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerupPellet : Bullet
-{
-    private Rigidbody2D rb;
+{    
     [SerializeField]
     SpriteRenderer sr;
 
@@ -13,10 +12,11 @@ public class PowerupPellet : Bullet
     {
         base.Start();
 
-        bulletDamage = 75 * _damageMultiplier;
-        bulletRangeInMetres = 500;
-        bulletSpeedMetresPerSec = 20;
-        bulletRadius = 0.23f;
+        //bulletDamage = 75 * _damageMultiplier;
+        //bulletRangeInMetres = 500;
+        //bulletSpeedMetresPerSec = 20;
+        //bulletRadius = 0.23f;
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
 
         rb = this.GetComponent<Rigidbody2D>();
 
@@ -26,7 +26,7 @@ public class PowerupPellet : Bullet
 
     public void SetDamageBUllet(float _multiplier)
     {
-        bulletDamage = 75 * _multiplier;
+        bulletData.bulletDamage = 75 * _multiplier;
     }
 
     protected override void Update()
@@ -45,7 +45,7 @@ public class PowerupPellet : Bullet
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            bulletInfo.damage = bulletDamage;
+            bulletInfo.damage = bulletData.bulletDamage;
             bulletInfo.impactPosition = transform.position;
             collision.gameObject.SendMessage("GetDamage", bulletInfo);
             base.ImpactBody();

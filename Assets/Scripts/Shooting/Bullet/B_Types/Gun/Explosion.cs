@@ -8,7 +8,7 @@ public class Explosion : Bullet
     // Start is called before the first frame update
     void Start()
     {
-        bulletDamage = damage * _damageMultiplier;
+        bulletData.bulletDamage = damage * bulletData._damageMultiplier;
 
         Destroy(this.gameObject, 0.6f);
 
@@ -20,7 +20,7 @@ public class Explosion : Bullet
          if (collision.gameObject.CompareTag("Enemy"))
         {
             base.HitSomeone();
-            bulletInfo.damage = bulletDamage;
+            bulletInfo.damage = bulletData.bulletDamage;
             bulletInfo.impactPosition = transform.position;
             collision.gameObject.SendMessage("GetDamage", bulletInfo);
         }

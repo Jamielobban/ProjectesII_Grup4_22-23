@@ -32,6 +32,7 @@ public class Flow : Mechanism
                 //whereLoopIsPlayed.Pause();
                 GameObject.Destroy(lastBullet, maxDuration);
                 //Debug.Log("On1");
+                
 
                 return false;
             }

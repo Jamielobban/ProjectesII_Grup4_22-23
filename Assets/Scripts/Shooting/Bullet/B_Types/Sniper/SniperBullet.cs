@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SniperBullet : Bullet
 {
-    private Rigidbody2D rb;   
+    
     [SerializeField]
     private GameObject childForCollisions;
 
@@ -13,15 +13,17 @@ public class SniperBullet : Bullet
     {
         base.Start();
 
-        bulletDamage = 150*_damageMultiplier;
-        bulletRangeInMetres = 150;
-        bulletSpeedMetresPerSec = 100;
-        bulletRadius = 0.23f;
+        //bulletDamage = 150*_damageMultiplier;
+        //bulletRangeInMetres = 150;
+        //bulletSpeedMetresPerSec = 100;
+        //bulletRadius = 0.23f;
 
-        rb = this.GetComponent<Rigidbody2D>();        
+        rb = this.GetComponent<Rigidbody2D>();
+
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
 
         Transform originalFirePoint = this.transform;
-        rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+        //rb.AddForce(originalFirePoint.up * -bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
         CinemachineShake.Instance.ShakeCamera(40f, .2f);
 
     }
@@ -66,14 +68,14 @@ public class SniperBullet : Bullet
                 GameObject blood = GameObject.Instantiate(collision.GetComponent<EnemyController>().floorBlood, this.transform.position, this.transform.rotation);
                 blood.GetComponent<Transform>().localScale = transform.localScale * 2;
 
-                if (collision.GetComponent<EnemyController>().enemyHealth <= bulletDamage)
+                if (collision.GetComponent<EnemyController>().enemyHealth <= bulletData.bulletDamage)
                 {
                     collision.GetComponent<EnemyController>().enemyHealth = 0;
                     collision.GetComponent<EnemyController>().isDeath = true;
                 }
                 else
                 {
-                    collision.GetComponent<EnemyController>().enemyHealth -= bulletDamage;
+                    collision.GetComponent<EnemyController>().enemyHealth -= bulletData.bulletDamage;
                 }
             });
         }

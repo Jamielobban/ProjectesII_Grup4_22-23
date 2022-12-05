@@ -12,11 +12,13 @@ public class ElectricGun : Weapon
         //_data.bulletTypePrefab.GetComponent<ElectricBullet>().thisGun = this;
     }
 
+
+
     public override void Update()
     {
         base.Update();
 
-        Debug.Log(bulletsOut);
+        //Debug.Log(bulletsOut);
 
         if (Time.time - data.timelastPowerupEnter.RuntimeValue >= data.maxTimeOnPowerup.RuntimeValue && data.powerActive.RuntimeValue)
         {

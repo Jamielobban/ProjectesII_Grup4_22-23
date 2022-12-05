@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class BalasExplosivas : Bullet
 {
-    private Rigidbody2D rb;
-
-
+    
     public GameObject explos;
     protected override void Start()
     {
         base.Start();
 
-        bulletDamage = 5 * _damageMultiplier;
-        bulletRangeInMetres = 100;
-        bulletSpeedMetresPerSec = 50;
-        bulletRadius = 0.23f;
+        //bulletDamage = 5 * _damageMultiplier;
+        //bulletRangeInMetres = 100;
+        //bulletSpeedMetresPerSec = 50;
+        //bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();
 
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
 
         transform.Rotate(0, 0, transform.rotation.z + Random.Range(-10, 10));
 
         //Transform originalFirePoint = this.transform;
-        rb.AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+        //rb.AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
         StartCoroutine(explosions(0.1f));
     }
 
@@ -36,7 +35,7 @@ public class BalasExplosivas : Bullet
 
         GameObject explosion = Instantiate(explos, transform.position, transform.rotation);
 
-        explosion.GetComponent<Bullet>().ApplyMultiplierToDamage(_damageMultiplier);
+        explosion.GetComponent<Bullet>().ApplyMultiplierToDamage(bulletData._damageMultiplier);
     }
 
 
@@ -54,7 +53,7 @@ public class BalasExplosivas : Bullet
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            bulletInfo.damage = bulletDamage;
+            bulletInfo.damage = bulletData.bulletDamage;
             bulletInfo.impactPosition = transform.position;
             //collision.gameObject.SendMessage("GetDamage", bulletInfo);
             collision.gameObject.GetComponent<EnemyController>().GetDamage(() =>
@@ -63,14 +62,14 @@ public class BalasExplosivas : Bullet
                 GameObject blood = GameObject.Instantiate(collision.GetComponent<EnemyController>().floorBlood, this.transform.position, this.transform.rotation);
                 blood.GetComponent<Transform>().localScale = transform.localScale * 2;
 
-                if (collision.GetComponent<EnemyController>().enemyHealth <= bulletDamage)
+                if (collision.GetComponent<EnemyController>().enemyHealth <= bulletData.bulletDamage)
                 {
                     collision.GetComponent<EnemyController>().enemyHealth = 0;
                     collision.GetComponent<EnemyController>().isDeath = true;
                 }
                 else
                 {
-                    collision.GetComponent<EnemyController>().enemyHealth -= bulletDamage;
+                    collision.GetComponent<EnemyController>().enemyHealth -= bulletData.bulletDamage;
                 }
             });
             base.HitSomeone();

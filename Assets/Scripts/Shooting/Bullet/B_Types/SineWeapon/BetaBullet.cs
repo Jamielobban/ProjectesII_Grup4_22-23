@@ -8,7 +8,7 @@ public class BetaBullet : Bullet{
     GameObject blackHole;
    
 
-    private Rigidbody2D rb;
+    
     private float timePassed;
     private int multiplier;
 
@@ -24,10 +24,11 @@ public class BetaBullet : Bullet{
     {
         base.Start();
 
-        bulletDamage = 30 * _damageMultiplier;
-        bulletRangeInMetres = 60;
-        bulletSpeedMetresPerSec = 15; //20
-        bulletRadius = 0.23f;
+        //bulletDamage = 30 * _damageMultiplier;
+        //bulletRangeInMetres = 60;
+        //bulletSpeedMetresPerSec = 15; //20
+        //bulletRadius = 0.23f;
+
         timePassed = 1;
         rb = this.GetComponent<Rigidbody2D>();
         multiplier = 0;
@@ -100,7 +101,7 @@ public class BetaBullet : Bullet{
             }
             else if (collision.gameObject.CompareTag("Enemy"))
             {                
-                bulletInfo.damage = bulletDamage;
+                bulletInfo.damage = bulletData.bulletDamage;
                 bulletInfo.impactPosition = transform.position;
                 collision.gameObject.SendMessage("GetDamage", bulletInfo);
                 base.HitSomeone();

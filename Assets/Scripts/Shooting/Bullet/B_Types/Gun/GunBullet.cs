@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class GunBullet : Bullet
 {
-    private Rigidbody2D rb;   
-    Transform originalFirePoint;
-
-    
+        
     
     protected override void Start()
     {
         base.Start();
 
-        bulletDamage = 20*_damageMultiplier;
-        bulletRangeInMetres = 100;
-        bulletSpeedMetresPerSec = 20;
-        bulletRadius = 0.23f;
+        //bulletDamage = 20*_damageMultiplier;
+        //bulletRangeInMetres = 100;
+        //bulletSpeedMetresPerSec = 20;
+        //bulletRadius = 0.23f;
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
 
         rb = this.GetComponent<Rigidbody2D>();
 
-        originalFirePoint = this.transform;
+        
         //originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-15, 15));
-        rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+        //rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
         //Debug.Log(rb.velocity);
         //originalVector = rb.velocity;
         
@@ -99,7 +97,7 @@ public class GunBullet : Bullet
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             base.ImpactBody();
-            bulletInfo.damage = bulletDamage;
+            bulletInfo.damage = bulletData.bulletDamage;
             bulletInfo.impactPosition = transform.position;
             collision.gameObject.SendMessage("GetDamage", bulletInfo);
         }
