@@ -362,22 +362,7 @@ public class EnemyController : MonoBehaviour
                     state = State.Firing;
                 }
                 break;
-            case State.Firing:
-                //RaycastHit2D hitInfo = Physics2D.Raycast(enemyFirePoint.position, transform.right);
-                //if (hitInfo.collider != null)
-                //{
-                //    if (hitInfo.collider.CompareTag("Player"))
-                //    {
-                //        Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.green);
-                //        canShoot = true;
-                //    }
-                //    if (hitInfo.collider.CompareTag("MapLimit"))
-                //    {
-                //        Debug.DrawRay(enemyFirePoint.position, hitInfo.point, Color.red);
-                //        canShoot = false;
-                //        lastShoot = Time.time;
-                //    }
-                //}
+            case State.Firing:                
                 if (!inRange)
                 {
                     state = State.Chasing;
@@ -476,7 +461,7 @@ public class EnemyController : MonoBehaviour
         //stoppingDistance = 30;
         //random machine gun
         GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
-        instance.GetComponent<EnemyProjectile>().bulletDamage = enemyBulletDamage;
+        instance.GetComponent<EnemyProjectile>().bulletData.damage = enemyBulletDamage;
         AudioManager.Instance.PlaySound(enemyShootSound, enemyFirePoint.transform.position);
         //Metralleta
         instance.transform.Rotate(0, 0, instance.transform.rotation.z + UnityEngine.Random.Range(-25,25));
@@ -533,7 +518,7 @@ public class EnemyController : MonoBehaviour
             for (int i = 0, grados = ((angleOfCone / 2) * -10) + par; i < angleOfCone; i++, grados += 10)
             {
                 GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
-                instance.GetComponent<EnemyProjectile>().bulletDamage = enemyBulletDamage;
+                instance.GetComponent<EnemyProjectile>().bulletData.damage = enemyBulletDamage;
                 AudioManager.Instance.PlaySound(enemyShootSound, enemyFirePoint.transform.position);
                 instance.transform.Rotate(0, 0, instance.transform.rotation.z + grados);
 

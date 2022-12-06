@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6d489befd46abb4e954ae9799a4d0f2, type: 3}
+  m_Name: TFiringData
+  m_EditorClassIdentifier: 
+  angleOfCone: 40
+  numberOfBursts: 2
+  timeBetweenShoots: 3
+  bulletType: {fileID: 2515261795593783295, guid: 813547d3da0153f409592e33ba972e13, type: 3}
+  shootShound: {fileID: 8300000, guid: c322bf1c478c9d949a6cab98f97bba61, type: 3}

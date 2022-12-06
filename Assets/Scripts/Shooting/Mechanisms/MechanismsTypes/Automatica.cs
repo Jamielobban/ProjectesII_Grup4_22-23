@@ -14,7 +14,7 @@ public class Automatica : Mechanism
             bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
             AudioManager.Instance.PlaySound(shootSound, firePoint.position);
             timeLastShoot = Time.time;
-            bullet.GetComponent<Bullet>().FireProjectile(/*firePoint*/);
+            bullet.GetComponent<Bullet>().FireProjectile();
             return true;
         }
         return false;
