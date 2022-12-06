@@ -8,14 +8,19 @@ public class Flow : Mechanism
     private bool on = false;
     private GameObject lastBullet;
     private AudioSource whereLoopIsPlayed;
-    
-      
 
+    //private Material ripple = Load;
+
+    //public Texture2D m_Ripple;
+    //Renderer m_Renderer;
     public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound, float amplitudeGain, float damageMultiplier)
     {
-        
         if (on)  //Si esta la sortida oberta
         {
+            //m_Renderer.material.SetTexture("_BlitPassTexture", m_Ripple);
+
+            CinemachineShake.Instance.ShakeCamera(5f, .2f);
+
             if (!Input.GetButton("Shoot")) //Si no estem apretant la tanquem
             {
                 on = false;                
@@ -55,8 +60,6 @@ public class Flow : Mechanism
                 lastBullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
                 //AudioManager.Instance.PlaySound(shootSound);
                 timeLastShoot = Time.time;
-                CinemachineShake.Instance.ShakeCamera(5f * amplitudeGain, .1f);
-                timeLastShoot = Time.time;
                 return true;
                // Debug.Log("Off1");
                 AudioManager.Instance.PlaySound(shootSound, firePoint.position);
@@ -67,6 +70,7 @@ public class Flow : Mechanism
             return false;
         }
         
+
     }
 
    

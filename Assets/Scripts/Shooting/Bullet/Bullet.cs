@@ -117,11 +117,11 @@ public abstract class Bullet : MonoBehaviour
         originalFirePoint.Rotate(0f, 0f, originalFirePoint.transform.rotation.z + Random.Range(bulletData.minRangeTransform, bulletData.maxRangeTransform));
         
         //Debug.Log(originalFirePoint == null);
-        Debug.Log(bulletData);
+        //Debug.Log(bulletData);
         if (bulletData.ApplyShootForce)
         {
-            Debug.Log(originalFirePoint);
-            Debug.Log("in");
+            //Debug.Log(originalFirePoint);
+            //Debug.Log("in");
             this.GetComponent<Rigidbody2D>().AddForce(originalFirePoint.up * -bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
             
         }

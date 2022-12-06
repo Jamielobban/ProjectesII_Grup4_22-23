@@ -18,6 +18,7 @@ public class BalasExplosivas : Bullet
         rb = this.GetComponent<Rigidbody2D>();
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
+        CinemachineShake.Instance.ShakeCamera(5f, .2f);
 
         //transform.Rotate(0, 0, transform.rotation.z + Random.Range(-10, 10));
 
@@ -34,6 +35,7 @@ public class BalasExplosivas : Bullet
         StartCoroutine(explosions(0.1f));
 
         GameObject explosion = Instantiate(explos, transform.position, transform.rotation);
+        CinemachineShake.Instance.ShakeCamera(3f, .2f);
 
         explosion.GetComponent<Bullet>().ApplyMultiplierToDamage(bulletData._damageMultiplier);
     }

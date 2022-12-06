@@ -28,7 +28,7 @@ public class ShotgunBullet : Bullet
         powerupPelletPrefab = Resources.Load<GameObject>("Prefab/BigPelletPowerup");
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
-
+        CinemachineShake.Instance.ShakeCamera(10f, .2f);
 
         if (powerUpOn)
         {

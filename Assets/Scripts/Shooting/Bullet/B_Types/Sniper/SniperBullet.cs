@@ -24,7 +24,7 @@ public class SniperBullet : Bullet
 
        
 
-        CinemachineShake.Instance.ShakeCamera(40f, .2f);
+        CinemachineShake.Instance.ShakeCamera(40f, 1f);
 
     }
 
