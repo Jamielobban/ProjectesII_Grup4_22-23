@@ -12,7 +12,7 @@ public class ElectricConnection : MonoBehaviour
     private LineController linePrefab;
 
     [SerializeField]
-    private Transform origin;
+    public Transform origin;
 
     public bool weaponIsOn;
 
@@ -36,6 +36,10 @@ public class ElectricConnection : MonoBehaviour
     }
     private void Update()
     {
+        if (allEnemies.Count > 0 && allEnemies[0] == null)
+        {
+            allEnemies.RemoveAt(0);
+        }
         
         if (allEnemies == null || allEnemies.Count == 0 || !isConnected)
         {

@@ -34,26 +34,43 @@ public class LineController : MonoBehaviour
         lineRenderer.SetPosition(0, startPosition);
         startPositionVec = startPosition;
         target = newTarget;
+
     }
     private void Update()
     {
-        if(ec.allEnemies == null || ec.allEnemies.Count == 0) 
+        if((target == null || ec.origin == null) && ec.isConnected)
+        {
+            ec.isConnected = false;
+            for (int i = 0; i < ec.allLines.Count;i++)
+            {
+                Debug.Log("in");
+                ec.origin = null;
+                Destroy(ec.allLines[i].gameObject);
+            }
+            ec.allLines.Clear();
+            Destroy(this.gameObject);
+        }
+
+        if(ec.allEnemies == null || ec.allEnemies.Count == 0 ) 
         {
             return;
         }
         else
         {
-
             ec.isConnected = true;
-            lineRenderer.SetPosition(1, target.position);
-            GenerateMeshCollider();
+            if (target != null)
+            {               
+                lineRenderer.SetPosition(1, target.position);
+                GenerateMeshCollider();
+            }
+            
         }
         //}
-
-        distanceBetween = Vector3.Distance(startPositionVec,target.position);
+        if (target != null)
+            distanceBetween = Vector3.Distance(startPositionVec,target.position);
 
         //Debug.Log(distanceBetween);
-        if(distanceBetween >= 10.0f)
+        if(distanceBetween >= 10.0f  )
         {
             ec.isConnected = false;
             ec.allLines.Clear();
