@@ -9,14 +9,27 @@ public class Flow : Mechanism
     private GameObject lastBullet;
     private AudioSource whereLoopIsPlayed;
 
+
     //private Material ripple = Load;
 
     //public Texture2D m_Ripple;
     //Renderer m_Renderer;
+
+    private BlitController myBlit;
+    //private Material _Mat = Resources.Load("Assets/Graphs_Ripple.mat", typeof(Material)) as Material;
+    //private float _Percentage;
+
     public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound, float amplitudeGain, float damageMultiplier)
     {
         if (on)  //Si esta la sortida oberta
         {
+            //_Percentage += Time.deltaTime * 2;
+            //_Mat.SetFloat("_Percent", _Percentage);
+            //if (_Percentage > 1)
+            //{
+            //    _Percentage = 0;
+            //}
+
             //m_Renderer.material.SetTexture("_BlitPassTexture", m_Ripple);
 
             CinemachineShake.Instance.ShakeCamera(5f, .2f);
@@ -60,9 +73,9 @@ public class Flow : Mechanism
                 lastBullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
                 //AudioManager.Instance.PlaySound(shootSound);
                 timeLastShoot = Time.time;
+                AudioManager.Instance.PlaySound(shootSound, firePoint.position);
                 return true;
                // Debug.Log("Off1");
-                AudioManager.Instance.PlaySound(shootSound, firePoint.position);
             }                            
                      //Si no estem apretant es queda igual
            // Debug.Log("off2");
