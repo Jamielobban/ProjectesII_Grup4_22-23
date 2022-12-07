@@ -12,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
         Normal, Rolling, Hit
     }
 
+    public float knockbackForce = 90f;
+    public float knockbackForceDrop = 5f;
+    public float knockbackMinimum = 5f;
+
     public int maxHealth = 100;
     public float currentHealth;
     public bool isDead;
@@ -25,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     public State state;
     public float moveSpeed = 5f;
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     //public SpriteRenderer sr;
     public Camera cam;
     public RightHand weaponHand;
@@ -34,11 +38,11 @@ public class PlayerMovement : MonoBehaviour
     //Vector2 mousePos;
     //Vector2 lookDir;
     Vector3 moveDir;
-    Vector3 rollDir;
+    public Vector3 rollDir;
 
     private TrailRenderer trail;
-    private float rollSpeed;
-
+    public float rollSpeed;
+    public bool knockback;
     public Color dashColor;
     public Color OriginalColor;
     public Color hurtColor;
@@ -106,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(Time.
         weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
 
+
         if ((Time.time - lastDash) >= timeBetweenDashes)
         {
             canDash = true;
@@ -164,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
                 currentBlinkRechargeTime3 = 0f;
             }
         }
-
+    
         switch (state)
         {
             case State.Normal:
@@ -239,6 +244,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
         }
+        Debug.Log(knockbackForce);
     }
 
     private void FixedUpdate()
@@ -246,8 +252,19 @@ public class PlayerMovement : MonoBehaviour
         switch (state)
         {
             case State.Normal:
-
-                rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+                if (!knockback)
+                {
+                    rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+                    knockbackForce = 90f;
+                }
+                else
+                {
+                    knockbackForce -= knockbackForce * Time.deltaTime;
+                    if(knockbackForce < knockbackMinimum)
+                    {
+                        knockback = false;
+                    }
+                }  
                 break;
             case State.Rolling:
                 rollSpeed -= rollSpeed * rollSpeedDropMultiplier * Time.deltaTime;
@@ -352,6 +369,12 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(time);
         currentBlinkRechargeTime += Time.deltaTime;
         dashUI1.SetDashTimer(currentBlinkRechargeTime);
+    }
+    public IEnumerator waitForKnockback(float time)
+    {
+        yield return new WaitForSeconds(time);
+        //knockback = false;
+        Debug.Log("Waiting");
     }
 
     private IEnumerator waitForLayerChange(float waitTime)
