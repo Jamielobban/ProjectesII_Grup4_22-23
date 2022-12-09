@@ -7,6 +7,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: variant
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: 612843e5465e1044d9c5cd3c4ee24cfa, type: 2}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: deadStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: d49f5c133adb4a946a90a6e3657edd38, type: 2}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: firingStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: f76d632def15580469c10d37ddcac2d9, type: 2}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: chasingStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: cf684be8502d7314aaff7550405ced03, type: 2}
+    - target: {fileID: 4765914084310129915, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: m_TagString
+      value: FirePoint
+      objectReference: {fileID: 0}
     - target: {fileID: 8930414981940649308, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
       propertyPath: enemyHealth
       value: 120
@@ -33,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8930414981940649309, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.749996
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8930414981940649309, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -67,5 +91,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Double Single Shot Enemies
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7163427000394522628, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1409296284934073191}
   - component: {fileID: 1409296284934073179}
   - component: {fileID: 1409296284934073178}
+  - component: {fileID: -377043484754212743}
   m_Layer: 10
   m_Name: Turret Enemy Wave
   m_TagString: Enemy
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1409296284934073189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10.749996}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -96,12 +97,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1409296284934073189}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 132d52d8cb0f839418ee63f8b487a6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAlive: 0
+  isDeath: 0
   enemyHealth: 120
   bulletSpeed: 20
   timeBetweenShots: 3
@@ -115,6 +116,7 @@ MonoBehaviour:
   retreatDistance: 0
   enemyBulletDamage: 15
   canShoot: 0
+  sr: {fileID: 0}
   enemyShootSound: {fileID: 8300000, guid: c322bf1c478c9d949a6cab98f97bba61, type: 3}
   canSeePlayer: 0
   inRange: 0
@@ -123,6 +125,13 @@ MonoBehaviour:
   numberOfBursts: 2
   damageSound: {fileID: 8300000, guid: 89e70a392fb07cf448a17d6316a50d9c, type: 3}
   floorBlood: {fileID: 4891040840000462560, guid: 0fc2b21afbd510b4eb804ef24e729336, type: 3}
+  actualHealthState: 0
+  durationActualState: 0
+  timeEnterLastState: 0
+  lastTimeDamagedByHealthState: 0
+  timeBetweenDamagesByHealthState: 0
+  damageActualHealthStateApply: 0
+  timeAddedToHealthState: 0
   metralleta: 0
 --- !u!61 &1409296284934073179
 BoxCollider2D:
@@ -171,6 +180,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &-377043484754212743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409296284934073189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf4fd074f45f0c4c92c6ec00c511278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  vectorToPlayer: {x: 0, y: 0, z: 0}
+  enemyData: {fileID: 11400000, guid: 169f46d840d31a846a07d846fb608e84, type: 2}
+  chasingStateData: {fileID: 11400000, guid: e78b1569ca477954291337f610b8a47c, type: 2}
+  firingStateData: {fileID: 11400000, guid: 584f034d6dd0aef4fb667f317ad65459, type: 2}
+  deadStateData: {fileID: 11400000, guid: 4945645dbe4ba3d479bb41440400384b, type: 2}
+  variant: 9
 --- !u!1 &3045008420885621440
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +210,7 @@ GameObject:
   - component: {fileID: 4491323302402679602}
   m_Layer: 0
   m_Name: firePoint
-  m_TagString: Enemy
+  m_TagString: FirePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -214,7 +242,7 @@ GameObject:
   - component: {fileID: 7460727901945008681}
   m_Layer: 0
   m_Name: w
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -227,7 +255,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6197470821849662029}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0.017, z: -10.749996}
+  m_LocalPosition: {x: 0.6, y: 0.017, z: 0}
   m_LocalScale: {x: 0.1875, y: 0.1875, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

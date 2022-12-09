@@ -244,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
         }
-        Debug.Log(knockbackForce);
+        //Debug.Log(knockbackForce);
     }
 
     private void FixedUpdate()

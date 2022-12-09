@@ -22,11 +22,9 @@ public class Explosion : Bullet
     private void OnTriggerEnter2D(Collider2D collision)
     {
          if (collision.gameObject.CompareTag("Enemy"))
-        {
+         {
+            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position);
             base.HitSomeone();
-            bulletInfo.damage = bulletData.bulletDamage;
-            bulletInfo.impactPosition = transform.position;
-            collision.gameObject.SendMessage("GetDamage", bulletInfo);
-        }
+         }
     }
 }

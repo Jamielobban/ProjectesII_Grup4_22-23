@@ -7,6 +7,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 92743026764471792, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: variant
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 92743026764471792, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: 04f7c50c24f5e154591eeb40dda367e7, type: 2}
+    - target: {fileID: 92743026764471792, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: deadStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2b0415b0579f9894d945d41b39505061, type: 2}
+    - target: {fileID: 92743026764471792, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: firingStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: 0ce8e8a7af1e4314babbc22e1f16b95a, type: 2}
+    - target: {fileID: 92743026764471792, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: chasingStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4b3923f463888034d910c1b130fe2952, type: 2}
     - target: {fileID: 1859936831163064488, guid: 5ac03940db506904caaf262e27842002, type: 3}
       propertyPath: bulletSpeed
       value: 25
@@ -41,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1859936831163064489, guid: 5ac03940db506904caaf262e27842002, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.749996
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1859936831163064489, guid: 5ac03940db506904caaf262e27842002, type: 3}
       propertyPath: m_LocalRotation.w
@@ -75,5 +95,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OP Sniper
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 2306698661189640463, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: m_TagString
+      value: FirePoint
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8108020579669345206, guid: 5ac03940db506904caaf262e27842002, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5ac03940db506904caaf262e27842002, type: 3}

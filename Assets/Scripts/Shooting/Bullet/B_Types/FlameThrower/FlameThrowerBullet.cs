@@ -19,7 +19,7 @@ public class FlameThrowerBullet : Bullet
         //bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
         //bulletSpeedMetresPerSec = 1;
         //bulletRadius = 0.23f;
-        Debug.Log("creatng bullet");
+        //Debug.Log("creatng bullet");
         isClicking = true;
         rb = this.GetComponent<Rigidbody2D>();
 

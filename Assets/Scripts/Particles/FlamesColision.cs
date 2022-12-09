@@ -49,40 +49,38 @@ public class FlamesColision : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
         if (other.CompareTag(targetTag))
-        {
-            //Debug.Log(other.GetComponent<EnemyController>().GetActualHealthState());
-            
-            other.GetComponent<EnemyController>().GetDamage(() =>
-            {
-               
-                GameObject blood = GameObject.Instantiate((GameObject)Resources.Load("Prefab/DamageArea"), other.transform.position, other.transform.rotation);
-                blood.GetComponent<Transform>().localScale = other.transform.localScale * 2;
-
-                if (other.GetComponent<EnemyController>().enemyHealth <= this.GetComponentInParent<Bullet>().GetBUlletDamage())
-                {
-                    other.GetComponent<EnemyController>().enemyHealth = 0;
-                    other.GetComponent<EnemyController>().isDeath = true;
-                }
-                else
-                {
-                    other.GetComponent<EnemyController>().enemyHealth -= this.GetComponentInParent<Bullet>().GetBUlletDamage();
-                }
-                Debug.Log(other.GetComponent<EnemyController>().actualHealthState);
-                if (other.GetComponent<EnemyController>().GetActualHealthState() != HealthStateTypes.BURNED )
-                {                    
-                    other.GetComponent<EnemyController>().StartCoroutine(other.GetComponent<EnemyController>().ApplyNewHealthStateConsequences(timeBurningActive, timeBetweenBurnings, burnDamage, HealthStateTypes.BURNED));                    
-                }
-                else
-                {
-                    Debug.Log("In");
-                    other.GetComponent<EnemyController>().timeAddedToHealthState += other.GetComponent<EnemyController>().AddTimeToHealthState();
-                }
-                       
-
-            }
-            );
-            
+        {           
+            other.gameObject.GetComponent<Entity>().GetDamage(this.GetComponentInParent<Bullet>().GetBUlletDamage(), HealthStateTypes.BURNED, 0, other.transform.position);
         }
         
     }
 }
+//other.GetComponent<EnemyController>().GetDamage(() =>
+//{
+
+//    GameObject blood = GameObject.Instantiate((GameObject)Resources.Load("Prefab/DamageArea"), other.transform.position, other.transform.rotation);
+//    blood.GetComponent<Transform>().localScale = other.transform.localScale * 2;
+
+//    if (other.GetComponent<EnemyController>().enemyHealth <= this.GetComponentInParent<Bullet>().GetBUlletDamage())
+//    {
+//        other.GetComponent<EnemyController>().enemyHealth = 0;
+//        other.GetComponent<EnemyController>().isDeath = true;
+//    }
+//    else
+//    {
+//        other.GetComponent<EnemyController>().enemyHealth -= this.GetComponentInParent<Bullet>().GetBUlletDamage();
+//    }
+//    Debug.Log(other.GetComponent<EnemyController>().actualHealthState);
+//    if (other.GetComponent<EnemyController>().GetActualHealthState() != HealthStateTypes.BURNED)
+//    {
+//        other.GetComponent<EnemyController>().StartCoroutine(other.GetComponent<EnemyController>().ApplyNewHealthStateConsequences(timeBurningActive, timeBetweenBurnings, burnDamage, HealthStateTypes.BURNED));
+//    }
+//    else
+//    {
+//        Debug.Log("In");
+//        other.GetComponent<EnemyController>().timeAddedToHealthState += other.GetComponent<EnemyController>().AddTimeToHealthState();
+//    }
+
+
+//}
+//            );

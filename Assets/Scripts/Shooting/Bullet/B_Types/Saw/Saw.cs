@@ -45,6 +45,21 @@ public class Saw : Bullet
         //bulletData.bulletSpeedMetresPerSec -= 3f * Time.deltaTime;
 
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("MapLimit"))
+        {
+
+            base.ImpactWall();
+
+        }
+        else if (collision.gameObject.CompareTag("Enemy"))
+        {
+            base.ImpactBody();
+            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position);
+
+        }
+    }
 }
 
 

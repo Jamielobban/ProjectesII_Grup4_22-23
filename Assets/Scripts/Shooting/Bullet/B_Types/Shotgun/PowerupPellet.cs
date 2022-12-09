@@ -44,10 +44,8 @@ public class PowerupPellet : Bullet
             Destroy(this.gameObject);
         }
         else if (collision.gameObject.CompareTag("Enemy"))
-        {
-            bulletInfo.damage = bulletData.bulletDamage;
-            bulletInfo.impactPosition = transform.position;
-            collision.gameObject.SendMessage("GetDamage", bulletInfo);
+        {            
+            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position);
             base.ImpactBody();
             Destroy(this.gameObject);
 

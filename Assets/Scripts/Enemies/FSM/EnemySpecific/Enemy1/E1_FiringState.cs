@@ -6,7 +6,8 @@ public class E1_FiringState : FiringState
 {
     private Enemy1 enemy;
     private bool nextShootReady;
-
+    int a;
+    bool b;
     public E1_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -16,6 +17,8 @@ public class E1_FiringState : FiringState
     {
         base.Enter();
         nextShootReady = false;
+        a = 0;
+        b = false;
     }
 
     public override void Exit()
@@ -34,6 +37,16 @@ public class E1_FiringState : FiringState
             stateMachine.ChangeState(enemy.chasingState);
         }
 
+        //string a = "Time is: " + Time.time;
+        //Debug.Log(a);
+        //string b = "LastShootTime is: " + lastShootTime;
+        //Debug.Log(b);
+        //string c = "La resta es: " + (Time.time - lastShootTime);
+        //Debug.Log(c);
+        
+
+
+
         nextShootReady = Time.time - lastShootTime >= stateData.timeBetweenShoots;
     }
 
@@ -43,11 +56,18 @@ public class E1_FiringState : FiringState
 
         if (nextShootReady)
         {
-            float waitTime = 0;
-            for(int j = 0; j < stateData.numberOfBursts; j++, waitTime += 0.2f)
+            if(enemy.GetVariant() != Enemy1Variants.BIGFATMAN)
             {
-                FunctionTimer.Create(FireProjectile, waitTime);
-            }                   
+                float waitTime = 0;
+                for (int j = 0; j < stateData.numberOfBursts; j++, waitTime += 0.2f)
+                {
+                    FunctionTimer.Create(FireProjectile, waitTime);
+                }
+            }
+            else
+            {
+                Machinegun();
+            }             
 
             lastShootTime = Time.time;            
         }
@@ -67,6 +87,42 @@ public class E1_FiringState : FiringState
 
             bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponent<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
             //Destroy(instance, 3);
+        }
+        
+    }
+    void Machinegun()
+    {
+        GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.enemyData.firePoint.transform.position, enemy.enemyData.firePoint.rotation);
+
+        AudioManager.Instance.PlaySound(stateData.shootShound, enemy.enemyData.firePoint.transform.position);
+
+        //Metralleta
+        bullet.transform.Rotate(0, 0, bullet.transform.rotation.z + UnityEngine.Random.Range(-25, 25));
+
+
+        //banda a banda
+        //instance.transform.Rotate(0, 0, instance.transform.rotation.z + a);
+
+        bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponent<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
+        
+
+        //banda a banda
+        if (b)
+        {
+            a += 10;
+            if (a == 30)
+            {
+                b = false;
+            }
+        }
+        else
+        {
+            a -= 10;
+            if (a == -30)
+            {
+                b = true;
+
+            }
         }
     }
 }

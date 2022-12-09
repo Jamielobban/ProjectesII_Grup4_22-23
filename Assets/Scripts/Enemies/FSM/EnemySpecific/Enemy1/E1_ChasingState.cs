@@ -37,7 +37,7 @@ public class E1_Chasingtate : ChasingState
     {
         base.PhysicsUpdate();
 
-        enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.player.position, -enemy.enemyData.speed * Time.fixedDeltaTime);
+        enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.player.position, enemy.enemyData.speed * Time.fixedDeltaTime);
 
     }
 

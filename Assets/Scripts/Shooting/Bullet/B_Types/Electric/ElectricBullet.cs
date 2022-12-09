@@ -35,6 +35,12 @@ public class ElectricBullet : Bullet
         {
             Destroy(this.gameObject);
         }
+        else if (collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position);
+            ImpactBody();
+        }
+        
     }
 }
 

@@ -64,22 +64,8 @@ public class SniperBullet : Bullet
             base.HitSomeone();
             //bulletInfo.damage = bulletDamage;
             //bulletInfo.impactPosition = transform.position;
-            collision.GetComponent<EnemyController>().GetDamage(() =>
-            {
-                AudioManager.Instance.PlaySound(collision.GetComponent<EnemyController>().damageSound, this.transform.position);
-                GameObject blood = GameObject.Instantiate(collision.GetComponent<EnemyController>().floorBlood, this.transform.position, this.transform.rotation);
-                blood.GetComponent<Transform>().localScale = transform.localScale * 2;
+            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position);
 
-                if (collision.GetComponent<EnemyController>().enemyHealth <= bulletData.bulletDamage)
-                {
-                    collision.GetComponent<EnemyController>().enemyHealth = 0;
-                    collision.GetComponent<EnemyController>().isDeath = true;
-                }
-                else
-                {
-                    collision.GetComponent<EnemyController>().enemyHealth -= bulletData.bulletDamage;
-                }
-            });
         }
     }  
     

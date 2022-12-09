@@ -450,7 +450,7 @@ public class EnemyController : MonoBehaviour
     }
 
     int a = 0;
-    bool b = false;
+    bool bAverOn = false;
 
     void MachineGunShoot()
     {
@@ -474,12 +474,12 @@ public class EnemyController : MonoBehaviour
             Destroy(instance, 3);
 
             //banda a banda
-            if (b)
+            if (bAverOn)
             {
                 a += 10;
                 if (a == 30)
                 {
-                    b = false;
+                    bAverOn = false;
                 }
             }
             else
@@ -487,7 +487,7 @@ public class EnemyController : MonoBehaviour
                 a -= 10;
                 if (a == -30)
                 {
-                    b = true;
+                    bAverOn = true;
 
                 }
             }

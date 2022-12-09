@@ -67,22 +67,20 @@ public class Cohetes : Bullet
     // Update is called once per frame
     void Update()
     {
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("MapLimit"))
         {
-
             base.ImpactWall();
-
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             base.ImpactBody();
-            bulletInfo.damage = bulletData.bulletDamage;
-            bulletInfo.impactPosition = transform.position;
-            collision.gameObject.SendMessage("GetDamage", bulletInfo);
+            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position);
+
         }
     }
 

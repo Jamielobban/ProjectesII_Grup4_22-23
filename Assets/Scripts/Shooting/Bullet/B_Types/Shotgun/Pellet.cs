@@ -56,9 +56,7 @@ public class Pellet : Bullet
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            bulletInfo.damage = bulletData.bulletDamage;
-            bulletInfo.impactPosition = transform.position;
-            collision.gameObject.SendMessage("GetDamage", bulletInfo);
+            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position);
             base.ImpactBody();           
         }
     }

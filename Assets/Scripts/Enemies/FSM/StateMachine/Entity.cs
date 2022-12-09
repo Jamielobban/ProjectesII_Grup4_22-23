@@ -1,134 +1,153 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Entity : MonoBehaviour
 {
+	[HideInInspector]
 	public FiniteStateMachine stateMachine;
 
+	[HideInInspector]
 	public Transform player;
-
+	[HideInInspector]
 	public Vector3 vectorToPlayer;
 
 	public Rigidbody2D rb { get; private set; }
 	public Animator anim { get; private set; }
-	public D_Entity enemyData { get; private set;}
+	public D_Entity enemyData;
 
-	public virtual void Start()
+	protected bool isDead;
+	protected HealthStateTypes myHealthState;
+	//protected float timeHealthStateEntered;
+	protected float timeHealthStateExit;	
+	protected float lastTimeDamageHealthStateApplied;
+
+    private void Awake()
+    {
+		enemyData.firePoint = GetComponentsInChildren<Transform>().Where(t => t.tag == "FirePoint").ToArray()[0];
+		myHealthState = HealthStateTypes.NORMAL;
+		//timeHealthStateEntered = Time.time;
+		timeHealthStateExit = 0;
+		lastTimeDamageHealthStateApplied = 0;
+	}
+
+    public virtual void Start()
     {
 		rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
+		if(anim == null)
+        {
+			anim = GetComponentsInChildren<Animator>().ToArray()[0];
+		}
 		player = GameObject.FindGameObjectWithTag("Player").transform;
-		stateMachine = new FiniteStateMachine();
+		stateMachine = new FiniteStateMachine();		
     }
 	public virtual void Update()
     {
+		isDead = enemyData.enemyHealth.RuntimeValue <= 0;
 		vectorToPlayer = player.position - transform.position;
-		stateMachine.currentState.LogicUpdate();
+
+		if (Time.time >= timeHealthStateExit)
+		{
+			myHealthState = HealthStateTypes.NORMAL;
+		}
+
+		if (myHealthState != HealthStateTypes.NORMAL)
+        {
+			switch (myHealthState)
+			{
+				case HealthStateTypes.BURNED:
+					if(Time.time - lastTimeDamageHealthStateApplied >= 2)
+                    {
+						GetDamage(10);
+						lastTimeDamageHealthStateApplied = Time.time;
+					}
+					break;
+				case HealthStateTypes.FREEZE:
+					break;
+				case HealthStateTypes.PARALYZED:
+					break;
+				default:
+					break;
+			}
+		}		
+		
+        stateMachine.currentState.LogicUpdate();
 	}
 	public virtual void FixedUpdate()
 	{
 		stateMachine.currentState.PhysicsUpdate();
 	}
+
+	public virtual void GetDamage(float damageHit, HealthStateTypes damageType, float knockBackForce, Vector3 bulletPosition)
+    {
+		
+		if(enemyData.enemyHealth.RuntimeValue - damageHit >= 0)
+        {
+			enemyData.enemyHealth.RuntimeValue -= damageHit;
+
+		}
+        else
+        {
+			enemyData.enemyHealth.RuntimeValue = 0;
+		}
+
+		if(damageType == HealthStateTypes.NORMAL)
+			AudioManager.Instance.PlaySound(enemyData.hitSound, this.transform);
+		
+		GameObject hitDamageParticles = Instantiate(enemyData.hitParticles, bulletPosition, this.transform.rotation);
+		FunctionTimer.Create(() => { Destroy(hitDamageParticles.gameObject); },0.5f);
+
+		if(myHealthState != damageType)
+        {
+			myHealthState = damageType;
+			//timeHealthStateEntered = Time.time;
+            switch (damageType)
+            {
+                case HealthStateTypes.BURNED:
+					timeHealthStateExit = Time.time + 5;
+					GetDamage(10);
+					lastTimeDamageHealthStateApplied = Time.time;
+					break;
+                case HealthStateTypes.FREEZE:
+                    break;
+                case HealthStateTypes.PARALYZED:
+                    break;                
+                default:
+                    break;
+            }
+        }
+        else
+        {
+			switch (damageType)
+			{
+				case HealthStateTypes.BURNED:
+					timeHealthStateExit = Time.time + 5;			
+					break;
+				case HealthStateTypes.FREEZE:
+					break;
+				case HealthStateTypes.PARALYZED:
+					break;
+				default:
+					break;
+			}
+		}
+		
+		
+    }
+
+	protected virtual void GetDamage(float damageHit)
+    {
+		Debug.Log("Damaged");
+		if (enemyData.enemyHealth.RuntimeValue - damageHit >= 0)
+		{
+			enemyData.enemyHealth.RuntimeValue -= damageHit;
+
+		}
+		else
+		{
+			enemyData.enemyHealth.RuntimeValue = 0;
+		}
+	}
 }
-//private Movement Movement { get => movement ?? Core.GetCoreComponent(ref movement); }
-
-//private Movement movement;
-
-//public FiniteStateMachine stateMachine;
-
-//public D_Entity entityData;
-
-//public Animator anim { get; private set; }
-//public AnimationToStatemachine atsm { get; private set; }
-//public int lastDamageDirection { get; private set; }
-//public Core Core { get; private set; }
-
-//[SerializeField]
-//private Transform wallCheck;
-//[SerializeField]
-//private Transform ledgeCheck;
-//[SerializeField]
-//private Transform playerCheck;
-//[SerializeField]
-//private Transform groundCheck;
-
-//private float currentHealth;
-//private float currentStunResistance;
-//private float lastDamageTime;
-
-//private Vector2 velocityWorkspace;
-
-//protected bool isStunned;
-//protected bool isDead;
-
-//public virtual void Awake()
-//{
-//	Core = GetComponentInChildren<Core>();
-
-//	currentHealth = entityData.maxHealth;
-//	currentStunResistance = entityData.stunResistance;
-
-//	anim = GetComponent<Animator>();
-//	atsm = GetComponent<AnimationToStatemachine>();
-
-//	stateMachine = new FiniteStateMachine();
-//}
-
-//public virtual void Update()
-//{
-//	Core.LogicUpdate();
-//	stateMachine.currentState.LogicUpdate();
-
-//	anim.SetFloat("yVelocity", Movement.RB.velocity.y);
-
-//	if (Time.time >= lastDamageTime + entityData.stunRecoveryTime)
-//	{
-//		ResetStunResistance();
-//	}
-//}
-
-//public virtual void FixedUpdate()
-//{
-//	stateMachine.currentState.PhysicsUpdate();
-//}
-
-//public virtual bool CheckPlayerInMinAgroRange()
-//{
-//	return Physics2D.Raycast(playerCheck.position, transform.right, entityData.minAgroDistance, entityData.whatIsPlayer);
-//}
-
-//public virtual bool CheckPlayerInMaxAgroRange()
-//{
-//	return Physics2D.Raycast(playerCheck.position, transform.right, entityData.maxAgroDistance, entityData.whatIsPlayer);
-//}
-
-//public virtual bool CheckPlayerInCloseRangeAction()
-//{
-//	return Physics2D.Raycast(playerCheck.position, transform.right, entityData.closeRangeActionDistance, entityData.whatIsPlayer);
-//}
-
-//public virtual void DamageHop(float velocity)
-//{
-//	velocityWorkspace.Set(Movement.RB.velocity.x, velocity);
-//	Movement.RB.velocity = velocityWorkspace;
-//}
-
-//public virtual void ResetStunResistance()
-//{
-//	isStunned = false;
-//	currentStunResistance = entityData.stunResistance;
-//}
-
-//public virtual void OnDrawGizmos()
-//{
-//	if (Core != null)
-//	{
-//		Gizmos.DrawLine(wallCheck.position, wallCheck.position + (Vector3)(Vector2.right * Movement.FacingDirection * entityData.wallCheckDistance));
-//		Gizmos.DrawLine(ledgeCheck.position, ledgeCheck.position + (Vector3)(Vector2.down * entityData.ledgeCheckDistance));
-
-//		Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(Vector2.right * entityData.closeRangeActionDistance), 0.2f);
-//		Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(Vector2.right * entityData.minAgroDistance), 0.2f);
-//		Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(Vector2.right * entityData.maxAgroDistance), 0.2f);
-//	}
-//}

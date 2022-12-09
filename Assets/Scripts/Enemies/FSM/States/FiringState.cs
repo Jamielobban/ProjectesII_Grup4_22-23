@@ -12,12 +12,12 @@ public class FiringState : State
     public FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
+        lastShootTime = 0;
     }
 
     public override void Enter()
     {
-        base.Enter();
-        lastShootTime = 0;
+        base.Enter();        
     }
 
     public override void Exit()
