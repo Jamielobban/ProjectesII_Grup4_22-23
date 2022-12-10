@@ -36,6 +36,6 @@ public class FiringState : State
     {
         base.PhysicsUpdate();
 
-        entity.rb.rotation = angle;
+        //entity.rb.rotation = angle;
     }
 }

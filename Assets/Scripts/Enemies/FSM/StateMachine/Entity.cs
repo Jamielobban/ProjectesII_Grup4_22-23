@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
 	[HideInInspector]
 	public FiniteStateMachine stateMachine;
@@ -13,6 +13,8 @@ public class Entity : MonoBehaviour
 	[HideInInspector]
 	public Vector3 vectorToPlayer;
 
+	[SerializeField]
+	protected SpriteRenderer sr;
 	public Rigidbody2D rb { get; private set; }
 	public Animator anim { get; private set; }
 	public D_Entity enemyData;
@@ -50,6 +52,10 @@ public class Entity : MonoBehaviour
 
 		if (Time.time >= timeHealthStateExit)
 		{
+			if(myHealthState == HealthStateTypes.BURNED)
+            {
+				//Destroy(GetComponentInChildren<BurnedAuraScript>().gameObject);
+            }
 			myHealthState = HealthStateTypes.NORMAL;
 		}
 
@@ -96,10 +102,15 @@ public class Entity : MonoBehaviour
 		if(damageType == HealthStateTypes.NORMAL)
 			AudioManager.Instance.PlaySound(enemyData.hitSound, this.transform);
 		
-		GameObject hitDamageParticles = Instantiate(enemyData.hitParticles, bulletPosition, this.transform.rotation);
-		FunctionTimer.Create(() => { Destroy(hitDamageParticles.gameObject); },0.5f);
+		if(damageType != HealthStateTypes.BURNED)
+        {
+			GameObject hitDamageParticles = Instantiate(enemyData.hitParticles, bulletPosition, this.transform.rotation);
 
-		if(myHealthState != damageType)
+			FunctionTimer.Create(() => { Destroy(hitDamageParticles.gameObject); }, 0.5f);
+
+		}
+
+		if (myHealthState != damageType)
         {
 			myHealthState = damageType;
 			//timeHealthStateEntered = Time.time;
@@ -109,6 +120,8 @@ public class Entity : MonoBehaviour
 					timeHealthStateExit = Time.time + 5;
 					GetDamage(10);
 					lastTimeDamageHealthStateApplied = Time.time;
+					GameObject burnShader = Instantiate(enemyData.burnPrefab,sr.gameObject.transform);
+					burnShader.GetComponent<BurnedAuraScript>().SetValues(this.GetBurnValues());
 					break;
                 case HealthStateTypes.FREEZE:
                     break;
@@ -150,4 +163,6 @@ public class Entity : MonoBehaviour
 			enemyData.enemyHealth.RuntimeValue = 0;
 		}
 	}
+
+	public abstract  KeyValuePair<Transform, float> GetBurnValues();
 }

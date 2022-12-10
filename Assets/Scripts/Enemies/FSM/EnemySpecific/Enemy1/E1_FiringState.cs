@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class E1_FiringState : FiringState
 {
@@ -53,6 +54,24 @@ public class E1_FiringState : FiringState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        //if(angle > 90 && angle < 270)
+        //{
+        //    if(enemy.transform.localScale.x > 0)
+        //    {
+        //        enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
+        //    }
+        //}
+        Debug.Log(angle);
+
+        if ( ((angle < 90 && angle > -90) && enemy.transform.localScale.x < 0) || ((angle > 90 || angle < -90 ) && enemy.transform.localScale.x > 0))        
+        {
+            enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
+            
+        }
+
+        enemy.GetComponentsInChildren<Transform>().Where(t => (t.gameObject.CompareTag("FirePoint"))).ToArray()[0].localRotation = Quaternion.Euler(0, 0, angle * Mathf.Sign(enemy.transform.localScale.x));
+        //enemy.rb.rotation = angle;
 
         if (nextShootReady)
         {

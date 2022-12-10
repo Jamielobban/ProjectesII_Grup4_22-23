@@ -28,7 +28,7 @@ public class ChasingState : State
     {
         base.LogicUpdate();
 
-        angle = Mathf.Atan2(entity.vectorToPlayer.y, entity.vectorToPlayer.x) * Mathf.Rad2Deg;
+        angle = Mathf.Atan2(entity.vectorToPlayer.normalized.y, entity.vectorToPlayer. normalized.x) * Mathf.Rad2Deg;
 
     }
 
@@ -36,7 +36,7 @@ public class ChasingState : State
     {
         base.PhysicsUpdate();
         
-        entity.rb.rotation = angle;
+        //entity.rb.rotation = angle;
          
     }
 

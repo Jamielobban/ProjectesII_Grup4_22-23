@@ -11,5 +11,6 @@ public class D_Entity : ScriptableObject
     public GameObject hitParticles;
     public AudioClip hitSound;
     [HideInInspector]
-    public Transform firePoint;    
+    public Transform firePoint;
+    public GameObject burnPrefab;
 }

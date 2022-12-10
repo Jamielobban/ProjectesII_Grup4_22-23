@@ -15,8 +15,9 @@ public class BurnedAuraScript : MonoBehaviour
     private AllIn1Shader aIOS;
     private SetAtlasUvs sAU;
     bool firstTime = true;
-    [SerializeField]
-    bool worm = true;
+    float distValue = 0;
+    //[SerializeField]
+    //bool worm = true;
 
     void Start()
     {
@@ -32,14 +33,15 @@ public class BurnedAuraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
-        Debug.Log(sr);
-        Debug.Log(mySr);
+        //Debug.Log(sr);
+        //Debug.Log(mySr);
         currOffset.y += -2 * Time.deltaTime;
         material.SetTextureOffset("_FadeTex", currOffset);
-        if (worm)
-        {
-            mySr.sprite = sr.sprite;
-            //CreateText();           
+        //if (worm)
+        //{
+        mySr.sprite = sr.sprite;
+        CreateText();
+        material.SetTexture("_MainTex", text);
             //material.SetFloat("_FadeTex", -Time.deltaTime * 0.2f);
             if (firstTime)
             {
@@ -49,8 +51,10 @@ public class BurnedAuraScript : MonoBehaviour
                 sAU.UpdateEveryFrame(true);
                 firstTime = false;
             }
-        }
-        
+        material.SetFloat("_DistortAmount", distValue);
+
+        //}
+
     }
 
     void CreateText()
@@ -62,5 +66,15 @@ public class BurnedAuraScript : MonoBehaviour
                                                  (int)sr.sprite.textureRect.height);
         text.SetPixels(pixels);
         text.Apply();
+    }
+
+    public void SetValues(KeyValuePair<Transform, float> transformAndDistortion)
+    {
+       
+        this.transform.localPosition = transformAndDistortion.Key.position;
+        this.transform.rotation = transformAndDistortion.Key.rotation;
+        this.transform.localScale = transformAndDistortion.Key.localScale;
+
+        distValue = transformAndDistortion.Value;
     }
 }
