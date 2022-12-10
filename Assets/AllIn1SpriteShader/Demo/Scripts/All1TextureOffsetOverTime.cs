@@ -7,6 +7,15 @@ namespace AllIn1SpriteShader
 {
     public class All1TextureOffsetOverTime : MonoBehaviour
     {
+        //public All1TextureOffsetOverTime()
+        //{
+
+        //}
+        //public All1TextureOffsetOverTime(string texturePropertyName, Vector2 offsetSpeed)
+        //{
+        //    this.texturePropertyName = texturePropertyName;
+        //    this.offsetSpeed = offsetSpeed;
+        //}
         [SerializeField] private string texturePropertyName = "_MainTex";
         [SerializeField] private Vector2 offsetSpeed = Vector2.zero;
 
