@@ -13,6 +13,7 @@ public class RightHand : MonoBehaviour
     public PowerUpTimer powerUpTimer;
     public PowerUpTimer reloadBarTimer;
 
+    private RecoilScript _recoilSript;
     public GameObject powerUpBar;
     public GameObject reloadBar;
     public TextMeshProUGUI bulletsInMagazine;
@@ -46,6 +47,7 @@ public class RightHand : MonoBehaviour
 
     private void Start()
     {
+        _recoilSript = GetComponent<RecoilScript>();
         nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint);
         weaponInHand.SetWeaponHand(ref sr);
         reloadBar.SetActive(false);
@@ -65,7 +67,11 @@ public class RightHand : MonoBehaviour
     }
     private void Update()
     {
-
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    Debug.Log("This is right hand");
+        //    _recoilSript.AddRecoil();
+        //}
 
         switch (powerUpState)
         {

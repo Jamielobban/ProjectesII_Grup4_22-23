@@ -131812,6 +131812,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2032705587 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6852020773992823753, guid: 37e2de9deb119b24b86730ee19d93aad, type: 3}
+  m_PrefabInstance: {fileID: 1826616466}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2032705589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032705587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0956813b04540ec49bce036fa2030652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maximumOffsetDistance: 0.3
+  _recoilAcceleration: 50
+  _weaponRecoilStartSpeed: -10
 --- !u!1 &2058661331
 GameObject:
   m_ObjectHideFlags: 0
