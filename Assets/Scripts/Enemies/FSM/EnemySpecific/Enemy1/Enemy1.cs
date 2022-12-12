@@ -52,15 +52,15 @@ public class Enemy1 : Entity
         return variant;
     }
 
-    public override KeyValuePair<Transform, float> GetBurnValues()
+    public override Transform/*KeyValuePair<Transform, float>*/ GetBurnValues()
     {
         GameObject emptyGO = new GameObject();
         if (variant == Enemy1Variants.SINGLESHOT)
         {
-            emptyGO.transform.position = new Vector3(0, 0.166f, 0);
+            emptyGO.transform.position = new Vector3(0, 0.475f, 0);
             emptyGO.transform.rotation = Quaternion.identity;
-            emptyGO.transform.localScale = new Vector3(0.87f, 1.2f, 1);
-            return new KeyValuePair<Transform, float>(emptyGO.transform, 0.09f);
+            emptyGO.transform.localScale = new Vector3(0.325f, 0.375f, 1);//1.3f, 1.5f, 1)
+            return /*new KeyValuePair<Transform, float>(*/emptyGO.transform/*, 0.09f)*/;
         }
         throw new System.NotImplementedException();
 

@@ -7,10 +7,7 @@ public class D_Entity : ScriptableObject
 {
     public float stopDistanceFromPlayer;
     public float speed;
-    public FloatValue enemyHealth;
+    public float health;    
     public GameObject hitParticles;
-    public AudioClip hitSound;
-    [HideInInspector]
-    public Transform firePoint;
-    public GameObject burnPrefab;
+    public AudioClip hitSound;    
 }

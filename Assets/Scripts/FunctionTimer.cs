@@ -31,13 +31,13 @@ public class FunctionTimer
         return functionTimer;
     }
 
-    private static void RemoveTimer(FunctionTimer functionTimer)
+    public static void RemoveTimer(FunctionTimer functionTimer)
     {
         InitIfNeeded();
         activeTimerList.Remove(functionTimer);
     }
 
-    private static void StopTimer(string timerName)
+    public static void StopTimer(string timerName)
     {
         for(int i = 0; i < activeTimerList.Count; i++)
         {

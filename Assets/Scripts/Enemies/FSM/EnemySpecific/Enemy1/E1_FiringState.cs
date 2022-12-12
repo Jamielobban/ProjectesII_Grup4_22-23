@@ -62,7 +62,7 @@ public class E1_FiringState : FiringState
         //        enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
         //    }
         //}
-        Debug.Log(angle);
+        //Debug.Log(angle);
 
         if ( ((angle < 90 && angle > -90) && enemy.transform.localScale.x < 0) || ((angle > 90 || angle < -90 ) && enemy.transform.localScale.x > 0))        
         {
@@ -99,9 +99,9 @@ public class E1_FiringState : FiringState
 
         for (int i = 0, grados = ((stateData.angleOfCone / 2) * -10) + par; i < stateData.angleOfCone; i++, grados += 10)
         {
-            GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.enemyData.firePoint.transform.position, enemy.enemyData.firePoint.rotation);
+            GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position, enemy.GetComponent<Entity>().GetFirePointTransform().rotation);
             //instance.GetComponent<EnemyProjectile>().bulletDamage = enemyBulletDamage;
-            AudioManager.Instance.PlaySound(stateData.shootShound, enemy.enemyData.firePoint.transform.position);
+            AudioManager.Instance.PlaySound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);
             bullet.transform.Rotate(0, 0, bullet.transform.rotation.z + grados);
 
             bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponent<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
@@ -111,9 +111,9 @@ public class E1_FiringState : FiringState
     }
     void Machinegun()
     {
-        GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.enemyData.firePoint.transform.position, enemy.enemyData.firePoint.rotation);
+        GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position, enemy.GetComponent<Entity>().GetFirePointTransform().rotation);
 
-        AudioManager.Instance.PlaySound(stateData.shootShound, enemy.enemyData.firePoint.transform.position);
+        AudioManager.Instance.PlaySound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);
 
         //Metralleta
         bullet.transform.Rotate(0, 0, bullet.transform.rotation.z + UnityEngine.Random.Range(-25, 25));
