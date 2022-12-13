@@ -106357,7 +106357,10 @@ Material:
   - FISHEYE_ON
   - HITEFFECT_ON
   - OUTBASE8DIR_ON
+  - OUTBASEPIXELPERF_ON
+  - OUTBASE_ON
   - PINCH_ON
+  - SHAKEUV_ON
   m_InvalidKeywords:
   - _BILLBOARDY_ON
   - _BLURHD_ON
@@ -106446,7 +106449,7 @@ Material:
     - _ClipUvLeft: 0
     - _ClipUvRight: 0
     - _ClipUvUp: 0
-    - _ColorChangeLuminosity: 0
+    - _ColorChangeLuminosity: 0.13
     - _ColorChangeTolerance: 0.25
     - _ColorChangeTolerance2: 0.25
     - _ColorChangeTolerance3: 0.25
@@ -106504,9 +106507,9 @@ Material:
     - _HsvBright: 1
     - _HsvSaturation: 1
     - _HsvShift: 0
-    - _InnerOutlineAlpha: 1
-    - _InnerOutlineGlow: 4
-    - _InnerOutlineThickness: 1
+    - _InnerOutlineAlpha: 0.136
+    - _InnerOutlineGlow: 27
+    - _InnerOutlineThickness: 0
     - _LitAmount: 1
     - _MaxXUV: 0.032258064
     - _MaxYUV: 1
@@ -106522,15 +106525,15 @@ Material:
     - _OffsetUvY: 0
     - _OnlyInnerOutline: 0
     - _OnlyOutline: 0
-    - _OutlineAlpha: 1
+    - _OutlineAlpha: 0
     - _OutlineDistortAmount: 0.5
     - _OutlineDistortTexXSpeed: 5
     - _OutlineDistortTexYSpeed: 5
-    - _OutlineGlow: 1
+    - _OutlineGlow: 100
     - _OutlinePixelWidth: 1
     - _OutlineTexXSpeed: 10
     - _OutlineTexYSpeed: 0
-    - _OutlineWidth: 0.001
+    - _OutlineWidth: 0.007
     - _OverlayBlend: 1
     - _OverlayGlow: 1
     - _PinchUvAmount: 0
@@ -106546,9 +106549,9 @@ Material:
     - _ShadowAlpha: 0.5
     - _ShadowX: 0.1
     - _ShadowY: -0.05
-    - _ShakeUvSpeed: 2.5
-    - _ShakeUvX: 1.5
-    - _ShakeUvY: 1
+    - _ShakeUvSpeed: 0
+    - _ShakeUvX: 0
+    - _ShakeUvY: 0
     - _ShineGlow: 1
     - _ShineLocation: 0.5
     - _ShineRotate: 0
@@ -106570,10 +106573,10 @@ Material:
     m_Colors:
     - _AlphaOutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorChangeNewCol: {r: 1, g: 1, b: 0, a: 1}
+    - _ColorChangeNewCol: {r: 1, g: 0, b: 0.010215759, a: 1}
     - _ColorChangeNewCol2: {r: 1, g: 1, b: 0, a: 1}
     - _ColorChangeNewCol3: {r: 1, g: 1, b: 0, a: 1}
-    - _ColorChangeTarget: {r: 1, g: 0, b: 0, a: 1}
+    - _ColorChangeTarget: {r: 0.60969925, g: 0, b: 1, a: 1}
     - _ColorChangeTarget2: {r: 1, g: 0, b: 0, a: 1}
     - _ColorChangeTarget3: {r: 1, g: 0, b: 0, a: 1}
     - _ColorSwapBlue: {r: 0.09812209, g: 0.5943396, b: 0.46925962, a: 1}
@@ -106586,10 +106589,10 @@ Material:
     - _GradTopLeftCol: {r: 1, g: 0, b: 0, a: 1}
     - _GradTopRightCol: {r: 1, g: 1, b: 0, a: 1}
     - _GreyscaleTintColor: {r: 1, g: 1, b: 1, a: 1}
-    - _HitEffectColor: {r: 1, g: 0, b: 0, a: 1}
+    - _HitEffectColor: {r: 1, g: 0.7325124, b: 0, a: 1}
     - _HologramStripeColor: {r: 0, g: 1, b: 1, a: 1}
     - _InnerOutlineColor: {r: 1, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 0.5912625, g: 0.46297613, b: 0.6415094, a: 1}
+    - _OutlineColor: {r: 1, g: 0.09637366, b: 0, a: 1}
     - _OverlayColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShineColor: {r: 1, g: 1, b: 1, a: 1}

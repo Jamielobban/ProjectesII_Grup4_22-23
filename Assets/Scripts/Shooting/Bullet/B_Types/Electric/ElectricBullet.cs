@@ -37,7 +37,7 @@ public class ElectricBullet : Bullet
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position);
+            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position, TransformMovementType.PUNCH);
             ImpactBody();
         }
         

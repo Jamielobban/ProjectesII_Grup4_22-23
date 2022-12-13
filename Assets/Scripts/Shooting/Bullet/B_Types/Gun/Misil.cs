@@ -85,7 +85,7 @@ public class Misil : Bullet
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             base.ImpactBody();
-            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position);
+            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position, TransformMovementType.PUNCH);
 
         }
     }

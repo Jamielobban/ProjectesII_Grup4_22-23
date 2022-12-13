@@ -15,13 +15,24 @@ public class FlamesColision : MonoBehaviour
     [SerializeField] float timeBurningActive;
     [SerializeField] float timeBetweenBurnings;
     [SerializeField] float burnDamage;
+    bool damageable;
+    float lastImeDamaged;
 
     private float lastBurn = 0;
 
     void OnEnable()
     {
         ps = GetComponent<ParticleSystem>();
+        damageable = true;
+        lastImeDamaged = 0;
 
+    }
+    private void Update()
+    {
+        if(Time.time - lastImeDamaged >= 0.2f)
+        {
+            damageable = true;
+        }
     }
     private void OnParticleTrigger()
     {
@@ -48,9 +59,11 @@ public class FlamesColision : MonoBehaviour
     }
     void OnParticleCollision(GameObject other)
     {
-        if (other.CompareTag(targetTag))
+        if (other.CompareTag(targetTag) && damageable)
         {           
-            other.gameObject.GetComponent<Entity>().GetDamage(this.GetComponentInParent<Bullet>().GetBUlletDamage(), HealthStateTypes.BURNED, 0, other.transform.position);
+            other.gameObject.GetComponent<Entity>().GetDamage(this.GetComponentInParent<Bullet>().GetBUlletDamage(), HealthStateTypes.BURNED, 0, other.transform.position, TransformMovementType.JUMP);
+            lastImeDamaged = Time.time;
+            damageable = false;
         }
         
     }

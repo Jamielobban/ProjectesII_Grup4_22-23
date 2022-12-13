@@ -79,7 +79,7 @@ public abstract class Entity : MonoBehaviour
 
 		CheckIfHealthStateIsDamaging();
 
-		UpdateBurnHItDamageValues();
+		//UpdateBurnHItDamageValues();
 
 		stateMachine.currentState.LogicUpdate();
 
@@ -123,9 +123,11 @@ public abstract class Entity : MonoBehaviour
 					if (Time.time - lastTimeDamageHealthStateApplied >= 2)
 					{
 						applyingHitEffect = true;
+						UpdateBurnHItDamageValues();
 						GetDamage(10);
 						lastTimeDamageHealthStateApplied = Time.time;
 						lastTimeTouchedFire = Time.time;
+						applyingHitEffect = false;
 					}
 					break;
 				case HealthStateTypes.FREEZE:
@@ -139,55 +141,62 @@ public abstract class Entity : MonoBehaviour
 	}
 
 	void UpdateBurnHItDamageValues()
-    {
-		if (applyingHitEffect)
+    {	
+
+		sr.material.DOFloat(0.6f, "_OutlineAlpha", 0.3f).OnComplete(()=>
 		{
-			float minimum;
-			float maximum;
-			sr.material.SetFloat("_HitEffectGlow", 10);
-
-			if (!maxHitBlendReached)
-			{
-				minimum = 0;
-				maximum = 1;
-
-				sr.material.SetFloat("_HitEffectBlend", Mathf.Lerp(minimum, maximum, tHE));
-
-				tHE += 5 * Time.deltaTime;
-
-				if (sr.material.GetFloat("_HitEffectBlend") >= 1)
-				{
-					maxHitBlendReached = true;
-					tHE = 0;
-				}
-			}
-			else
-			{
-				minimum = 1;
-				maximum = 0;
-
-				sr.material.SetFloat("_HitEffectBlend", Mathf.Lerp(minimum, maximum, tHE));
-
-				tHE += 5 * Time.deltaTime;
-
-				if (sr.material.GetFloat("_HitEffectBlend") <= 0)
-				{
-					maxHitBlendReached = false;
-					applyingHitEffect = false;
-					tHE = 0;
-				}
-			}
-		}
+			sr.material.DOFloat(0, "_OutlineAlpha", 0.3f);
+		});
+		
 	}
+	//float minimum;
+	//float maximum;
+	//sr.material.SetFloat("_HitEffectGlow", 10);
 
-	
+	//if (!maxHitBlendReached)
+	//{
+	//	minimum = 0;
+	//	maximum = 1;
+
+	//	sr.material.SetFloat("_HitEffectBlend", Mathf.Lerp(minimum, maximum, tHE));
+
+	//	tHE += 5 * Time.deltaTime;
+
+	//	if (sr.material.GetFloat("_HitEffectBlend") >= 1)
+	//	{
+	//		maxHitBlendReached = true;
+	//		tHE = 0;
+	//	}
+	//}
+	//else
+	//{
+	//	minimum = 1;
+	//	maximum = 0;
+
+	//	sr.material.SetFloat("_HitEffectBlend", Mathf.Lerp(minimum, maximum, tHE));
+
+	//	tHE += 5 * Time.deltaTime;
+
+	//	if (sr.material.GetFloat("_HitEffectBlend") <= 0)
+	//	{
+	//		maxHitBlendReached = false;
+	//		applyingHitEffect = false;
+	//		tHE = 0;
+	//	}
+	//}
+	//sr.material.DOFloat(0.6f, "_OutlineAlpha", 0.3f).OnComplete(()=>
+	//{
+	//	sr.material.DOFloat(0.6f, "_OutlineAlpha", 0.3f);
+	//});
+
 	public virtual void FixedUpdate()
 	{		
 
 		stateMachine.currentState.PhysicsUpdate();
+		
 	}
 
-	public virtual void GetDamage(float damageHit, HealthStateTypes damageType, float knockBackForce, Vector3 bulletPosition)
+	public virtual void GetDamage(float damageHit, HealthStateTypes damageType, float knockBackForce, Vector3 bulletPosition, TransformMovementType type)
 	{
 
 		if (enemyHealth - damageHit >= 0)
@@ -200,33 +209,66 @@ public abstract class Entity : MonoBehaviour
 			enemyHealth = 0;
 		}
 
-		
+		ImpactBullet(bulletPosition, type);
+        		
 
-        if (sequenceImpactShader.IsPlaying())
-        {
+		if (damageType == HealthStateTypes.NORMAL)
+			AudioManager.Instance.PlaySound(enemyData.hitSound, this.transform);
+
+		if (damageType != HealthStateTypes.BURNED)
+		{
+			GameObject hitDamageParticles = Instantiate(enemyData.hitParticles, bulletPosition, this.transform.rotation);
+
+			FunctionTimer.Create(() => { Destroy(hitDamageParticles.gameObject); }, 0.5f);
+
+		}
+
+		UpdateNewHeealthState(damageType);
+
+	}
+
+	void ImpactBullet(Vector3 bulletPosition, TransformMovementType type)
+    {
+		if (sequenceImpactShader.IsPlaying())
+		{
 			Debug.Log("isPlaying");
 			sequenceImpactShader.Pause();
 			sequenceImpactShader.Kill();
-			sequenceImpactShader = null;						
+			sequenceImpactShader = null;
 		}
 
 		sequenceImpactShader = DOTween.Sequence();
 
-        
-        sr.material.SetFloat("_ChromAberrAmount", 0);
-        sr.material.SetFloat("_FishEyeUvAmount", 0);
-        sr.material.SetFloat("_HitEffectBlend", 0);
-        sr.material.SetColor("_HitEffectColor", new Color(1, 0.99806f, 0.93816f, 1));
-        sr.material.SetFloat("_PinchUvAmount", 0);
 
-		if(shaker == null || !shaker.IsPlaying())
-        {
-			shaker = transform.DOShakePosition(0.2f, 1.5f);
+		sr.material.SetFloat("_ChromAberrAmount", 0);
+		sr.material.SetFloat("_FishEyeUvAmount", 0);
+		sr.material.SetFloat("_HitEffectBlend", 0);
+		sr.material.SetColor("_HitEffectColor", new Color(1, 0.99806f, 0.93816f, 1));
+		sr.material.SetFloat("_PinchUvAmount", 0);
+
+		if ((shaker == null || !shaker.IsPlaying()) && type != TransformMovementType.NOTHING)
+		{
+			Vector3 direction = bulletPosition - transform.position;
+			direction = direction.normalized;
+			
+			if(type == TransformMovementType.PUNCH)
+            {
+				shaker = transform.DOPunchPosition(-direction * 2, 0.2f, 0, 1, false);
+			}
+			else if(type == TransformMovementType.SHAKE)
+            {
+				shaker = transform.DOShakePosition(0.2f, 0.5f, 10, 45, false, true, ShakeRandomnessMode.Harmonic);
+			}
+			else if(type == TransformMovementType.JUMP)
+            {
+				shaker = transform.DOJump(transform.position, 0.5f, 1, 0.2f, false);
+			}
+
 			shaker = transform.DOShakeRotation(0.2f, 0.7f);
-			shaker = transform.DOShakeScale(0.2f, 0.5f);
+			shaker = transform.DOShakeScale(0.2f, 0.2f, 10, 45, true, ShakeRandomnessMode.Harmonic);
 			//shaker = transform.DOJump(this.transform.position, 1.5f, 1, 0.2f);
 			//shaker = transform.DOShakeRotation(0.2f, 0.7f);
-		}		
+		}
 
 		sequenceImpactShader.Join(sr.material.DOColor(new Color(1, 0.99999f, 0.34615f, 1), "_HitEffectColor", 0.2f));
 
@@ -250,78 +292,30 @@ public abstract class Entity : MonoBehaviour
 			sequenceImpactShader.Join(sr.material.DOFloat(0, "_FishEyeUvAmount", 0.2f));
 			sequenceImpactShader.Join(sr.material.DOFloat(0, "_HitEffectBlend", 0.2f));
 			sequenceImpactShader.Join(sr.material.DOColor(new Color(1, 1, 0.34434f, 1), "_HitEffectColor", 0.2f));
-			sequenceImpactShader.Join(sr.material.DOFloat(0, "_PinchUvAmount", 0.2f)); 
+			sequenceImpactShader.Join(sr.material.DOFloat(0, "_PinchUvAmount", 0.2f));
 		});
-		
-
-
-
-
-
-
-		//	sequence.Insert(0, sr.material.DOColor(new Color(1, 0.99999f, 0.34615f, 1), "_HitEffectColor", 1));//0.3f / 0.6f
-		//sequence.OnComplete(() =>
-		//{
-		//	sequence.Insert(0, sr.material.DOFloat(1, "_ChromAberrAmount", 1));//0.01f / 0.6f
-		//	sequence.Insert(0, sr.material.DOFloat(0.245f, "_FishEyeUvAmount", 1));
-		//	sequence.Insert(0, sr.material.DOFloat(0.2f, "_HitEffectBlend", 1));
-		//	sequence.Insert(0, sr.material.DOColor(new Color(1, 1, 0.34434f, 1), "_HitEffectColor", 1));
-		//	sequence.Insert(0, sr.material.DOFloat(0, "_PinchUvAmount", 1));
-		//});
-		//      sequence.OnComplete(() =>
-		//      {
-		//          sequence.Insert(0, sr.material.DOFloat(0, "_FishEyeUvAmount", 1));//0.04f / 0.6f
-		//          sequence.Insert(0, sr.material.DOFloat(0.18963f, "_HitEffectBlend", 1));
-		//          sequence.Insert(0, sr.material.DOFloat(0.078f, "_PinchUvAmount", 1));
-		//      });
-		//      sequence.OnComplete(() =>
-		//      {
-		//          Debug.Log("in2");
-		//          sequence.Insert(0, sr.material.DOFloat(0, "_ChromAberrAmount", 1));//0.25f / 0.6f
-		//          sequence.Insert(0, sr.material.DOFloat(0, "_FishEyeUvAmount", 1));
-		//          sequence.Insert(0, sr.material.DOFloat(0, "_HitEffectBlend", 1));
-		//          sequence.Insert(0, sr.material.DOColor(new Color(1, 1, 0.34434f, 1), "_HitEffectColor", 1));
-		//          sequence.Insert(0, sr.material.DOFloat(0, "_PinchUvAmount", 1));
-		//          sequenceCompleted = true;
-		//      });
-
-
-		//}
-		//      else
-		//      {
-		//	sequence.Restart();
-		//}
-
-		//sequence.Insert(0, sr.material.DO)
-
-		if (damageType == HealthStateTypes.NORMAL)
-			AudioManager.Instance.PlaySound(enemyData.hitSound, this.transform);
-
-		if (damageType != HealthStateTypes.BURNED)
-		{
-			GameObject hitDamageParticles = Instantiate(enemyData.hitParticles, bulletPosition, this.transform.rotation);
-
-			FunctionTimer.Create(() => { Destroy(hitDamageParticles.gameObject); }, 0.5f);
-
-		}
-
-		UpdateNewHeealthState(damageType);
-
 	}
+
 	void UpdateNewHeealthState(HealthStateTypes damageType)
     {
-			if (myHealthState != damageType)
+			if (myHealthState != damageType && damageType != HealthStateTypes.NORMAL)
 			{
 				myHealthState = damageType;
 				//timeHealthStateEntered = Time.time;
 				switch (damageType)
 				{
-					case HealthStateTypes.BURNED:						
+					case HealthStateTypes.BURNED:
+						
 						applyingHitEffect = true;
 						timeHealthStateExit = Time.time + 5;
+						UpdateBurnHItDamageValues();
 						GetDamage(10);
 						lastTimeDamageHealthStateApplied = Time.time;
-						lastTimeTouchedFire = Time.time;	
+						lastTimeTouchedFire = Time.time;
+						if(burnFireShader != null)
+						{
+						Destroy(burnFireShader.gameObject);
+						}
 						burnFireShader = Instantiate(burnPrefab, sr.gameObject.transform);
 						burnFireShader.transform.localPosition = GetBurnValues().position;
 						burnFireShader.transform.rotation = GetBurnValues().rotation;

@@ -8,6 +8,7 @@ public class FlameThrowerBullet : Bullet
 {
     public bool isClicking;
     private BlitController myblit;
+
     protected override void Start()
     {
         timeShooted = Time.time;
