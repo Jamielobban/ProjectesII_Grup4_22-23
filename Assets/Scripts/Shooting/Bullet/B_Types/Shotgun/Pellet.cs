@@ -7,11 +7,12 @@ public class Pellet : Bullet
     [SerializeField]
     SpriteRenderer sr;
 
+    private PlayerMovement playerpos;
 
     protected override void Start()
     {
         base.Start();
-
+        playerpos = FindObjectOfType<PlayerMovement>();
         //bulletDamage = 34*_damageMultiplier;
         //bulletRangeInMetres = 500;
         //bulletSpeedMetresPerSec = 20;
@@ -20,7 +21,8 @@ public class Pellet : Bullet
         rb = this.GetComponent<Rigidbody2D>();
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
-
+        playerpos.knockback = true;
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * playerpos.knockbackForce) / 100, (-rb.velocity.y * playerpos.knockbackForce) / 100);
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
     }

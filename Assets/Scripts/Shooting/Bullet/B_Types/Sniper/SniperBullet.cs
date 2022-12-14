@@ -31,6 +31,7 @@ public class SniperBullet : Bullet
 
         playerpos.knockback = true; 
         playerpos.rb.velocity =  new Vector2((-rb.velocity.x * playerpos.knockbackForce) /100, (-rb.velocity.y*playerpos.knockbackForce) /100);
+
         Instantiate(effect, playerpos.transform.position, Quaternion.identity);
         CinemachineShake.Instance.ShakeCamera(40f, 1f);
     }

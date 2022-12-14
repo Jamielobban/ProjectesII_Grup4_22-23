@@ -18,6 +18,8 @@ public class WeaponValues : ScriptableObject
     public FloatValue fireRateinSec;    
     public FloatValue maxTimeOnPowerup;
     public FloatValue amplitudeGain;
+    public FloatValue knockbackForce;
+    public FloatValue knockbackMinimum;
 
     [Header("Default InGame variables")]
     public FloatValue startReloading;    
@@ -39,6 +41,8 @@ public class WeaponValues : ScriptableObject
         fireRateinSec.RestartValues();
         maxTimeOnPowerup.RestartValues();
         amplitudeGain.RestartValues();
+        //knockbackForce.RestartValues();
+        //knockbackMinimum.RestartValues();
         startReloading.RestartValues();
         timelastPowerupEnter.RestartValues();
         timelastPowerupExit.RestartValues();

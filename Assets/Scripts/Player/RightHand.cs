@@ -6,7 +6,7 @@ using TMPro;
 
 public class RightHand : MonoBehaviour
 {
-    Weapon weaponInHand, nextWeapon;
+    public Weapon weaponInHand, nextWeapon;
     [SerializeField] Transform firePoint;
     [SerializeField] SpriteRenderer sr;
 

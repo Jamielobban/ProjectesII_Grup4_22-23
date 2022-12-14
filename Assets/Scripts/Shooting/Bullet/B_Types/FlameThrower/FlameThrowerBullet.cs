@@ -8,9 +8,11 @@ public class FlameThrowerBullet : Bullet
 {
     public bool isClicking;
     private BlitController myblit;
+    private PlayerMovement playerpos;
     protected override void Start()
     {
         timeShooted = Time.time;
+        playerpos = FindObjectOfType<PlayerMovement>();
         myblit = FindObjectOfType<BlitController>();
         bulletData.bulletDamage *= bulletData._damageMultiplier;
         bulletData.bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
@@ -19,9 +21,13 @@ public class FlameThrowerBullet : Bullet
         //bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
         //bulletSpeedMetresPerSec = 1;
         //bulletRadius = 0.23f;
+
+        playerpos.knockback = true;
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * playerpos.knockbackForce) / 100, (-rb.velocity.y * playerpos.knockbackForce) / 100);
+
         Debug.Log("creatng bullet");
         isClicking = true;
-        rb = this.GetComponent<Rigidbody2D>();
+//rb = this.GetComponent<Rigidbody2D>();
 
     }
 

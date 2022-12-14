@@ -28,8 +28,8 @@ public class RoomManager : MonoBehaviour
     public void Start()
     {
         cameraPos = GameObject.FindGameObjectWithTag("CameraPos");
-        wallToSpawn.SetActive(false);
-        wallToSpawn2.SetActive(false);
+        //wallToSpawn.SetActive(false);
+        //wallToSpawn2.SetActive(false);
         lastNumberEnemiesInRoom = enemiesInRoom.Count;
         
     }

@@ -12,10 +12,11 @@ public class PlayerMovement : MonoBehaviour
         Normal, Rolling, Hit
     }
 
-    public float knockbackForce = 90f;
+    public RightHand _rightHand;
+    public float knockbackForce;
     public float knockbackForceDrop = 5f;
-    public float knockbackMinimum = 5f;
-
+    public float knockbackMinimum;
+    public bool knockbackSet;
     public int maxHealth = 100;
     public float currentHealth;
     public bool isDead;
@@ -25,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     public dashCooldown dashUI3;
 
     public GameObject floorBlood;
+
+    public float knockbackForceCheck;
 
     public State state;
     public float moveSpeed = 5f;
@@ -100,6 +103,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Start()
     {
+        _rightHand = GetComponentInChildren<RightHand>();
+      
         isDead = false;
         state = State.Normal;
         currentHealth = maxHealth;
@@ -107,7 +112,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(Time.
+        if(_rightHand  == null)
+        {
+            Debug.Log("nOTHING FOUND");
+        }
+        else
+        {
+            Debug.Log(_rightHand.weaponInHand.GetKnockbackMinimum());
+        }
         weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
 
 
@@ -244,7 +256,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
         }
-        Debug.Log(knockbackForce);
+        //Debug.Log(knockbackForce);
     }
 
     private void FixedUpdate()
@@ -259,11 +271,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
-                    knockbackForce -= knockbackForce * Time.deltaTime;
-                    if(knockbackForce < knockbackMinimum)
-                    {
-                        knockback = false;
-                    }
+                    OnKnockbackShoot(knockbackForceCheck, _rightHand.weaponInHand.GetKnockbackMinimum());
                 }  
                 break;
             case State.Rolling:
@@ -275,6 +283,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void OnKnockbackShoot(float knockbackForce, float knockbackMinimum)
+    {
+        if (!knockbackSet)
+        {
+            knockbackForceCheck = _rightHand.weaponInHand.GetKnockbackForce();
+            knockbackSet = true;
+        }
+
+        knockbackForceCheck -= _rightHand.weaponInHand.GetKnockbackForce() * Time.deltaTime;
+        if (knockbackForceCheck < _rightHand.weaponInHand.GetKnockbackMinimum()) 
+        {
+            knockback = false;
+            knockbackSet = false;
+        }
+    }
     void TakeDamage(float damage)
     {
         if (!isInvulnerable)
@@ -362,7 +385,6 @@ public class PlayerMovement : MonoBehaviour
         isInvulnerable = false;
         
     }
-
 
     private IEnumerator waitForUpdateDash(float time)
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class RecoilScript : MonoBehaviour
 {
@@ -14,14 +15,15 @@ public class RecoilScript : MonoBehaviour
 
     public Vector3 _offsetPosition;
     public Vector3 _recoilSpeed;
+    private bool hasReachedPoint;
 
 
     public void AddRecoil()
     {
-        _recoilInEffect = true;
-        _weaponHeadedBackToStartPosition = false;
-        _recoilSpeed = -transform.up * _weaponRecoilStartSpeed;
-
+        //_weaponHeadedBackToStartPosition = false;
+        //_recoilSpeed = -transform.up * _weaponRecoilStartSpeed;
+        transform.DOLocalMove((new Vector3(-0.04f, -0.5f, 0.0f)), 0.05f, false);
+        StartCoroutine(waitForPosition(0.06f));
     }
     private void Start()
     {
@@ -43,28 +45,40 @@ public class RecoilScript : MonoBehaviour
         {
             return;
         }
-
-        _recoilSpeed += (-_offsetPosition.normalized) * _recoilAcceleration * Time.deltaTime;
-        Vector3 newOffsetPosition = _offsetPosition + _recoilSpeed * Time.deltaTime;
-
-        Vector3 newTransformPosition = transform.position - _offsetPosition;
-
-        if(newOffsetPosition.magnitude > _maximumOffsetDistance)
+        else
         {
-            _recoilSpeed = Vector3.zero;
-            _weaponHeadedBackToStartPosition = true;
-            newOffsetPosition = _offsetPosition.normalized * _maximumOffsetDistance;
-        }
-        else if(_weaponHeadedBackToStartPosition == true && newOffsetPosition.magnitude > _offsetPosition.magnitude)
-        {
-            transform.position -= _offsetPosition;
-            _offsetPosition = Vector3.zero;
-
+            transform.DOLocalMove((new Vector3(-0.04f, -1f, 0.0f)), 0.1f, false);
             _recoilInEffect = false;
-            _weaponHeadedBackToStartPosition = false;
-            return;
         }
-        transform.position = newTransformPosition + newOffsetPosition;
-        _offsetPosition = newOffsetPosition;
+        if (hasReachedPoint)
+        {
+            _recoilSpeed += (-_offsetPosition.normalized) * _recoilAcceleration * Time.deltaTime;
+            Vector3 newOffsetPosition = _offsetPosition + _recoilSpeed * Time.deltaTime;
+
+            Vector3 newTransformPosition = transform.position - _offsetPosition;
+
+            if (newOffsetPosition.magnitude > _maximumOffsetDistance)
+            {
+                _recoilSpeed = Vector3.zero;
+                _weaponHeadedBackToStartPosition = true;
+                newOffsetPosition = _offsetPosition.normalized * _maximumOffsetDistance;
+            }
+            else if (_weaponHeadedBackToStartPosition == true && newOffsetPosition.magnitude > _offsetPosition.magnitude)
+            {
+                transform.position -= _offsetPosition;
+                _offsetPosition = Vector3.zero;
+
+                _recoilInEffect = false;
+                _weaponHeadedBackToStartPosition = false;
+                return;
+            }
+            transform.position = newTransformPosition + newOffsetPosition;
+            _offsetPosition = newOffsetPosition;
+        }
+    }
+    private IEnumerator waitForPosition(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _recoilInEffect = true;
     }
 }

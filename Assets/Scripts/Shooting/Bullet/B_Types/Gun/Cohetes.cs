@@ -23,7 +23,7 @@ public class Cohetes : Bullet
         //this.GetComponent<Rigidbody2D>().AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
         GameObject explosion = Instantiate(muzzle, this.transform.position, this.transform.rotation);
         Destroy(explosion, 0.2f);
-
+        Debug.Log("wjats tjos");
         StartCoroutine(teledirigir(0.4f));
     }
 

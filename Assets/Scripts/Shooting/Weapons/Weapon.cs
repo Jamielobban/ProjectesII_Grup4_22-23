@@ -93,6 +93,17 @@ public abstract class Weapon
     {
         return data.magazinesInWeapon.RuntimeValue;
     }
+
+    public float GetKnockbackForce()
+    {
+        //return data.
+        return data.knockbackForce.InitialValue;
+    }
+    public float GetKnockbackMinimum()
+    {
+        //return data.
+        return data.knockbackMinimum.InitialValue;
+    }
     public float SetTimeLeftPowerup()
     {
         return data.maxTimeOnPowerup.RuntimeValue;
