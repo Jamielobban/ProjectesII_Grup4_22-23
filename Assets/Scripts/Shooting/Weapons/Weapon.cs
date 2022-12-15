@@ -61,9 +61,9 @@ public abstract class Weapon
         LogicUpdate();
 
     }
-    public virtual void FixedUpdate()
+    public virtual bool FixedUpdate()
     {
-        CheckShooting();
+        return CheckShooting();
     }
     public float GetReloadTimeInSec()
     {
@@ -92,6 +92,17 @@ public abstract class Weapon
     public int GetCurrentMagazines()
     {
         return data.magazinesInWeapon.RuntimeValue;
+    }
+
+    public float GetKnockbackForce()
+    {
+        //return data.
+        return data.knockbackForce.InitialValue;
+    }
+    public float GetKnockbackMinimum()
+    {
+        //return data.
+        return data.knockbackMinimum.InitialValue;
     }
     public float SetTimeLeftPowerup()
     {
@@ -130,7 +141,7 @@ public abstract class Weapon
         //data.timelastPowerupEnter -= timePassed;
     }
     //
-    private void CheckShooting()
+    private bool CheckShooting()
     {
         
         if (!data.outOfAmmo.RuntimeValue && !data.reloading.RuntimeValue)
@@ -139,18 +150,20 @@ public abstract class Weapon
             {                
                 if (weaponMechanism.Shoot(data.bulletTypePrefab, firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue))
                 {
-                    LoadOrReloadWhenNeedIt();                    
+                    LoadOrReloadWhenNeedIt();
+                    return true;
                 }                
             }
             else
             {        
-                CheckPowerUpShooting();               
+                return CheckPowerUpShooting();               
             }            
             
         }
+        return false;
     }
 
-    protected abstract void CheckPowerUpShooting();    
+    protected abstract bool CheckPowerUpShooting();    
     public void SetWeaponHand(ref SpriteRenderer _sr)
     {
         _sr.sprite = data.weaponSprite;

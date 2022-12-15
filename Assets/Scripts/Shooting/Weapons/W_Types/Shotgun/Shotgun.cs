@@ -19,13 +19,15 @@ public class Shotgun : Weapon
 
 
     }
-    protected override void CheckPowerUpShooting()
+    protected override bool CheckPowerUpShooting()
     {
         data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = true;
         if (weaponMechanism.Shoot(data.bulletTypePrefab, firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue))
         {
             base.LoadOrReloadWhenNeedIt();
+            return true;
         }
+        return false;
     }
 
     public override void Update()

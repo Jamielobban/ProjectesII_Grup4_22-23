@@ -15,9 +15,9 @@ public class Flamethrower : Weapon
         
     }
 
-    protected override void CheckPowerUpShooting()
+    protected override bool CheckPowerUpShooting()
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 
     // Start is called before the first frame update

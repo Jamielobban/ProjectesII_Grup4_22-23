@@ -18,6 +18,7 @@ public class BlitController : MonoBehaviour
         if(!_Fired && (_Percentage >= 0))
         {
             _Percentage = 0;
+            _Mat.SetFloat("_Percent", _Percentage);
         }
         //if (Input.GetKeyDown(KeyCode.V))
         //{

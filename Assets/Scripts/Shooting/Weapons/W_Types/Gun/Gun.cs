@@ -25,10 +25,10 @@ public class Gun : Weapon
     }
 
     
-    protected override void CheckPowerUpShooting()
+    protected override bool CheckPowerUpShooting()
     {        
         //No gastar municio
-        weaponMechanism.Shoot(data.bulletTypePrefab, firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue);    
+        return weaponMechanism.Shoot(data.bulletTypePrefab, firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue);    
     }
 
     public override void Update()

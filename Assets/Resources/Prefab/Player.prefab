@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 6852020774505889647}
   - component: {fileID: 6852020774505889646}
   - component: {fileID: 6852020774505889635}
+  - component: {fileID: -8226197517765273299}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -222,7 +223,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 62a07459047e7cc438e0e54b42b56714, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -303,6 +304,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4c2691c938a0f43a7861bead8c060b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rightHand: {fileID: 0}
+  knockbackForce: 0
+  knockbackForceDrop: 5
+  knockbackMinimum: 0
+  knockbackSet: 0
   maxHealth: 100
   currentHealth: 0
   isDead: 0
@@ -310,10 +316,15 @@ MonoBehaviour:
   dashUI2: {fileID: 0}
   dashUI3: {fileID: 0}
   floorBlood: {fileID: 4891040840000462560, guid: 0fc2b21afbd510b4eb804ef24e729336, type: 3}
+  knockbackForceCheck: 0
   state: 0
   moveSpeed: 9.5
+  rb: {fileID: 0}
   cam: {fileID: 0}
   weaponHand: {fileID: 6852020773992823756}
+  rollDir: {x: 0, y: 0, z: 0}
+  rollSpeed: 0
+  knockback: 0
   dashColor: {r: 1, g: 1, b: 1, a: 1}
   OriginalColor: {r: 0.003921569, g: 0.78431374, b: 0.03137255, a: 1}
   hurtColor: {r: 0.6792453, g: 0.11854753, b: 0.11854753, a: 1}
@@ -441,6 +452,22 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 0
+--- !u!114 &-8226197517765273299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6852020774505889645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaderTypes: 0
+  normalStrength: 5
+  normalSmoothing: 1
+  computingNormal: 0
 --- !u!1 &6852020775407180377
 GameObject:
   m_ObjectHideFlags: 0

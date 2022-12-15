@@ -12,6 +12,7 @@ public class FlameThrowerBullet : Bullet
     protected override void Start()
     {
         timeShooted = Time.time;
+        playerpos = FindObjectOfType<PlayerMovement>();
         myblit = FindObjectOfType<BlitController>();
         bulletData.bulletDamage *= bulletData._damageMultiplier;
         bulletData.bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
@@ -22,7 +23,7 @@ public class FlameThrowerBullet : Bullet
         //bulletRadius = 0.23f;
         //Debug.Log("creatng bullet");
         isClicking = true;
-        rb = this.GetComponent<Rigidbody2D>();
+//rb = this.GetComponent<Rigidbody2D>();
 
     }
 

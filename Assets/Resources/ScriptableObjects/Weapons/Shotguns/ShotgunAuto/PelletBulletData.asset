@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa6f6f3ec7c4a144a16145eb5297d66, type: 3}
   m_Name: PelletBulletData
   m_EditorClassIdentifier: 
+  minRangeTransform: 0
+  maxRangeTransform: 0
+  minRangeVelocity: 0
+  maxRangeVeclocity: 0
   bulletDamage: 34
-  bulletSpeedMetresPerSec: 20
+  bulletSpeedMetresPerSec: 30
   bulletRangeInMetres: 500
   bulletRadius: 0.23
   _damageMultiplier: 1

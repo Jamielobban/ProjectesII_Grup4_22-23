@@ -9,6 +9,7 @@ public class Saw : Bullet
     
     //Transform originalFirePoint;
     public bool isAlive;
+    private RecoilScript _recoilScript;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class Saw : Bullet
     }
     protected override void Start()
     {
+        _recoilScript = FindObjectOfType<RecoilScript>();
         base.Start();
 
         //thisGun.bulletsOut.Add(this.gameObject);
@@ -28,7 +30,7 @@ public class Saw : Bullet
         //rb = this.GetComponent<Rigidbody2D>();
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
-
+        _recoilScript.AddRecoil();
 
         //originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-15, 15));
 

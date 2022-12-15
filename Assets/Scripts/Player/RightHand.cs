@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
+using DG.Tweening;
 
 public class RightHand : MonoBehaviour
 {
-    Weapon weaponInHand, nextWeapon;
+    public Weapon weaponInHand, nextWeapon;
     [SerializeField] Transform firePoint;
     [SerializeField] SpriteRenderer sr;
 
     public PowerUpTimer powerUpTimer;
     public PowerUpTimer reloadBarTimer;
 
+    private RecoilScript _recoilSript;
     public GameObject powerUpBar;
     public GameObject reloadBar;
     public TextMeshProUGUI bulletsInMagazine;
@@ -38,14 +41,18 @@ public class RightHand : MonoBehaviour
     public Color usePowerUpColor;
 
     Image powerUpBarColor;
+    Material playerMat;
+    Sequence shakeSeq;
 
     enum PowerUpState { RELOADING, USING, FULL };
     PowerUpState powerUpState;
 
     public Image actualWeaponUI, nextWeaponUI;
+    
 
     private void Start()
     {
+        _recoilSript = GetComponent<RecoilScript>();
         nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint);
         weaponInHand.SetWeaponHand(ref sr);
         reloadBar.SetActive(false);
@@ -53,6 +60,7 @@ public class RightHand : MonoBehaviour
 
         UpdateUIWeapons();
         powerUpState = PowerUpState.RELOADING;
+        playerMat = GetComponentInParent<PlayerMovement>().gameObject.GetComponent<SpriteRenderer>().material;
     }
 
     void UpdateUIWeapons()
@@ -65,7 +73,11 @@ public class RightHand : MonoBehaviour
     }
     private void Update()
     {
-
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    Debug.Log("This is right hand");
+        //    _recoilSript.AddRecoil();
+        //}
 
         switch (powerUpState)
         {
@@ -185,10 +197,12 @@ public class RightHand : MonoBehaviour
     {
         weaponInHand.FixedUpdate();
     }
-    //public void SetColor()
-    //{
 
-    //}
+    void ShootShake()
+    {
+        //shakeSeq = playerMat.DOFloat(6.67f, "_ShakeUvSpeed", 0.1f);
+    }
+
     public Color GetColor()
     {
         return weaponInHand.GetWeaponColor();

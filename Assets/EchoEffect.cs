@@ -17,18 +17,16 @@ public class EchoEffect : MonoBehaviour
 
     private void Update()
     {
-        if (thisSaw.isAlive)
+
+        if (timeBewteenSpawns <= 0)
         {
-            if(timeBewteenSpawns <= 0)
-            {
-                GameObject instance = (GameObject)Instantiate(echo, transform.position, Quaternion.identity);
-                Destroy(instance, 2f);
-                timeBewteenSpawns = startTimeBetweenSpawns;
-            }
-            else
-            {
-                timeBewteenSpawns -= Time.deltaTime;
-            }
+            GameObject instance = (GameObject)Instantiate(echo, transform.position, Quaternion.identity);
+            Destroy(instance, 0.4f);
+            timeBewteenSpawns = startTimeBetweenSpawns;
+        }
+        else
+        {
+            timeBewteenSpawns -= Time.deltaTime;
         }
     }
 }

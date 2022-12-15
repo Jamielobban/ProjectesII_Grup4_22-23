@@ -45,8 +45,8 @@ public class Sawgun : Weapon
         CinemachineShake.Instance.ShakeCamera(5f * data.amplitudeGain.RuntimeValue, .1f);
     }
 
-    protected override void CheckPowerUpShooting()
+    protected override bool CheckPowerUpShooting()
     {
-        
+        return false;
     }
 }
