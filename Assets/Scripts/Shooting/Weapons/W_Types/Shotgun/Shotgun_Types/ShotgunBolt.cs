@@ -17,8 +17,9 @@ public class ShotgunBolt : Shotgun
         //data.bulletsPerMagazine -= 4;
         //data.currentBulletsInMagazine = data.bulletsPerMagazine;
     }    
-    protected override void CheckPowerUpShooting()
+    protected override bool CheckPowerUpShooting()
     {
         base.CheckPowerUpShooting();
+        return false;
     }
 }

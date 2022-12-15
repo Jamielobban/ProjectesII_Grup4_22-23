@@ -8,9 +8,10 @@ public class ShotgunAuto : Shotgun
     {    
         weaponMechanism = new Automatica();    
     }
-    protected override void CheckPowerUpShooting()
+    protected override bool CheckPowerUpShooting()
     {
         base.CheckPowerUpShooting();
+        return false;
     }
     
 }

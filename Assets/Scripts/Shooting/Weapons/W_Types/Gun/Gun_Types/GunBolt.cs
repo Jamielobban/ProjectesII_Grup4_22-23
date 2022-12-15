@@ -19,11 +19,11 @@ public class GunBolt : Gun
         //data.currentBulletsInMagazine = data.bulletsPerMagazine;
     }
 
-    protected override void CheckPowerUpShooting()
+    protected override bool CheckPowerUpShooting()
     {
         base.CheckPowerUpShooting();
 
-        temporalMechanism.Shoot(data.bulletTypePrefab, secondHandClone.GetComponent<LeftHand>().firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue);
+        return temporalMechanism.Shoot(data.bulletTypePrefab, secondHandClone.GetComponent<LeftHand>().firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue);
     }
 
 }

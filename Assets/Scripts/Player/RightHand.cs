@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
+using DG.Tweening;
 
 public class RightHand : MonoBehaviour
 {
@@ -39,11 +41,14 @@ public class RightHand : MonoBehaviour
     public Color usePowerUpColor;
 
     Image powerUpBarColor;
+    Material playerMat;
+    Sequence shakeSeq;
 
     enum PowerUpState { RELOADING, USING, FULL };
     PowerUpState powerUpState;
 
     public Image actualWeaponUI, nextWeaponUI;
+    
 
     private void Start()
     {
@@ -55,6 +60,7 @@ public class RightHand : MonoBehaviour
 
         UpdateUIWeapons();
         powerUpState = PowerUpState.RELOADING;
+        playerMat = GetComponentInParent<PlayerMovement>().gameObject.GetComponent<SpriteRenderer>().material;
     }
 
     void UpdateUIWeapons()
@@ -191,10 +197,12 @@ public class RightHand : MonoBehaviour
     {
         weaponInHand.FixedUpdate();
     }
-    //public void SetColor()
-    //{
 
-    //}
+    void ShootShake()
+    {
+        //shakeSeq = playerMat.DOFloat(6.67f, "_ShakeUvSpeed", 0.1f);
+    }
+
     public Color GetColor()
     {
         return weaponInHand.GetWeaponColor();

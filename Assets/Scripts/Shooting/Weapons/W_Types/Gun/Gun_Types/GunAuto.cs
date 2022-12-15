@@ -20,11 +20,11 @@ public class GunAuto : Gun
         //data.amplitudeGain = 1.1f;
     }
 
-    protected override void CheckPowerUpShooting()
+    protected override bool CheckPowerUpShooting()
     {
         base.CheckPowerUpShooting();
 
-        temporalMechanism.Shoot(data.bulletTypePrefab, secondHandClone.GetComponent<LeftHand>().firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue);
+        return temporalMechanism.Shoot(data.bulletTypePrefab, secondHandClone.GetComponent<LeftHand>().firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue);
         
     }
 }

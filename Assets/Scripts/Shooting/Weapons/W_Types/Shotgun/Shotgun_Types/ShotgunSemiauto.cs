@@ -16,9 +16,10 @@ public class ShotgunSemiauto : Shotgun
         //data.amplitudeGain = 1.4f;
     }
 
-    protected override void CheckPowerUpShooting()
+    protected override bool CheckPowerUpShooting()
     {
         base.CheckPowerUpShooting();
+        return false;
     }
 }
  

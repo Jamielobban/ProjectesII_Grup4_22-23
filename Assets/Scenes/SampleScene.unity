@@ -11142,6 +11142,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6852020774505889633, guid: 37e2de9deb119b24b86730ee19d93aad, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 62a07459047e7cc438e0e54b42b56714, type: 2}
     - target: {fileID: 6852020774505889634, guid: 37e2de9deb119b24b86730ee19d93aad, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -11206,7 +11210,8 @@ PrefabInstance:
       propertyPath: dashUI3
       value: 
       objectReference: {fileID: 615417642}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 37e2de9deb119b24b86730ee19d93aad, type: 3}
 --- !u!1001 &1829800896
 PrefabInstance:
