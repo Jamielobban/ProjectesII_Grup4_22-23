@@ -12,7 +12,7 @@ public class FlameThrowerBullet : Bullet
     protected override void Start()
     {
         timeShooted = Time.time;
-        playerpos = FindObjectOfType<PlayerMovement>();
+        //playerpos = FindObjectOfType<PlayerMovement>();
         myblit = FindObjectOfType<BlitController>();
         bulletData.bulletDamage *= bulletData._damageMultiplier;
         bulletData.bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
