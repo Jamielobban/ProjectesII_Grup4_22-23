@@ -112,14 +112,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_rightHand  == null)
-        {
-            Debug.Log("nOTHING FOUND");
-        }
-        else
-        {
-            Debug.Log(_rightHand.weaponInHand.GetKnockbackMinimum());
-        }
+
         weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
 
 

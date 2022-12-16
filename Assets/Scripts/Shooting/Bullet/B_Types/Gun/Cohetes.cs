@@ -8,6 +8,8 @@ public class Cohetes : Bullet
     public GameObject teledirigido;
     public GameObject explosionTel;
 
+    private RecoilScript recoilSript;
+    private PlayerMovement playerpos;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,15 +18,20 @@ public class Cohetes : Bullet
         //bulletSpeedMetresPerSec = 25;
         //bulletRadius = 0.23f;
         bulletData.bulletDamage *= bulletData._damageMultiplier;
-
+        recoilSript = FindObjectOfType<RecoilScript>();
+        playerpos = FindObjectOfType<PlayerMovement>();
 
         //this.transform.Rotate(0,0, this.transform.rotation.z + Random.RandomRange(-5, 5));
 
         //this.GetComponent<Rigidbody2D>().AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
         GameObject explosion = Instantiate(muzzle, this.transform.position, this.transform.rotation);
         Destroy(explosion, 0.2f);
-        Debug.Log("wjats tjos");
-        StartCoroutine(teledirigir(0.4f));
+        playerpos.knockback = true;
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * playerpos.knockbackForce) / 100, (-rb.velocity.y * playerpos.knockbackForce) / 100);
+
+        recoilSript.AddRecoil();
+
+        StartCoroutine(teledirigir(0.15f));
     }
 
     private IEnumerator teledirigir(float time)

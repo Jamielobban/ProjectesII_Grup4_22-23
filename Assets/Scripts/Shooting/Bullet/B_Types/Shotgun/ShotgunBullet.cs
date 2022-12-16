@@ -45,12 +45,12 @@ public class ShotgunBullet : Bullet
             for (int i = 0, grados = -15; i < pelletsOnBullet.Length; i++, grados += 3)
             {
                 pelletsOnBullet[i] = GameObject.Instantiate(pelletPrefab, transform.position, transform.rotation);
-                pelletsOnBullet[i].transform.Rotate(0, 0, pelletsOnBullet[i].transform.rotation.z + Random.Range(-20,20));
+                pelletsOnBullet[i].transform.Rotate(0, 0, pelletsOnBullet[i].transform.rotation.z + Random.Range(-4,4));
 
                 //Transform originalFirePoint = this.transform;
                 //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
 
-                pelletsOnBullet[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBullet[i].transform.up * -Random.Range(25, 35), ForceMode2D.Impulse);
+                pelletsOnBullet[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBullet[i].transform.up * -Random.Range(25, 35)*3, ForceMode2D.Impulse);
                 //pelletsOnBullet[i].GetComponent<Bullet>().FireProjectile(originalFirePoint);
 
                 if (powerUpOn)

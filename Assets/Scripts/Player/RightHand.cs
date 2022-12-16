@@ -79,7 +79,7 @@ public class RightHand : MonoBehaviour
             playerMat.SetFloat("_ShakeUvSpeed", 0);
         }
 
-        Debug.Log(playerMat);
+        //Debug.Log(playerMat);
         switch (powerUpState)
         {
             case PowerUpState.RELOADING:

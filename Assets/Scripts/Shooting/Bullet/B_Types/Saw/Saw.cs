@@ -10,10 +10,13 @@ public class Saw : Bullet
     //Transform originalFirePoint;
     public bool isAlive;
     private RecoilScript _recoilScript;
+    Sequence _sequence;
     // Start is called before the first frame update
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody2D>();
+        _sequence = DOTween.Sequence();
+        _sequence.Join(rb.DORotate(180, 0.2f)).SetLoops(-1);
     }
     protected override void Start()
     {

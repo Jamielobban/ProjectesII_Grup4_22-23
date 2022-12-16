@@ -25,21 +25,17 @@ public class BalasExplosivas : Bullet
         playerpos.knockback = true;
         playerpos.rb.velocity = new Vector2((-rb.velocity.x * playerpos.knockbackForce) / 100, (-rb.velocity.y * playerpos.knockbackForce) / 100);
         //transform.Rotate(0, 0, transform.rotation.z + Random.Range(-10, 10));
-        Debug.Log("MAKING A BULLET");
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-        StartCoroutine(explosions(0.1f));
+        StartCoroutine(explosions(Random.Range(0.3f, 0.5f)));
     }
 
     private IEnumerator explosions(float time)
     {
         yield return new WaitForSeconds(time);
-
-
-        StartCoroutine(explosions(0.3f));
-
         GameObject explosion = Instantiate(explos, transform.position, transform.rotation);
         CinemachineShake.Instance.ShakeCamera(3f, .2f);
+        Destroy(gameObject);
 
         //explosion.GetComponent<Bullet>().ApplyMultiplierToDamage(bulletData._damageMultiplier);
     }
