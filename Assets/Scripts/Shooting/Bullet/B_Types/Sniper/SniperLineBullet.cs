@@ -94,9 +94,10 @@ public class SniperLineBullet : Bullet
         if (charge)
         {
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, -transform.up, 500, mapLimit);
+            Ray r = new Ray(player.transform.position, -transform.forward);
 
-        bullet.SetPosition(0, transform.position);
-        bullet.SetPosition(1, hitInfo.point);
+            bullet.SetPosition(0, transform.position);
+        bullet.SetPosition(1, transform.position -transform.up * 30);
 
         }
         else
