@@ -27,7 +27,7 @@ public class BalasExplosivas : Bullet
         //transform.Rotate(0, 0, transform.rotation.z + Random.Range(-10, 10));
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-        StartCoroutine(explosions(Random.Range(0.2f, 0.35f)));
+        StartCoroutine(explosions(Random.Range(0.15f, 0.25f)));
     }
 
     private IEnumerator explosions(float time)
