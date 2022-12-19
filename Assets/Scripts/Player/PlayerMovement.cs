@@ -21,7 +21,8 @@ public class PlayerMovement : MonoBehaviour
     public float currentHealth;
     public bool isDead;
 
-
+    public float maxStamina = 100;
+    public float currentStamina;
 
     public GameObject floorBlood;
 
@@ -95,8 +96,9 @@ public class PlayerMovement : MonoBehaviour
         PlayerMask = LayerMask.NameToLayer("Player");
         //dashUI1.SetMaxDashTimer(blinkRechargeTime);
         //dashUI2.SetMaxDashTimer(blinkRechargeTime);
-       //dashUI3.SetMaxDashTimer(blinkRechargeTime);
+        //dashUI3.SetMaxDashTimer(blinkRechargeTime);
         //healthBar.SetMaxHealth(maxHealth);
+        stamina.SetMaxStamina(100);
         playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
     }
@@ -107,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
       
         isDead = false;
         state = State.Normal;
+        currentStamina = maxStamina;
         //currentHealth = maxHealth;
     }
     // Update is called once per frame
@@ -116,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
         weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
 
 
-        if ((Time.time - lastDash) >= timeBetweenDashes)
+        if (((Time.time - lastDash) >= timeBetweenDashes) && currentStamina >= 20)
         {
             canDash = true;
         }
@@ -124,7 +127,18 @@ public class PlayerMovement : MonoBehaviour
         {
             canDash = false;
         }
+        
+        if(currentStamina >= 100)
+        {
+            currentStamina = 100;
+        }
+        else
+        {
+            currentStamina += Time.deltaTime;
+            stamina.SetStamina(currentStamina);
+        }
 
+        
         //dashController();
         //if (remainingBlinks == 2)
         //{
@@ -211,6 +225,8 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (remainingBlinks > 0)
                     {
+                        currentStamina -= 20;
+                        stamina.SetStamina(currentStamina);
                         AudioManager.Instance.PlaySound(playerDash, this.gameObject.transform);
                         rollDir = moveDir;
                         rollSpeed = 90f;
@@ -229,7 +245,7 @@ public class PlayerMovement : MonoBehaviour
 
             case State.Rolling:
                 
-                if (remainingBlinks <= 0) { state = State.Normal; }
+                //if (remainingBlinks <= 0) { state = State.Normal; }
 
                 //remainingBlinks--;
                 OnRollingEffects();
@@ -237,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (rollSpeed < rollSpeedMinimum)
                 {
-                    remainingBlinks--;
+                    //remainingBlinks--;
                     trail.emitting = false;
                     body.DOColor(OriginalColor, 0.5f);
                     for(int i = 0; i < weaponSprites.Length; i++)
