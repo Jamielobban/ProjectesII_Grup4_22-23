@@ -20,9 +20,10 @@ public class PlayerMovement : MonoBehaviour
     public int maxHealth = 100;
     public float currentHealth;
     public bool isDead;
-
-    public float maxStamina = 100;
-    public float currentStamina;
+    private HealthBar healthBar;
+    public dashCooldown dashUI1;
+    public dashCooldown dashUI2;
+    public dashCooldown dashUI3;
 
     public GameObject floorBlood;
 
@@ -32,12 +33,13 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f;
 
     public Rigidbody2D rb;
- 
+    //public SpriteRenderer sr;
     public Camera cam;
     public RightHand weaponHand;
 
     Vector2 movement;
-
+    //Vector2 mousePos;
+    //Vector2 lookDir;
     Vector3 moveDir;
     public Vector3 rollDir;
 
@@ -48,9 +50,11 @@ public class PlayerMovement : MonoBehaviour
     public Color OriginalColor;
     public Color hurtColor;
     public Color invulnerableColor;
+    //public Color midwayRoll;
+
     public SpriteRenderer body;
     public SpriteRenderer[]weaponSprites;
-
+    //public LayerMask layerMask;
 
     public GameObject rotatePoint;
 
@@ -76,10 +80,6 @@ public class PlayerMovement : MonoBehaviour
     AudioClip playerDash;
     AudioClip cantPress;
 
-    [SerializeField]
-    private Staminabar stamina;
-    [SerializeField]
-    private HealthBar health;
 
     public float currentBlinkRechargeTime = 0f;
     public float currentBlinkRechargeTime2 = 0f;
@@ -88,17 +88,15 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         // GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
-        //healthBar = Canvas.FindObjectOfType<HealthBar>();
-
+        healthBar = Canvas.FindObjectOfType<HealthBar>();
         trail = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
         LayerIgnoreRaycast = LayerMask.NameToLayer("IgnoreEverything");
         PlayerMask = LayerMask.NameToLayer("Player");
-        //dashUI1.SetMaxDashTimer(blinkRechargeTime);
-        //dashUI2.SetMaxDashTimer(blinkRechargeTime);
-        //dashUI3.SetMaxDashTimer(blinkRechargeTime);
-        //healthBar.SetMaxHealth(maxHealth);
-        stamina.SetMaxStamina(100);
+        dashUI1.SetMaxDashTimer(blinkRechargeTime);
+        dashUI2.SetMaxDashTimer(blinkRechargeTime);
+        dashUI3.SetMaxDashTimer(blinkRechargeTime);
+        healthBar.SetMaxHealth(maxHealth);
         playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
     }
@@ -109,8 +107,7 @@ public class PlayerMovement : MonoBehaviour
       
         isDead = false;
         state = State.Normal;
-        currentStamina = maxStamina;
-        //currentHealth = maxHealth;
+        currentHealth = maxHealth;
     }
     // Update is called once per frame
     void Update()
@@ -119,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
         weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
 
 
-        if (((Time.time - lastDash) >= timeBetweenDashes) && currentStamina >= 20)
+        if ((Time.time - lastDash) >= timeBetweenDashes)
         {
             canDash = true;
         }
@@ -127,67 +124,56 @@ public class PlayerMovement : MonoBehaviour
         {
             canDash = false;
         }
-        
-        if(currentStamina >= 100)
-        {
-            currentStamina = 100;
-        }
-        else
-        {
-            currentStamina += Time.deltaTime;
-            stamina.SetStamina(currentStamina);
-        }
 
-        
         //dashController();
-        //if (remainingBlinks == 2)
-        //{
-        //    dashUI1.SetDashTimer(0);
-        //    //currentBlinkRechargeTime += Time.deltaTime;
-        //    //dashUI1.SetDashTimer(currentBlinkRechargeTime);
-        //    if ((Time.time - lastDash) >= timeBetweenDashes)
-        //    {
-        //        dashUI1.SetDashTimer(currentBlinkRechargeTime);
-        //        currentBlinkRechargeTime += Time.deltaTime;
-        //    }
-        //    if (currentBlinkRechargeTime >= blinkRechargeTime)
-        //    {
-        //        remainingBlinks++;
-        //        currentBlinkRechargeTime = 0f;
-        //    }
-        //}
-        //if (remainingBlinks == 1)
-        //{
-        //    dashUI2.SetDashTimer(0);
-        //    //currentBlinkRechargeTime += Time.deltaTime;
-        //    //dashUI1.SetDashTimer(currentBlinkRechargeTime);
-        //    if ((Time.time - lastDash) >= timeBetweenDashes)
-        //    {
-        //        currentBlinkRechargeTime2 += Time.deltaTime;
-        //        dashUI2.SetDashTimer(currentBlinkRechargeTime2);
-        //    }
-        //    if (currentBlinkRechargeTime2 >= blinkRechargeTime)
-        //    {
-        //        remainingBlinks++;
-        //        currentBlinkRechargeTime2 = 0f;
-        //    }
-        //}
-        //if (remainingBlinks == 0)
-        //{
-        //    dashUI3.SetDashTimer(0);
-        //    //currentBlinkRechargeTime += Time.deltaTime;
-        //    //dashUI1.SetDashTimer(currentBlinkRechargeTime);
-        //    if ((Time.time - lastDash) >= timeBetweenDashes)
-        //    {
-        //        currentBlinkRechargeTime3 += Time.deltaTime;
-        //        dashUI3.SetDashTimer(currentBlinkRechargeTime3);
-        //    }
-        //    if (currentBlinkRechargeTime3 >= blinkRechargeTime)
-        //    {
-        //        remainingBlinks++;
-        //        currentBlinkRechargeTime3 = 0f;
-        //    }
-        //}
+        if (remainingBlinks == 2)
+        {
+            dashUI1.SetDashTimer(0);
+            //currentBlinkRechargeTime += Time.deltaTime;
+            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+            if ((Time.time - lastDash) >= timeBetweenDashes)
+            {
+                dashUI1.SetDashTimer(currentBlinkRechargeTime);
+                currentBlinkRechargeTime += Time.deltaTime;
+            }
+            if (currentBlinkRechargeTime >= blinkRechargeTime)
+            {
+                remainingBlinks++;
+                currentBlinkRechargeTime = 0f;
+            }
+        }
+        if (remainingBlinks == 1)
+        {
+            dashUI2.SetDashTimer(0);
+            //currentBlinkRechargeTime += Time.deltaTime;
+            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+            if ((Time.time - lastDash) >= timeBetweenDashes)
+            {
+                currentBlinkRechargeTime2 += Time.deltaTime;
+                dashUI2.SetDashTimer(currentBlinkRechargeTime2);
+            }
+            if (currentBlinkRechargeTime2 >= blinkRechargeTime)
+            {
+                remainingBlinks++;
+                currentBlinkRechargeTime2 = 0f;
+            }
+        }
+        if (remainingBlinks == 0)
+        {
+            dashUI3.SetDashTimer(0);
+            //currentBlinkRechargeTime += Time.deltaTime;
+            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+            if ((Time.time - lastDash) >= timeBetweenDashes)
+            {
+                currentBlinkRechargeTime3 += Time.deltaTime;
+                dashUI3.SetDashTimer(currentBlinkRechargeTime3);
+            }
+            if (currentBlinkRechargeTime3 >= blinkRechargeTime)
+            {
+                remainingBlinks++;
+                currentBlinkRechargeTime3 = 0f;
+            }
+        }
     
         switch (state)
         {
@@ -199,8 +185,8 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (Input.GetButtonDown("Heal"))
                     {
-                        //currentHealth = 99999;
-                        //healthBar.SetHealth(currentHealth);
+                        currentHealth = 99999;
+                        healthBar.SetHealth(currentHealth);
                     }
                     movement.x = Input.GetAxisRaw("Horizontal");
                     movement.y = Input.GetAxisRaw("Vertical");
@@ -225,8 +211,6 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (remainingBlinks > 0)
                     {
-                        currentStamina -= 20;
-                        stamina.SetStamina(currentStamina);
                         AudioManager.Instance.PlaySound(playerDash, this.gameObject.transform);
                         rollDir = moveDir;
                         rollSpeed = 90f;
@@ -245,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
 
             case State.Rolling:
                 
-                //if (remainingBlinks <= 0) { state = State.Normal; }
+                if (remainingBlinks <= 0) { state = State.Normal; }
 
                 //remainingBlinks--;
                 OnRollingEffects();
@@ -253,7 +237,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (rollSpeed < rollSpeedMinimum)
                 {
-                    //remainingBlinks--;
+                    remainingBlinks--;
                     trail.emitting = false;
                     body.DOColor(OriginalColor, 0.5f);
                     for(int i = 0; i < weaponSprites.Length; i++)
@@ -311,10 +295,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isInvulnerable)
         {
-            //currentHealth -= damage;
+            currentHealth -= damage;
             GameObject.Instantiate(floorBlood, this.transform.position, this.transform.rotation);
             AudioManager.Instance.PlaySound(damageSound, this.gameObject.transform);
-            //healthBar.SetHealth(currentHealth);
+            healthBar.SetHealth(currentHealth);
         }
     }
 
@@ -399,7 +383,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         currentBlinkRechargeTime += Time.deltaTime;
-        //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+        dashUI1.SetDashTimer(currentBlinkRechargeTime);
     }
     public IEnumerator waitForKnockback(float time)
     {

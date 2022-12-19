@@ -11,7 +11,9 @@ public class SineTrap : MonoBehaviour
     int nextPosition;
     bool direction;
     public float waitTime;
-    float currentWaitTime;
+    float currentWaitTime;   
+    float alpha = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
