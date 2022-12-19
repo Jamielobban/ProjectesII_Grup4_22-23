@@ -6,39 +6,15 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
 
-    public int health;
-    public int numOfHearts;
+    public Slider slider;
 
-
-    public Image[] hearts;
-    public Sprite FullHeart;
-    public Sprite EmptyHeart;
-
-    private void Update()
+    public void SetMaxHealth(float health)
     {
-        if(health > numOfHearts)
-        {
-            health = numOfHearts;
-        }
-        for (int i = 0; i < hearts.Length; i++)
-        {
-            if(i < health)
-            {
-                hearts[i].sprite = FullHeart;
-            }
-            else
-            {
-                hearts[i].sprite = EmptyHeart;
-            }
-
-            if (i < numOfHearts)
-            {
-                hearts[i].enabled = true;
-            }
-            else
-            {
-                hearts[i].enabled = false;
-            }
-        }
+        slider.maxValue = health;
+        slider.value = health;
+    }
+   public void SetHealth(float health)
+    {
+        slider.value = health;
     }
 }
