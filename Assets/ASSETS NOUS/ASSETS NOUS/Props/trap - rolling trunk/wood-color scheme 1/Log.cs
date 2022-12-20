@@ -5,13 +5,16 @@ using UnityEngine;
 public class Log : MonoBehaviour
 {
     public GameObject log;
+    public Transform end;
+    public List<GameObject> logs = new List<GameObject>();
 
     public Transform spawnPoint;
+    int logsNum;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(animation(3f));
-
+        logsNum = 0;
     }
 
     private IEnumerator animation(float time)
@@ -27,14 +30,24 @@ public class Log : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        
-        GameObject logs = Instantiate(log, spawnPoint.position, spawnPoint.rotation);
-        logs.GetComponent<Rigidbody2D>().AddForce(-transform.up*500);
+
+        logs.Add(Instantiate(log, spawnPoint.position, spawnPoint.rotation) as GameObject);
+        logs[logsNum].GetComponent<Rigidbody2D>().AddForce(-transform.up*500);
+        logsNum++;
 
     }
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        for(int i = 0; i < logsNum; i++)
+        {
+            if(Vector3.Distance(logs[i].transform.position,end.position) < 0.1f)
+            {
+                logs[i].gameObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("End");
+                Destroy(logs[i], 1f);
+                logs.Remove(logs[i]);
+                logsNum--;
+            }
+        }
     }
 }

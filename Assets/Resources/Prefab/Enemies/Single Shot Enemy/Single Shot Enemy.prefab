@@ -79,6 +79,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8405310305926585224, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+      propertyPath: m_Mass
+      value: 1000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405310305926585224, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8405310305926585225, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
       propertyPath: m_Size.x
       value: 2.0832925
@@ -311,9 +319,9 @@ MonoBehaviour:
   player: {fileID: 0}
   vectorToPlayer: {x: 0, y: 0, z: 0}
   sr: {fileID: 1485610732865043095}
-  burnMask: {fileID: 0}
   burnPrefab: {fileID: 3564664467013247471, guid: e4b5b15301115b443bd61b63bdc3487f, type: 3}
   enemyData: {fileID: 11400000, guid: fe36addbcafe4aa47ba724137057c9bb, type: 2}
+  blood: {fileID: 5131986925755455784, guid: 11d09c4b86434884c9d334ba4d7fe419, type: 3}
   chasingStateData: {fileID: 11400000, guid: c924cc8435607f341b6985cb73ac4f1c, type: 2}
   firingStateData: {fileID: 11400000, guid: a5a05e6b9a501eb42bc9b4695c3cc43c, type: 2}
   deadStateData: {fileID: 11400000, guid: 11c4c1d8b4e107848aa5f475adb82f4d, type: 2}
