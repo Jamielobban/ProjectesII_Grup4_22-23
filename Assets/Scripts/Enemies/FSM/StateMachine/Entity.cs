@@ -43,6 +43,8 @@ public abstract class Entity : MonoBehaviour
 	static Tween shaker;
 
 	public GameObject blood;
+	public GameObject deadBlood;
+
 	private void Awake()
     {
 		firePoint = GetComponentsInChildren<Transform>().Where(t => t.tag == "FirePoint").ToArray()[0];
@@ -203,13 +205,15 @@ public abstract class Entity : MonoBehaviour
 		if (enemyHealth - damageHit >= 0)
 		{
 			enemyHealth -= damageHit;
+		Instantiate(blood, this.transform.position, this.transform.rotation);
 
 		}
 		else
 		{
 			enemyHealth = 0;
+			Instantiate(deadBlood, this.transform.position, this.transform.rotation);
+
 		}
-		Instantiate(blood, this.transform.position, this.transform.rotation);
 
 		ImpactBullet(bulletPosition, type);
         		
@@ -359,13 +363,15 @@ public abstract class Entity : MonoBehaviour
 		if (enemyHealth - damageHit >= 0)
 		{
 			enemyHealth -= damageHit;
+		Instantiate(blood, this.transform.position, this.transform.rotation);
 
 		}
 		else
 		{
 			enemyHealth = 0;
+			Instantiate(deadBlood, this.transform.position, this.transform.rotation);
+
 		}
-		Instantiate(blood, this.transform.position, this.transform.rotation);
 		}
 
 	public Transform GetFirePointTransform()

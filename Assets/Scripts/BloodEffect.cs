@@ -7,7 +7,7 @@ public class BloodEffect : MonoBehaviour
     public GameObject blood;
 
     float currentWaitTime;
-    GameObject bloods1, bloods2, bloods3;
+    GameObject bloods1;
 
     bool disapear = false;
     float alpha = 1.0f;
@@ -21,7 +21,7 @@ public class BloodEffect : MonoBehaviour
 
 
         currentWaitTime = Time.realtimeSinceStartup;
-        StartCoroutine(disappear(4));
+        StartCoroutine(disappear(3.5f));
 
 
 
@@ -32,7 +32,8 @@ public class BloodEffect : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         disapear = true;
-       
+        Destroy(bloods1,2);
+
     }
     // Update is called once per frame
     void Update()
@@ -48,12 +49,8 @@ public class BloodEffect : MonoBehaviour
         
 
 
-            if (alpha < 0)
-            {
-                Destroy(bloods1);
 
-                Destroy(transform.parent.gameObject);
-            }
+            
 
         }
     }
