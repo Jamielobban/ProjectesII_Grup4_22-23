@@ -32,7 +32,15 @@ public class BloodEffect : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         disapear = true;
-        Destroy(bloods1,2);
+        StartCoroutine(end(2f));
+        Destroy(bloods1, 2.1f);
+    }
+
+    private IEnumerator end(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        disapear = false;
 
     }
     // Update is called once per frame
@@ -47,7 +55,6 @@ public class BloodEffect : MonoBehaviour
 
             bloods1.GetComponent<SpriteRenderer>().color = new Color(bloods1.GetComponent<SpriteRenderer>().color.r, bloods1.GetComponent<SpriteRenderer>().color.g, bloods1.GetComponent<SpriteRenderer>().color.b, bloods1.GetComponent<SpriteRenderer>().color.a*alpha);
         
-
 
 
             
