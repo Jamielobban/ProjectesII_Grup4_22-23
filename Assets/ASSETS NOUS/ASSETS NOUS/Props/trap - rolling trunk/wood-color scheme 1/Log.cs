@@ -33,6 +33,8 @@ public class Log : MonoBehaviour
 
         logs.Add(Instantiate(log, spawnPoint.position, spawnPoint.rotation) as GameObject);
         logs[logsNum].GetComponent<Rigidbody2D>().AddForce(-transform.up*500);
+        logs[logsNum].transform.SetParent(this.gameObject.transform.parent);
+
         logsNum++;
 
     }
