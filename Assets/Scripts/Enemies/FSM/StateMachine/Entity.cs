@@ -13,7 +13,9 @@ public abstract class Entity : MonoBehaviour
 	[HideInInspector]
 	public Transform player;
 	[HideInInspector]
-	public Vector3 vectorToPlayer;
+	public Vector3 vectorToPlayer;	
+	public Vector3 vectorToPlayerFromFirepoint;
+	
 
 	[SerializeField]
 	protected SpriteRenderer sr;	
@@ -21,7 +23,7 @@ public abstract class Entity : MonoBehaviour
 	protected GameObject burnPrefab;	
 	protected GameObject burnFireShader;
 	protected float enemyHealth;
-	protected Transform firePoint;
+	public Transform firePoint;
 	Texture2D text;
 	public Rigidbody2D rb { get; private set; }
 	public Animator anim { get; private set; }
@@ -77,6 +79,7 @@ public abstract class Entity : MonoBehaviour
 		isDead = enemyHealth <= 0;
 
 		vectorToPlayer = player.position - transform.position;
+		vectorToPlayerFromFirepoint = player.position - firePoint.position;
 				
 		CheckHealthStateEnding();		
 

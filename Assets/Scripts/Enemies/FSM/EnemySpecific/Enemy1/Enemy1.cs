@@ -32,7 +32,8 @@ public class Enemy1 : Entity
 
         chasingState = new E1_Chasingtate(this, stateMachine, "chase", chasingStateData, this);
         firingState = new E1_FiringState(this, stateMachine, "fire", firingStateData, this);
-        deadState = new E1_DeadState(this, stateMachine, "dead", deadStateData, this);
+        deadState = new E1_DeadState(this, stateMachine, "dead", deadStateData, this);        
+
 
         stateMachine.Initialize(chasingState);
     }
