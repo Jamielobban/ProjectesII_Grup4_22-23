@@ -22,7 +22,8 @@ public class Pellet : Bullet
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
         playerpos.knockback = true;
-        playerpos.rb.velocity = new Vector2((-rb.velocity.x * playerpos.knockbackForce) / 100, (-rb.velocity.y * playerpos.knockbackForce) / 100);
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * playerpos.knockbackForce) / 200, (-rb.velocity.y * playerpos.knockbackForce) / 200);
+        CinemachineShake.Instance.ShakeCamera(10f, 0.5f);
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
     }

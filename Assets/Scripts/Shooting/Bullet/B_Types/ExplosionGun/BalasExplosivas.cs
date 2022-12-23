@@ -23,7 +23,7 @@ public class BalasExplosivas : Bullet
 
 
         playerpos.knockback = true;
-        playerpos.rb.velocity = new Vector2((-rb.velocity.x * playerpos.knockbackForce) / 100, (-rb.velocity.y * playerpos.knockbackForce) / 100);
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * playerpos.knockbackForce) / 250, (-rb.velocity.y * playerpos.knockbackForce) / 250);
         //transform.Rotate(0, 0, transform.rotation.z + Random.Range(-10, 10));
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
