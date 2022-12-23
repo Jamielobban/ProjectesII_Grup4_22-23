@@ -42,7 +42,7 @@ public class WeaponGenerator : MonoBehaviour
     public Weapon SetMyInitialWeaponAndReturnMyNext(ref Weapon weaponInHand, Transform firePoint)
     {        
 
-        int random = Random.Range(0, 7);
+        int random = Random.Range(0, 3);
         
         weaponInHandInt = random;
         
@@ -52,31 +52,31 @@ public class WeaponGenerator : MonoBehaviour
         }
         else if(random == 1)
         {
-            weaponInHand = new Flamethrower(firePoint, weaponsValues[1]);
+            weaponInHand = new SniperBolt(firePoint, weaponsValues[1]);
         }
         else if (random == 2)
         {
-            weaponInHand = new SniperBolt(firePoint, weaponsValues[2]);
+            weaponInHand = new ShotgunAuto(firePoint, weaponsValues[2]);
         }
-        else if(random == 3)
-        {
-            weaponInHand = new ShotgunAuto(firePoint, weaponsValues[3]);
-        }
-        else if (random == 4)
-        {
-            weaponInHand = new GunAuto(firePoint, weaponsValues[4]);
-        }        else if (random == 5)
-        {
-            weaponInHand = new Sawgun(firePoint, weaponsValues[5]);
-        }
-        else if (random == 6)
-        {
-            weaponInHand = new ElectricGun(firePoint, weaponsValues[6]);
-        }
+        //else if(random == 3)
+        //{
+        //    weaponInHand = new ShotgunAuto(firePoint, weaponsValues[3]);
+        //}
+        //else if (random == 4)
+        //{
+        //    weaponInHand = new GunAuto(firePoint, weaponsValues[4]);
+        //}        //else if (random == 5)
+        //{
+        //    weaponInHand = new Sawgun(firePoint, weaponsValues[5]);
+        //}
+        //else if (random == 6)
+        //{
+        //    weaponInHand = new ElectricGun(firePoint, weaponsValues[6]);
+        //}
 
 
 
-        do { random = Random.Range(0, 5);} while (weaponInHandInt == random);     
+        do { random = Random.Range(0, 3);} while (weaponInHandInt == random);     
         
         nextWeaponInt = random;      
 
@@ -86,27 +86,27 @@ public class WeaponGenerator : MonoBehaviour
         }
         else if (random == 1)
         {
-            return new Flamethrower(firePoint, weaponsValues[1]);
+            return new SniperBolt(firePoint, weaponsValues[1]);
         }
         else if (random == 2)
         {
-            return new SniperBolt(firePoint, weaponsValues[2]);
+            return new ShotgunAuto(firePoint, weaponsValues[2]);
         }
-        else if(random == 3){
+        //else if(random == 3){
 
-            return new ShotgunAuto(firePoint, weaponsValues[3]);
-        }
-        else if (random == 4)
-        {
-            return new GunAuto(firePoint, weaponsValues[4]);
-        }        else if (random == 5)
-        {
-            return new Sawgun(firePoint, weaponsValues[5]);
-        }
-        else if (random == 6)
-        {
-            return new ElectricGun(firePoint, weaponsValues[6]);
-        }
+        //    return new ShotgunAuto(firePoint, weaponsValues[3]);
+        //}
+        //else if (random == 4)
+        //{
+        //    return new GunAuto(firePoint, weaponsValues[4]);
+        //}        //else if (random == 5)
+        //{
+        //    return new Sawgun(firePoint, weaponsValues[5]);
+        //}
+        //else if (random == 6)
+        //{
+        //    return new ElectricGun(firePoint, weaponsValues[6]);
+        //}
 
         throw new System.NotImplementedException();        
 
@@ -115,8 +115,8 @@ public class WeaponGenerator : MonoBehaviour
     public Weapon ReturnMyNextWeapon(Transform firePoint)
     {
         weaponInHandInt = nextWeaponInt;
-        int random = Random.Range(0, 7);
-        do { random = Random.Range(0, 7); } while (random == weaponInHandInt);
+        int random = Random.Range(0, 3);
+        do { random = Random.Range(0, 3); } while (random == weaponInHandInt);
         nextWeaponInt = random;
 
 
@@ -126,27 +126,27 @@ public class WeaponGenerator : MonoBehaviour
         }
         else if (random == 1)
         {
-            return new Flamethrower(firePoint, weaponsValues[1]);
+            return new SniperBolt(firePoint, weaponsValues[1]);
         }
         else if (random == 2)
         {
-            return new SniperBolt(firePoint, weaponsValues[2]);
+            return new ShotgunAuto(firePoint, weaponsValues[2]);
         }
-        else if (random == 3)
-        {
-            return new ShotgunAuto(firePoint, weaponsValues[3]);
-        }
-        else if (random == 4)
-        {
-            return new GunAuto(firePoint, weaponsValues[4]);
-        }        else if (random == 5)
-        {
-            return new Sawgun(firePoint, weaponsValues[5]);
-        }
-        else if (random == 6)
-        {
-            return new ElectricGun(firePoint, weaponsValues[6]);
-        }
+        //else if (random == 3)
+        //{
+        //    return new ShotgunAuto(firePoint, weaponsValues[3]);
+        //}
+        //else if (random == 4)
+        //{
+        //    return new GunAuto(firePoint, weaponsValues[4]);
+        //}        //else if (random == 5)
+        //{
+        //    return new Sawgun(firePoint, weaponsValues[5]);
+        //}
+        //else if (random == 6)
+        //{
+        //    return new ElectricGun(firePoint, weaponsValues[6]);
+        //}
 
         throw new System.NotImplementedException();
     }
