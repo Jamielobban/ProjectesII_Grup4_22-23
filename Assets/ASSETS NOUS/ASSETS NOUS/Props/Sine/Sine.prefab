@@ -115,6 +115,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5525502813164003273}
   - component: {fileID: 460648538456735637}
+  - component: {fileID: 5609515198422516009}
+  - component: {fileID: 279932153758723859}
   m_Layer: 0
   m_Name: Sine
   m_TagString: Untagged
@@ -154,3 +156,31 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.9301052}
   serializedVersion: 2
   m_Radius: 1.2930368
+--- !u!114 &5609515198422516009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2211000931521360265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aae9e771e72475419f14e19a0b35498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &279932153758723859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2211000931521360265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e46124d4a7fa642a18c27551a66b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: []
+  velocity: 0
+  loop: 0
+  waitTime: 0

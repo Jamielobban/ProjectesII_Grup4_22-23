@@ -29,8 +29,9 @@ public class SniperBullet : Bullet
         angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg - 90;
         bulletData.bulletDamage *= bulletData._damageMultiplier;
 
-        playerpos.knockback = true; 
-        playerpos.rb.velocity =  new Vector2((-rb.velocity.x * playerpos.knockbackForce) /100, (-rb.velocity.y*playerpos.knockbackForce) /100);
+        playerpos.knockback = true;
+        playerpos.rb.AddForce(-playerpos.firePoint.up * playerpos.knockbackForce,ForceMode2D.Impulse);
+        //playerpos.rb.velocity =  new Vector2((-rb.velocity.x * playerpos.knockbackForce) /100, (-rb.velocity.y*playerpos.knockbackForce) /100);
 
         Instantiate(effect, playerpos.transform.position, Quaternion.identity);
         CinemachineShake.Instance.ShakeCamera(40f, 1f);
