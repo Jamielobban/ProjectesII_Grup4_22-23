@@ -11,7 +11,10 @@ public class PlayerMovement : MonoBehaviour
     {
         Normal, Rolling, Hit
     }
-
+    public Animator anim;
+    public Animator fxAnim;
+    public SpriteRenderer playerSprite;
+    public Transform firePoint;
     public RightHand _rightHand;
     public float knockbackForce;
     public float knockbackForceDrop = 5f;
@@ -24,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public dashCooldown dashUI1;
     public dashCooldown dashUI2;
     public dashCooldown dashUI3;
-
+    public bool isDashing;
     public GameObject floorBlood;
 
     public float knockbackForceCheck;
@@ -37,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     public Camera cam;
     public RightHand weaponHand;
 
-    Vector2 movement;
+    public Vector2 movement;
     //Vector2 mousePos;
     //Vector2 lookDir;
     Vector3 moveDir;
@@ -53,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
     //public Color midwayRoll;
 
     public SpriteRenderer body;
-    public SpriteRenderer[]weaponSprites;
+    public SpriteRenderer[] weaponSprites;
     //public LayerMask layerMask;
 
     public GameObject rotatePoint;
@@ -63,7 +66,9 @@ public class PlayerMovement : MonoBehaviour
     private float rollSpeedDropMultiplier = 5f;
     private float rollSpeedMinimum = 50f;
     public bool isInvulnerable;
-    
+
+    private Vector3 dir;
+    public float angle;
 
     public AudioClip damageSound;
 
@@ -80,7 +85,9 @@ public class PlayerMovement : MonoBehaviour
     AudioClip playerDash;
     AudioClip cantPress;
 
-
+    public float dashTimer;
+    public float dashTimer2;
+    public float dashTime;
     public float currentBlinkRechargeTime = 0f;
     public float currentBlinkRechargeTime2 = 0f;
     public float currentBlinkRechargeTime3 = 0f;
@@ -104,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
     public void Start()
     {
         _rightHand = GetComponentInChildren<RightHand>();
-      
+
         isDead = false;
         state = State.Normal;
         currentHealth = maxHealth;
@@ -112,6 +119,27 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        dir = rotatePoint.transform.position - firePoint.transform.position;
+        angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        //Debug.Log(angle);
+
+        if (angle > -90 && angle < 90)
+        {
+            playerSprite.flipX = true;
+        }
+        else
+        {
+            playerSprite.flipX = false;
+        }
+
+        if (angle > 0 && angle < 180)
+        {
+            playerSprite.sortingOrder = 0;
+        }
+        else
+        {
+            playerSprite.sortingOrder = 1;
+        }
 
         weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
 
@@ -126,55 +154,73 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //dashController();
-        if (remainingBlinks == 2)
+        //if (remainingBlinks == 2)
+        //{
+        //    dashUI1.SetDashTimer(0);
+        //    //currentBlinkRechargeTime += Time.deltaTime;
+        //    //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+        //    if ((Time.time - lastDash) >= timeBetweenDashes)
+        //    {
+        //        dashUI1.SetDashTimer(currentBlinkRechargeTime);
+        //        currentBlinkRechargeTime += Time.deltaTime;
+        //    }
+        //    if (currentBlinkRechargeTime >= blinkRechargeTime)
+        //    {
+        //        remainingBlinks++;
+        //        currentBlinkRechargeTime = 0f;
+        //    }
+        //}
+        //if (remainingBlinks == 1)
+        //{
+        //    dashUI2.SetDashTimer(0);
+        //    //currentBlinkRechargeTime += Time.deltaTime;
+        //    //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+        //    if ((Time.time - lastDash) >= timeBetweenDashes)
+        //    {
+        //        currentBlinkRechargeTime2 += Time.deltaTime;
+        //        dashUI2.SetDashTimer(currentBlinkRechargeTime2);
+        //    }
+        //    if (currentBlinkRechargeTime2 >= blinkRechargeTime)
+        //    {
+        //        remainingBlinks++;
+        //        currentBlinkRechargeTime2 = 0f;
+        //    }
+        //}
+        //if (remainingBlinks == 0)
+        //{
+        //    dashUI3.SetDashTimer(0);
+        //    //currentBlinkRechargeTime += Time.deltaTime;
+        //    //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+        //    if ((Time.time - lastDash) >= timeBetweenDashes)
+        //    {
+        //        currentBlinkRechargeTime3 += Time.deltaTime;
+        //        dashUI3.SetDashTimer(currentBlinkRechargeTime3);
+        //    }
+        //    if (currentBlinkRechargeTime3 >= blinkRechargeTime)
+        //    {
+        //        remainingBlinks++;
+        //        currentBlinkRechargeTime3 = 0f;
+        //    }
+        //}
+        if (isDashing && isMoving)
         {
-            dashUI1.SetDashTimer(0);
-            //currentBlinkRechargeTime += Time.deltaTime;
-            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
-            if ((Time.time - lastDash) >= timeBetweenDashes)
-            {
-                dashUI1.SetDashTimer(currentBlinkRechargeTime);
-                currentBlinkRechargeTime += Time.deltaTime;
-            }
-            if (currentBlinkRechargeTime >= blinkRechargeTime)
-            {
-                remainingBlinks++;
-                currentBlinkRechargeTime = 0f;
-            }
+            anim.SetBool("isDashing", true);
+            fxAnim.SetBool("isDashingFX", true);
         }
-        if (remainingBlinks == 1)
+        else
         {
-            dashUI2.SetDashTimer(0);
-            //currentBlinkRechargeTime += Time.deltaTime;
-            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
-            if ((Time.time - lastDash) >= timeBetweenDashes)
-            {
-                currentBlinkRechargeTime2 += Time.deltaTime;
-                dashUI2.SetDashTimer(currentBlinkRechargeTime2);
-            }
-            if (currentBlinkRechargeTime2 >= blinkRechargeTime)
-            {
-                remainingBlinks++;
-                currentBlinkRechargeTime2 = 0f;
-            }
+            anim.SetBool("isDashing", false);
         }
-        if (remainingBlinks == 0)
+
+        if (isMoving)
         {
-            dashUI3.SetDashTimer(0);
-            //currentBlinkRechargeTime += Time.deltaTime;
-            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
-            if ((Time.time - lastDash) >= timeBetweenDashes)
-            {
-                currentBlinkRechargeTime3 += Time.deltaTime;
-                dashUI3.SetDashTimer(currentBlinkRechargeTime3);
-            }
-            if (currentBlinkRechargeTime3 >= blinkRechargeTime)
-            {
-                remainingBlinks++;
-                currentBlinkRechargeTime3 = 0f;
-            }
+            anim.SetBool("isMoving", true);
         }
-    
+        else
+        {
+            anim.SetBool("isMoving", false);
+        }
+
         switch (state)
         {
             case State.Normal:
@@ -185,14 +231,14 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (Input.GetButtonDown("Heal"))
                     {
-                        currentHealth = 99999;
+                       currentHealth = 99999;
                         healthBar.SetHealth(currentHealth);
                     }
                     movement.x = Input.GetAxisRaw("Horizontal");
                     movement.y = Input.GetAxisRaw("Vertical");
                     moveDir = new Vector3(movement.x, movement.y).normalized;
                     //
-                    if(moveDir.magnitude == 1)
+                    if (moveDir.magnitude == 1)
                     {
                         isMoving = true;
                     }
@@ -200,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
                     {
                         isMoving = false;
                     }
+                    // Debug.Log(movement.x + "This is X axis");
                 }
                 else
                 {
@@ -211,6 +258,9 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (remainingBlinks > 0)
                     {
+                        isDashing = true;
+                        dashTimer = Time.time;
+                        //anim.SetBool("isDashing", true);
                         AudioManager.Instance.PlaySound(playerDash, this.gameObject.transform);
                         rollDir = moveDir;
                         rollSpeed = 90f;
@@ -228,7 +278,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
             case State.Rolling:
-                
+
                 if (remainingBlinks <= 0) { state = State.Normal; }
 
                 //remainingBlinks--;
@@ -239,11 +289,14 @@ public class PlayerMovement : MonoBehaviour
                 {
                     remainingBlinks--;
                     trail.emitting = false;
-                    body.DOColor(OriginalColor, 0.5f);
-                    for(int i = 0; i < weaponSprites.Length; i++)
-                    {
-                        weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
-                    }
+                    //body.DOColor(OriginalColor, 0.5f);
+                    //for(int i = 0; i < weaponSprites.Length; i++)
+                    //{
+                    //    weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
+                    //}
+                    isDashing = false;
+                    dashTimer2 = Time.time;
+                    dashTime = dashTimer2 - dashTimer;
                     state = State.Normal;
                     //Debug.Log("Once");
                 }
@@ -265,7 +318,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     OnKnockbackShoot(knockbackForceCheck, _rightHand.weaponInHand.GetKnockbackMinimum());
-                }  
+                }
                 break;
             case State.Rolling:
                 rollSpeed -= rollSpeed * rollSpeedDropMultiplier * Time.deltaTime;
@@ -285,7 +338,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         knockbackForceCheck -= _rightHand.weaponInHand.GetKnockbackForce() * Time.deltaTime;
-        if (knockbackForceCheck < _rightHand.weaponInHand.GetKnockbackMinimum()) 
+        if (knockbackForceCheck < _rightHand.weaponInHand.GetKnockbackMinimum())
         {
             knockback = false;
             knockbackSet = false;
@@ -306,13 +359,13 @@ public class PlayerMovement : MonoBehaviour
     {
         StartCoroutine(waitForLayerChange(0.45f));
         gameObject.layer = LayerIgnoreRaycast;
-        transform.DOScale((new Vector3(0.9f, 0.7f, 1f)), 0.0f);
-        transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
-        body.DOColor(dashColor, 0.0f);
-        for (int i = 0; i < weaponSprites.Length; i++)
-        {
-            weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
-        }
+        //transform.DOScale((new Vector3(0.9f, 0.7f, 1f)), 0.0f);
+        //transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
+        //body.DOColor(dashColor, 0.0f);
+        //for (int i = 0; i < weaponSprites.Length; i++)
+        //{
+        //    weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
+        //}
         trail.emitting = true;
     }
 
@@ -346,7 +399,7 @@ public class PlayerMovement : MonoBehaviour
         for (int i = 0; i < weaponSprites.Length; i++)
         {
             weaponSprites[i].DOColor(invulnerableColor, 0.15f);
-        }        
+        }
         yield return new WaitForSeconds(0.20f);
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
@@ -376,7 +429,7 @@ public class PlayerMovement : MonoBehaviour
             weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
         }
         isInvulnerable = false;
-        
+
     }
 
     private IEnumerator waitForUpdateDash(float time)
@@ -397,5 +450,7 @@ public class PlayerMovement : MonoBehaviour
         gameObject.layer = LayerIgnoreRaycast;
         yield return new WaitForSeconds(waitTime);
         gameObject.layer = PlayerMask;
+        fxAnim.SetBool("isDashingFX", false);
+        //anim.SetBool("isDashing", false);
     }
 }
