@@ -154,54 +154,54 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //dashController();
-        //if (remainingBlinks == 2)
-        //{
-        //    dashUI1.SetDashTimer(0);
-        //    //currentBlinkRechargeTime += Time.deltaTime;
-        //    //dashUI1.SetDashTimer(currentBlinkRechargeTime);
-        //    if ((Time.time - lastDash) >= timeBetweenDashes)
-        //    {
-        //        dashUI1.SetDashTimer(currentBlinkRechargeTime);
-        //        currentBlinkRechargeTime += Time.deltaTime;
-        //    }
-        //    if (currentBlinkRechargeTime >= blinkRechargeTime)
-        //    {
-        //        remainingBlinks++;
-        //        currentBlinkRechargeTime = 0f;
-        //    }
-        //}
-        //if (remainingBlinks == 1)
-        //{
-        //    dashUI2.SetDashTimer(0);
-        //    //currentBlinkRechargeTime += Time.deltaTime;
-        //    //dashUI1.SetDashTimer(currentBlinkRechargeTime);
-        //    if ((Time.time - lastDash) >= timeBetweenDashes)
-        //    {
-        //        currentBlinkRechargeTime2 += Time.deltaTime;
-        //        dashUI2.SetDashTimer(currentBlinkRechargeTime2);
-        //    }
-        //    if (currentBlinkRechargeTime2 >= blinkRechargeTime)
-        //    {
-        //        remainingBlinks++;
-        //        currentBlinkRechargeTime2 = 0f;
-        //    }
-        //}
-        //if (remainingBlinks == 0)
-        //{
-        //    dashUI3.SetDashTimer(0);
-        //    //currentBlinkRechargeTime += Time.deltaTime;
-        //    //dashUI1.SetDashTimer(currentBlinkRechargeTime);
-        //    if ((Time.time - lastDash) >= timeBetweenDashes)
-        //    {
-        //        currentBlinkRechargeTime3 += Time.deltaTime;
-        //        dashUI3.SetDashTimer(currentBlinkRechargeTime3);
-        //    }
-        //    if (currentBlinkRechargeTime3 >= blinkRechargeTime)
-        //    {
-        //        remainingBlinks++;
-        //        currentBlinkRechargeTime3 = 0f;
-        //    }
-        //}
+        if (remainingBlinks == 2)
+        {
+            dashUI1.SetDashTimer(0);
+            //currentBlinkRechargeTime += Time.deltaTime;
+            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+            if ((Time.time - lastDash) >= timeBetweenDashes)
+            {
+                dashUI1.SetDashTimer(currentBlinkRechargeTime);
+                currentBlinkRechargeTime += Time.deltaTime;
+            }
+            if (currentBlinkRechargeTime >= blinkRechargeTime)
+            {
+                remainingBlinks++;
+                currentBlinkRechargeTime = 0f;
+            }
+        }
+        if (remainingBlinks == 1)
+        {
+            dashUI2.SetDashTimer(0);
+            //currentBlinkRechargeTime += Time.deltaTime;
+            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+            if ((Time.time - lastDash) >= timeBetweenDashes)
+            {
+                currentBlinkRechargeTime2 += Time.deltaTime;
+                dashUI2.SetDashTimer(currentBlinkRechargeTime2);
+            }
+            if (currentBlinkRechargeTime2 >= blinkRechargeTime)
+            {
+                remainingBlinks++;
+                currentBlinkRechargeTime2 = 0f;
+            }
+        }
+        if (remainingBlinks == 0)
+        {
+            dashUI3.SetDashTimer(0);
+            //currentBlinkRechargeTime += Time.deltaTime;
+            //dashUI1.SetDashTimer(currentBlinkRechargeTime);
+            if ((Time.time - lastDash) >= timeBetweenDashes)
+            {
+                currentBlinkRechargeTime3 += Time.deltaTime;
+                dashUI3.SetDashTimer(currentBlinkRechargeTime3);
+            }
+            if (currentBlinkRechargeTime3 >= blinkRechargeTime)
+            {
+                remainingBlinks++;
+                currentBlinkRechargeTime3 = 0f;
+            }
+        }
         if (isDashing && isMoving)
         {
             anim.SetBool("isDashing", true);
@@ -312,8 +312,7 @@ public class PlayerMovement : MonoBehaviour
             case State.Normal:
                 if (!knockback)
                 {
-                    rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-                    knockbackForce = 90f;
+                    rb.AddForce(movement * moveSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
                 }
                 else
                 {
