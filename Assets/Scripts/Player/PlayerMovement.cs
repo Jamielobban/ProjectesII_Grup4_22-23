@@ -21,9 +21,9 @@ public class PlayerMovement : MonoBehaviour
     public float knockbackMinimum;
     public bool knockbackSet;
     public int maxHealth = 100;
-    public float currentHealth;
+    //public float currentHealth;
     public bool isDead;
-    private HealthBar healthBar;
+    //private HealthBar healthBar;
     public dashCooldown dashUI1;
     public dashCooldown dashUI2;
     public dashCooldown dashUI3;
@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         // GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
-        healthBar = Canvas.FindObjectOfType<HealthBar>();
+        //healthBar = Canvas.FindObjectOfType<HealthBar>();
         trail = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
         LayerIgnoreRaycast = LayerMask.NameToLayer("IgnoreEverything");
@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
         dashUI1.SetMaxDashTimer(blinkRechargeTime);
         dashUI2.SetMaxDashTimer(blinkRechargeTime);
         dashUI3.SetMaxDashTimer(blinkRechargeTime);
-        healthBar.SetMaxHealth(maxHealth);
+        //healthBar.SetMaxHealth(maxHealth);
         playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
     }
@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
       
         isDead = false;
         state = State.Normal;
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
     }
     // Update is called once per frame
     void Update()
@@ -231,8 +231,8 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (Input.GetButtonDown("Heal"))
                     {
-                        currentHealth = 99999;
-                        healthBar.SetHealth(currentHealth);
+                        //currentHealth = 99999;
+                        //healthBar.SetHealth(currentHealth);
                     }
                     movement.x = Input.GetAxisRaw("Horizontal");
                     movement.y = Input.GetAxisRaw("Vertical");
@@ -348,10 +348,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isInvulnerable)
         {
-            currentHealth -= damage;
+           // currentHealth -= damage;
             GameObject.Instantiate(floorBlood, this.transform.position, this.transform.rotation);
             AudioManager.Instance.PlaySound(damageSound, this.gameObject.transform);
-            healthBar.SetHealth(currentHealth);
+           // healthBar.SetHealth(currentHealth);
         }
     }
 
@@ -380,11 +380,11 @@ public class PlayerMovement : MonoBehaviour
     {
         TakeDamage(damage);
         StartCoroutine(hurtAnimation());
-        if (currentHealth <= 0)
-        {
-            isDead = true;
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        }
+        //if (currentHealth <= 0)
+        //{
+        //    isDead = true;
+        //    rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        //}
     }
 
     private IEnumerator hurtAnimation()
