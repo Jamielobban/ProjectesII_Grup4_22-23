@@ -316,6 +316,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
+                    //rb.AddForce(movement * 500000 * Time.fixedDeltaTime, ForceMode2D.Force);
                     OnKnockbackShoot(knockbackForceCheck, _rightHand.weaponInHand.GetKnockbackMinimum());
                 }
                 break;
@@ -342,6 +343,7 @@ public class PlayerMovement : MonoBehaviour
             knockback = false;
             knockbackSet = false;
         }
+        //rb.AddForce(movement * 500 * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
     void TakeDamage(float damage)
     {
