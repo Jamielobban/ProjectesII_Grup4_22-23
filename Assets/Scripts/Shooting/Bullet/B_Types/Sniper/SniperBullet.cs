@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using DG.Tweening;
 public class SniperBullet : Bullet
 {
     
@@ -14,9 +15,11 @@ public class SniperBullet : Bullet
     private PlayerMovement playerpos;
     private float angle;
     private float knockbackForce = 10;
+    private Canvas myCavnas;
     protected override void Start()
     {
         base.Start();
+        myCavnas= FindObjectOfType<Canvas>();
         _recoilScript = FindObjectOfType<RecoilScript>();
         playerpos = FindObjectOfType<PlayerMovement>();
         //bulletDamage = 150*_damageMultiplier;
@@ -24,17 +27,18 @@ public class SniperBullet : Bullet
         //bulletSpeedMetresPerSec = 100;
         //bulletRadius = 0.23f;
 
+        //myCavnas.DO
 
         _recoilScript.AddRecoil();
         angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg - 90;
         bulletData.bulletDamage *= bulletData._damageMultiplier;
 
         playerpos.knockback = true;
-        playerpos.rb.AddForce(-playerpos.firePoint.up * playerpos.knockbackForce,ForceMode2D.Impulse);
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 2f), (-rb.velocity.y * 2f));
         //playerpos.rb.velocity =  new Vector2((-rb.velocity.x * playerpos.knockbackForce) /100, (-rb.velocity.y*playerpos.knockbackForce) /100);
 
         Instantiate(effect, playerpos.transform.position, Quaternion.identity);
-        CinemachineShake.Instance.ShakeCamera(15f, 1.5f);
+        CinemachineShake.Instance.ShakeCamera(10f, 0.75f);
     }
 
     protected override void Update()

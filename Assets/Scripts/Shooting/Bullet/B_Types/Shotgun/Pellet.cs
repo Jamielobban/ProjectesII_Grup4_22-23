@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class Pellet : Bullet
@@ -8,9 +10,11 @@ public class Pellet : Bullet
     SpriteRenderer sr;
 
     private PlayerMovement playerpos;
+    private RecoilScript _recoil;
 
     protected override void Start()
     {
+        _recoil = FindObjectOfType<RecoilScript>();
         base.Start();
         playerpos = FindObjectOfType<PlayerMovement>();
         //bulletDamage = 34*_damageMultiplier;
@@ -19,11 +23,13 @@ public class Pellet : Bullet
         //bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();
+        _recoil.AddRecoil();
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
         playerpos.knockback = true;
-        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 50000), (-rb.velocity.y * 50000));
-        CinemachineShake.Instance.ShakeCamera(10f, 0.5f);
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 0.75f), (-rb.velocity.y * 0.75f));
+        CinemachineShake.Instance.ShakeCamera(10f, 0.3f);
+        
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
     }
@@ -55,7 +61,7 @@ public class Pellet : Bullet
         if (collision.gameObject.CompareTag("MapLimit"))
         {
             base.ImpactWall();
-            Debug.Log("Hit the wall");
+            //Debug.Log("Hit the wall");
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {

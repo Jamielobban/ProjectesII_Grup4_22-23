@@ -7,10 +7,21 @@ public class BalasExplosivas : Bullet
     
     public GameObject explos;
     private PlayerMovement playerpos;
+    private RecoilScript _recoil;
+    private Turn turningPoint;
+    public GameObject bulletShell;
+    public Turn will;
     protected override void Start()
     {
         base.Start();
+
+
         playerpos = FindObjectOfType<PlayerMovement>();
+        _recoil = FindObjectOfType<RecoilScript>();
+        will = FindObjectOfType<Turn>();
+
+        //bulletShell = Resources.Load<GameObject>("Prefab/BulletParticle");
+        Instantiate(bulletShell,will.transform.position,Quaternion.identity);
         //bulletDamage = 5 * _damageMultiplier;
         //bulletRangeInMetres = 100;
         //bulletSpeedMetresPerSec = 50;
@@ -22,8 +33,10 @@ public class BalasExplosivas : Bullet
         CinemachineShake.Instance.ShakeCamera(5f, .2f);
 
 
+        _recoil.AddRecoil();
+
         playerpos.knockback = true;
-        playerpos.rb.velocity = new Vector2((-rb.velocity.x * playerpos.knockbackForce) / 250, (-rb.velocity.y * playerpos.knockbackForce) / 250);
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 0.5f), (-rb.velocity.y * 0.5f));
         //transform.Rotate(0, 0, transform.rotation.z + Random.Range(-10, 10));
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
@@ -33,7 +46,7 @@ public class BalasExplosivas : Bullet
     private IEnumerator explosions(float time)
     {
         yield return new WaitForSeconds(time);
-        GameObject explosion = Instantiate(explos, transform.position, transform.rotation);
+        Instantiate(explos, transform.position, transform.rotation);
         CinemachineShake.Instance.ShakeCamera(3f, .2f);
         Destroy(gameObject);
 
