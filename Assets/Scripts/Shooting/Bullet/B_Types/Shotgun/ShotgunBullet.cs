@@ -8,11 +8,14 @@ public class ShotgunBullet : Bullet
     GameObject[] pelletsOnBulletPU = new GameObject[12];
     GameObject pelletPrefab;
     GameObject powerupPelletPrefab;
+    private GameObject bulletShell;
+    private GameObject muzzleFlash;
     //public GameObject powerUpPelletCollisions;
     
     //private float _multiplier;
     private Pellet pellet;
-
+    private GameObject firePoint;
+    private GameObject rotationPoint;
     protected override void Start()
     {
         base.Start();
@@ -22,10 +25,14 @@ public class ShotgunBullet : Bullet
         //bulletSpeedMetresPerSec = 20;
         //bulletRadius = 0.23f;
 
-        rb = this.GetComponent<Rigidbody2D>();        
+        rb = this.GetComponent<Rigidbody2D>();
 
+        rotationPoint = GameObject.FindGameObjectWithTag("RotatePoint");
+        firePoint = GameObject.FindGameObjectWithTag("FirePoint");
         pelletPrefab = Resources.Load<GameObject>("Prefab/Pellet");
+        bulletShell = Resources.Load<GameObject>("Prefab/BulletParticle");
         powerupPelletPrefab = Resources.Load<GameObject>("Prefab/BigPelletPowerup");
+        muzzleFlash = Resources.Load<GameObject>("Prefab/MuzzleFlash");
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
         CinemachineShake.Instance.ShakeCamera(10f, .2f);
@@ -42,6 +49,8 @@ public class ShotgunBullet : Bullet
 
         if (!powerUpOn)
         {
+            Instantiate(bulletShell, rotationPoint.transform.position, Quaternion.identity);
+            Instantiate(muzzleFlash, firePoint.transform.position, firePoint.transform.rotation);
             for (int i = 0, grados = -15; i < pelletsOnBullet.Length; i++, grados += 3)
             {
                 pelletsOnBullet[i] = GameObject.Instantiate(pelletPrefab, transform.position, transform.rotation);

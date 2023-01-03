@@ -123,7 +123,7 @@ public abstract class Bullet : MonoBehaviour
             //Debug.Log(originalFirePoint);
             //Debug.Log("in");
             this.GetComponent<Rigidbody2D>().AddForce(originalFirePoint.up * -bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-            
+            Debug.Log(originalFirePoint.up);
         }
 
     }

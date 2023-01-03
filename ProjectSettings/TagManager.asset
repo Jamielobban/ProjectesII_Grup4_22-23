@@ -18,6 +18,7 @@ TagManager:
   - ElectricBulletRange
   - FirePoint
   - PlayerContain
+  - Blood
   layers:
   - Default
   - TransparentFX
@@ -38,7 +39,7 @@ TagManager:
   - ElectricBulletRange
   - Blood
   - BulletSponge
-  - 
+  - PlayerWallCollider
   - 
   - 
   - 
@@ -57,4 +58,7 @@ TagManager:
     locked: 0
   - name: Blood
     uniqueID: 4010685711
+    locked: 0
+  - name: Blood2
+    uniqueID: 3783537189
     locked: 0

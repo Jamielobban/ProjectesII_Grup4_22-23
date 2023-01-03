@@ -92,6 +92,10 @@ public class PlayerMovement : MonoBehaviour
     public float currentBlinkRechargeTime2 = 0f;
     public float currentBlinkRechargeTime3 = 0f;
     [SerializeField] private int remainingBlinks;
+
+    float rollSpeedCheck;
+
+    bool justRolled;
     private void Awake()
     {
         // GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
@@ -115,6 +119,8 @@ public class PlayerMovement : MonoBehaviour
         isDead = false;
         state = State.Normal;
         currentHealth = maxHealth;
+        rollSpeed = 90f;
+        justRolled = false;
     }
     // Update is called once per frame
     void Update()
@@ -263,7 +269,6 @@ public class PlayerMovement : MonoBehaviour
                         //anim.SetBool("isDashing", true);
                         AudioManager.Instance.PlaySound(playerDash, this.gameObject.transform);
                         rollDir = moveDir;
-                        rollSpeed = 90f;
                         lastDash = Time.time;
                         currentBlinkRechargeTime = 0f;
                         state = State.Rolling;
@@ -283,9 +288,12 @@ public class PlayerMovement : MonoBehaviour
 
                 //remainingBlinks--;
                 OnRollingEffects();
-
-
-                if (rollSpeed < rollSpeedMinimum)
+                if (justRolled)
+                {
+                    rollSpeedCheck = rollSpeed;
+                    justRolled = false;
+                }
+                if (rollSpeedCheck < rollSpeedMinimum)
                 {
                     remainingBlinks--;
                     trail.emitting = false;
@@ -295,6 +303,7 @@ public class PlayerMovement : MonoBehaviour
                     //    weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
                     //}
                     isDashing = false;
+                    justRolled = true;
                     dashTimer2 = Time.time;
                     dashTime = dashTimer2 - dashTimer;
                     state = State.Normal;
@@ -321,8 +330,8 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case State.Rolling:
-                rollSpeed -= rollSpeed * rollSpeedDropMultiplier * Time.deltaTime;
-                rb.velocity = rollDir * rollSpeed;
+                rollSpeedCheck -= rollSpeedCheck * rollSpeedDropMultiplier * Time.deltaTime;
+                rb.velocity = rollDir * rollSpeedCheck;
                 break;
             default:
                 break;
@@ -454,4 +463,28 @@ public class PlayerMovement : MonoBehaviour
         fxAnim.SetBool("isDashingFX", false);
         //anim.SetBool("isDashing", false);
     }
+
+    //private void OnCollisionStay2D(Collision2D other)
+    //{
+    //    if (other.gameObject.CompareTag("Blood"))
+    //    {
+    //        Debug.Log("Please");
+    //    }
+    //}
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Blood"))
+    //    {
+    //        moveSpeed = 5000;
+    //        rollSpeed = 75f;
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Blood"))
+    //    {
+    //        Debug.Log("I am no longer inside");
+    //    }
+    //}
 }

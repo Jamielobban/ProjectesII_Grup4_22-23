@@ -11,16 +11,19 @@ public class BalasExplosivas : Bullet
     private Turn turningPoint;
     public GameObject bulletShell;
     public Turn will;
+    private GameObject rotatePoint;
+    public GameObject muzzleFlash;
     protected override void Start()
     {
         base.Start();
 
-
+        rotatePoint = GameObject.FindGameObjectWithTag("FirePoint");
         playerpos = FindObjectOfType<PlayerMovement>();
         _recoil = FindObjectOfType<RecoilScript>();
         will = FindObjectOfType<Turn>();
 
         //bulletShell = Resources.Load<GameObject>("Prefab/BulletParticle");
+        Instantiate(muzzleFlash, rotatePoint.transform.position, rotatePoint.transform.rotation);
         Instantiate(bulletShell,will.transform.position,Quaternion.identity);
         //bulletDamage = 5 * _damageMultiplier;
         //bulletRangeInMetres = 100;
