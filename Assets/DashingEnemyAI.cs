@@ -26,8 +26,8 @@ public class DashingEnemyAI : MonoBehaviour
     {
         if (!isDashing)
         {
-        myCheck = Vector3.MoveTowards(this.transform.position, player.transform.position, 0.055f);
-        this.transform.position = myCheck;
+            myCheck = Vector3.MoveTowards(this.transform.position, player.transform.position, 0.055f);
+            this.transform.position = myCheck;
         }
         if (isDashing)
         {

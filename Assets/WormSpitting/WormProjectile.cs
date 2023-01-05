@@ -32,8 +32,10 @@ public class WormProjectile : MonoBehaviour
         for (int i = 0, grados = -15; i < pelletsOnBullet.Length; i++, grados += 3)
         {
             pelletsOnBullet[i] = GameObject.Instantiate(bigBall, transform.position, transform.rotation);
+            pelletsOnBullet[i].GetComponent<Rigidbody2D>().AddForce(transform.up * 4, ForceMode2D.Impulse);
             pelletsOnBullet[i].transform.Rotate(0, 0, angle + Random.Range(-15, 15));
-            pelletsOnBullet[i].GetComponent<Rigidbody2D>().AddForce(pelletsOnBullet[i].transform.up * -Random.Range(4, 5) * 3, ForceMode2D.Impulse);
+
+
         }
         Destroy(this.gameObject);
     }

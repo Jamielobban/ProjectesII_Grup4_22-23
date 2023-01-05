@@ -9,5 +9,6 @@ public class D_FiringState : ScriptableObject
     public int numberOfBursts;
     public float timeBetweenShoots;
     public GameObject bulletType;
-    public AudioClip shootShound;    
+    public AudioClip shootShound;
+    public float stateDuration;
 }

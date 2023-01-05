@@ -20,16 +20,8 @@ public class SpittingWorm : MonoBehaviour
     {
         player = FindObjectOfType<PlayerMovement>();
         hasShot= false;
-        //spawnlocations = new List<Transform> ;
-        //Debug.Log(spawnlocations.Length + "Why is it doing it twice");
-        //int randomSpawn = Random.Range(0, spawnlocations.Length);
-        //Transform thisSpawn = spawnlocations[randomSpawn];
-        //Debug.Log(spawnlocations[randomSpawn]);
-
-        //Instantiate(wormEnemy,this.transform.position,Quaternion.identity);
-        //wormSpawn = Instantiate(wormEnemy, spawnlocations[(Random.Range(0,spawnlocations.Length))].transform.position,Quaternion.identity);
-        StartCoroutine(waitForAppear());
         
+        StartCoroutine(waitForAppear());        
     }
 
     // Update is called once per frame
@@ -40,20 +32,17 @@ public class SpittingWorm : MonoBehaviour
     private IEnumerator waitForShot()
     {
         //hasShot = false;
-        Instantiate(wormProjectile, this.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(1f);
-        this.GetComponent<SpriteRenderer>().DOFade(0, 1f);
+        Instantiate(wormProjectile, this.transform.position, Quaternion.identity); //dispara
+        yield return new WaitForSeconds(1f);                                       //espera 1s
+        this.GetComponent<SpriteRenderer>().DOFade(0, 1f);                         //Triga 1s en estar amagat
         //this.GetComponent<SpriteRenderer>().DOColor(Color.white, 2.8f);
-        yield return new WaitForSeconds(1f);
-        StartCoroutine(waitForAppear());
-        //hasShot= true;
-        
-        //wormProjectile.GetComponent<Rigidbody2D>().AddForce(transform.up * Random.Range(-4, 4), ForceMode2D.Impulse);
+        yield return new WaitForSeconds(1f);                                       //Espera 1s amagat
+        StartCoroutine(waitForAppear());                                           //Tria nou punt d'aparicio
+                                                                                   //Triga 2.8 segons a apareixer del tot
+                                                                                   //Espera 3 segons abans de tornar a disparar
     }
 
-    private IEnumerator waitForAppear() {
-        //this.GetComponent<SpriteRenderer>().DOFade(0.5f, 2.5f);
-        //Do the animation time it with shot
+    private IEnumerator waitForAppear() {        
 
         this.transform.position = spawnlocations[(Random.Range(0, spawnlocations.Length))].transform.position;
         this.GetComponent<SpriteRenderer>().DOColor(Color.red, 2.8f);
@@ -63,4 +52,3 @@ public class SpittingWorm : MonoBehaviour
 }
 
 
-//31. Lifting Animation

@@ -5,13 +5,13 @@ using UnityEngine;
 public class IdleState : State
 {
     // Start is called before the first frame update
-    //protected D_IdleState stateData;
+    protected D_IdleState stateData;
     protected bool inRange;
     protected float angle;
 
-    public IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_ChaseState stateData) : base(entity, stateMachine, animBoolName)
+    public IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData) : base(entity, stateMachine, animBoolName)
     {
-        //this.stateData = stateData;
+        this.stateData = stateData;
     }
 
     public override void Enter()

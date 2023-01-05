@@ -105,6 +105,10 @@ public abstract class Entity : MonoBehaviour
 	//	sr.material.SetTexture("_MainTex", text);
 
 	//}
+	public bool GetIfIsDead()
+    {
+		return isDead;
+    }
 
 	void CheckHealthStateEnding()
     {
