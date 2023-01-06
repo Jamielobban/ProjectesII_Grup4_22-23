@@ -20,6 +20,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d1eec61fecbdbc54db8c97222cb082fc, type: 2}
     - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: idleStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4d889c5321b449549b0aa557e4c08d47, type: 2}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
       propertyPath: firingStateData
       value: 
       objectReference: {fileID: 11400000, guid: 6eefe4a894f08c0459cbaf181b17bcd8, type: 2}
@@ -27,6 +31,10 @@ PrefabInstance:
       propertyPath: chasingStateData
       value: 
       objectReference: {fileID: 11400000, guid: 2d0cf41cfa946e548b230bdc37369a48, type: 2}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: distanceToPassToIdle
+      value: 22
+      objectReference: {fileID: 0}
     - target: {fileID: 4765914084310129915, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
       propertyPath: m_TagString
       value: FirePoint
