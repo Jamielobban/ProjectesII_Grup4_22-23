@@ -9,18 +9,24 @@ public class Repeticion : Mechanism
     public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound, float amplitudeGain, float damageMultiplier)
     {
         
-        if (Input.GetButtonDown("Shoot") && Time.time - timeLastShoot >= fireRateinSec)
+        if (Input.GetButtonDown("Shoot") )
         {
+            Debug.Log("Pressed " + Time.time);
+            if (Time.time - timeLastShoot >= fireRateinSec)
+            {
+                Debug.Log("Enter");
 
-            GameObject bullet = GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
-            bullet.GetComponent<Bullet>().FireProjectile(/*firePoint*/);
+                GameObject bullet = GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
+                bullet.GetComponent<Bullet>().FireProjectile(/*firePoint*/);
 
-            bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
-            AudioManager.Instance.PlaySound(shootSound, firePoint.transform.position);
-            timeLastShoot = Time.time;
+                bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
+                AudioManager.Instance.PlaySound(shootSound, firePoint.transform.position);
+                timeLastShoot = Time.time;
 
 
-            return true;
+                return true;
+            }
+            
         }
         return false;
     }

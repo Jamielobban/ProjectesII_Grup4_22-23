@@ -10,6 +10,12 @@ public class SniperBolt : Sniper
 
     }
 
+    public override void Update()
+    {
+        base.Update();
+        //Debug.Log(GetIfOutOffAmmo());
+    }
+
     protected override void ActionOnEnterPowerup()
     {
         ShootPowerUp(data.bulletTypePrefab, firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue);

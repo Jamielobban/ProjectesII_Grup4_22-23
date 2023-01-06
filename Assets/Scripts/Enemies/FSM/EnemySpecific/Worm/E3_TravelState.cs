@@ -39,7 +39,7 @@ public class E3_TravelState : TravelState
     {
         base.PhysicsUpdate();
 
-        if(enemy.transform.position != enemy.holes[enemy.actualHole].transform.position && Mathf.Abs(enemy.vectorToPlayer.magnitude) <= stateData.maxDistanceToAppear)
+        if(enemy.transform.position != enemy.holes[enemy.actualHole].transform.position)
         {
             myCheck = Vector3.MoveTowards(enemy.transform.position, enemy.holes[enemy.actualHole].transform.position, velocity * Time.deltaTime);
             enemy.transform.position = myCheck;

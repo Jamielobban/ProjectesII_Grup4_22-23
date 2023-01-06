@@ -6,6 +6,14 @@ public class CallFunctionAnim : MonoBehaviour
 {
     public void CallFunction (string functionName)
     {
-        this.SendMessageUpwards("SearchFunction",functionName);
+
+        try
+        {
+            this.SendMessageUpwards("SearchFunction", functionName);
+        }
+        catch (System.Exception)
+        {
+            
+        } 
     }
 }

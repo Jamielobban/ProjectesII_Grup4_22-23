@@ -43,7 +43,7 @@ public class Enemy3 : Entity
 
     public override void GetDamage(float damageHit, HealthStateTypes damageType, float knockBackForce, Vector3 bulletPosition, TransformMovementType type)
     {
-        if(stateMachine.currentState != travelState)
+        if(stateMachine.currentState != travelState && sr.enabled == true)
         {
             base.GetDamage(damageHit, damageType, knockBackForce, bulletPosition, type);
         }
@@ -87,7 +87,7 @@ public class Enemy3 : Entity
         {
             bc.enabled = false;
         }
-        else
+        else if(stateMachine.currentState != appearState)
         {
             bc.enabled = true;
         }

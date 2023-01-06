@@ -192,14 +192,16 @@ public class RightHand : MonoBehaviour
             UpdateUIWeapons();
 
         }
-    }
 
-    private void FixedUpdate()
-    {
         if (weaponInHand.FixedUpdate())
         {
             ShootShake();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        
     }
 
     void ShootShake()

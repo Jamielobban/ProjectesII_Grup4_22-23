@@ -7,6 +7,11 @@ public class E3_AppearState : AppearState
     Enemy3 enemy;
     float enterTime;
     protected float angle;
+    bool isVisible = false;
+    SpriteRenderer enemySr;
+    Animator enemyActr;
+    BoxCollider2D enemyBc2d;
+
     public E3_AppearState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_AppearState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -16,23 +21,58 @@ public class E3_AppearState : AppearState
     {
         base.Enter();
 
-        enemy.holes[enemy.actualHole].GetComponentInChildren<SpriteRenderer>().enabled = false;
-        enterTime = Time.time;        
+        enemySr = enemy.GetComponentInChildren<SpriteRenderer>();
+        enemyActr = enemy.GetComponentInChildren<Animator>();
+        enemyBc2d = enemy.GetComponent<BoxCollider2D>();        
+
+        if (Mathf.Abs(enemy.vectorToPlayer.magnitude) <= stateData.maxDistanceToAppear)
+        {
+            enemy.holes[enemy.actualHole].GetComponentInChildren<SpriteRenderer>().enabled = false;
+
+            enemySr.enabled = true;
+                
+            enterTime = Time.time;
+            isVisible = true;
+
+            enemyActr.SetBool("inRange", true);
+            
+        }
+        else
+        {
+            enemySr.enabled = false;
+            isVisible = false;
+        }
+
     }
 
     public override void Exit()
     {
         base.Exit();
+        enemyActr.SetBool("inRange", false);
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        if(Time.time - enterTime >= stateData.timeAppearDuration && !enemy.GetIfIsDead())
+        if(Time.time - enterTime >= stateData.timeAppearDuration && !enemy.GetIfIsDead() && isVisible)
         {
             stateMachine.ChangeState(enemy.firingState);
         }
+
+        if (Mathf.Abs(enemy.vectorToPlayer.magnitude) <= stateData.maxDistanceToAppear && !isVisible)
+        {
+            enemy.holes[enemy.actualHole].GetComponentInChildren<SpriteRenderer>().enabled = false;
+
+            enemySr.enabled = true;
+
+            enterTime = Time.time;
+            isVisible = true;
+
+            enemyActr.SetBool("inRange", true);
+        }
+
+        enemyBc2d.enabled = isVisible;
     }
 
     public override void PhysicsUpdate()
