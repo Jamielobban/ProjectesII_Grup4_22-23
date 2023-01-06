@@ -24,6 +24,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 2a0f9c448ecdcb842bd9574742c137fa, type: 2}
     - target: {fileID: 7792079252185949933, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+      propertyPath: idleStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: 280c5d163c905d34f9be3eaab4992581, type: 2}
+    - target: {fileID: 7792079252185949933, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
       propertyPath: firingStateData
       value: 
       objectReference: {fileID: 11400000, guid: 71d32657e211aed4ba5437ff4664b2df, type: 2}
@@ -31,6 +35,10 @@ PrefabInstance:
       propertyPath: chasingStateData
       value: 
       objectReference: {fileID: 11400000, guid: f80f87c718bc8c047b801775985912a9, type: 2}
+    - target: {fileID: 7792079252185949933, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+      propertyPath: distanceToPassToIdle
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8405310305926585268, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
       propertyPath: m_RootOrder
       value: 0
