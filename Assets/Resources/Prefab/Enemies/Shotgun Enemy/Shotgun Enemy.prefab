@@ -20,6 +20,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 62f1829e743af094090f64664088d3ce, type: 2}
     - target: {fileID: 92743026764471792, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: idleStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: 7adf0f1571077bf4382821519e4f8a34, type: 2}
+    - target: {fileID: 92743026764471792, guid: 5ac03940db506904caaf262e27842002, type: 3}
       propertyPath: firingStateData
       value: 
       objectReference: {fileID: 11400000, guid: f0c452a4155b7ef4cb4cc25f233ce56c, type: 2}
@@ -27,6 +31,10 @@ PrefabInstance:
       propertyPath: chasingStateData
       value: 
       objectReference: {fileID: 11400000, guid: 2208dd1789cbb064fac4694b3b06eb04, type: 2}
+    - target: {fileID: 92743026764471792, guid: 5ac03940db506904caaf262e27842002, type: 3}
+      propertyPath: distanceToPassToIdle
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 1859936831163064488, guid: 5ac03940db506904caaf262e27842002, type: 3}
       propertyPath: floorBlood
       value: 
