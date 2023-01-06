@@ -7,7 +7,6 @@ public class Enemy1 : Entity
     public E1_Chasingtate chasingState { get; private set; }
     public E1_FiringState firingState { get; private set; }
     public E1_DeadState deadState { get; private set; }
-    public E1_IdleState idleState { get; private set; }
 
     [SerializeField]
     private D_ChaseState chasingStateData;
@@ -15,13 +14,10 @@ public class Enemy1 : Entity
     private D_FiringState firingStateData;
     [SerializeField]
     private D_DeadState deadStateData;
-    [SerializeField]
-    private D_IdleState idleStateData;
 
     [SerializeField]
     private Enemy1Variants variant;
 
-    public float distanceToPassToIdle;
     
     //public Dictionary<Enemy1Variants, D_ChaseState> chaseStateDatasVariants;
 
@@ -36,8 +32,8 @@ public class Enemy1 : Entity
 
         chasingState = new E1_Chasingtate(this, stateMachine, "chase", chasingStateData, this);
         firingState = new E1_FiringState(this, stateMachine, "fire", firingStateData, this);
-        deadState = new E1_DeadState(this, stateMachine, "dead", deadStateData, this);
-        idleState = new E1_IdleState(this, stateMachine, "idle", idleStateData, this);
+        deadState = new E1_DeadState(this, stateMachine, "dead", deadStateData, this);        
+
 
         stateMachine.Initialize(chasingState);
     }
@@ -50,13 +46,6 @@ public class Enemy1 : Entity
         {
             stateMachine.ChangeState(deadState);
         }
-
-        if(!isDead && stateMachine.currentState != idleState && vectorToPlayer.magnitude >= distanceToPassToIdle && vectorToPlayer.magnitude >= enemyData.stopDistanceFromPlayer)
-        {
-            stateMachine.ChangeState(idleState);
-        }
-
-        Debug.Log(stateMachine.currentState);
     }    
 
     public Enemy1Variants GetVariant()
