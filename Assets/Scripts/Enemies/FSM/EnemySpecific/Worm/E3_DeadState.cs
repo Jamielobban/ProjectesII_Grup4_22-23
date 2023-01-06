@@ -29,6 +29,8 @@ public class E3_DeadState : DeadState
     {
         base.PhysicsUpdate();
 
+        enemy.holes[enemy.actualHole].GetComponentInChildren<SpriteRenderer>().enabled = true;
+        AudioManager.Instance.PlaySound(stateData.deadSound, enemy.transform.position);
         GameObject deadParticles = GameObject.Instantiate(stateData.deadParticles, entity.transform.position, entity.transform.rotation);
         GameObject.Destroy(enemy.gameObject);
     }

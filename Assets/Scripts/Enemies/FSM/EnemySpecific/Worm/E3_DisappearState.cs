@@ -6,6 +6,7 @@ public class E3_DisappearState : DisappearState
 {
     Enemy3 enemy;
     float enterTime;
+    bool audioPlayed;
     public E3_DisappearState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_DisappearState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -16,6 +17,8 @@ public class E3_DisappearState : DisappearState
         base.Enter();
 
         enterTime = Time.time;
+        audioPlayed = false;
+
     }
 
     public override void Exit()
@@ -26,6 +29,12 @@ public class E3_DisappearState : DisappearState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        if(Time.time - enterTime >= 0.4f && !audioPlayed)
+        {
+            AudioManager.Instance.PlaySound(stateData.disappearSound, enemy.transform.position);
+            audioPlayed = true;
+        }
 
         if (Time.time - enterTime >= stateData.timeDisappearDuration && !enemy.GetIfIsDead())
         {

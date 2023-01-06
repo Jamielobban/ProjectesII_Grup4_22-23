@@ -48,7 +48,14 @@ public class AudioManager : MonoBehaviour
         instantiatedPrefabAtTimeAndPositionWithAudioclip.Add(clone.GetInstanceID(), new KeyValuePair<float, KeyValuePair<GameObject, AudioClip>>(Time.time, cloneWithAudiclip));
     }
 
-
+    public void PlayLoop(AudioClip clip, Transform parentToSetPrefab)
+    {
+        GameObject clone = Instantiate(audioSourcePrefab, parentToSetPrefab);
+        AudioSource audioS = clone.GetComponent<AudioSource>();
+        audioS.clip = clip;
+        audioS.loop = true;
+        audioS.Play();
+    }
 
     public void PlaySoundDelayed(AudioClip clip, float delay, Vector3 pos)
     {

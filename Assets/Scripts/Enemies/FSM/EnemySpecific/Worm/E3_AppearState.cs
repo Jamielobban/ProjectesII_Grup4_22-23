@@ -35,6 +35,8 @@ public class E3_AppearState : AppearState
             isVisible = true;
 
             enemyActr.SetBool("inRange", true);
+
+            AudioManager.Instance.PlaySound(stateData.appearSound, enemy.transform.position);
             
         }
         else
@@ -70,6 +72,8 @@ public class E3_AppearState : AppearState
             isVisible = true;
 
             enemyActr.SetBool("inRange", true);
+
+            AudioManager.Instance.PlaySound(stateData.appearSound, enemy.transform.position);
         }
 
         enemyBc2d.enabled = isVisible;

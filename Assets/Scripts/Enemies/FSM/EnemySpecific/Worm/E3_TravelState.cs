@@ -18,6 +18,8 @@ public class E3_TravelState : TravelState
         base.Enter();
 
         velocity = Vector3.Distance(enemy.transform.position, enemy.holes[enemy.actualHole].transform.position);
+        AudioManager.Instance.PlayLoop(stateData.travelSound, enemy.transform);
+        enemy.GetComponentInChildren<AudioSource>().loop = true;
     }
 
     public override void Exit()
@@ -31,6 +33,8 @@ public class E3_TravelState : TravelState
 
         if (enemy.transform.position == enemy.holes[enemy.actualHole].transform.position)
         {
+            enemy.GetComponentInChildren<AudioSource>().Pause();
+            Object.Destroy(enemy.GetComponentInChildren<AudioSource>());
             stateMachine.ChangeState(enemy.appearState);
         }
     }
