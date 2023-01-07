@@ -7,6 +7,7 @@ public class E3_DisappearState : DisappearState
     Enemy3 enemy;
     float enterTime;
     bool audioPlayed;
+    int? disappearSoundKey;
     public E3_DisappearState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_DisappearState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -32,7 +33,7 @@ public class E3_DisappearState : DisappearState
 
         if(Time.time - enterTime >= 0.4f && !audioPlayed)
         {
-            AudioManager.Instance.PlaySound(stateData.disappearSound, enemy.transform.position);
+            disappearSoundKey = AudioManager.Instance.LoadSound(stateData.disappearSound, enemy.transform.position);
             audioPlayed = true;
         }
 

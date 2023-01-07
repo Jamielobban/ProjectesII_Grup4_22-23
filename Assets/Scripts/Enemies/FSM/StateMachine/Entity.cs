@@ -47,6 +47,8 @@ public abstract class Entity : MonoBehaviour
 	public GameObject blood;
 	public GameObject deadBlood;
 
+	public int? hitSoundKey;
+
 	private void Awake()
     {
 		firePoint = GetComponentsInChildren<Transform>().Where(t => t.tag == "FirePoint").ToArray()[0];
@@ -212,7 +214,7 @@ public abstract class Entity : MonoBehaviour
 		if (enemyHealth - damageHit >= 0)
 		{
 			enemyHealth -= damageHit;
-		Instantiate(blood, this.transform.position, this.transform.rotation);
+			Instantiate(blood, this.transform.position, this.transform.rotation);
 
 		}
 		else
@@ -227,7 +229,7 @@ public abstract class Entity : MonoBehaviour
         		
 
 		if (damageType == HealthStateTypes.NORMAL)
-			AudioManager.Instance.PlaySound(enemyData.hitSound, this.transform);
+			hitSoundKey = AudioManager.Instance.LoadSound(enemyData.hitSound, this.transform);
 
 		if (damageType != HealthStateTypes.BURNED)
 		{
@@ -245,7 +247,7 @@ public abstract class Entity : MonoBehaviour
     {
 		if (sequenceImpactShader.IsPlaying())
 		{
-			Debug.Log("isPlaying");
+			//Debug.Log("isPlaying");
 			sequenceImpactShader.Pause();
 			sequenceImpactShader.Kill();
 			sequenceImpactShader = null;

@@ -8,6 +8,7 @@ public class Gun : Weapon
     protected GameObject secondHandPrefab;
     protected GameObject secondHandClone;
     protected Mechanism temporalMechanism;
+    int? powerupEmptyKey;
     public Gun(Transform _firePoint, WeaponValues _data) : base(_firePoint, _data)
     {
         //data.bulletsPerMagazine = Random.Range(13, 20);
@@ -42,7 +43,7 @@ public class Gun : Weapon
             
             data.powerupAvailable.RuntimeValue = false;                    
             data.timelastPowerupExit.RuntimeValue = Time.time;
-            AudioManager.Instance.PlaySound(powerupEmpty, player.transform);
+            powerupEmptyKey = AudioManager.Instance.LoadSound(powerupEmpty, player.transform);
         }
     }
 

@@ -16,9 +16,10 @@ public class DeadState : State
 
         if (GameObject.FindGameObjectWithTag("RoomManager") != null)
         {
-        GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().Dead();
+            GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().Dead();
 
         }
+        
     }
 
     public override void Exit()

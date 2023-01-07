@@ -7,20 +7,25 @@ public class AudioPrefabScript : MonoBehaviour
     [SerializeField]
     AudioSource audioSource;
     bool playing = false;
+    
+    public int? myId = null;
+
     // Start is called before the first frame update
     
     // Update is called once per frame
     void Update()
-    {        
+    {
 
-        if(audioSource.isPlaying && !playing)
+        if (audioSource.isPlaying && !playing)
         {
             playing = true;
         }
-        if(!audioSource.isPlaying && playing)
+        if (!audioSource.isPlaying && playing)
         {
-            FindObjectOfType<AudioManager>().RemoveFromDictionary(this.gameObject.GetInstanceID());
-            Destroy(this.gameObject);
+            if (myId.HasValue)
+            {
+                AudioManager.Instance.RemoveAudio(myId.Value);
+            }
         }
     }
 }

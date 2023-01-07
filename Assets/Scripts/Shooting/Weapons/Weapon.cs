@@ -19,6 +19,11 @@ public abstract class Weapon
     protected Transform firePoint;
 
     protected GameObject player;
+
+    protected int? reloadKeySound;
+    protected int? powerupMaxKey;
+    protected int? powerupPressKey;
+    protected int? nextWeaponKey;
     
     public float timer;
     bool firstEnter = true;
@@ -44,7 +49,7 @@ public abstract class Weapon
         {
             if(data.powerupAvailable.RuntimeValue && firstEnter)
             {
-                AudioManager.Instance.PlaySound(powerupMax, player.transform);
+                powerupMaxKey = AudioManager.Instance.LoadSound(powerupMax, player.transform);
                 firstEnter = false;
             }
             data.timePassed.RuntimeValue = Time.time - data.timelastPowerupExit.RuntimeValue;
@@ -195,8 +200,8 @@ public abstract class Weapon
             {
                 data.powerActive.RuntimeValue = true;
                 ActionOnEnterPowerup();
-                data.timelastPowerupEnter.RuntimeValue = Time.time;     
-                AudioManager.Instance.PlaySound(powerupPressed, player.transform);
+                data.timelastPowerupEnter.RuntimeValue = Time.time;
+                powerupPressKey = AudioManager.Instance.LoadSound(powerupPressed, player.transform);
             }
 
         }
@@ -206,7 +211,7 @@ public abstract class Weapon
             {
                 data.bulletsInMagazine.RuntimeValue = data.bulletsInMagazine.InitialValue;
                 data.magazinesInWeapon.RuntimeValue--;
-                AudioManager.Instance.PlaySoundDelayed(data.reloadSound, 0.5f, player.transform);
+                reloadKeySound = AudioManager.Instance.LoadSound(data.reloadSound, player.transform, 0.5f, false);
                 data.reloading.RuntimeValue = true;
                 data.startReloading.RuntimeValue = Time.time;
             }
@@ -233,7 +238,7 @@ public abstract class Weapon
             }
             else
             {
-                AudioManager.Instance.PlaySoundDelayed(data.reloadSound, 0.5f, player.transform);
+                reloadKeySound = AudioManager.Instance.LoadSound(data.reloadSound, player.transform, 0.5f, false);
                 data.bulletsInMagazine.RuntimeValue = data.bulletsInMagazine.InitialValue;
                 data.magazinesInWeapon.RuntimeValue--;
                 data.startReloading.RuntimeValue = Time.time;
@@ -245,7 +250,7 @@ public abstract class Weapon
     public bool GetIfOutOffAmmo()
     {
         if (data.outOfAmmo.RuntimeValue)
-            AudioManager.Instance.PlaySound(nextWeapon, player.transform);
+            nextWeaponKey = AudioManager.Instance.LoadSound(nextWeapon, player.transform);
         return data.outOfAmmo.RuntimeValue;
     }
     

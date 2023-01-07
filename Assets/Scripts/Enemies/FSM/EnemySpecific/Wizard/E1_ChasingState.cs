@@ -6,7 +6,10 @@ using System.Linq;
 public class E1_Chasingtate : ChasingState
 {
     private Enemy1 enemy;
-    
+    //private int? followSoundKey;
+    int? stomp1Key;
+    int? stomp2Key; 
+
     public E1_Chasingtate(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_ChaseState stateData, Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -14,17 +17,27 @@ public class E1_Chasingtate : ChasingState
 
     public override void Enter()
     {
-        base.Enter();        
+        base.Enter();
+
+        //followSoundKey = AudioManager.Instance.LoadSound(stateData.followSounds, enemy.transform, 0.2f, true);
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        //if (followSoundKey.HasValue)
+        //{
+        //    AudioManager.Instance.RemoveAudio(followSoundKey.Value);
+        //}
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        //Debug.Log(followSoundKey);
+
 
         inRange = entity.vectorToPlayer.magnitude < enemy.enemyData.stopDistanceFromPlayer;
 
@@ -62,6 +75,16 @@ public class E1_Chasingtate : ChasingState
 
         enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.player.position, enemy.enemyData.speed * Time.fixedDeltaTime);
 
+    }
+
+    public void DoStomp1()
+    {
+        stomp1Key = AudioManager.Instance.LoadSound(stateData.Stomp1, enemy.transform);
+    }
+
+    public void DoStomp2()
+    {
+        stomp2Key = AudioManager.Instance.LoadSound(stateData.Stomp2, enemy.transform);
     }
 
 

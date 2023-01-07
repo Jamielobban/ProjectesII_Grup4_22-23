@@ -13,6 +13,8 @@ public class E1_FiringState : FiringState
     float enterTime;
     const float attackAnim1Duration = 0.3f;
     const float attackAnim2Duration = 0.3f;
+    int? fireSoundKey;    
+    int? attackSoundsKey;    
     readonly float attackDuration;
     public E1_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -39,6 +41,8 @@ public class E1_FiringState : FiringState
         b = false;
 
         enterTime = Time.time;
+
+        attackSoundsKey = AudioManager.Instance.LoadSound(stateData.attackSounds, enemy.transform, 0, true);
 
         //if (!enemy.anim.GetBool("waitingTimeAttack") && !(Time.time - lastShootTime >= stateData.timeBetweenShoots))
         //{
@@ -72,6 +76,11 @@ public class E1_FiringState : FiringState
         if (!enemy.anim.GetBool("waitingTimeAttack"))
         {
             enemy.anim.SetBool("waitingTimeAttack", true);
+        }
+
+        if (attackSoundsKey.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(attackSoundsKey.Value);
         }
     }
 
@@ -134,7 +143,7 @@ public class E1_FiringState : FiringState
                 for (int j = 0; j < stateData.numberOfBursts; j++, waitTime += 0.2f)
                 {
                     FunctionTimer.Create(FireProjectile, waitTime);
-                    FunctionTimer.Create(()=>{ enemy.anim.SetBool("waitingTimeAttack", true);}, waitTime + 0.2f);
+                    FunctionTimer.Create(()=>{ if(!enemy.GetIfIsDead())enemy.anim.SetBool("waitingTimeAttack", true);}, waitTime + 0.2f);
                 }
             }
             else
@@ -160,7 +169,7 @@ public class E1_FiringState : FiringState
         {
             GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position, enemy.GetComponent<Entity>().GetFirePointTransform().rotation);
             //instance.GetComponent<EnemyProjectile>().bulletDamage = enemyBulletDamage;
-            AudioManager.Instance.PlaySound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);
+            fireSoundKey = AudioManager.Instance.LoadSound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);
             bullet.transform.Rotate(0, 0, bullet.transform.rotation.z + grados);
 
             bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponent<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
@@ -172,7 +181,7 @@ public class E1_FiringState : FiringState
     {
         GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position, enemy.GetComponent<Entity>().GetFirePointTransform().rotation);
 
-        AudioManager.Instance.PlaySound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);
+        fireSoundKey = AudioManager.Instance.LoadSound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);
 
         //Metralleta
         bullet.transform.Rotate(0, 0, bullet.transform.rotation.z + UnityEngine.Random.Range(-25, 25));

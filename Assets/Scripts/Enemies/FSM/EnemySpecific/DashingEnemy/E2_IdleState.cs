@@ -6,6 +6,7 @@ public class E2_IdleState : IdleState
 {
     private Enemy2 enemy;
     private bool firstTimeInIdle = true;
+    int? idleSoundKey;
 
     public E2_IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -15,6 +16,8 @@ public class E2_IdleState : IdleState
     public override void Enter()
     {
         base.Enter();
+
+        idleSoundKey = AudioManager.Instance.LoadSound(stateData.idleSounds, enemy.transform, 0, true);
 
         if (firstTimeInIdle)
         {
@@ -39,6 +42,10 @@ public class E2_IdleState : IdleState
     public override void Exit()
     {
         base.Exit();
+        if (idleSoundKey.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(idleSoundKey.Value);
+        }
     }
 
     public override void LogicUpdate()

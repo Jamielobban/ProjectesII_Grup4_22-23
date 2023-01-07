@@ -217,7 +217,7 @@ public class EnemyController : MonoBehaviour
             else
             {
                 enemyHealth -= damageActualHealthStateApply;
-                AudioManager.Instance.PlaySound(damageSound, this.gameObject.transform);
+                //AudioManager.Instance.PlaySound(damageSound, this.gameObject.transform);
                 if (feedbackObject != null)
                 {
                     GameObject.Instantiate(feedbackObject, this.transform, false);
@@ -462,7 +462,7 @@ public class EnemyController : MonoBehaviour
         //random machine gun
         GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
         instance.GetComponent<EnemyProjectile>().bulletData.damage = enemyBulletDamage;
-        AudioManager.Instance.PlaySound(enemyShootSound, enemyFirePoint.transform.position);
+        //AudioManager.Instance.PlaySound(enemyShootSound, enemyFirePoint.transform.position);
         //Metralleta
         instance.transform.Rotate(0, 0, instance.transform.rotation.z + UnityEngine.Random.Range(-25,25));
 
@@ -519,7 +519,7 @@ public class EnemyController : MonoBehaviour
             {
                 GameObject instance = Instantiate(enemyBulletPrefab, enemyFirePoint.transform.position, enemyFirePoint.rotation);
                 instance.GetComponent<EnemyProjectile>().bulletData.damage = enemyBulletDamage;
-                AudioManager.Instance.PlaySound(enemyShootSound, enemyFirePoint.transform.position);
+                //AudioManager.Instance.PlaySound(enemyShootSound, enemyFirePoint.transform.position);
                 instance.transform.Rotate(0, 0, instance.transform.rotation.z + grados);
 
                 instance.GetComponent<Rigidbody2D>().AddForce(instance.transform.right * bulletSpeed, ForceMode2D.Impulse);

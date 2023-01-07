@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SniperBolt : Sniper
 {
+    int? shootSoundKey;
     public SniperBolt(Transform _firePoint, WeaponValues _data) : base(_firePoint, _data)
     {        
         weaponMechanism = new Repeticion();
@@ -30,7 +31,7 @@ public class SniperBolt : Sniper
         bullet.GetComponent<Bullet>().powerUpOn = true; ;
 
         bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
-        AudioManager.Instance.PlaySound(shootSound,bullet.transform.position);
+        shootSoundKey = AudioManager.Instance.LoadSound(shootSound,bullet.transform.position);
         CinemachineShake.Instance.ShakeCamera(5f, .1f);
         CinemachineShake.Instance.ShakeCamera(5f * amplitudeGain, .1f);
     }

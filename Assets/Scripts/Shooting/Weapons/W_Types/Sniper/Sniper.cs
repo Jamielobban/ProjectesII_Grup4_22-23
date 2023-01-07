@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Sniper : Weapon
 {
-    
+    int? powerupEmptyKey;
     public Sniper(Transform _firePoint, WeaponValues _data) :base(_firePoint, _data) {   
         //data.bulletsPerMagazine = Random.Range(6,9);
         //data.magazines = Random.Range(1, 3);       
@@ -40,7 +40,7 @@ public abstract class Sniper : Weapon
             //data.fireRateinSec /= 0.5f;
             //data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = false;
             data.timelastPowerupExit.RuntimeValue = Time.time;
-            AudioManager.Instance.PlaySound(powerupEmpty,player.transform);
+            powerupEmptyKey = AudioManager.Instance.LoadSound(powerupEmpty,player.transform);
         }
         if (!data.powerActive)
         {

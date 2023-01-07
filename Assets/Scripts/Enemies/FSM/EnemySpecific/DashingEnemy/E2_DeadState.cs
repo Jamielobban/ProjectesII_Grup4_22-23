@@ -5,6 +5,7 @@ using UnityEngine;
 public class E2_DeadState : DeadState
 {
     Enemy2 enemy;
+    int? deadSoundKey;
     public E2_DeadState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_DeadState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -13,11 +14,16 @@ public class E2_DeadState : DeadState
     public override void Enter()
     {
         base.Enter();
+        deadSoundKey = AudioManager.Instance.LoadSound(stateData.deadSound, enemy.transform.position);
     }
 
     public override void Exit()
     {
         base.Exit();
+        if (deadSoundKey.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(deadSoundKey.Value);
+        }
     }
 
     public override void LogicUpdate()

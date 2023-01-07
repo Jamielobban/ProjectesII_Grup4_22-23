@@ -6,6 +6,7 @@ public class E2_ChasingState : ChasingState
 {
     private Enemy2 enemy;
     private Vector3 myCheck;
+    int? spinSoundKey;
 
     public E2_ChasingState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_ChaseState stateData, Enemy2 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -15,11 +16,16 @@ public class E2_ChasingState : ChasingState
     public override void Enter()
     {
         base.Enter();
+        spinSoundKey = AudioManager.Instance.LoadSound(stateData.followSounds, enemy.transform, 0, true);
     }
 
     public override void Exit()
     {
         base.Exit();
+        if (spinSoundKey.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(spinSoundKey.Value);
+        }
     }
 
     public override void LogicUpdate()

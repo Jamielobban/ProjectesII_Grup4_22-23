@@ -22,6 +22,7 @@ public class SniperLineBullet : Bullet
     public Animator muzzleShoot;
 
     public AudioClip shootSound;
+    int? shootSoundKey;
     void Start()
     {
 
@@ -75,7 +76,7 @@ public class SniperLineBullet : Bullet
         player.GetComponent<PlayerMovement>().canMove = true;
         charge = false;
 
-        AudioManager.Instance.PlaySound(shootSound, transform.position);
+        shootSoundKey = AudioManager.Instance.LoadSound(shootSound, transform.position);
 
 
         GameObject shoot = GameObject.Instantiate(shootBullet, transform.position, transform.rotation);

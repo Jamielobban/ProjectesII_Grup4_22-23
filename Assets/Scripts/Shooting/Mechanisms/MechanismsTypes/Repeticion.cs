@@ -5,7 +5,7 @@ using Cinemachine;
 
 public class Repeticion : Mechanism
 {
-
+    int? shootSoundKey;
     public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound, float amplitudeGain, float damageMultiplier)
     {
         
@@ -20,7 +20,7 @@ public class Repeticion : Mechanism
                 bullet.GetComponent<Bullet>().FireProjectile(/*firePoint*/);
 
                 bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
-                AudioManager.Instance.PlaySound(shootSound, firePoint.transform.position);
+                shootSoundKey = AudioManager.Instance.LoadSound(shootSound, firePoint.transform.position);
                 timeLastShoot = Time.time;
 
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Shotgun : Weapon
 {
+    int? powerupEmptyKey;
     public Shotgun(Transform _firePoint, WeaponValues _data) : base(_firePoint, _data)
     {
         //data.bulletsPerMagazine = Random.Range(8, 15);
@@ -44,7 +45,7 @@ public class Shotgun : Weapon
             data.powerActive.RuntimeValue = false;      
             data.powerupAvailable.RuntimeValue = false;
             data.timelastPowerupExit.RuntimeValue = Time.time;
-            AudioManager.Instance.PlaySound(powerupEmpty, player.transform);
+            powerupEmptyKey = AudioManager.Instance.LoadSound(powerupEmpty, player.transform);
         }
     }
 

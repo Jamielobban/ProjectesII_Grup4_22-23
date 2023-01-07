@@ -14,6 +14,7 @@ public class Flow : Mechanism
 
     //public Texture2D m_Ripple;
     //Renderer m_Renderer;
+    int? shootSoundKey;
 
     private BlitController myBlit;
     //private Material _Mat = Resources.Load("Assets/Graphs_Ripple.mat", typeof(Material)) as Material;
@@ -73,7 +74,7 @@ public class Flow : Mechanism
                 lastBullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
                 //AudioManager.Instance.PlaySound(shootSound);
                 timeLastShoot = Time.time;
-                AudioManager.Instance.PlaySound(shootSound, firePoint.position);
+                shootSoundKey = AudioManager.Instance.LoadSound(shootSound, firePoint.position);
                 return true;
                // Debug.Log("Off1");
             }                            

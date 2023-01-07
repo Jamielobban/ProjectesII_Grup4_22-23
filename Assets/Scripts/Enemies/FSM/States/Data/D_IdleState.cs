@@ -8,4 +8,5 @@ public class D_IdleState : ScriptableObject
     public float rangeToPassToChasing;
     public float timeBetweenFlips;
     public float timeToNextFlips;
+    public AudioClip idleSounds;
 }

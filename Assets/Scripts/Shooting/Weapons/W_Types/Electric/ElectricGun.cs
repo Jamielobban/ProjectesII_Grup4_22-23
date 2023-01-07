@@ -5,6 +5,8 @@ using UnityEngine;
 public class ElectricGun : Weapon
 {
     public List<GameObject> bulletsOut;
+    int? powerupEmptyKey;
+    int? shootSoundKey;
 
     public ElectricGun(Transform _firePoint, WeaponValues _data) : base(_firePoint, _data)
     {
@@ -27,7 +29,7 @@ public class ElectricGun : Weapon
             //data.fireRateinSec /= 0.5f;
             //data.bulletTypePrefab.GetComponent<Bullet>().powerUpOn = false;
             data.timelastPowerupExit.RuntimeValue = Time.time;
-            AudioManager.Instance.PlaySound(powerupEmpty, player.transform);
+            powerupEmptyKey = AudioManager.Instance.LoadSound(powerupEmpty, player.transform);
         }
         if (!data.powerActive.RuntimeValue)
         {
@@ -47,7 +49,7 @@ public class ElectricGun : Weapon
 
         GameObject bullet = GameObject.Instantiate(data.bulletTypePrefab, firePoint.position, firePoint.rotation);
         bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(data.damageMultiplier.RuntimeValue);
-        AudioManager.Instance.PlaySound(data.shootSound, bullet.transform.position);
+        shootSoundKey = AudioManager.Instance.LoadSound(data.shootSound, bullet.transform.position);
         CinemachineShake.Instance.ShakeCamera(5f, .1f);
         CinemachineShake.Instance.ShakeCamera(5f * data.amplitudeGain.RuntimeValue, .1f);
     }

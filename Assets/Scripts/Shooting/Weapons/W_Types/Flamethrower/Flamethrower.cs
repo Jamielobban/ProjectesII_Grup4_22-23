@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Flamethrower : Weapon
 {
+    int? powerupEmptyKey;
     public Flamethrower(Transform _firePoint, WeaponValues _data) : base(_firePoint, _data)
     {
         weaponMechanism = new Flow();
@@ -35,7 +36,7 @@ public class Flamethrower : Weapon
             data.powerActive.RuntimeValue = false;
             data.powerupAvailable.RuntimeValue = false;
             data.timelastPowerupExit.RuntimeValue = Time.time;
-            AudioManager.Instance.PlaySound(powerupEmpty, player.transform);
+            powerupEmptyKey = AudioManager.Instance.LoadSound(powerupEmpty, player.transform);
         }
     }
 }

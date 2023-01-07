@@ -95,6 +95,10 @@ public class PlayerMovement : MonoBehaviour
 
     float rollSpeedCheck;
 
+    int? cantPressSoundKey;
+    int? dashSoundKey;
+    int? damageSoundKey;
+
     bool justRolled;
     private void Awake()
     {
@@ -267,7 +271,7 @@ public class PlayerMovement : MonoBehaviour
                         isDashing = true;
                         dashTimer = Time.time;
                         //anim.SetBool("isDashing", true);
-                        AudioManager.Instance.PlaySound(playerDash, this.gameObject.transform);
+                        dashSoundKey = AudioManager.Instance.LoadSound(playerDash, this.gameObject.transform);
                         rollDir = moveDir;
                         lastDash = Time.time;
                         currentBlinkRechargeTime = 0f;
@@ -275,7 +279,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else
                     {
-                        AudioManager.Instance.PlaySound(cantPress, this.gameObject.transform);
+                        cantPressSoundKey = AudioManager.Instance.LoadSound(cantPress, this.gameObject.transform);
                     }
 
                 }
@@ -360,7 +364,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentHealth -= damage;
             GameObject.Instantiate(floorBlood, this.transform.position, this.transform.rotation);
-            AudioManager.Instance.PlaySound(damageSound, this.gameObject.transform);
+            damageSoundKey = AudioManager.Instance.LoadSound(damageSound, this.gameObject.transform);
             healthBar.SetHealth(currentHealth);
         }
     }

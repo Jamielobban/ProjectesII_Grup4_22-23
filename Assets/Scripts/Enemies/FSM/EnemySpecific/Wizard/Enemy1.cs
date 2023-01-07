@@ -56,7 +56,7 @@ public class Enemy1 : Entity
             stateMachine.ChangeState(idleState);
         }
 
-        Debug.Log(stateMachine.currentState);
+        //Debug.Log(stateMachine.currentState);
     }    
 
     public Enemy1Variants GetVariant()
@@ -76,5 +76,12 @@ public class Enemy1 : Entity
         }
         throw new System.NotImplementedException();
 
+    }
+
+    public void SearchFunction(string funcName)
+    {
+        var exampleType = stateMachine.currentState.GetType();
+        var exampleMethod = exampleType.GetMethod(funcName);
+        exampleMethod.Invoke(stateMachine.currentState, null);
     }
 }

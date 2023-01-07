@@ -11,6 +11,7 @@ public class E3_AppearState : AppearState
     SpriteRenderer enemySr;
     Animator enemyActr;
     BoxCollider2D enemyBc2d;
+    int? apeearSoundKey;
 
     public E3_AppearState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_AppearState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -35,8 +36,8 @@ public class E3_AppearState : AppearState
             isVisible = true;
 
             enemyActr.SetBool("inRange", true);
-
-            AudioManager.Instance.PlaySound(stateData.appearSound, enemy.transform.position);
+             
+            apeearSoundKey = AudioManager.Instance.LoadSound(stateData.appearSound, enemy.transform.position);
             
         }
         else
@@ -73,7 +74,7 @@ public class E3_AppearState : AppearState
 
             enemyActr.SetBool("inRange", true);
 
-            AudioManager.Instance.PlaySound(stateData.appearSound, enemy.transform.position);
+            apeearSoundKey = AudioManager.Instance.LoadSound(stateData.appearSound, enemy.transform.position);
         }
 
         enemyBc2d.enabled = isVisible;

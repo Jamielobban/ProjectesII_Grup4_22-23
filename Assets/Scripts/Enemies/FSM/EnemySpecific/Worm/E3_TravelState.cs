@@ -8,6 +8,7 @@ public class E3_TravelState : TravelState
     Vector3 myCheck;
     float velocity;
     float timeTravel = 2;
+    int? audioKey;
     public E3_TravelState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_TravelState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -18,13 +19,18 @@ public class E3_TravelState : TravelState
         base.Enter();
 
         velocity = Vector3.Distance(enemy.transform.position, enemy.holes[enemy.actualHole].transform.position);
-        AudioManager.Instance.PlayLoop(stateData.travelSound, enemy.transform);
-        enemy.GetComponentInChildren<AudioSource>().loop = true;
+        audioKey = AudioManager.Instance.LoadSound(stateData.travelSound, enemy.transform, 0, true);
     }
 
     public override void Exit()
     {
         base.Exit();
+        if (audioKey.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(audioKey.Value);
+        }
+
+
     }
 
     public override void LogicUpdate()
@@ -32,9 +38,7 @@ public class E3_TravelState : TravelState
         base.LogicUpdate();
 
         if (enemy.transform.position == enemy.holes[enemy.actualHole].transform.position)
-        {
-            enemy.GetComponentInChildren<AudioSource>().Pause();
-            Object.Destroy(enemy.GetComponentInChildren<AudioSource>());
+        {                      
             stateMachine.ChangeState(enemy.appearState);
         }
     }
@@ -50,4 +54,5 @@ public class E3_TravelState : TravelState
         }
         
     }
+    
 }

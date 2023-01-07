@@ -5,6 +5,7 @@ using UnityEngine;
 public class E3_DeadState : DeadState
 {
     Enemy3 enemy;
+    int? deadSoundKey;
     public E3_DeadState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_DeadState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -30,7 +31,7 @@ public class E3_DeadState : DeadState
         base.PhysicsUpdate();
 
         enemy.holes[enemy.actualHole].GetComponentInChildren<SpriteRenderer>().enabled = true;
-        AudioManager.Instance.PlaySound(stateData.deadSound, enemy.transform.position);
+        deadSoundKey = AudioManager.Instance.LoadSound(stateData.deadSound, enemy.transform.position);
         GameObject deadParticles = GameObject.Instantiate(stateData.deadParticles, entity.transform.position, entity.transform.rotation);
         GameObject.Destroy(enemy.gameObject);
     }

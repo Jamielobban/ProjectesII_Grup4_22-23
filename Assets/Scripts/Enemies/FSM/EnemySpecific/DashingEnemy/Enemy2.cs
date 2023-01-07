@@ -21,6 +21,7 @@ public class Enemy2 : Entity
     [SerializeField]
     private D_DeadState deadStateData;
 
+    float lastTimeDamaged = 0;
 
     public override void FixedUpdate()
     {
@@ -60,7 +61,31 @@ public class Enemy2 : Entity
         {
             stateMachine.ChangeState(deadState);
         }
-    }    
+    }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if(stateMachine.currentState == dashingState)
+            {
+                collision.gameObject.SendMessage("GetDamage", 25);
+            }
+            else
+            {
+                collision.gameObject.SendMessage("GetDamage", 8);
+            }
+
+            lastTimeDamaged = Time.time;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && Time.time - lastTimeDamaged >= 1)
+        {
+            collision.gameObject.SendMessage("GetDamage", 8);
+            lastTimeDamaged = Time.time;
+        }
+    }
+
 }

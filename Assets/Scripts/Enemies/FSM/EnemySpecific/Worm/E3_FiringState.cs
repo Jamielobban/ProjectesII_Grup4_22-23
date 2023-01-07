@@ -7,6 +7,7 @@ public class E3_FiringState : FiringState
     Enemy3 enemy;
     float enterTime;
     bool shootDone = false;
+    int? shootSoundKey;
 
     public E3_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy3 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -52,7 +53,7 @@ public class E3_FiringState : FiringState
     public void FireProjectile()
     {
         GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position, enemy.GetComponent<Entity>().GetFirePointTransform().rotation);
-        AudioManager.Instance.PlaySound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);
+        shootSoundKey = AudioManager.Instance.LoadSound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);
         bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponentInChildren<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
 
         //bullet.GetComponent<Transform>().DORotate(Vector3.forward, 1).SetLoops(-1);

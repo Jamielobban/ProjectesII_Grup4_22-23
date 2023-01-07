@@ -5,7 +5,7 @@ using Cinemachine;
 
 public class Seamiautomatica : Mechanism
 {
-    
+    int? shootSoundKey;
 
     public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound, float amplitudeGain, float damageMultiplier)
     {
@@ -13,7 +13,7 @@ public class Seamiautomatica : Mechanism
         {
             GameObject bullet = GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
             bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
-            AudioManager.Instance.PlaySound(shootSound, firePoint.position);
+            shootSoundKey = AudioManager.Instance.LoadSound(shootSound, firePoint.position);
             timeLastShoot = Time.time;            
             bullet.GetComponent<Bullet>().FireProjectile(/*firePoint*/);
             

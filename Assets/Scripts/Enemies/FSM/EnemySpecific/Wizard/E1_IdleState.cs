@@ -10,6 +10,7 @@ public class E1_IdleState : IdleState
     Vector3 aux;
     float timeBetweenFlips;
     float timeToNextFlips;
+    int? idleSoundsKey;
 
     public E1_IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData, Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -29,11 +30,18 @@ public class E1_IdleState : IdleState
 
         timeBetweenFlips = Random.Range(1f, 3f);
         timeToNextFlips = Random.Range(3.5f, 7f);
+
+        idleSoundsKey = AudioManager.Instance.LoadSound(stateData.idleSounds, enemy.transform, 0, true);
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        if (idleSoundsKey.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(idleSoundsKey.Value);
+        }
     }
 
     public override void LogicUpdate()
