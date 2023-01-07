@@ -18,8 +18,17 @@ public class E2_DashingState : DashState
         base.Enter();
 
         dashPos = enemy.player.transform.position;
-
+        
         dashSoundKey = AudioManager.Instance.LoadSound(stateData.dashSound, enemy.transform);
+
+        FunctionTimer.Create(() =>
+        {
+            if (!enemy.GetIfIsDead() && enemy.transform != null)
+            {
+                Object.Instantiate(stateData.fireExplosionPrefab, enemy.transform.position - new Vector3(0, 1, 0), Quaternion.identity);
+            }
+        }, 0.5f);        
+
 
         FunctionTimer.Create(() =>
         {
@@ -52,5 +61,5 @@ public class E2_DashingState : DashState
 
         enemy.transform.position = Vector3.MoveTowards(this.enemy.transform.position, dashPos, 0.45f);
 
-    }
+    }    
 }

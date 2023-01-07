@@ -87,5 +87,6 @@ public class Enemy2 : Entity
             lastTimeDamaged = Time.time;
         }
     }
+    
 
 }

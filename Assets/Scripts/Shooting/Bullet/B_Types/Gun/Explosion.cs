@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Explosion : Bullet
+public class BombExplosion : Bullet
 {
     public int damage;
     // Start is called before the first frame update

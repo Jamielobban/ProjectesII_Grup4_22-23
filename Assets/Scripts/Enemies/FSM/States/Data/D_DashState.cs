@@ -6,4 +6,5 @@ using UnityEngine;
 public class D_DashState : ScriptableObject
 {
     public AudioClip dashSound;
+    public GameObject fireExplosionPrefab;
 }
