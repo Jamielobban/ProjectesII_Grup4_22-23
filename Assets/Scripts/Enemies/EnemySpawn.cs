@@ -18,7 +18,6 @@ public class EnemySpawn : MonoBehaviour
     public void SpawnEnemy()
     {
         Enemy = Instantiate(EnemyPrefab, transform.position, transform.rotation);
-        GameObject.FindGameObjectWithTag("RoomManager").GetComponentInParent<RoomManager>().enemiesInRoom.Add(Enemy);
         Enemy.transform.parent = parent.transform;
         Destroy(this.gameObject);
     }

@@ -345,12 +345,12 @@ public class EnemyController : MonoBehaviour
 
         if (isDeath)
         {
-            GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
-            if (GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Count == 0)
-            {
-                GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().spawnRound();
-            }
-            Destroy(this.gameObject);
+            //GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
+            //if (GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Count == 0)
+            //{
+            //    GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().spawnRound();
+            //}
+            //Destroy(this.gameObject);
         }
 
         switch (state)

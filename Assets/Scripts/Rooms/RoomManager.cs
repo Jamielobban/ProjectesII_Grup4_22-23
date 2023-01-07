@@ -6,90 +6,65 @@ public class RoomManager : MonoBehaviour
 {
     //public bool currentRoom = false;
 
-    private int lastNumberEnemiesInRoom;
    
     public int kills = 0;
 
-    public List<GameObject> enemySpawners;
 
-    public List<GameObject> enemiesInRoom;
 
     bool EnterRoom = false;
-    public int[] enemiesInRound;
-    int round = 0;
+    public int enemiesInRoom;
 
     public GameObject wallToSpawn;
-    public GameObject wallToSpawn2;
 
-    public GameObject room;
 
-    GameObject cameraPos;
+    //public GameObject room;
+
 
     public void Start()
     {
-        cameraPos = GameObject.FindGameObjectWithTag("CameraPos");
-        //wallToSpawn.SetActive(false);
-        //wallToSpawn2.SetActive(false);
-        lastNumberEnemiesInRoom = enemiesInRoom.Count;
+        wallToSpawn.SetActive(true);
         
     }
 
     private void Update()
     {
-        if(lastNumberEnemiesInRoom != enemiesInRoom.Count)
-        {
-            int difference = lastNumberEnemiesInRoom - enemiesInRoom.Count;
-            if(difference > 0)
-            {
-                kills += difference;
-            }
-            lastNumberEnemiesInRoom = enemiesInRoom.Count;
-        }
-        if (!this.gameObject.CompareTag("RoomManager"))
-        {
-            kills = 0;
-        }
-    }
-    public void spawnRound()
-    {
-        //if (enemiesInRound[round] < enemy.Count)
+        //if(lastNumberEnemiesInRoom != enemiesInRoom.Count)
         //{
-        //    enemiesInRound[round] = enemy.Count;
-        //    EnterRoom = false;
+        //    int difference = lastNumberEnemiesInRoom - enemiesInRoom.Count;
+        //    if(difference > 0)
+        //    {
+        //        kills += difference;
+        //    }
+        //    lastNumberEnemiesInRoom = enemiesInRoom.Count;
         //}
-        if (round < enemiesInRound.Length)
-        {
-            for (int i = 0; i < enemiesInRound[round]; i++)
-            {
-                enemySpawners[0].GetComponent<EnemySpawn>().SpawnAnimation();
-                enemySpawners.Remove(enemySpawners[0]);
-                //GetComponent<EnemySpawn>().SpawnAnimation(spawns);
-            }
-            round++;
-        }
-        else
-        {
-            //Debug.Log("All enemies are dead");
-            this.gameObject.tag = "Default";
-            wallToSpawn.SetActive(false);
-            wallToSpawn2.SetActive(false);
-            Destroy(gameObject);
-        }
+        //if (!this.gameObject.CompareTag("RoomManager"))
+        //{
+        //    kills = 0;
+        //}
+    }
+    public void Dead()
+    {
+        kills++;
 
+        if(kills == enemiesInRoom)
+        {
+            Destroy(wallToSpawn);
+
+            Destroy(this.gameObject);
+        }
     }
 
-
+   
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")&& !EnterRoom)
         {
+            EnterRoom = true;
             //currentRoom = true;
-            cameraPos.GetComponent<CameraPos>().x = room;
+            //cameraPos.GetComponent<CameraPos>().x = room;
             wallToSpawn.SetActive(true);
-            wallToSpawn2.SetActive(true);
             this.gameObject.tag = "RoomManager";
-            Invoke("spawnRound", 1.1f);
             Destroy(this.GetComponent<BoxCollider2D>());
         }
     }

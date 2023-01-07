@@ -13,6 +13,12 @@ public class DeadState : State
     public override void Enter()
     {
         base.Enter();
+
+        if (GameObject.FindGameObjectWithTag("RoomManager") != null)
+        {
+        GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().Dead();
+
+        }
     }
 
     public override void Exit()

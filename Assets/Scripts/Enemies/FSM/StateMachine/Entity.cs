@@ -220,6 +220,7 @@ public abstract class Entity : MonoBehaviour
 			enemyHealth = 0;
 			Instantiate(deadBlood, this.transform.position, this.transform.rotation);
 
+
 		}
 
 		ImpactBullet(bulletPosition, type);
@@ -379,7 +380,7 @@ public abstract class Entity : MonoBehaviour
 			Instantiate(deadBlood, this.transform.position, this.transform.rotation);
 
 		}
-		}
+	}
 
 	public Transform GetFirePointTransform()
     {
