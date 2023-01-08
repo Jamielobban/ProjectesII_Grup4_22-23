@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using static UnityEditor.VersionControl.Asset;
-using UnityEditor.U2D.Path;
+//using static UnityEditor.VersionControl.Asset;
+//using UnityEditor.U2D.Path;
 
 public class UIShakeTest : MonoBehaviour
 {
