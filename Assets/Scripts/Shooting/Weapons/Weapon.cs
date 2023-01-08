@@ -194,18 +194,18 @@ public abstract class Weapon
     private void InputsUpdate()
     {  
 
-        if (Input.GetButtonDown("UsePowerup"))
-        {
-            if (!data.powerActive.RuntimeValue && data.powerupAvailable.RuntimeValue)
-            {
-                data.powerActive.RuntimeValue = true;
-                ActionOnEnterPowerup();
-                data.timelastPowerupEnter.RuntimeValue = Time.time;
-                powerupPressKey = AudioManager.Instance.LoadSound(powerupPressed, player.transform);
-            }
+        //if (Input.GetButtonDown("UsePowerup"))
+        //{
+        //    if (!data.powerActive.RuntimeValue && data.powerupAvailable.RuntimeValue)
+        //    {
+        //        data.powerActive.RuntimeValue = true;
+        //        ActionOnEnterPowerup();
+        //        data.timelastPowerupEnter.RuntimeValue = Time.time;
+        //        powerupPressKey = AudioManager.Instance.LoadSound(powerupPressed, player.transform);
+        //    }
 
-        }
-        else if (Input.GetButtonDown("Reload") && data.bulletsInMagazine.RuntimeValue < data.bulletsInMagazine.InitialValue && !data.outOfAmmo.RuntimeValue && data.magazinesInWeapon.RuntimeValue > 0)
+        //}
+        if (Input.GetButtonDown("Reload") && data.bulletsInMagazine.RuntimeValue < data.bulletsInMagazine.InitialValue && !data.outOfAmmo.RuntimeValue && data.magazinesInWeapon.RuntimeValue > 0)
         {
             if (data.magazinesInWeapon.RuntimeValue > 0 && data.bulletsInMagazine.RuntimeValue > 0)
             {

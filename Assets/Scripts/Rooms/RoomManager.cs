@@ -10,7 +10,7 @@ public class RoomManager : MonoBehaviour
     public int kills = 0;
 
 
-
+    public List<GameObject> objectsToEnable;
     bool EnterRoom = false;
     public int enemiesInRoom;
 
@@ -23,6 +23,10 @@ public class RoomManager : MonoBehaviour
     public void Start()
     {
         wallToSpawn.SetActive(true);
+        foreach (GameObject gameObject in objectsToEnable)
+        {
+            gameObject.SetActive(false);
+        }
         
     }
 
@@ -61,6 +65,10 @@ public class RoomManager : MonoBehaviour
         if (collision.CompareTag("Player")&& !EnterRoom)
         {
             EnterRoom = true;
+            foreach (GameObject enemy in objectsToEnable)
+            {
+                enemy.SetActive(true);
+            }
             //currentRoom = true;
             //cameraPos.GetComponent<CameraPos>().x = room;
             wallToSpawn.SetActive(true);

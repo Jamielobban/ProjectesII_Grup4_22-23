@@ -9,6 +9,7 @@ public class EnemyProjectile : MonoBehaviour
     private void Start()
     {
         projectileSoundKey = AudioManager.Instance.LoadSound(bulletData.projectileSound, this.transform, 0, true);
+        Destroy(this.gameObject, 5f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

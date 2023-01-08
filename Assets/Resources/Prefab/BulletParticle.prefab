@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1920896335013489962}
   - component: {fileID: 1920896335013489963}
   - component: {fileID: 6894895722337833435}
+  - component: {fileID: 5695738572035571972}
   m_Layer: 18
   m_Name: BulletParticle
   m_TagString: Untagged
@@ -4884,3 +4885,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasCollided: 0
+--- !u!114 &5695738572035571972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920896335013489960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f417e6110491a94a99a2bddba3604cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 6

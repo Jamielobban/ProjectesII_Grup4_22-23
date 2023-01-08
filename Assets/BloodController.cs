@@ -27,7 +27,9 @@ public class BloodController : MonoBehaviour
         {
             playerpos.moveSpeed = 5000;
             playerpos.rollSpeed = 65f;
+            playerpos.isInBlood = true;
             bloodcollider.geometryType = CompositeCollider2D.GeometryType.Polygons;
+
         }
     }
 
@@ -37,6 +39,7 @@ public class BloodController : MonoBehaviour
         {
             playerpos.moveSpeed = 10000;
             playerpos.rollSpeed = 90f;
+            playerpos.isInBlood = false;
             bloodcollider.geometryType = CompositeCollider2D.GeometryType.Outlines;
         }
     }
