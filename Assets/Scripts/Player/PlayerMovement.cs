@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isDashing;
     public GameObject floorBlood;
 
+    public bool isInBlood;
+
     public float knockbackForceCheck;
 
     public State state;
@@ -377,6 +379,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void TakeLavaDamage()
+    {
+        if (!isInvulnerable)
+        {
+            currentHealth -= 5;
+            healthBar.SetHealth(currentHealth);
+        }
+    }
+
     void OnRollingEffects()
     {
         StartCoroutine(waitForLayerChange(0.45f));
@@ -475,28 +486,9 @@ public class PlayerMovement : MonoBehaviour
         fxAnim.SetBool("isDashingFX", false);
         //anim.SetBool("isDashing", false);
     }
-
-    //private void OnCollisionStay2D(Collision2D other)
-    //{
-    //    if (other.gameObject.CompareTag("Blood"))
-    //    {
-    //        Debug.Log("Please");
-    //    }
-    //}
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Blood"))
-    //    {
-    //        moveSpeed = 5000;
-    //        rollSpeed = 75f;
-    //    }
-    //}
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Blood"))
-    //    {
-    //        Debug.Log("I am no longer inside");
-    //    }
-    //}
+    
+    private IEnumerator TakeLavaCoroutine(float time) {
+        InvokeRepeating("TakeLavaDamage()", 0.5f, 1f);
+        yield return new WaitForSeconds(time);
+    }
 }
