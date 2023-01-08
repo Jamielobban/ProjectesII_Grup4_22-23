@@ -98,11 +98,11 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         RemoveEmptyPositions();
-        Debug.Log(audiosPlaying.Count);
-        foreach(var pair in audiosPlaying)
-        {
-            Debug.Log(pair.Value.audioClipName);
-        }
+        ////Debug.Log(audiosPlaying.Count);
+        //foreach(var pair in audiosPlaying)
+        //{
+        //    Debug.Log(pair.Value.audioClipName);
+        //}
     }
 
     public int? LoadSound(AudioClip clip, Vector3 position, float delay = 0f, bool loop = false)
