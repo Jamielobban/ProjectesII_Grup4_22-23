@@ -1,24 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class Pellet : Bullet
-{
-    private Rigidbody2D rb;    
+{       
     [SerializeField]
     SpriteRenderer sr;
-    
+
+    private PlayerMovement playerpos;
+    private RecoilScript _recoil;
+
     protected override void Start()
     {
+        _recoil = FindObjectOfType<RecoilScript>();
         base.Start();
-
-        bulletDamage = 34*_damageMultiplier;
-        bulletRangeInMetres = 5;
-        bulletSpeedMetresPerSec = 20;
-        bulletRadius = 0.23f;
+        playerpos = FindObjectOfType<PlayerMovement>();
+        //bulletDamage = 34*_damageMultiplier;
+        //bulletRangeInMetres = 500;
+        //bulletSpeedMetresPerSec = 20;
+        //bulletRadius = 0.23f;
 
         rb = this.GetComponent<Rigidbody2D>();
+        _recoil.AddRecoil();
 
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
+        playerpos.knockback = true;
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 0.75f), (-rb.velocity.y * 0.75f));
+        CinemachineShake.Instance.ShakeCamera(10f, 0.3f);
         
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
@@ -26,7 +36,7 @@ public class Pellet : Bullet
 
     public void SetDamageBUllet(float _multiplier)
     {
-        bulletDamage = 34 * _multiplier;
+        bulletData.bulletDamage = 34 * _multiplier;
     }
     
     protected override void Update()
@@ -39,7 +49,7 @@ public class Pellet : Bullet
         }
         else
         {
-            bulletRangeInMetres =15;
+            
         }
 
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg - 90;
@@ -51,14 +61,12 @@ public class Pellet : Bullet
         if (collision.gameObject.CompareTag("MapLimit"))
         {
             base.ImpactWall();
+            //Debug.Log("Hit the wall");
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            bulletInfo.damage = bulletDamage;
-            bulletInfo.impactPosition = transform.position;
-            collision.gameObject.SendMessage("GetDamage", bulletInfo);
+            collision.gameObject.GetComponent<Entity>().GetDamage(bulletData.bulletDamage, HealthStateTypes.NORMAL, 0, this.transform.position, TransformMovementType.PUNCH);
             base.ImpactBody();           
-            
         }
     }
 

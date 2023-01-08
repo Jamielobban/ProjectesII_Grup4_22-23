@@ -4,15 +4,18 @@ using UnityEngine;
 using Cinemachine;
 public class Automatica : Mechanism
 {    
+    int? shootSoundKey;
     public override bool Shoot(GameObject bulletTypePrefab, Transform firePoint, float fireRateinSec, AudioClip shootSound, float amplitudeGain, float damageMultiplier)
     {
         if (Input.GetButton("Shoot") && Time.time - timeLastShoot >= fireRateinSec)
         {
             GameObject bullet = GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
+            //Debug.Log(bullet.transform.position);
+
             bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
-            AudioManager.Instance.PlaySound(shootSound);
+            shootSoundKey = AudioManager.Instance.LoadSound(shootSound, firePoint.position);
             timeLastShoot = Time.time;
-            CinemachineShake.Instance.ShakeCamera(5f*amplitudeGain, .1f);
+            bullet.GetComponent<Bullet>().FireProjectile();
             return true;
         }
         return false;

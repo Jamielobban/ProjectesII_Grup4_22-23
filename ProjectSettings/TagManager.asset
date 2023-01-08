@@ -13,6 +13,12 @@ TagManager:
   - EnemyList
   - RoomManager
   - Default
+  - CameraPos
+  - ChallengeUI
+  - ElectricBulletRange
+  - FirePoint
+  - PlayerContain
+  - Blood
   layers:
   - Default
   - TransparentFX
@@ -30,10 +36,10 @@ TagManager:
   - IgnoreEverything
   - SniperBulletPowerup
   - RoomTrigger
-  - 
-  - 
-  - 
-  - 
+  - ElectricBulletRange
+  - Blood
+  - BulletSponge
+  - PlayerWallCollider
   - 
   - 
   - 
@@ -49,4 +55,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Blood
+    uniqueID: 4010685711
+    locked: 0
+  - name: Blood2
+    uniqueID: 3783537189
     locked: 0

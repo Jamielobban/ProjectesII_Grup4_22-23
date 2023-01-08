@@ -7,9 +7,45 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: variant
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: 34d37d37b7d56564f8a5ec0113bfb1f0, type: 2}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: deadStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: d1eec61fecbdbc54db8c97222cb082fc, type: 2}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: idleStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4d889c5321b449549b0aa557e4c08d47, type: 2}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: firingStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6eefe4a894f08c0459cbaf181b17bcd8, type: 2}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: chasingStateData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2d0cf41cfa946e548b230bdc37369a48, type: 2}
+    - target: {fileID: -4160090725573128497, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: distanceToPassToIdle
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4765914084310129915, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: m_TagString
+      value: FirePoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 7428876066006896582, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8930414981940649308, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
       propertyPath: bulletSpeed
-      value: 13
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8930414981940649308, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
       propertyPath: enemyHealth
@@ -33,7 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8930414981940649309, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.749996
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8930414981940649309, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -67,5 +103,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Automatic
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7163427000394522628, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 83720aa667e4e3046818bf7fb661bedd, type: 3}

@@ -7,6 +7,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 287641543650026421, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.469
+      objectReference: {fileID: 0}
+    - target: {fileID: 287641543650026421, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.469
+      objectReference: {fileID: 0}
+    - target: {fileID: 287641543650026421, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.488
+      objectReference: {fileID: 0}
+    - target: {fileID: 287641543650026421, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409296284934073176, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409296284934073178, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_Mass
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409296284934073179, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_Size.x
+      value: 2.4766898
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409296284934073179, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_Size.y
+      value: 2.4965563
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409296284934073179, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.0033109188
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409296284934073179, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.000000059604645
+      objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073189, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_Name
       value: Big Fat Man
@@ -17,11 +57,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalPosition.x
@@ -33,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.749996
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalRotation.w
@@ -64,6 +104,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: sr
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: speed
       value: 4
       objectReference: {fileID: 0}
@@ -81,7 +125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: bulletSpeed
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: damageSound
@@ -115,10 +159,57 @@ PrefabInstance:
       propertyPath: enemyBulletDamage
       value: 20
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3045008420885621440, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_TagString
+      value: FirePoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 3762627058480545269, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: shaderTypes
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4491323302402679602, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.83
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1409296284934073176, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+    - {fileID: -377043484754212743, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+    - {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
 --- !u!4 &5784240789969858167 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4491323302402679602, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
   m_PrefabInstance: {fileID: 7931299525193305413}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9052078452103636512 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1409296284934073189, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+  m_PrefabInstance: {fileID: 7931299525193305413}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-1254014935782448181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9052078452103636512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf4fd074f45f0c4c92c6ec00c511278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  vectorToPlayer: {x: 0, y: 0, z: 0}
+  vectorToPlayerFromFirepoint: {x: 0, y: 0, z: 0}
+  sr: {fileID: 0}
+  burnPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  enemyData: {fileID: 11400000, guid: 7627d4c653257134da60cfda75581b58, type: 2}
+  blood: {fileID: 0}
+  deadBlood: {fileID: 0}
+  chasingStateData: {fileID: 11400000, guid: 45f1c38a7b4b2614394df81c3ed1496b, type: 2}
+  firingStateData: {fileID: 11400000, guid: 2e1bd05fda57ece4ba87f1a596f4ee81, type: 2}
+  deadStateData: {fileID: 11400000, guid: 1eff69aab916339438c2d58bb5d95b17, type: 2}
+  idleStateData: {fileID: 11400000, guid: 64463c4ed42a7e84da5bdeffe7ea5ea0, type: 2}
+  variant: 8
+  distanceToPassToIdle: 20

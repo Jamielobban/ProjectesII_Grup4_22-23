@@ -7,8 +7,8 @@ public abstract class Bullet : MonoBehaviour
     public bool powerUpOn;
     protected BulletHitInfo bulletInfo;
 
-    [SerializeField]
-    protected GameObject collisionWallEffect;
+    //[SerializeField]
+    public GameObject collisionWallEffect;
     [SerializeField]
     protected GameObject collisionBloodEffect;
 
@@ -17,21 +17,37 @@ public abstract class Bullet : MonoBehaviour
     [SerializeField]
     protected LayerMask whatIsMapColisionable;
 
-    protected float bulletDamage;
-    protected float bulletSpeedMetresPerSec;
-    protected float bulletRangeInMetres;
-    protected float bulletRadius;
-    protected float _damageMultiplier;
+    protected Transform originalFirePoint;
+
+    [SerializeField]
+    protected Rigidbody2D rb;
+
+    
+    public D_Bullet bulletData;
+
+   
 
     private bool firstTime = true;
-    private float timeShooted;
+    protected float timeShooted;
     
     public virtual void ApplyMultiplierToDamage(float multiplier)
     {
-        _damageMultiplier = multiplier;        
+        bulletData._damageMultiplier = multiplier;        
     }
 
-    
+    public float GetDamageMultiplier()
+    {
+        return bulletData._damageMultiplier;
+    }
+    public float GetBUlletDamage()
+    {
+        return bulletData.bulletDamage;
+    }
+
+    public float GetSpeed()
+    {
+        return bulletData.bulletSpeedMetresPerSec;
+    }
 
     protected virtual void Start()
     {
@@ -39,6 +55,7 @@ public abstract class Bullet : MonoBehaviour
         
         timeShooted = Time.time;       
         
+
     }
 
     // Update is called once per frame
@@ -50,7 +67,7 @@ public abstract class Bullet : MonoBehaviour
             firstTime = false;
         }
 
-        if (Time.time - timeShooted >= bulletRangeInMetres / bulletSpeedMetresPerSec)
+        if (Time.time - timeShooted >= bulletData.bulletRangeInMetres / bulletData.bulletSpeedMetresPerSec)
         {
             Destroy(this.gameObject);
 
@@ -86,5 +103,28 @@ public abstract class Bullet : MonoBehaviour
     protected virtual void HitSomething()
     {
         Instantiate(collisionWallEffect, transform.position, Quaternion.identity);
+    }
+
+    public void FireProjectile(/*Transform referenceTransform*/)
+    {
+        //this.speed = speed;
+        //this.travelDistance = travelDistance;
+
+        //attackDetails.damageAmount = damage;        
+
+        //originalFirePoint = referenceTransform;
+        originalFirePoint = this.transform;
+        originalFirePoint.Rotate(0f, 0f, originalFirePoint.transform.rotation.z + Random.Range(bulletData.minRangeTransform, bulletData.maxRangeTransform));
+        
+        //Debug.Log(originalFirePoint == null);
+        //Debug.Log(bulletData);
+        if (bulletData.ApplyShootForce)
+        {
+            //Debug.Log(originalFirePoint);
+            //Debug.Log("in");
+            this.GetComponent<Rigidbody2D>().AddForce(originalFirePoint.up * -bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+            //Debug.Log(originalFirePoint.up);
+        }
+
     }
 }

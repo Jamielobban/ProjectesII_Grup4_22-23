@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
+using DG.Tweening;
 
 public class RightHand : MonoBehaviour
 {
-    Weapon weaponInHand, nextWeapon;
+    public Weapon weaponInHand, nextWeapon;
     [SerializeField] Transform firePoint;
     [SerializeField] SpriteRenderer sr;
 
     public PowerUpTimer powerUpTimer;
     public PowerUpTimer reloadBarTimer;
 
+    private RecoilScript _recoilSript;
     public GameObject powerUpBar;
     public GameObject reloadBar;
     public TextMeshProUGUI bulletsInMagazine;
@@ -38,21 +41,27 @@ public class RightHand : MonoBehaviour
     public Color usePowerUpColor;
 
     Image powerUpBarColor;
+    Material playerMat;    
+    float timeEndShake;
 
     enum PowerUpState { RELOADING, USING, FULL };
     PowerUpState powerUpState;
 
     public Image actualWeaponUI, nextWeaponUI;
+    
 
     private void Start()
     {
-        nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint, ref sr);
+        _recoilSript = GetComponent<RecoilScript>();
+        nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint);
         weaponInHand.SetWeaponHand(ref sr);
         reloadBar.SetActive(false);
-        powerUpBarColor = powerUpBar.GetComponent<Image>();
+        //powerUpBarColor = powerUpBar.GetComponent<Image>();
 
         UpdateUIWeapons();
-
+        powerUpState = PowerUpState.RELOADING;
+        playerMat = GetComponentInParent<PlayerMovement>().body.material;
+        //shakeSeq = DOTween.Sequence();
     }
 
     void UpdateUIWeapons()
@@ -65,12 +74,16 @@ public class RightHand : MonoBehaviour
     }
     private void Update()
     {
+        if (playerMat.GetFloat("_ShakeUvSpeed") != 0 && timeEndShake <= Time.time)
+        {
+            playerMat.SetFloat("_ShakeUvSpeed", 0);
+        }
 
-
+        //Debug.Log(playerMat);
         switch (powerUpState)
         {
             case PowerUpState.RELOADING:
-                powerUpBarColor.color = reloadingColor;
+                //powerUpBarColor.color = reloadingColor;
                 firstTime4 = true;
                 break;
             case PowerUpState.FULL:
@@ -81,7 +94,7 @@ public class RightHand : MonoBehaviour
                 powerUpBarColor.color = usePowerUpColor;
                 if (firstTime4)
                 {
-                    Debug.Log(weaponInHand.GetTimeLeftPowerup());
+                    //Debug.Log(weaponInHand.GetTimeLeftPowerup());
                     CinemachineShake.Instance.ShakeCamera(5f, weaponInHand.GetTimeLeftPowerup());
                     firstTime4 = false;
                 }
@@ -109,47 +122,47 @@ public class RightHand : MonoBehaviour
         }
 
         //Weapon powerup UI
-        if (!weaponInHand.GetState())
-        {
+        //if (!weaponInHand.GetState())
+        //{
 
-            if (powerUpTimer.GetMaxTime() <= 20)
-            {
-                powerUpTimer.SetMaxTime(20);
-                firstTime = true;
+        //    //if (powerUpTimer.GetMaxTime() <= 20)
+        //    //{
+        //    //    powerUpTimer.SetMaxTime(20);
+        //    //    firstTime = true;
 
-            }
-            if (powerUpBarColor.fillAmount == 1)
-            {
-                powerUpState = PowerUpState.FULL;
+        //    //}
+        //    //if (powerUpBarColor.fillAmount == 1)
+        //    //{
+        //    //    powerUpState = PowerUpState.FULL;
 
-            }
-            else
-            {
-                powerUpState = PowerUpState.RELOADING;
+        //    //}
+        //    //else
+        //    //{
+        //    //    powerUpState = PowerUpState.RELOADING;
 
-            }
+        //    //}
 
-            powerUpTimer.SetTime(weaponInHand.GetTime());
-        }
-        if (weaponInHand.GetState())
-        {
-            powerUpState = PowerUpState.USING;
+        //    //powerUpTimer.SetTime(weaponInHand.GetTime());
+        //}
+        //if (weaponInHand.GetState())
+        //{
+        //    powerUpState = PowerUpState.USING;
 
-            if (firstTime)
-            {
-                powerUpTimer.SetMaxTime(weaponInHand.SetTimeLeftPowerup());
-                firstTime = false;
-            }
+        //    if (firstTime)
+        //    {
+        //        powerUpTimer.SetMaxTime(weaponInHand.SetTimeLeftPowerup());
+        //        firstTime = false;
+        //    }
 
-            powerUpTimer.SetTime(weaponInHand.GetTimeLeftPowerup());
+        //    powerUpTimer.SetTime(weaponInHand.GetTimeLeftPowerup());
 
-            //powerUpBar.color = new Color(202,187,43,255);
+        //    //powerUpBar.color = new Color(202,187,43,255);
 
-            //CBBC2B
-            //394AA6
+        //    //CBBC2B
+        //    //394AA6
 
-            //Debug.Log("Activated");
-        }
+        //    //Debug.Log("Activated");
+        //}
 
         //Weapon ammo UI
         bulletsInMagazine.text = weaponInHand.GetBulletsInMagazine().ToString();
@@ -163,6 +176,7 @@ public class RightHand : MonoBehaviour
 
         if (weaponInHand.GetIfOutOffAmmo())
         {
+            //Debug.Log("in");
             if (reloadBar.activeSelf)
             {
                 firstTime3 = true;
@@ -173,19 +187,39 @@ public class RightHand : MonoBehaviour
             weaponInHand = nextWeapon;
             weaponInHand.SetWeaponHand(ref sr);
             weaponInHand.SetTime(timeToPass);
-            nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon(firePoint, ref sr);
+            nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon(firePoint);
             firstTime = true;
             UpdateUIWeapons();
 
         }
+
+        if (weaponInHand.FixedUpdate())
+        {
+            ShootShake();
+        }
     }
 
-    //public void SetColor()
-    //{
+    private void FixedUpdate()
+    {
+        
+    }
 
-    //}
+    void ShootShake()
+    {
+        if(playerMat.GetFloat("_ShakeUvSpeed") == 0)
+        {
+            playerMat.SetFloat("_ShakeUvSpeed", 20);
+        }
+        timeEndShake = Time.time + 0.13f;
+    }
+
     public Color GetColor()
     {
         return weaponInHand.GetWeaponColor();
+    }
+
+    public Weapon GetWeaponInHand()
+    {
+        return weaponInHand;
     }
 }

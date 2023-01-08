@@ -25,7 +25,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.749996
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073190, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: m_LocalRotation.w
@@ -65,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: bulletSpeed
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: damageSound
@@ -73,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 89e70a392fb07cf448a17d6316a50d9c, type: 3}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: enemyHealth
-      value: 105
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 1409296284934073191, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
       propertyPath: numberOfBursts
@@ -99,5 +99,51 @@ PrefabInstance:
       propertyPath: enemyBulletDamage
       value: 20
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3045008420885621440, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_TagString
+      value: FirePoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875871923991973174, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197470821849662029, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -377043484754212743, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+    - {fileID: 196873054636932772, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+--- !u!1 &1859936831163064490 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1409296284934073189, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+  m_PrefabInstance: {fileID: 738873121966525391}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &92743026764471792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859936831163064490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf4fd074f45f0c4c92c6ec00c511278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  vectorToPlayer: {x: 0, y: 0, z: 0}
+  vectorToPlayerFromFirepoint: {x: 0, y: 0, z: 0}
+  sr: {fileID: 0}
+  burnPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  enemyData: {fileID: 11400000, guid: 58d3cad2ec0c1e24eb9d9ed179c69604, type: 2}
+  blood: {fileID: 0}
+  deadBlood: {fileID: 0}
+  chasingStateData: {fileID: 11400000, guid: 486fc00e54afbc345bcd3a4d7013c717, type: 2}
+  firingStateData: {fileID: 11400000, guid: c49f3100afc21d448b68a767e7804869, type: 2}
+  deadStateData: {fileID: 11400000, guid: 70569955435de854dada82c04b317f1b, type: 2}
+  idleStateData: {fileID: 11400000, guid: 0aa5ebaac84f12942a8e77e5129d002d, type: 2}
+  variant: 1
+  distanceToPassToIdle: 27
