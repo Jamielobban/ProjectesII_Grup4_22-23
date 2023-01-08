@@ -7,4 +7,5 @@ public class D_DeadState : ScriptableObject
 {
     public GameObject deadParticles;
     public AudioClip deadSound;
+    public GameObject hearth;
 }

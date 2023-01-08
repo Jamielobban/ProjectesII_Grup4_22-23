@@ -15,6 +15,7 @@ public class E2_DeadState : DeadState
     {
         base.Enter();
         deadSoundKey = AudioManager.Instance.LoadSound(stateData.deadSound, enemy.transform.position);
+        Object.Instantiate(stateData.hearth, enemy.transform.position, Quaternion.identity);
     }
 
     public override void Exit()

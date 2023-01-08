@@ -409,6 +409,18 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void Health()
+    {
+        currentHealth += 10;
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+        healthBar.SetHealth(currentHealth);
+    }
+
     private void OnHit(float damage)
     {
         TakeDamage(damage);

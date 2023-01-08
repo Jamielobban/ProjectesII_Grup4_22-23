@@ -14,6 +14,8 @@ public class E3_DeadState : DeadState
     public override void Enter()
     {
         base.Enter();
+        Object.Instantiate(stateData.hearth, enemy.transform.position, Quaternion.identity);
+
     }
 
     public override void Exit()
