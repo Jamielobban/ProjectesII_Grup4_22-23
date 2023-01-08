@@ -8,6 +8,11 @@ public class Log : MonoBehaviour
     public Transform end;
     public List<GameObject> logs = new List<GameObject>();
 
+    [SerializeField]
+    AudioClip doorLogSound;
+
+    int? logDoorKey;
+
     public Transform spawnPoint;
     int logsNum;
     // Start is called before the first frame update
@@ -20,6 +25,7 @@ public class Log : MonoBehaviour
     private IEnumerator animation(float time)
     {
         yield return new WaitForSeconds(time);
+        logDoorKey = AudioManager.Instance.LoadSound(doorLogSound, this.transform, 0, false);
         this.GetComponent<Animator>().SetTrigger("Triger");
         StartCoroutine(Spawn(0.6f));
 

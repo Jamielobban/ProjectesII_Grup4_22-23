@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class RotateScript : MonoBehaviour
 {
+   
     [SerializeField]
     float velocity;
     float lastEnter;
     float counter;
 
+    
 
     private void Start()
     {
         lastEnter = Time.time;
-        counter = 0;
+        counter = 0;        
     }
 
     private void FixedUpdate()

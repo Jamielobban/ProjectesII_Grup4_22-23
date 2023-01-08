@@ -9,6 +9,17 @@ public class ArrowTrap : MonoBehaviour
     public Transform spawnPoint;
     public Transform end;
 
+    [SerializeField]
+    AudioClip arrowThrow;
+    [SerializeField]
+    AudioClip arrowAir;
+    [SerializeField]
+    AudioClip arrowHit;
+
+    int? arrowThrowKey;
+    int? arrowAirKey;
+    int? arrowHitKey;
+
     public bool up;
     private int dir;
     int arrowsNum;
@@ -37,8 +48,11 @@ public class ArrowTrap : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.RandomRange(1f, 2f));
 
+        arrowThrowKey = AudioManager.Instance.LoadSound(arrowThrow, this.transform, 0, false);
         arrows.Add(Instantiate(arrow, spawnPoint.position, new Quaternion(spawnPoint.rotation.x, spawnPoint.rotation.y, rotation,0)) as GameObject);
 
+        arrowAirKey = AudioManager.Instance.LoadSound(arrowAir, arrows[arrowsNum].transform, 0, false);
+       
         arrows[arrowsNum].GetComponent<Rigidbody2D>().AddForce(dir*transform.up * 1500);
         arrows[arrowsNum].transform.SetParent(this.gameObject.transform);
         arrowsNum++;
@@ -52,6 +66,7 @@ public class ArrowTrap : MonoBehaviour
         {
             if (Vector3.Distance(arrows[i].transform.position, end.position) < 0.5f)
             {
+                arrowHitKey = AudioManager.Instance.LoadSound(arrowHit, arrows[i].transform.position, 0, false);
                 arrows[i].GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                 arrows[i].gameObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Stop");
                 Destroy(arrows[i].gameObject, 1f);

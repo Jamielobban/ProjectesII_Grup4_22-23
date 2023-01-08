@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Normal, Rolling, Hit
     }
+    [SerializeField]
+    AudioClip backgroundTheme;
+    int? backThemeKey;
     public Animator anim;
     public Animator fxAnim;
     public SpriteRenderer playerSprite;
@@ -125,6 +128,11 @@ public class PlayerMovement : MonoBehaviour
         currentHealth = maxHealth;
         rollSpeed = 90f;
         justRolled = false;
+        backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true);
+        if (backThemeKey.HasValue)
+        {
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).volume = 0.4f;
+        }
     }
     // Update is called once per frame
     void Update()

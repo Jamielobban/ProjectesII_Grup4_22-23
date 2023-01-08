@@ -8,7 +8,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] GameObject audioSourcePrefab;
     public static AudioManager Instance { get; private set; }
     const float maxDifferenceToBePlayed = 0.01f;
-
+    
+    Dictionary<string, float> audioNameAndItsRange = new Dictionary<string, float>();
     public class AudioInfo : MonoBehaviour
     {
         public string audioClipName;        
@@ -20,7 +21,7 @@ public class AudioManager : MonoBehaviour
         private float timeDelayed;
         private bool clipHasStarted = false;
 
-        public AudioInfo(AudioClip clip, float creationTime, Transform parent, GameObject audioSourcePrefab, float delay = 0f, bool loop = false)
+        public AudioInfo(AudioClip clip, float creationTime, Transform parent, GameObject audioSourcePrefab, float maxDistance = 25,float delay = 0f, bool loop = false)
         {
             thisTime = Time.time;
             timeDelayed = delay;
@@ -28,6 +29,8 @@ public class AudioManager : MonoBehaviour
             audioSorcePrefabClone = Instantiate(audioSourcePrefab, parent);
 
             audioSource = audioSorcePrefabClone.GetComponent<AudioSource>();
+
+            audioSource.maxDistance = maxDistance;
 
             audioSource.loop = loop;
 
@@ -39,7 +42,7 @@ public class AudioManager : MonoBehaviour
             audioSource.PlayDelayed(delay);
         }
 
-        public AudioInfo(AudioClip clip, float creationTime, Vector3 position, GameObject audioSourcePrefab, float delay = 0f, bool loop = false)
+        public AudioInfo(AudioClip clip, float creationTime, Vector3 position, GameObject audioSourcePrefab, float maxDistance = 25, float delay = 0f, bool loop = false)
         {
             thisTime = Time.time;
             timeDelayed = delay;
@@ -47,6 +50,8 @@ public class AudioManager : MonoBehaviour
             audioSorcePrefabClone = Instantiate(audioSourcePrefab, position, Quaternion.identity);
 
             audioSource = audioSorcePrefabClone.GetComponent<AudioSource>();
+
+            audioSource.maxDistance = maxDistance;
 
             audioSource.loop = loop;
 
@@ -78,6 +83,16 @@ public class AudioManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
         }
+
+        audioNameAndItsRange.Add("EnemyBulletWorm", 15);
+        audioNameAndItsRange.Add("EnemyBulletWizard", 15);
+        audioNameAndItsRange.Add("idle", 31);
+        audioNameAndItsRange.Add("Candle Fire Flicker Sound Effect (mp3cut.net)", 3.5f);
+        audioNameAndItsRange.Add("TorchFire", 8f);
+        audioNameAndItsRange.Add("GotaSound", 7f);
+        audioNameAndItsRange.Add("ArrowImpact", 2.5f);
+        audioNameAndItsRange.Add("elevator", 1000f);
+        
     }
 
     private void Update()
@@ -97,7 +112,18 @@ public class AudioManager : MonoBehaviour
             return null;
         }
 
-        AudioInfo audioInfo = new AudioInfo(clip, Time.time, position, audioSourcePrefab, delay, loop);
+        float range;
+
+        if (audioNameAndItsRange.ContainsKey(clip.name))
+        {
+            range = audioNameAndItsRange[clip.name];
+        }
+        else
+        {
+            range = 25;
+        }
+
+        AudioInfo audioInfo = new AudioInfo(clip, Time.time, position, audioSourcePrefab, range, delay, loop);
 
         audioInfo.audioSorcePrefabClone.GetComponent<AudioPrefabScript>().myId = audioInfo.audioSorcePrefabClone.GetInstanceID();
         audiosPlaying.Add(audioInfo.audioSorcePrefabClone.GetInstanceID(), audioInfo);
@@ -114,7 +140,18 @@ public class AudioManager : MonoBehaviour
 
         }
 
-        AudioInfo audioInfo = new AudioInfo(clip, Time.time, parent, audioSourcePrefab, delay, loop);
+        float range;
+
+        if (audioNameAndItsRange.ContainsKey(clip.name))
+        {
+            range = audioNameAndItsRange[clip.name];
+        }
+        else
+        {
+            range = 25;
+        }
+
+        AudioInfo audioInfo = new AudioInfo(clip, Time.time, parent, audioSourcePrefab, range, delay, loop);
 
         audioInfo.audioSorcePrefabClone.GetComponent<AudioPrefabScript>().myId = audioInfo.audioSorcePrefabClone.GetInstanceID();
         audiosPlaying.Add(audioInfo.audioSorcePrefabClone.GetInstanceID(), audioInfo);
@@ -136,9 +173,22 @@ public class AudioManager : MonoBehaviour
         
     }
 
+    public AudioSource GetAudioFromDictionaryIfPossible(int key)
+    {
+        if (audiosPlaying.ContainsKey(key) && audiosPlaying[key].audioSorcePrefabClone != null)
+        {
+            return audiosPlaying[key].audioSorcePrefabClone.GetComponent<AudioSource>();
+        }
+        return null;
+    }
+
     private bool CheckIfShouldPlay(AudioClip clip, float delay)
     {
-        return audiosPlaying.Where(aI => aI.Value.audioSorcePrefabClone != null && aI.Value.audioSorcePrefabClone.GetComponent<AudioSource>().clip.name == clip.name && (Mathf.Abs(aI.Value.startSoundTime - (Time.time + delay)) <= maxDifferenceToBePlayed)).ToList().Count == 0;        
+        if(clip.name == "Attack2" || clip.name == "TurretAttackBo" || clip.name == "ArrowImpact")
+        {
+            return audiosPlaying.Where(aI => aI.Value.audioSorcePrefabClone != null && aI.Value.audioSorcePrefabClone.GetComponent<AudioSource>().clip.name == clip.name && (Mathf.Abs(aI.Value.startSoundTime - (Time.time + delay)) <= maxDifferenceToBePlayed)).ToList().Count == 0;
+        }
+        return true;
     }
 
     private void RemoveEmptyPositions()

@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class SineTrap : MonoBehaviour
 {
+    [SerializeField]
+    AudioClip engineSound;
+    [SerializeField]
+    AudioClip bladesSound;
+
+    int? engineSoundKey;
+    int? bladesSoundKey;
+
     public GameObject[] points;
     public float velocity;
     //Cuando llega al final vuelve al principio
@@ -20,6 +28,13 @@ public class SineTrap : MonoBehaviour
         currentWaitTime = Time.realtimeSinceStartup;
         nextPosition = 0;
         transform.position = points[nextPosition].transform.position;
+
+        engineSoundKey = AudioManager.Instance.LoadSound(engineSound, this.transform, 0, true);
+        if (engineSoundKey.HasValue)
+        {
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(engineSoundKey.Value).volume = 0.85f;
+        }
+        bladesSoundKey = AudioManager.Instance.LoadSound(bladesSound, this.transform, 0, true);
     }
 
     // Update is called once per frame

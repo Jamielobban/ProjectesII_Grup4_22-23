@@ -5,6 +5,11 @@ using UnityEngine;
 public class EnemyProjectile : MonoBehaviour
 {
     public D_EnemyBullet bulletData;
+    int? projectileSoundKey;
+    private void Start()
+    {
+        projectileSoundKey = AudioManager.Instance.LoadSound(bulletData.projectileSound, this.transform, 0, true);
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

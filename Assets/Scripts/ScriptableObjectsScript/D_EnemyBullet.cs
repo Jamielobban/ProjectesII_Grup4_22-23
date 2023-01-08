@@ -7,4 +7,5 @@ public class D_EnemyBullet : ScriptableObject
 {
     public float speed;
     public float damage;
+    public AudioClip projectileSound;
 }
