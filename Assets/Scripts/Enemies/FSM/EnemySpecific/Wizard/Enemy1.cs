@@ -80,8 +80,15 @@ public class Enemy1 : Entity
 
     public void SearchFunction(string funcName)
     {
+        if (this.gameObject == null || stateMachine.currentState == null || stateMachine.currentState == deadState)
+            return;
         var exampleType = stateMachine.currentState.GetType();
         var exampleMethod = exampleType.GetMethod(funcName);
         exampleMethod.Invoke(stateMachine.currentState, null);
+
+        if(this.gameObject == null)
+        {
+            CancelInvoke();
+        }
     }
 }
