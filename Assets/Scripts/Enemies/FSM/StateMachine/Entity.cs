@@ -48,6 +48,7 @@ public abstract class Entity : MonoBehaviour
 	public GameObject deadBlood;
 
 	public int? hitSoundKey;
+	float originalGlowValue;
 
 	private void Awake()
     {
@@ -66,8 +67,9 @@ public abstract class Entity : MonoBehaviour
 	public virtual void Start()
     {
 		rb = GetComponent<Rigidbody2D>();
-		anim = GetComponent<Animator>();		
-		if(anim == null)
+		anim = GetComponent<Animator>();
+		originalGlowValue = sr.material.GetFloat("_Glow");
+		if (anim == null)
         {
 			anim = GetComponentsInChildren<Animator>().ToArray()[0];
 		}
@@ -252,6 +254,7 @@ public abstract class Entity : MonoBehaviour
 			sequenceImpactShader.Kill();
 			sequenceImpactShader = null;
 		}
+		sr.material.SetFloat("_Glow", 0);
 
 		sequenceImpactShader = DOTween.Sequence();
 
@@ -309,6 +312,7 @@ public abstract class Entity : MonoBehaviour
 			sequenceImpactShader.Join(sr.material.DOFloat(0, "_HitEffectBlend", 0.2f));
 			sequenceImpactShader.Join(sr.material.DOColor(new Color(1, 1, 0.34434f, 1), "_HitEffectColor", 0.2f));
 			sequenceImpactShader.Join(sr.material.DOFloat(0, "_PinchUvAmount", 0.2f));
+			sequenceImpactShader.Join(sr.material.DOFloat(originalGlowValue, "_Glow", 0.2f));
 		});
 	}
 

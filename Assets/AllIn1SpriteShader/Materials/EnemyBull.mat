@@ -10,6 +10,7 @@ Material:
   m_Name: EnemyBull
   m_Shader: {fileID: 4800000, guid: a36b7719ff0465b42ab1407d67672c5f, type: 3}
   m_ValidKeywords:
+  - GLOW_ON
   - OUTBASE8DIR_ON
   - OUTBASEPIXELPERF_ON
   m_InvalidKeywords: []
@@ -119,7 +120,7 @@ Material:
     - _GhostTransparency: 0
     - _GlitchAmount: 3
     - _GlitchSize: 1
-    - _Glow: 10
+    - _Glow: 0
     - _GlowGlobal: 1
     - _GradBlend: 1
     - _GradBoostX: 1.2
@@ -149,9 +150,9 @@ Material:
     - _InnerOutlineAlpha: 1
     - _InnerOutlineGlow: 4
     - _InnerOutlineThickness: 1
-    - _MaxXUV: 0.9419344
+    - _MaxXUV: 0.08479158
     - _MaxYUV: 0.733957
-    - _MinXUV: 0.91744053
+    - _MinXUV: 0.060297716
     - _MinYUV: 0.40666798
     - _MotionBlurAngle: 0.1
     - _MotionBlurDist: 1.25
