@@ -26,7 +26,7 @@ public class WeaponGenerator : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
         }
     }
     private void Update()

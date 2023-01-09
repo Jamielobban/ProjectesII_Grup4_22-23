@@ -368,7 +368,7 @@ public class PlayerMovement : MonoBehaviour
         }
         //rb.AddForce(movement * 500 * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
-    void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         if (!isInvulnerable)
         {
@@ -379,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void TakeLavaDamage()
+    public void TakeLavaDamage()
     {
         if (!isInvulnerable)
         {
