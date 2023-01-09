@@ -483,12 +483,7 @@ public class PlayerMovement : MonoBehaviour
         currentBlinkRechargeTime += Time.deltaTime;
         dashUI1.SetDashTimer(currentBlinkRechargeTime);
     }
-    public IEnumerator waitForKnockback(float time)
-    {
-        yield return new WaitForSeconds(time);
-        //knockback = false;
-        Debug.Log("Waiting");
-    }
+
 
     private IEnumerator waitForLayerChange(float waitTime)
     {

@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponGenerator : MonoBehaviour
-{
-    [SerializeField]
-    WeaponValues[] weaponsValues = new WeaponValues[7]; //Sniper, shotgun, Pistol - Auto, Semi, Bolt
-    //Mechanism[] mechanismTypes = new Mechanism[3] { new Automatica(), new Seamiautomatica(), new Repeticion() };
-    //[SerializeField] GameObject[] bulletPrefabs = new GameObject[3];
-
+{
+
+    [SerializeField]
+
+    WeaponValues[] weaponsValues = new WeaponValues[7]; //Sniper, shotgun, Pistol - Auto, Semi, Bolt
+
+    //Mechanism[] mechanismTypes = new Mechanism[3] { new Automatica(), new Seamiautomatica(), new Repeticion() };
+
+    //[SerializeField] GameObject[] bulletPrefabs = new GameObject[3];
+
+
+
     int weaponInHandInt, nextWeaponInt;
 
     private int arrayPositionInHand;
@@ -34,7 +40,8 @@ public class WeaponGenerator : MonoBehaviour
 
     }
 
-    private void Start()
+    private void Start()
+
     {
 
 
@@ -55,28 +62,49 @@ public class WeaponGenerator : MonoBehaviour
         {
             weaponInHand = new SniperAuto(firePoint, weaponsValues[0]);
         }
-        else if (random == 1)
-        {
-            weaponInHand = new SniperBolt(firePoint, weaponsValues[1]);
+        else if (random == 1)
+
+        {
+
+            weaponInHand = new SniperBolt(firePoint, weaponsValues[1]);
+
         }
-        else if (random == 2)
-        {
-            weaponInHand = new ShotgunAuto(firePoint, weaponsValues[2]);
-        }
-        //else if(random == 3)
-        //{
-        //    weaponInHand = new ShotgunAuto(firePoint, weaponsValues[3]);
-        //}
-        //else if (random == 4)
-        //{
-        //    weaponInHand = new GunAuto(firePoint, weaponsValues[4]);
-        //}        //else if (random == 5)
-        //{
-        //    weaponInHand = new Sawgun(firePoint, weaponsValues[5]);
+        else if (random == 2)
+
+        {
+
+            weaponInHand = new ShotgunAuto(firePoint, weaponsValues[2]);
+
+        }
+
+        //else if(random == 3)
+
+        //{
+
+        //    weaponInHand = new ShotgunAuto(firePoint, weaponsValues[3]);
+
         //}
-        //else if (random == 6)
-        //{
-        //    weaponInHand = new ElectricGun(firePoint, weaponsValues[6]);
+
+        //else if (random == 4)
+
+        //{
+
+        //    weaponInHand = new GunAuto(firePoint, weaponsValues[4]);
+
+        //}
+        //else if (random == 5)
+
+        //{
+
+        //    weaponInHand = new Sawgun(firePoint, weaponsValues[5]);
+
+        //}
+        //else if (random == 6)
+
+        //{
+
+        //    weaponInHand = new ElectricGun(firePoint, weaponsValues[6]);
+
         //}
 
 
@@ -91,32 +119,55 @@ public class WeaponGenerator : MonoBehaviour
 
         if (random == 0)
         {
-            return new SniperAuto(firePoint, weaponsValues[0]);
+            return new SniperAuto(firePoint, weaponsValues[0]);
+
         }
-        else if (random == 1)
-        {
-            return new SniperBolt(firePoint, weaponsValues[1]);
+        else if (random == 1)
+
+        {
+
+            return new SniperBolt(firePoint, weaponsValues[1]);
+
         }
-        else if (random == 2)
-        {
-            return new ShotgunAuto(firePoint, weaponsValues[2]);
-        }
-        //else if(random == 3){
-
-        //    return new ShotgunAuto(firePoint, weaponsValues[3]);
-        //}
-        //else if (random == 4)
-        //{
-        //    return new GunAuto(firePoint, weaponsValues[4]);
-        //}        //else if (random == 5)
-        //{
-        //    return new Sawgun(firePoint, weaponsValues[5]);
+        else if (random == 2)
+
+        {
+
+            return new ShotgunAuto(firePoint, weaponsValues[2]);
+
+        }
+
+        //else if(random == 3){
+
+
+
+        //    return new ShotgunAuto(firePoint, weaponsValues[3]);
+
         //}
-        //else if (random == 6)
-        //{
-        //    return new ElectricGun(firePoint, weaponsValues[6]);
-        //}
-
+
+        //else if (random == 4)
+
+        //{
+
+        //    return new GunAuto(firePoint, weaponsValues[4]);
+
+        //}
+        //else if (random == 5)
+        //{
+
+        //    return new Sawgun(firePoint, weaponsValues[5]);
+
+        //}
+        //else if (random == 6)
+
+        //{
+
+        //    return new ElectricGun(firePoint, weaponsValues[6]);
+
+        //}
+
+
+
         throw new System.NotImplementedException();
 
 
@@ -126,11 +177,16 @@ public class WeaponGenerator : MonoBehaviour
     public Weapon ReturnMyNextWeapon(Transform firePoint)
     {
         weaponInHandInt = nextWeaponInt;
-        int random = Random.Range(0, 3);
-        do { random = Random.Range(0, 3); } while (random == weaponInHandInt);
-        nextWeaponInt = random;
-
-
+        int random = Random.Range(0, 3);
+
+        do { random = Random.Range(0, 3); } while (random == weaponInHandInt);
+
+        nextWeaponInt = random;
+
+
+
+
+
         if (random == 0)
         {
             return new SniperAuto(firePoint, weaponsValues[0]);
@@ -146,19 +202,29 @@ public class WeaponGenerator : MonoBehaviour
         //else if (random == 3)
         //{
         //    return new ShotgunAuto(firePoint, weaponsValues[3]);
-        //}
+        //}
+
         //else if (random == 4)
         //{
         //    return new GunAuto(firePoint, weaponsValues[4]);
-        //}        //else if (random == 5)
-        //{
-        //    return new Sawgun(firePoint, weaponsValues[5]);
         //}
-        //else if (random == 6)
-        //{
-        //    return new ElectricGun(firePoint, weaponsValues[6]);
-        //}
-
+        //else if (random == 5)
+
+        //{
+
+        //    return new Sawgun(firePoint, weaponsValues[5]);
+
+        //}
+        //else if (random == 6)
+
+        //{
+
+        //    return new ElectricGun(firePoint, weaponsValues[6]);
+
+        //}
+
+
+
         throw new System.NotImplementedException();
     }
 
