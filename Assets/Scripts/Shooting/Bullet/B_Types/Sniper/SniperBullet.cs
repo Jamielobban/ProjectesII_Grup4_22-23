@@ -34,7 +34,7 @@ public class SniperBullet : Bullet
         bulletData.bulletDamage *= bulletData._damageMultiplier;
 
         playerpos.knockback = true;
-        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 2f), (-rb.velocity.y * 2f));
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 1f), (-rb.velocity.y * 1f));
         //playerpos.rb.velocity =  new Vector2((-rb.velocity.x * playerpos.knockbackForce) /100, (-rb.velocity.y*playerpos.knockbackForce) /100);
 
         Instantiate(effect, playerpos.transform.position, Quaternion.identity);

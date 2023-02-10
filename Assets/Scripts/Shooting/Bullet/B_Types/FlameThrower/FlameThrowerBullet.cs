@@ -16,7 +16,7 @@ public class FlameThrowerBullet : Bullet
         myblit = FindObjectOfType<BlitController>();
         bulletData.bulletDamage *= bulletData._damageMultiplier;
         bulletData.bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
-        myblit._Fired = true;
+        //myblit._Fired = true;
         //bulletDamage = 0.5f * _damageMultiplier;
         //bulletRangeInMetres = FindObjectOfType<RightHand>().GetWeaponInHand().GetFireRate();
         //bulletSpeedMetresPerSec = 1;
@@ -29,21 +29,22 @@ public class FlameThrowerBullet : Bullet
 
     protected override void Update()
     {
-        if (myblit._Fired)
-        {
-            isClicking = true;
-            myblit._Percentage += Time.deltaTime * 2;
-            myblit._Mat.SetFloat("_Percent", myblit._Percentage);
-            if (myblit._Percentage > 1)
-            {
-                myblit._Percentage = 0;
-               // myblit._Fired = false;
-            }
-            //myblit._Fired = true;
-        }
-        if (Input.GetMouseButtonUp(0)){
-            myblit._Fired = false;
-        }
+        //if (myblit._Fired)
+        //{
+        //    isClicking = true;
+        //    myblit._Percentage += Time.deltaTime * 2;
+        //    myblit._Mat.SetFloat("_Percent", myblit._Percentage);
+        //    if (myblit._Percentage > 1)
+        //    {
+        //        myblit._Percentage = 0;
+        //        myblit._Fired = false;
+        //    }
+        //    myblit._Fired = true;
+        //}
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    myblit._Fired = false;
+        //}
         //CinemachineShake.Instance.ShakeCamera(4f, .05f);
         //base.Update();
         //timeShooted = Time.time;        

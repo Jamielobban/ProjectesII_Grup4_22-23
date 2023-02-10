@@ -7,19 +7,22 @@ public class BlitController : MonoBehaviour
     //public RenderPipelineAsset exampleAssetB;
 
     public float _Percentage;
-    public bool _Fired = false;
-
+    public float _Size;
+    public bool isExpanding;
     public Material _Mat;
+    private CircleCollider2D circle;
     private void Start()
     {
+        circle = GetComponent<CircleCollider2D>();
+        circle.enabled = false;
     }
     void Update()
     {
-        if(!_Fired && (_Percentage >= 0))
-        {
-            _Percentage = 0;
-            _Mat.SetFloat("_Percent", _Percentage);
-        }
+        //if(!_Fired && (_Percentage >= 0))
+        //{
+        //    _Percentage = 0;
+        //    _Mat.SetFloat("_Percent", _Percentage);
+        //}
         //if (Input.GetKeyDown(KeyCode.V))
         //{
         //    //GraphicsSettings.renderPipelineAsset = exampleAssetA;
@@ -34,13 +37,31 @@ public class BlitController : MonoBehaviour
         //}
         //if (_Fired)
         //{
-        //    _Percentage += Time.deltaTime * 2;
-        //    _Mat.SetFloat("_Percent", _Percentage);
-        //    if (_Percentage > 1)
-        //    {
-        //        _Percentage = 0;
-        //        _Fired = false;
-        //    }
+        
+        if (isExpanding)
+        {
+            circle.enabled = true;
+            circle.radius += 0.5f;
+            _Size = 0.1f;
+            _Mat.SetFloat("_Size", _Size);
+            _Percentage += Time.deltaTime * 2;
+            _Mat.SetFloat("_Percent", _Percentage);
+            if (_Percentage > 1)
+            {
+                circle.radius = 1;
+                circle.enabled = false;
+                _Percentage = 0;
+                _Mat.SetFloat("_Percent", _Percentage);
+                _Size = 0;
+                _Mat.SetFloat("_Size", _Size);
+                isExpanding =false;
+            }
+        }
+
+        //_Percentage = 0;
+        //_Mat.SetFloat("_Percent", _Percentage);
+
+
         //}
         //if (Input.GetKeyDown("space"))
         //{

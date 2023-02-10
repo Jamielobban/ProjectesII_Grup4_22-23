@@ -104,6 +104,10 @@ public class PlayerMovement : MonoBehaviour
     int? dashSoundKey;
     int? damageSoundKey;
 
+    //public Material rippleMaterial;
+
+    public BlitController myBlit;
+
     bool justRolled;
     private void Awake()
     {
@@ -258,6 +262,12 @@ public class PlayerMovement : MonoBehaviour
                     movement.y = Input.GetAxisRaw("Vertical");
                     moveDir = new Vector3(movement.x, movement.y).normalized;
                     //
+
+                    if (Input.GetButtonDown("Parry"))
+                    {
+                        Debug.Log("Parry");
+                        myBlit.isExpanding = true;
+                    }
                     if (moveDir.magnitude == 1)
                     {
                         isMoving = true;
