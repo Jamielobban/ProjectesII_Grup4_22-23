@@ -185,6 +185,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4491323302402679602, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
   m_PrefabInstance: {fileID: 7931299525193305413}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &7388704636101332690 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 619334409832956823, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
+  m_PrefabInstance: {fileID: 7931299525193305413}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9052078452103636512 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1409296284934073189, guid: cdd2fc0663b9f4c4aa9ac034b5b59b31, type: 3}
@@ -205,12 +210,12 @@ MonoBehaviour:
   player: {fileID: 0}
   vectorToPlayer: {x: 0, y: 0, z: 0}
   vectorToPlayerFromFirepoint: {x: 0, y: 0, z: 0}
-  sr: {fileID: 0}
-  burnPrefab: {fileID: 0}
+  sr: {fileID: 7388704636101332690}
+  burnPrefab: {fileID: 3564664467013247471, guid: e4b5b15301115b443bd61b63bdc3487f, type: 3}
   firePoint: {fileID: 0}
   enemyData: {fileID: 11400000, guid: 7627d4c653257134da60cfda75581b58, type: 2}
-  blood: {fileID: 0}
-  deadBlood: {fileID: 0}
+  blood: {fileID: 5131986925755455784, guid: 11d09c4b86434884c9d334ba4d7fe419, type: 3}
+  deadBlood: {fileID: 5131986925755455784, guid: 4fea703dcdeb5fa478ed5ad8e58fe837, type: 3}
   chasingStateData: {fileID: 11400000, guid: 45f1c38a7b4b2614394df81c3ed1496b, type: 2}
   firingStateData: {fileID: 11400000, guid: 2e1bd05fda57ece4ba87f1a596f4ee81, type: 2}
   deadStateData: {fileID: 11400000, guid: 1eff69aab916339438c2d58bb5d95b17, type: 2}

@@ -11,32 +11,34 @@ public class E1_FiringState : FiringState
     int a;
     bool b;
     float enterTime;
-    const float attackAnim1Duration = 0.3f;
+    const float attackAnim1Duration = 0.6f;
     const float attackAnim2Duration = 1.4f;
     
     int? fireSoundKey;    
     int? attackSoundsKey;    
-    readonly float attackDuration;
+    float attackDuration;
     public E1_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
-
-        if (enemy.GetVariant() == Enemy1Variants.TURRET)
-        {
-            enemy.anim.SetInteger("AttackType", 0);
-            attackDuration = attackAnim2Duration;            
-        }
-        else
-        {
-            enemy.anim.SetInteger("AttackType", 1);
-            attackDuration = attackAnim1Duration;
-        }
+        
         //attackDuration += 0.2f * (stateData.numberOfBursts-1);
     }
 
     public override void Enter()
     {
         base.Enter();
+
+        if (enemy.GetVariant() == Enemy1Variants.TURRET)
+        {
+            enemy.anim.SetInteger("AttackType", 0);
+            attackDuration = attackAnim2Duration;
+        }
+        else
+        {
+            enemy.anim.SetInteger("AttackType", 1);
+            attackDuration = attackAnim1Duration;
+        }
+
         nextShootReady = false;
         a = 0;
         b = false;
@@ -174,7 +176,8 @@ public class E1_FiringState : FiringState
         }
         else
         {
-            Machinegun();
+            do { Machinegun(); } while (!enemy.anim.GetBool("waitingTimeAttack"));
+            
         }
 
         lastShootTime = Time.time;
@@ -215,22 +218,22 @@ public class E1_FiringState : FiringState
         
 
         //banda a banda
-        if (b)
-        {
-            a += 10;
-            if (a == 30)
-            {
-                b = false;
-            }
-        }
-        else
-        {
-            a -= 10;
-            if (a == -30)
-            {
-                b = true;
+        //if (b)
+        //{
+        //    a += 10;
+        //    if (a == 30)
+        //    {
+        //        b = false;
+        //    }
+        //}
+        //else
+        //{
+        //    a -= 10;
+        //    if (a == -30)
+        //    {
+        //        b = true;
 
-            }
-        }
+        //    }
+        //}
     }
 }
