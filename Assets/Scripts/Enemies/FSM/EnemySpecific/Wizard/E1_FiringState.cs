@@ -12,7 +12,8 @@ public class E1_FiringState : FiringState
     bool b;
     float enterTime;
     const float attackAnim1Duration = 0.3f;
-    const float attackAnim2Duration = 0.3f;
+    const float attackAnim2Duration = 1.4f;
+    
     int? fireSoundKey;    
     int? attackSoundsKey;    
     readonly float attackDuration;
@@ -50,7 +51,7 @@ public class E1_FiringState : FiringState
         //}
         if (enemy.GetVariant() == Enemy1Variants.TURRET)
         {
-            enemy.firePoint.localPosition = new Vector3(1.91f, 0.81f, 0);
+            enemy.firePoint.localPosition = new Vector3(0, 0, 0);
 
         }
         else
@@ -129,35 +130,54 @@ public class E1_FiringState : FiringState
         enemy.firePoint.localRotation = Quaternion.Euler(0, 0, angleFirePoint * Mathf.Sign(enemy.transform.localScale.x));
         //enemy.rb.rotation = angle;
 
-        if (nextShootReady)
-        {
-            //if (enemy.anim.GetBool("waitingTimeAttack"))
-            //{
-            //    enemy.anim.SetBool("waitingTimeAttack", false);
-            //}
+        //if (nextShootReady)
+        //{
+        //    if (enemy.anim.GetBool("waitingTimeAttack"))
+        //    {
+        //        enemy.anim.SetBool("waitingTimeAttack", false);
+        //    }
 
-            if (enemy.GetVariant() != Enemy1Variants.BIGFATMAN)
-            {
-                
-                float waitTime = 0;
-                for (int j = 0; j < stateData.numberOfBursts; j++, waitTime += 0.2f)
-                {
-                    FunctionTimer.Create(FireProjectile, waitTime);
-                    FunctionTimer.Create(()=>{ if(!enemy.GetIfIsDead())enemy.anim.SetBool("waitingTimeAttack", true);}, waitTime + 0.2f);
-                }
-            }
-            else
-            {
-                Machinegun();
-            }             
+        //    if (enemy.GetVariant() != Enemy1Variants.BIGFATMAN)
+        //    {
 
-            lastShootTime = Time.time;          
-            //enemy.anim.SetBool("waitingTimeAttack", true);
-        }
+        //        float waitTime = 0;
+        //        for (int j = 0; j < stateData.numberOfBursts; j++, waitTime += 0.2f)
+        //        {
+        //            FunctionTimer.Create(FireProjectile, waitTime);
+        //            FunctionTimer.Create(() => { if (!enemy.GetIfIsDead()) enemy.anim.SetBool("waitingTimeAttack", true); }, waitTime + 0.2f);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Machinegun();
+        //    }
+
+        //    lastShootTime = Time.time;
+        //    enemy.anim.SetBool("waitingTimeAttack", true);
+        //}
         //else if (!enemy.anim.GetBool("waitingTimeAttack"))
         //{
         //    enemy.anim.SetBool("waitingTimeAttack", true);
         //}
+    }
+    public void ShootLoop()
+    {
+        if (enemy.GetVariant() != Enemy1Variants.BIGFATMAN)
+        {
+
+            float waitTime = 0;
+            for (int j = 0; j < stateData.numberOfBursts; j++, waitTime += 0.2f)
+            {
+                FunctionTimer.Create(FireProjectile, waitTime);
+                FunctionTimer.Create(() => { if (!enemy.GetIfIsDead()) enemy.anim.SetBool("waitingTimeAttack", true); }, waitTime + 0.2f);
+            }
+        }
+        else
+        {
+            Machinegun();
+        }
+
+        lastShootTime = Time.time;
     }
     void FireProjectile()
     {
@@ -175,7 +195,8 @@ public class E1_FiringState : FiringState
             bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponent<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
             //Destroy(instance, 3);
         }
-        
+        //FunctionTimer.Create(FireProjectile, waitTime);
+                    //FunctionTimer.Create(()=>{ if(!enemy.GetIfIsDead())enemy.anim.SetBool("waitingTimeAttack", true);}, waitTime + 0.2f);
     }
     void Machinegun()
     {
