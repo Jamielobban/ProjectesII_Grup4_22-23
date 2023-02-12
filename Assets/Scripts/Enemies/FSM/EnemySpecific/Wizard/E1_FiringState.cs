@@ -11,12 +11,14 @@ public class E1_FiringState : FiringState
     int a;
     bool b;
     float enterTime;
-    const float attackAnim1Duration = 0.6f;
+    const float attackAnim1Duration = 0.7f;
     const float attackAnim2Duration = 1.4f;
     
     int? fireSoundKey;    
     int? attackSoundsKey;    
     float attackDuration;
+    bool animationDone = true;
+
     public E1_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy1 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -58,7 +60,7 @@ public class E1_FiringState : FiringState
         }
         else
         {
-            enemy.firePoint.localPosition = new Vector3(3.06f, 0.95f, 0);
+            enemy.firePoint.localPosition = new Vector3(3.94f, -1.55f, 0);
         }
 
 
@@ -93,7 +95,7 @@ public class E1_FiringState : FiringState
 
         inRange = entity.vectorToPlayer.magnitude  < enemy.enemyData.stopDistanceFromPlayer + 5;
 
-        if (!inRange)
+        if (!inRange && animationDone)
         {
             stateMachine.ChangeState(enemy.chasingState);
         }
@@ -162,10 +164,22 @@ public class E1_FiringState : FiringState
         //    enemy.anim.SetBool("waitingTimeAttack", true);
         //}
     }
+
+    public void AnimDoneTrue()
+    {
+        animationDone = true;
+    }
+    public void AnimDoneFalse()
+    {
+        animationDone = false;
+    }
     public void ShootLoop()
     {
+        Debug.Log("In1");
         if (enemy.GetVariant() != Enemy1Variants.BIGFATMAN)
         {
+            Debug.Log("In2");
+
 
             float waitTime = 0;
             for (int j = 0; j < stateData.numberOfBursts; j++, waitTime += 0.2f)
