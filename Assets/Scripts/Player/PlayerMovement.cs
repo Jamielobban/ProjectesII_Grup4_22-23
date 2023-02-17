@@ -64,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
     public SpriteRenderer[] weaponSprites;
     //public LayerMask layerMask;
 
+    public BlitController myBlit;
     public GameObject rotatePoint;
 
     private int LayerIgnoreRaycast;
@@ -258,6 +259,11 @@ public class PlayerMovement : MonoBehaviour
                     movement.y = Input.GetAxisRaw("Vertical");
                     moveDir = new Vector3(movement.x, movement.y).normalized;
                     //
+                    if (Input.GetButtonDown("Parry"))
+                    {
+                        Debug.Log("Parry");
+                        myBlit.isExpanding = true;
+                    }
                     if (moveDir.magnitude == 1)
                     {
                         isMoving = true;
