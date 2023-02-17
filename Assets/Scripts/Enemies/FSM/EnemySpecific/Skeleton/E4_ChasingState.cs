@@ -34,9 +34,9 @@ public class E4_ChasingState : ChasingState
     {
         base.LogicUpdate();
 
-        inRange = entity.vectorToPlayer.magnitude < enemy.enemyData.stopDistanceFromPlayer;
+        //inRange = entity.vectorToPlayer.magnitude < enemy.enemyData.stopDistanceFromPlayer;
 
-        if (inRange)
+        if (enemy.inRange)
         {
             stateMachine.ChangeState(enemy.slashState);
         }

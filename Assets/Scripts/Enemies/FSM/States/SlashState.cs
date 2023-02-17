@@ -25,6 +25,8 @@ public class SlashState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        angle = Mathf.Atan2(entity.vectorToPlayer.normalized.y, entity.vectorToPlayer.normalized.x) * Mathf.Rad2Deg;
     }
 
     public override void PhysicsUpdate()

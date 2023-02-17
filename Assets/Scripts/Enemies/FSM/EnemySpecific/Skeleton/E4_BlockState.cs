@@ -12,8 +12,7 @@ public class E4_BlockState : BlockState
     }
     public override void Enter()
     {
-        base.Enter();
-        var blockParticles = GameObject.Instantiate(stateData.blockParticles, enemy.transform.position + enemy.shieldPos, Quaternion.identity);
+        base.Enter();        
     }
 
     public override void Exit()

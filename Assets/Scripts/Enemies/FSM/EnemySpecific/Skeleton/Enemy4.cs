@@ -22,8 +22,10 @@ public class Enemy4 : Entity
     private D_BlockState blockStateData;
 
     public float distanceToPassToIdle;
+    [HideInInspector]
     public Vector3 shieldPos;
     public bool attack0attack1 = false;
+    public bool inRange;
 
     public override void FixedUpdate()
     {
@@ -49,11 +51,14 @@ public class Enemy4 : Entity
         blockState = new E4_BlockState(this, stateMachine, "block", blockStateData, this);
 
         stateMachine.Initialize(chasingState);
-    }
+    }   
 
     public override void Update()
     {
         base.Update();
+        float randomX = Random.Range(-1f, 1f);
+        float randomY = Random.Range(-1f, 1f);
+        this.shieldPos = new Vector3((0.84f+randomX) * Mathf.Sign(this.transform.localScale.x), randomY + 0, 0);
 
         if (isDead && stateMachine.currentState != deadState)
         {
@@ -65,30 +70,38 @@ public class Enemy4 : Entity
             stateMachine.ChangeState(idleState);
         }
     }
+    public void BackToChase()
+    {
+        stateMachine.ChangeState(chasingState);
+    }
 
     public override void GetDamage(float damageHit, HealthStateTypes damageType, float knockBackForce, Vector3 bulletPosition, TransformMovementType type)
     {
         if (stateMachine.currentState != chasingState)
         {
-            base.GetDamage(damageHit, damageType, knockBackForce, bulletPosition, type);
+            if(stateMachine.currentState != blockState)
+            {
+                //Debug.Log(stateMachine.currentState);
+                base.GetDamage(damageHit, damageType, knockBackForce, bulletPosition, type);
+            }
+            else
+            {
+                var blockParticles = GameObject.Instantiate(blockStateData.blockParticles, this.transform.position + this.shieldPos, Quaternion.identity);
+            }
         }
         else
         {
             stateMachine.ChangeState(blockState);
+            var blockParticles = GameObject.Instantiate(blockStateData.blockParticles, this.transform.position + this.shieldPos, Quaternion.identity);
         }
-    }
-    public void WhichAttackDo()
-    {
-        attack0attack1 = Random.Range(0, 100) % 2 == 0;
-    }
+    }    
     public void SearchFunction(string funcName)
     {
         if (this.gameObject == null || stateMachine.currentState == null || stateMachine.currentState == deadState)
             return;
         var exampleType = stateMachine.currentState.GetType();
         var exampleMethod = exampleType.GetMethod(funcName);
-        exampleMethod.Invoke(stateMachine.currentState, null);
-
+        try { exampleMethod.Invoke(stateMachine.currentState, null); } catch { };
         if (this.gameObject == null)
         {
             CancelInvoke();

@@ -48,7 +48,7 @@ public class E4_IdleState : IdleState
     {
         base.LogicUpdate();
 
-        if (Mathf.Abs(enemy.vectorToPlayer.magnitude) <= stateData.rangeToPassToChasing)
+        if (enemy.vectorToPlayer.magnitude - stateData.rangeToPassToChasing < 0)
         {
             stateMachine.ChangeState(enemy.chasingState);
         }
