@@ -70,5 +70,17 @@ public class BlitController : MonoBehaviour
         //    _Fired = true;
         //}
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyBullet")){
+            collision.GetComponent<EnemyProjectile>().DestroyProjectile();
+        }
+        //if (collision.gameObject.CompareTag("Enemy"))
+        //{
+        //    Debug.Log("hIT ENEMY");
+        //    collision.GetComponent<Entity>().rb.AddForce((-1*(collision.GetComponent<Entity>().vectorToPlayer).normalized)*100000, ForceMode2D.Impulse);
+        //}
+    }
 }
 
