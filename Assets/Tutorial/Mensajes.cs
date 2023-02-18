@@ -101,7 +101,7 @@ public class Mensajes : MonoBehaviour
         {
             button.SetActive(true);
 
-            if (Input.GetButtonDown("Interact"))
+            if (Input.GetButton("Interact"))
             {
                 pressed = true;
                 button.SetActive(false);

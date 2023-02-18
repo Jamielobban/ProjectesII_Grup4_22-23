@@ -40,7 +40,7 @@ public class PickWeapons : MonoBehaviour
         {
             button.SetActive(true);
 
-            if (Input.GetButtonDown("Interact"))
+            if (Input.GetButton("Interact"))
             {
                 weapons.SetActive(true);
 
