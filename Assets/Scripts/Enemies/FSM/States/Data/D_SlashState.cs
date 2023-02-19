@@ -7,4 +7,5 @@ public class D_SlashState : ScriptableObject
 {
     public float timeBetwenSlashes;
     public AudioClip slashSound;
+    public AudioClip hitSound;
 }

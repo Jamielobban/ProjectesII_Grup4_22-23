@@ -26,6 +26,8 @@ public class Enemy4 : Entity
     public Vector3 shieldPos;
     public bool attack0attack1 = false;
     public bool inRange;
+    int? blockSoundKey;
+
 
     public override void FixedUpdate()
     {
@@ -77,22 +79,24 @@ public class Enemy4 : Entity
 
     public override void GetDamage(float damageHit, HealthStateTypes damageType, float knockBackForce, Vector3 bulletPosition, TransformMovementType type)
     {
-        if (stateMachine.currentState != chasingState)
-        {
-            if(stateMachine.currentState != blockState)
-            {
-                //Debug.Log(stateMachine.currentState);
-                base.GetDamage(damageHit, damageType, knockBackForce, bulletPosition, type);
-            }
-            else
-            {
-                var blockParticles = GameObject.Instantiate(blockStateData.blockParticles, this.transform.position + this.shieldPos, Quaternion.identity);
-            }
-        }
-        else
+
+        if(stateMachine.currentState == chasingState)
         {
             stateMachine.ChangeState(blockState);
             var blockParticles = GameObject.Instantiate(blockStateData.blockParticles, this.transform.position + this.shieldPos, Quaternion.identity);
+            blockSoundKey = AudioManager.Instance.LoadSound(blockStateData.blockSound, this.transform);
+        }
+        else
+        {
+            if(stateMachine.currentState == blockState)
+            {
+                var blockParticles = GameObject.Instantiate(blockStateData.blockParticles, this.transform.position + this.shieldPos, Quaternion.identity);
+                blockSoundKey = AudioManager.Instance.LoadSound(blockStateData.blockSound, this.transform);
+            }
+            else
+            {
+                base.GetDamage(damageHit, damageType, knockBackForce, bulletPosition, type);
+            }
         }
     }    
     public void SearchFunction(string funcName)
@@ -101,7 +105,7 @@ public class Enemy4 : Entity
             return;
         var exampleType = stateMachine.currentState.GetType();
         var exampleMethod = exampleType.GetMethod(funcName);
-        try { exampleMethod.Invoke(stateMachine.currentState, null); } catch { };
+        try { exampleMethod.Invoke(stateMachine.currentState, null); } catch { /*Debug.Log(funcName); Debug.Log(stateMachine.currentState);*/ };
         if (this.gameObject == null)
         {
             CancelInvoke();

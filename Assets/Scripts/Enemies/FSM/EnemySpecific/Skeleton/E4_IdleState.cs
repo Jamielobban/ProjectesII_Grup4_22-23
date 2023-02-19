@@ -43,7 +43,11 @@ public class E4_IdleState : IdleState
             AudioManager.Instance.RemoveAudio(idleSoundsKey.Value);
         }
     }
-
+    public void BackToChase()
+    {
+        //Function to fix bug
+        //stateMachine.ChangeState(enemy.chasingState);
+    }
     public override void LogicUpdate()
     {
         base.LogicUpdate();

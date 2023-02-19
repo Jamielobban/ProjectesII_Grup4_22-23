@@ -184,7 +184,7 @@ public class AudioManager : MonoBehaviour
 
     private bool CheckIfShouldPlay(AudioClip clip, float delay)
     {
-        if(clip.name == "Attack2" || clip.name == "TurretAttackBo" || clip.name == "ArrowImpact")
+        if(clip.name == "Attack2" || clip.name == "TurretAttackBo" || clip.name == "ArrowImpact" || clip.name == "skeletonShield")
         {
             return audiosPlaying.Where(aI => aI.Value.audioSorcePrefabClone != null && aI.Value.audioSorcePrefabClone.GetComponent<AudioSource>().clip.name == clip.name && (Mathf.Abs(aI.Value.startSoundTime - (Time.time + delay)) <= maxDifferenceToBePlayed)).ToList().Count == 0;
         }

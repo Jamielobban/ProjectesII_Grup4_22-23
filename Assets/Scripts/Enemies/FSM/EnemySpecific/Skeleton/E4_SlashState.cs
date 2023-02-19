@@ -9,6 +9,8 @@ public class E4_SlashState : SlashState
     private float lastSlashDone;
     bool lastLoopValue;    
     bool animationDone = false;
+    int? swordSoundKey;
+    int? swordHitSoundKey;
 
     public E4_SlashState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_SlashState stateData, Enemy4 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -26,7 +28,14 @@ public class E4_SlashState : SlashState
     {
         base.Exit();
     }
-
+    public void PlaySwordSound()
+    {
+        swordSoundKey = AudioManager.Instance.LoadSound(stateData.slashSound, enemy.transform);
+    }
+    public void PlaySwordHitGround()
+    {
+        swordHitSoundKey = AudioManager.Instance.LoadSound(stateData.hitSound, enemy.transform);
+    }
     public override void LogicUpdate()
     {
         base.LogicUpdate();
@@ -46,6 +55,7 @@ public class E4_SlashState : SlashState
 
         if (!enemy.inRange && animationDone)
         {
+            //enemy.anim.SetBool("SlashReady", false);
             stateMachine.ChangeState(enemy.chasingState);
         }
 
