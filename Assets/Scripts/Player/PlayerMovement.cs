@@ -123,7 +123,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Start()
     {
-        _rightHand = GetComponentInChildren<RightHand>();
 
         isDead = false;
         state = State.Normal;
