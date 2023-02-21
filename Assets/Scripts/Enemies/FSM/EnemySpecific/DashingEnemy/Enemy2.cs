@@ -51,6 +51,8 @@ public class Enemy2 : Entity
         //canDash = true;
 
         stateMachine.Initialize(idleState);
+
+        agent.speed = enemyData.speed;
     }
 
     public override void Update()

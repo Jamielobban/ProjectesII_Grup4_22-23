@@ -16,6 +16,8 @@ public class E4_ChasingState : ChasingState
     {
         base.Enter();
 
+        enemy.agent.enabled = true;
+        
         followSoundKey = AudioManager.Instance.LoadSound(stateData.followSounds, enemy.transform, 0.2f, true);
         
     }
@@ -23,6 +25,8 @@ public class E4_ChasingState : ChasingState
     public override void Exit()
     {
         base.Exit();
+
+        enemy.agent.enabled = false;
 
         if (followSoundKey.HasValue)
         {
@@ -55,6 +59,7 @@ public class E4_ChasingState : ChasingState
 
         enemy.GetComponentsInChildren<Transform>().Where(t => (t.gameObject.CompareTag("FirePoint"))).ToArray()[0].localRotation = Quaternion.Euler(0, 0, angle * Mathf.Sign(enemy.transform.localScale.x));
 
-        enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.player.position, enemy.enemyData.speed * Time.fixedDeltaTime);
+        //enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.player.position, enemy.enemyData.speed * Time.fixedDeltaTime);
+        enemy.agent.SetDestination(new Vector3(enemy.player.position.x, enemy.player.position.y, enemy.transform.position.z));
     }
 }

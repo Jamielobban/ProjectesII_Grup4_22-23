@@ -210,6 +210,7 @@ MonoBehaviour:
   player: {fileID: 0}
   vectorToPlayer: {x: 0, y: 0, z: 0}
   vectorToPlayerFromFirepoint: {x: 0, y: 0, z: 0}
+  agent: {fileID: 0}
   sr: {fileID: 7388704636101332690}
   burnPrefab: {fileID: 3564664467013247471, guid: e4b5b15301115b443bd61b63bdc3487f, type: 3}
   firePoint: {fileID: 0}
@@ -222,3 +223,25 @@ MonoBehaviour:
   idleStateData: {fileID: 11400000, guid: 64463c4ed42a7e84da5bdeffe7ea5ea0, type: 2}
   variant: 8
   distanceToPassToIdle: 20
+--- !u!195 &3383844486339636791
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9052078452103636512}
+  m_Enabled: 0
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

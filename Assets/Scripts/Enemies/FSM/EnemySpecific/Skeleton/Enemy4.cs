@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy4 : Entity
-{
+{    
     public E4_ChasingState chasingState { get; private set; }
     public E4_SlashState slashState { get; private set; }
     public E4_DeadState deadState { get; private set; }
@@ -53,6 +53,8 @@ public class Enemy4 : Entity
         blockState = new E4_BlockState(this, stateMachine, "block", blockStateData, this);
 
         stateMachine.Initialize(chasingState);
+
+        agent.speed = enemyData.speed;
     }   
 
     public override void Update()

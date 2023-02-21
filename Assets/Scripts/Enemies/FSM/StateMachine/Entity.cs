@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using UnityEngine.AI;
 
 
 public abstract class Entity : MonoBehaviour
@@ -15,7 +16,8 @@ public abstract class Entity : MonoBehaviour
 	[HideInInspector]
 	public Vector3 vectorToPlayer;	
 	public Vector3 vectorToPlayerFromFirepoint;
-	
+
+	public NavMeshAgent agent;
 
 	[SerializeField]
 	protected SpriteRenderer sr;	
@@ -52,6 +54,9 @@ public abstract class Entity : MonoBehaviour
 
 	private void Awake()
     {
+		agent = GetComponent<NavMeshAgent>();
+		agent.updateRotation = false;
+		agent.updateUpAxis = false;
 		firePoint = GetComponentsInChildren<Transform>().Where(t => t.tag == "FirePoint").ToArray()[0];
 		myHealthState = HealthStateTypes.NORMAL;		
 		timeHealthStateExit = 0;
