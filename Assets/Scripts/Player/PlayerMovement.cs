@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isDashing;
     public GameObject floorBlood;
 
+    public Transform actualSpawn;
     public bool isInBlood;
 
     public float knockbackForceCheck;
@@ -385,6 +386,10 @@ public class PlayerMovement : MonoBehaviour
             currentHealth -= 5;
             healthBar.SetHealth(currentHealth);
         }
+    }
+    public void Spawn()
+    {
+        this.transform.position = actualSpawn.position;
     }
 
     void OnRollingEffects()
