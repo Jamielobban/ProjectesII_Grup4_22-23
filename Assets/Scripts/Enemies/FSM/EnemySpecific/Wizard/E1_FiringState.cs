@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class E1_FiringState : FiringState
 {
@@ -104,12 +105,16 @@ public class E1_FiringState : FiringState
         {
             enemy.anim.SetBool("waitingTimeAttack", false);
         }
-        
-        
-
-
 
         nextShootReady = (Time.time - lastShootTime >= stateData.timeBetweenShoots) && Time.time >= enterTime + attackDuration;
+
+        if (enemy.GetVariant() == Enemy1Variants.BIGFATMAN && nextShootReady)
+        {
+            Machinegun();
+        }
+
+
+
     }
 
     public override void PhysicsUpdate()
@@ -188,11 +193,10 @@ public class E1_FiringState : FiringState
                 FunctionTimer.Create(() => { if (!enemy.GetIfIsDead()) enemy.anim.SetBool("waitingTimeAttack", true); }, waitTime + 0.2f);
             }
         }
-        else
-        {
-            do { Machinegun(); } while (!enemy.anim.GetBool("waitingTimeAttack"));
-            
-        }
+        //else
+        //{
+        //    Machinegun();             
+        //}
 
         lastShootTime = Time.time;
     }
@@ -229,8 +233,8 @@ public class E1_FiringState : FiringState
         //instance.transform.Rotate(0, 0, instance.transform.rotation.z + a);
 
         bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponent<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
-        
 
+        lastShootTime = Time.time;
         //banda a banda
         //if (b)
         //{
