@@ -39,11 +39,11 @@ public class BalasExplosivas : Bullet
         _recoil.AddRecoil();
 
         playerpos.knockback = true;
-        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 0.5f), (-rb.velocity.y * 0.5f));
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 0.15f), (-rb.velocity.y * 0.15f));
         //transform.Rotate(0, 0, transform.rotation.z + Random.Range(-10, 10));
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-        StartCoroutine(explosions(Random.Range(0.15f, 0.25f)));
+        StartCoroutine(explosions(Random.Range(0.45f, 0.55f)));
     }
 
     private IEnumerator explosions(float time)
