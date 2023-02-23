@@ -53,7 +53,7 @@ public class WeaponGenerator : MonoBehaviour
 
 
 
-        int random = Random.Range(0, 3);
+        int random = Random.Range(0, 4);
 
 
         weaponInHandInt = random;
@@ -74,6 +74,13 @@ public class WeaponGenerator : MonoBehaviour
         {
 
             weaponInHand = new ShotgunAuto(firePoint, weaponsValues[2]);
+
+        }
+        else if (random == 3)
+
+        {
+
+            weaponInHand = new GunSemiauto(firePoint, weaponsValues[3]);
 
         }
 
@@ -109,7 +116,7 @@ public class WeaponGenerator : MonoBehaviour
 
 
 
-        do { random = Random.Range(0, 3); } while (weaponInHandInt == random);
+        do { random = Random.Range(0, 4); } while (weaponInHandInt == random);
 
 
 
@@ -134,6 +141,13 @@ public class WeaponGenerator : MonoBehaviour
         {
 
             return new ShotgunAuto(firePoint, weaponsValues[2]);
+
+        }
+        else if (random == 3)
+
+        {
+
+            weaponInHand = new GunSemiauto(firePoint, weaponsValues[3]);
 
         }
 
@@ -177,9 +191,9 @@ public class WeaponGenerator : MonoBehaviour
     public Weapon ReturnMyNextWeapon(Transform firePoint)
     {
         weaponInHandInt = nextWeaponInt;
-        int random = Random.Range(0, 3);
+        int random = Random.Range(0, 4);
 
-        do { random = Random.Range(0, 3); } while (random == weaponInHandInt);
+        do { random = Random.Range(0, 4); } while (random == weaponInHandInt);
 
         nextWeaponInt = random;
 
@@ -198,6 +212,10 @@ public class WeaponGenerator : MonoBehaviour
         else if (random == 2)
         {
             return new ShotgunAuto(firePoint, weaponsValues[2]);
+        }
+        else if (random == 3)
+        {
+            return new GunSemiauto(firePoint, weaponsValues[3]);
         }
         //else if (random == 3)
         //{
