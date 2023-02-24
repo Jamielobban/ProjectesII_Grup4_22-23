@@ -63,6 +63,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: FirePoint
       objectReference: {fileID: 0}
+    - target: {fileID: 5988929809742007591, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+      propertyPath: shaderTypes
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6365413753096113249, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
       propertyPath: m_LocalScale.x
       value: 12
@@ -94,6 +98,22 @@ PrefabInstance:
     - target: {fileID: 7266156419362935655, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8048825255850931013, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8048825255850931013, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8207547
+      objectReference: {fileID: 0}
+    - target: {fileID: 8048825255850931013, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8207547
+      objectReference: {fileID: 0}
+    - target: {fileID: 8048825255850931013, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8207547
       objectReference: {fileID: 0}
     - target: {fileID: 8405310305926585224, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
       propertyPath: m_Mass
@@ -243,6 +263,7 @@ MonoBehaviour:
   player: {fileID: 0}
   vectorToPlayer: {x: 0, y: 0, z: 0}
   vectorToPlayerFromFirepoint: {x: 0, y: 0, z: 0}
+  agent: {fileID: 0}
   sr: {fileID: 6987818332353656236}
   burnPrefab: {fileID: 3564664467013247471, guid: e4b5b15301115b443bd61b63bdc3487f, type: 3}
   firePoint: {fileID: 0}

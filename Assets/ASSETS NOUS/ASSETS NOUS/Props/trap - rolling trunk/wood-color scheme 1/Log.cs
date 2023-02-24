@@ -29,7 +29,7 @@ public class Log : MonoBehaviour
         this.GetComponent<Animator>().SetTrigger("Triger");
         StartCoroutine(Spawn(0.6f));
 
-        StartCoroutine(animation(3f));
+        StartCoroutine(animation(Random.Range(2.0f,3.0f)));
     }
 
     private IEnumerator Spawn(float time)

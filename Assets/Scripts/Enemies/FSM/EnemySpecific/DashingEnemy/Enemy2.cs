@@ -22,6 +22,7 @@ public class Enemy2 : Entity
     private D_DeadState deadStateData;
 
     float lastTimeDamaged = 0;
+    public float distanceToPassToIdle;
 
     public override void FixedUpdate()
     {
@@ -62,6 +63,11 @@ public class Enemy2 : Entity
         if (isDead && stateMachine.currentState != deadState)
         {
             stateMachine.ChangeState(deadState);
+        }
+
+        if (!isDead && stateMachine.currentState != idleState && vectorToPlayer.magnitude >= distanceToPassToIdle && vectorToPlayer.magnitude >= enemyData.stopDistanceFromPlayer)
+        {
+            stateMachine.ChangeState(idleState);
         }
     }
 

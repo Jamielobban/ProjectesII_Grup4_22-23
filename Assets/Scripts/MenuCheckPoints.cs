@@ -21,16 +21,22 @@ public class MenuCheckPoints : MonoBehaviour
 
         for(int i = 0; i < mapa1.Length; i++)
         {
-            mapa1[i].GetComponent<Button>().onClick.AddListener(delegate { changeMenu(mapa1[i].transform.GetChild(1).gameObject); });
+
+            GameObject menu = mapa1[i].transform.GetChild(1).gameObject;
+            mapa1[i].GetComponent<Button>().onClick.AddListener(() => { changeMenu(menu); });
 
         }
         for (int i = 0; i < mapa2.Length; i++)
         {
-            mapa2[i].GetComponent<Button>().onClick.AddListener(delegate { changeMenu(mapa1[i].transform.GetChild(1).gameObject); });
+            GameObject menu = mapa2[i].transform.GetChild(1).gameObject;
+
+            mapa2[i].GetComponent<Button>().onClick.AddListener(() => { changeMenu(menu); });
         }
         for (int i = 0; i < mapa3.Length; i++)
         {
-            mapa3[i].GetComponent<Button>().onClick.AddListener(delegate { changeMenu(mapa1[i].transform.GetChild(1).gameObject); });
+            GameObject menu = mapa3[i].transform.GetChild(1).gameObject;
+
+            mapa3[i].GetComponent<Button>().onClick.AddListener(() => { changeMenu(menu); });
         }
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
@@ -55,7 +61,7 @@ public class MenuCheckPoints : MonoBehaviour
         {
             currentImage.SetActive(false);
         }
-
+        Debug.Log(image);
         currentImage = image;
 
         currentImage.SetActive(true);
@@ -68,10 +74,10 @@ public class MenuCheckPoints : MonoBehaviour
         {
             mapa1[i].transform.GetChild(1).gameObject.SetActive(false);
 
-            if (mapa1[i].activeSelf)
-            {
-                mapa1[i].transform.position = positions[e].position;
-            }
+            //if (mapa1[i].activeSelf)
+            //{
+            //    mapa1[i].transform.position = positions[e].position;
+            //}
         }
 
         e = 0;
@@ -79,10 +85,10 @@ public class MenuCheckPoints : MonoBehaviour
         {
             mapa2[i].transform.GetChild(1).gameObject.SetActive(false);
 
-            if (mapa2[i].activeSelf)
-            {
-                mapa2[i].transform.position = positions[e].position;
-            }
+            //if (mapa2[i].activeSelf)
+            //{
+            //    mapa2[i].transform.position = positions[e].position;
+            //}
         }
 
         e = 0;
@@ -90,10 +96,10 @@ public class MenuCheckPoints : MonoBehaviour
         {
             mapa3[i].transform.GetChild(1).gameObject.SetActive(false);
 
-            if (mapa3[i].activeSelf)
-            {
-                mapa3[i].transform.position = positions[e].position;
-            }
+            //if (mapa3[i].activeSelf)
+            //{
+            //    mapa3[i].transform.position = positions[e].position;
+            //}
         }
     }
 }
