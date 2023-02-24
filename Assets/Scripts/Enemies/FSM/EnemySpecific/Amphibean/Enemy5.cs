@@ -18,6 +18,9 @@ public class Enemy5 : Entity
     private D_DeadState deadStateData;
     [SerializeField]
     private D_IdleState idleStateData;
+
+    [SerializeField]
+    GameObject fireBreathPrefab;
     
 
     public override void FixedUpdate()
@@ -52,6 +55,12 @@ public class Enemy5 : Entity
     public override void Update()
     {
         base.Update();
+        //Debug.Log(stateMachine.currentState);
+
+        if (isDead && stateMachine.currentState != deadState)
+        {
+            stateMachine.ChangeState(deadState);
+        }
     }
 
     protected override void GetDamage(float damageHit)

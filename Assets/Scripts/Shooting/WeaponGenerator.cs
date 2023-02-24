@@ -147,7 +147,7 @@ public class WeaponGenerator : MonoBehaviour
 
         {
 
-            weaponInHand = new GunSemiauto(firePoint, weaponsValues[3]);
+            return new GunSemiauto(firePoint, weaponsValues[3]);
 
         }
 
