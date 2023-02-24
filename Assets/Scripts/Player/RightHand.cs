@@ -12,11 +12,11 @@ public class RightHand : MonoBehaviour
     [SerializeField] Transform firePoint;
     [SerializeField] SpriteRenderer sr;
 
-    public PowerUpTimer powerUpTimer;
+    //public PowerUpTimer powerUpTimer;
     public PowerUpTimer reloadBarTimer;
 
-    private RecoilScript _recoilSript;
-    public GameObject powerUpBar;
+    //private RecoilScript _recoilSript;
+    //public GameObject powerUpBar;
     public GameObject reloadBar;
     public TextMeshProUGUI bulletsInMagazine;
     public TextMeshProUGUI bulletsPerMagazine;
@@ -52,7 +52,8 @@ public class RightHand : MonoBehaviour
 
     private void Start()
     {
-        _recoilSript = GetComponent<RecoilScript>();
+        //WeaponGenerator.Instance();
+        //_recoilSript = GetComponent<RecoilScript>();
         nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint);
         weaponInHand.SetWeaponHand(ref sr);
         reloadBar.SetActive(false);
@@ -74,10 +75,10 @@ public class RightHand : MonoBehaviour
     }
     private void Update()
     {
-        if (playerMat.GetFloat("_ShakeUvSpeed") != 0 && timeEndShake <= Time.time)
-        {
-            playerMat.SetFloat("_ShakeUvSpeed", 0);
-        }
+        //if (playerMat.GetFloat("_ShakeUvSpeed") != 0 && timeEndShake <= Time.time)
+        //{
+        //    playerMat.SetFloat("_ShakeUvSpeed", 0);
+        //}
 
         //Debug.Log(playerMat);
         switch (powerUpState)
@@ -206,11 +207,11 @@ public class RightHand : MonoBehaviour
 
     void ShootShake()
     {
-        if(playerMat.GetFloat("_ShakeUvSpeed") == 0)
-        {
-            playerMat.SetFloat("_ShakeUvSpeed", 20);
-        }
-        timeEndShake = Time.time + 0.13f;
+        //if(playerMat.GetFloat("_ShakeUvSpeed") == 0)
+        //{
+        //    playerMat.SetFloat("_ShakeUvSpeed", 20);
+        //}
+        //timeEndShake = Time.time + 0.13f;
     }
 
     public Color GetColor()
