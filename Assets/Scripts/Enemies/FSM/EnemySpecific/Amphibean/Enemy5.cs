@@ -19,9 +19,13 @@ public class Enemy5 : Entity
     [SerializeField]
     private D_IdleState idleStateData;
 
-    [SerializeField]
-    GameObject fireBreathPrefab;
     
+    public GameObject fireBreathPrefab;
+    
+    public GameObject smokePrefab;
+
+    public bool longRange;
+    public bool flamesAreOn;
 
     public override void FixedUpdate()
     {
@@ -50,6 +54,9 @@ public class Enemy5 : Entity
         stateMachine.Initialize(chasingState);
 
         agent.speed = enemyData.speed;
+
+        longRange = true;
+        flamesAreOn = false;
     }
 
     public override void Update()

@@ -9,12 +9,17 @@ public class E5_FiringState : FiringState
     int? fireSoundKey;
 
     bool attackStarted;
+    bool fireBreathStarted;
+    float timeBetweenBreaths = 0.2f;
+    float lastBreathAttack;
 
     public E5_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy5 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
         lastAttackTime = 0;
-        attackStarted = false;        
+        attackStarted = false;
+        fireBreathStarted = false;
+        lastBreathAttack = 0;
     }
 
     public override void Enter()
@@ -41,58 +46,96 @@ public class E5_FiringState : FiringState
             }
         }
 
-        if (enemy.anim.GetBool("waitingNewAttack") && Time.time - lastAttackTime >= stateData.timeBetweenShoots)
+        if (enemy.anim.GetBool("waitingNewBallAttack") && Time.time - lastAttackTime >= stateData.timeBetweenShoots)
         {
-            enemy.anim.SetBool("waitingNewAttack", false);
+            enemy.anim.SetBool("waitingNewBallAttack", false);
             enemy.anim.SetBool("attackDone", false);
 
         }
 
-        if (((angle < 90 && angle > -90) && enemy.transform.localScale.x > 0) || ((angle > 90 || angle < -90) && enemy.transform.localScale.x < 0))
+        if (enemy.anim.GetBool("waitingNewFlamesAttack") && Time.time - lastBreathAttack >= timeBetweenBreaths)
         {
-            enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
+            enemy.anim.SetBool("waitingNewFlamesAttack", false);
+            enemy.anim.SetBool("attackDone", false);
 
         }
 
-        if (enemy.vectorToPlayer.magnitude >= 5) {
-            if (!enemy.agent.enabled)
-            {
-                enemy.agent.enabled = true;
-            }
-        }
-        else
+        if (((angle < 90 && angle > -90) && enemy.transform.localScale.x > 0)|| ((angle > 90 || angle < -90) && enemy.transform.localScale.x < 0))
         {
-            if (enemy.agent.enabled && enemy.transform.position.y >= enemy.player.transform.position.y + 2)
+            if (!fireBreathStarted)
             {
-                if(enemy.player.position.x > enemy.transform.position.x)
-                {
-                    if(enemy.transform.position.x + 2 <= enemy.player.transform.position.x)
-                    {
-                        enemy.agent.enabled = false;
-                    }
-                }
-                else
-                {
-                    if (enemy.player.position.x <= enemy.transform.position.x)
-                    {
-                        enemy.agent.enabled = false;
-                    }
-                }
+                enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
             }
         }
 
-        if (enemy.agent.enabled)
+        //if (enemy.vectorToPlayer.magnitude >= 5)
+        //{
+        //    if (!enemy.agent.enabled && !fireBreathStarted)
+        //    {
+        //        enemy.agent.enabled = true;
+        //    }
+        //}
+        //else
+        //{
+        //    if (enemy.agent.enabled && enemy.transform.position.y >= enemy.player.transform.position.y + 2f)
+        //    {
+        //        if (enemy.player.position.x > enemy.transform.position.x)
+        //        {
+        //            if (enemy.transform.position.x + 2f <= enemy.player.transform.position.x)
+        //            {
+        //                enemy.agent.enabled = false;
+        //                enemy.longRange = false;
+        //                enemy.anim.SetBool("longRange", enemy.longRange);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (enemy.player.position.x <= enemy.transform.position.x)
+        //            {
+        //                enemy.agent.enabled = false;
+        //                enemy.longRange = false;
+        //                enemy.anim.SetBool("longRange", enemy.longRange);
+        //            }
+        //        }
+        //    }
+        //}
+
+        //if (enemy.agent.enabled)
+        //{
+        //    enemy.agent.SetDestination(new Vector3(enemy.player.position.x + -Mathf.Abs(enemy.player.localScale.x) * 2f, enemy.player.position.y + 2f, enemy.transform.position.z));
+        //    enemy.longRange = true;
+        //    enemy.anim.SetBool("longRange", enemy.longRange);
+
+        //}
+
+        if (enemy.longRange == false)
         {
-            enemy.agent.SetDestination(new Vector3(enemy.player.position.x + -Mathf.Abs(enemy.player.localScale.x)*2, enemy.player.position.y + 2, enemy.transform.position.z));
+            enemy.agent.enabled = false;
         }
+        else if(!fireBreathStarted)
+        {
+            enemy.agent.enabled = true;            
+
+            if(enemy.player.transform.position.x >= enemy.transform.position.x)
+            {
+                enemy.agent.SetDestination(new Vector3(enemy.player.position.x - 3f, enemy.player.position.y + 3f, enemy.transform.position.z));
+            }
+            else
+            {
+                enemy.agent.SetDestination(new Vector3(enemy.player.position.x + 3f, enemy.player.position.y + 3f, enemy.transform.position.z));
+            }
+        }
+
+        enemy.anim.SetBool("longRange", enemy.longRange);
 
         enemy.firePoint.localRotation = Quaternion.Euler(0, 0, angleFirePoint * Mathf.Sign(enemy.transform.localScale.x));
+        
     }
 
     public void AttackDone()
-    {
+    {        
         enemy.anim.SetBool("attackDone", true);
-        enemy.anim.SetBool("waitingNewAttack", true);
+        enemy.anim.SetBool("waitingNewBallAttack", true);
         lastAttackTime = Time.time;
         
         attackStarted = false;
@@ -109,6 +152,57 @@ public class E5_FiringState : FiringState
     {
         base.PhysicsUpdate();
         
+    }
+
+    public void StartFireBreath()
+    {
+        attackStarted = true;
+        fireBreathStarted = true;
+
+        //Instantiate fum
+        float aux = 0;
+        if(enemy.transform.localScale.x < 0)
+        {
+            aux = 0.24f;
+        }
+        else
+        {
+            aux = -0.24f;
+        }
+        GameObject smoke = GameObject.Instantiate(enemy.smokePrefab, enemy.GetComponent<Entity>().transform.position + new Vector3(aux, 2f,0), Quaternion.identity);
+    }
+
+    public void DoFireBreath()
+    {
+        //Instantiate foc
+        GameObject flames = GameObject.Instantiate(enemy.fireBreathPrefab, enemy.GetComponent<Entity>().GetFirePointTransform().position, Quaternion.identity);
+        if(enemy.transform.localScale.x < 0)
+        {
+            flames.GetComponent<SpriteRenderer>().flipX = true;
+        }
+
+        FunctionTimer.Create(() =>
+        {
+            if(enemy.gameObject != null)
+            {
+                enemy.flamesAreOn = true;
+            }
+        }, 0.1f);
+
+        FunctionTimer.Create(() =>
+        {
+            enemy.anim.SetBool("attackDone", true);
+            enemy.anim.SetBool("waitingNewFlamesAttack", true);
+            lastBreathAttack = Time.time;
+
+            attackStarted = false;
+            fireBreathStarted = false;
+            if (enemy.gameObject != null)
+            {
+                enemy.flamesAreOn = false;
+            }
+
+        }, 1.0f);
     }
 
     public void FireProjectile()
