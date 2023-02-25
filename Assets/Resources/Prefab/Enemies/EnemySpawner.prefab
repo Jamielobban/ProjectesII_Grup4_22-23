@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
-  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 8405310305926585271, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+  Enemy: {fileID: 0}
   enemySpawnSound: {fileID: 8300000, guid: 019df458c785cea4bb321fd5a8cb49bc, type: 3}
 --- !u!212 &-6281430479799677975
 SpriteRenderer:

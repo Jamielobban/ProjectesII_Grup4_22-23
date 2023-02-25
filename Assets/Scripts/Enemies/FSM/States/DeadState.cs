@@ -16,14 +16,14 @@ public class DeadState : State
         base.Enter();
 
         probabilityOfHearth = Random.Range(0, 7);
-        
+
 
         if (GameObject.FindGameObjectWithTag("RoomManager") != null)
         {
             GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().Dead();
 
         }
-        
+
     }
 
     public override void Exit()

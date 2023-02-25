@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Palanca : MonoBehaviour
 {
 
-    bool puertaAbierta;
+    public bool puertaAbierta;
     float pressTime;
     bool isPressed;
 
@@ -16,9 +16,12 @@ public class Palanca : MonoBehaviour
     public GameObject door;
 
     public Image slice;
+
+    public bool canOpen;
     // Start is called before the first frame update
     void Start()
     {
+        canOpen = false;
         slice.fillAmount = 0;
         button.SetActive(false);
         door.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
@@ -32,7 +35,7 @@ public class Palanca : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !puertaAbierta)
+        if (collision.CompareTag("Player") && !puertaAbierta && canOpen)
         {
             button.SetActive(true);
             isPressed = false;
@@ -42,7 +45,7 @@ public class Palanca : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !puertaAbierta)
+        if (collision.CompareTag("Player") && !puertaAbierta && canOpen)
         {
             if (Input.GetButton("Interact") && !isPressed)
             {
@@ -87,7 +90,7 @@ public class Palanca : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !puertaAbierta)
+        if (collision.CompareTag("Player") && !puertaAbierta && canOpen)
         {
             button.SetActive(false);
             isPressed = false;

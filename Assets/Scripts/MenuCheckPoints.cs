@@ -15,6 +15,8 @@ public class MenuCheckPoints : MonoBehaviour
 
     PlayerMovement player;
 
+    public GameObject allRooms;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +71,12 @@ public class MenuCheckPoints : MonoBehaviour
 
     public void EnterMenu()
     {
+        for(int i = 0; i < allRooms.transform.childCount; i++)
+        {
+            allRooms.transform.GetChild(i).gameObject.GetComponent<RoomManager>().restartRoom();
+        }
+
+
         int e = 0;
         for (int i = 0; i < mapa1.Length; i++)
         {

@@ -6,7 +6,7 @@ using DG.Tweening;
 public class EnemySpawn : MonoBehaviour
 {
     public GameObject EnemyPrefab;
-    GameObject Enemy;
+    public GameObject Enemy;
     private SpriteRenderer spawn;
     GameObject parent;
     public AudioClip enemySpawnSound;
