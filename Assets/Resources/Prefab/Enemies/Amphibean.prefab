@@ -170,6 +170,10 @@ MonoBehaviour:
   arrayTextures:
   - {fileID: 2800000, guid: ec9ff6574a0988f49b535baccf07de54, type: 3}
   - {fileID: 2800000, guid: 8995858d439289246a1a4ddb2bca12b0, type: 3}
+  - {fileID: 2800000, guid: 5525ce306c34e804f91006b68d88ece6, type: 3}
+  - {fileID: 2800000, guid: 6b19cb4671bb49649a6cfa8321290d05, type: 3}
+  - {fileID: 2800000, guid: 3634f9b07dd1fcd4b89e6f6a42407d92, type: 3}
+  - {fileID: 2800000, guid: 4e58b31e518759a44bd8abd3cf875b3d, type: 3}
 --- !u!114 &323605106020376445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +251,9 @@ MonoBehaviour:
   firingStateData: {fileID: 11400000, guid: ac9fe7f7f149c784bbddc5e038ccd466, type: 2}
   deadStateData: {fileID: 11400000, guid: dce46ed17defaf04e91e5fd74e5f2805, type: 2}
   idleStateData: {fileID: 11400000, guid: 9a46251960649f946a654022d2e4e0a1, type: 2}
+  breathSound: {fileID: 8300000, guid: c6c32f0fb02635746bb6e585b1bab242, type: 3}
+  wings1: {fileID: 8300000, guid: 31e58cb268f6ebd44a5565e367b474f5, type: 3}
+  wings2: {fileID: 8300000, guid: cb28bdb2cef70da469e9c5af3387cf2e, type: 3}
   fireBreathPrefab: {fileID: 7499989374822741764, guid: 7b33a1a754c91364bbfaf33b53dda0e8, type: 3}
   smokePrefab: {fileID: 4479690608288022630, guid: 511c943d3bc4de14ca9409982875a186, type: 3}
   longRange: 0
@@ -378,7 +385,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -3.4804423, y: -4.446123}
+  m_Offset: {x: -3.4804423, y: -4.8064528}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -389,7 +396,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.4317307, y: 0.9313698}
+  m_Size: {x: 4.4317307, y: 1.6520376}
   m_EdgeRadius: 0
 --- !u!1 &4842279462348250095
 GameObject:

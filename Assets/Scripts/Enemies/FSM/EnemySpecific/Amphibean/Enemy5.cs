@@ -19,7 +19,13 @@ public class Enemy5 : Entity
     [SerializeField]
     private D_IdleState idleStateData;
 
-    
+    public AudioClip breathSound;
+    public AudioClip wings1;
+    public AudioClip wings2;
+    public int? wings1key;
+    public int? wings2key;
+    public int? breathKey;
+
     public GameObject fireBreathPrefab;
     
     public GameObject smokePrefab;

@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class E5_FiringState : FiringState
 {
     Enemy5 enemy;
     float lastAttackTime;
     int? fireSoundKey;
+    int? attackSoundsKey;
+    int? flamesSoundsKey;
+    
 
     bool attackStarted;
     bool fireBreathStarted;
@@ -25,11 +28,32 @@ public class E5_FiringState : FiringState
     public override void Enter()
     {
         base.Enter();
+
+        attackSoundsKey = AudioManager.Instance.LoadSound(stateData.attackSounds, enemy.GetComponent<Entity>().transform, 0, true);
+        if (attackSoundsKey.HasValue)
+        {
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(attackSoundsKey.Value).volume = 0.4f;
+        }
+    }
+
+    public void PlayWings1()
+    {
+        enemy.wings1key = AudioManager.Instance.LoadSound(enemy.wings1, enemy.GetComponent<Entity>().transform);
+    }
+    public void PlayWings2()
+    {
+        enemy.wings2key = AudioManager.Instance.LoadSound(enemy.wings2, enemy.GetComponent<Entity>().transform);
     }
 
     public override void Exit()
     {
-        base.Exit();        
+        base.Exit();
+
+        if (attackSoundsKey.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(attackSoundsKey.Value);
+        }
+        
     }
 
     public override void LogicUpdate()
@@ -66,47 +90,7 @@ public class E5_FiringState : FiringState
             {
                 enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
             }
-        }
-
-        //if (enemy.vectorToPlayer.magnitude >= 5)
-        //{
-        //    if (!enemy.agent.enabled && !fireBreathStarted)
-        //    {
-        //        enemy.agent.enabled = true;
-        //    }
-        //}
-        //else
-        //{
-        //    if (enemy.agent.enabled && enemy.transform.position.y >= enemy.player.transform.position.y + 2f)
-        //    {
-        //        if (enemy.player.position.x > enemy.transform.position.x)
-        //        {
-        //            if (enemy.transform.position.x + 2f <= enemy.player.transform.position.x)
-        //            {
-        //                enemy.agent.enabled = false;
-        //                enemy.longRange = false;
-        //                enemy.anim.SetBool("longRange", enemy.longRange);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (enemy.player.position.x <= enemy.transform.position.x)
-        //            {
-        //                enemy.agent.enabled = false;
-        //                enemy.longRange = false;
-        //                enemy.anim.SetBool("longRange", enemy.longRange);
-        //            }
-        //        }
-        //    }
-        //}
-
-        //if (enemy.agent.enabled)
-        //{
-        //    enemy.agent.SetDestination(new Vector3(enemy.player.position.x + -Mathf.Abs(enemy.player.localScale.x) * 2f, enemy.player.position.y + 2f, enemy.transform.position.z));
-        //    enemy.longRange = true;
-        //    enemy.anim.SetBool("longRange", enemy.longRange);
-
-        //}
+        }      
 
         if (enemy.longRange == false)
         {
@@ -141,11 +125,14 @@ public class E5_FiringState : FiringState
         attackStarted = false;
 
         FireProjectile();
+       
     }
 
     public void AttackStarted()
     {
-        attackStarted = true;        
+        attackStarted = true;
+
+        
     }
 
     public override void PhysicsUpdate()
@@ -161,7 +148,15 @@ public class E5_FiringState : FiringState
 
         //Instantiate fum
         float aux = 0;
-        if(enemy.transform.localScale.x < 0)
+
+        enemy.breathKey = AudioManager.Instance.LoadSound(enemy.breathSound, enemy.transform);
+
+        if (attackSoundsKey.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(attackSoundsKey.Value);
+        }
+
+        if (enemy.transform.localScale.x < 0)
         {
             aux = 0.24f;
         }
@@ -176,9 +171,15 @@ public class E5_FiringState : FiringState
     {
         //Instantiate foc
         GameObject flames = GameObject.Instantiate(enemy.fireBreathPrefab, enemy.GetComponent<Entity>().GetFirePointTransform().position, Quaternion.identity);
-        if(enemy.transform.localScale.x < 0)
+
+        flamesSoundsKey = AudioManager.Instance.LoadSound(stateData.attackSounds2, flames.transform);
+
+        if (enemy.transform.localScale.x < 0)
         {
             flames.GetComponent<SpriteRenderer>().flipX = true;
+            //Vector3 aux = flames.GetComponentsInChildren<Transform>().Where(t => t.GetComponent<PolygonCollider2D>() == true).ToArray()[0].localScale;
+            //aux.x *= -1;
+            //flames.GetComponentInChildren<Transform>().localScale = aux;
         }
 
         FunctionTimer.Create(() =>
@@ -191,15 +192,23 @@ public class E5_FiringState : FiringState
 
         FunctionTimer.Create(() =>
         {
-            enemy.anim.SetBool("attackDone", true);
-            enemy.anim.SetBool("waitingNewFlamesAttack", true);
-            lastBreathAttack = Time.time;
-
-            attackStarted = false;
-            fireBreathStarted = false;
+           
             if (enemy.gameObject != null)
             {
+                enemy.anim.SetBool("attackDone", true);
+                enemy.anim.SetBool("waitingNewFlamesAttack", true);
+                lastBreathAttack = Time.time;
+
+                attackStarted = false;
+                fireBreathStarted = false;
                 enemy.flamesAreOn = false;
+
+                attackSoundsKey = AudioManager.Instance.LoadSound(stateData.attackSounds, enemy.GetComponent<Entity>().transform, 0, true);
+                if (attackSoundsKey.HasValue)
+                {
+                    AudioManager.Instance.GetAudioFromDictionaryIfPossible(attackSoundsKey.Value).volume = 0.4f;
+                }
+
             }
 
         }, 1.0f);
@@ -209,8 +218,7 @@ public class E5_FiringState : FiringState
     {
         GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position, enemy.GetComponent<Entity>().GetFirePointTransform().rotation);
         fireSoundKey = AudioManager.Instance.LoadSound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);
-        bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponentInChildren<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
-        
+        bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponentInChildren<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);        
 
         //shootDone = true;
     }

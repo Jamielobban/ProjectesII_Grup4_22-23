@@ -43,6 +43,15 @@ public class E5_IdleState : IdleState
         }
     }
 
+    public void PlayWings1()
+    {
+        enemy.wings1key = AudioManager.Instance.LoadSound(enemy.wings1, enemy.GetComponent<Entity>().transform);
+    }
+    public void PlayWings2()
+    {
+        enemy.wings2key = AudioManager.Instance.LoadSound(enemy.wings2, enemy.GetComponent<Entity>().transform);
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();

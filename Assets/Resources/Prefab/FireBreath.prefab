@@ -147,6 +147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6023450633942119726}
   - component: {fileID: 5624149590678878448}
+  - component: {fileID: 1021060169749937813}
   m_Layer: 0
   m_Name: Colider
   m_TagString: Untagged
@@ -211,3 +212,18 @@ PolygonCollider2D:
       - {x: 0.07780665, y: 0.16668671}
       - {x: -0.8948945, y: -0.30596513}
       - {x: -4.0794625, y: -0.37936962}
+--- !u!114 &1021060169749937813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7930314530757871309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90988386c468a354b96981a5eae3c510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBetweenDamage: 0.1
+  damagePerTic: 5
+  tagToAffect: Player

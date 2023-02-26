@@ -12,5 +12,6 @@ public class D_FiringState : ScriptableObject
     public AudioClip shootShound;
     //public AudioClip shootShound2;
     public AudioClip attackSounds;
+    public AudioClip attackSounds2;
     public float stateDuration;
 }
