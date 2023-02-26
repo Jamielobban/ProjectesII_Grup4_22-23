@@ -11,16 +11,29 @@ public class EnemySpawn : MonoBehaviour
     GameObject parent;
     public AudioClip enemySpawnSound;
     int? spawnSoundKey;
+
+    public bool spawnEnemyAtStart;
+
+    private void Start()
+    {
+        if(spawnEnemyAtStart)
+        {
+            SpawnAnimation();
+        }
+    }
     private void Awake()
     {
+ 
         spawn = GetComponent<SpriteRenderer>();
         parent = GameObject.FindGameObjectWithTag("EnemyList");
     }
+
     public void SpawnEnemy()
     {
         Enemy = Instantiate(EnemyPrefab, transform.position, transform.rotation);
         Enemy.transform.parent = parent.transform;
-        Destroy(this.gameObject);
+        spawn.DOColor(Color.clear, 1f);
+
     }
 
 

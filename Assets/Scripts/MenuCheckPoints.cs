@@ -17,11 +17,15 @@ public class MenuCheckPoints : MonoBehaviour
 
     public GameObject allRooms;
 
+    public GameObject destruibles;
+
+    public GameObject spawns;
+
     // Start is called before the first frame update
     void Start()
     {
 
-        for(int i = 0; i < mapa1.Length; i++)
+        for (int i = 0; i < mapa1.Length; i++)
         {
 
             GameObject menu = mapa1[i].transform.GetChild(1).gameObject;
@@ -71,11 +75,22 @@ public class MenuCheckPoints : MonoBehaviour
 
     public void EnterMenu()
     {
-        for(int i = 0; i < allRooms.transform.childCount; i++)
+        for (int i = 0; i < spawns.transform.childCount; i++)
+        {
+            //En vez de destruir, recuperarle la vida
+            Destroy(spawns.transform.GetChild(i).gameObject.GetComponent<EnemySpawn>().Enemy);
+
+            spawns.transform.GetChild(i).gameObject.GetComponent<EnemySpawn>().SpawnAnimation();
+
+        }
+        for (int i = 0; i < allRooms.transform.childCount; i++)
         {
             allRooms.transform.GetChild(i).gameObject.GetComponent<RoomManager>().restartRoom();
         }
-
+        for (int i = 0; i < destruibles.transform.childCount; i++)
+        {
+            destruibles.transform.GetChild(i).gameObject.GetComponent<barrilDestruible>().restart();
+        }
 
         int e = 0;
         for (int i = 0; i < mapa1.Length; i++)
