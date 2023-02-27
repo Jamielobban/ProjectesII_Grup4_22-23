@@ -5,70 +5,75 @@ using DG.Tweening;
 
 public class MoveGlowTextOffset : MonoBehaviour
 {
-    Material circleMat;       
-    static Sequence textureMovement;   
-    float timeBetweenChange;
+    float lerpDuration = 1;
+    float startValueX;
+    float startValueY;
+    float endValueX;
+    float endValueY;
+    float valueToLerpX;
+    float valueToLerpY;
+    float timeToChangeVelocity;
     float lastTime;
-    float scrollSpeedX;
-    float scrollSpeedY;
-    float scrollSpeedX2;
-    float scrollSpeedY2;
-    bool doingLerp = false;
-    float lerpTime = 1;
-    bool firstTime = true;
-
-    float lerpValueX;
-    float lerpValueY;
-
-    // Start is called before the first frame update
+    Material mat;
+    [SerializeField]
+    float vel = 1;
     void Start()
     {
-        circleMat = GetComponent<SpriteRenderer>().material;
-
-        timeBetweenChange = Random.Range(5f, 15f);
-
-        lastTime = Time.time;
-
-        scrollSpeedX = Random.Range(-0.5f, 0.5f);
-        scrollSpeedY = Random.Range(-0.5f, 0.5f);
         
+        timeToChangeVelocity = Random.Range(5f, 10f);
+        startValueX = Random.Range(-0.1f, 0.1f);
+        startValueY = Random.Range(-0.1f, 0.1f);
+        lastTime = Time.time;
+        mat = GetComponent<SpriteRenderer>().material;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
+    {
+        //if(Time.time - lastTime >= timeToChangeVelocity)
+        //{
+        //    StartCoroutine(Lerp());
+        //    mat.SetTextureOffset("_OverlayTex", new Vector2(valueToLerpX, valueToLerpY) * Time.time);
+        //}
+        //else
+        //{
+        //    mat.SetTextureOffset("_OverlayTex", new Vector2(startValueX, startValueY) * Time.time);
+        //}
+        mat.SetTextureOffset("_OverlayTex", new Vector2(Mathf.Sin(Time.time), -Mathf.Cos(Time.time)) * vel);
+    }
+    IEnumerator Lerp()
     {
         
-        
-        if(Time.time - (lastTime + lerpTime) >= timeBetweenChange || firstTime)
+        float timeElapsed = 0;
+        endValueX = Random.Range(-0.1f, 0.1f);
+        endValueY = Random.Range(-0.1f, 0.1f);
+        while (timeElapsed < lerpDuration)
         {
-            //timeBetweenChange = Random.Range(5f, 15f);
-            scrollSpeedX2 = Random.Range(-0.5f, 0.5f);
-            scrollSpeedY2 = Random.Range(-0.5f, 0.5f);
-            doingLerp = true;
-            lastTime = Time.time;
-            firstTime = false;
-        }
-
-        if (doingLerp)
-        {
-            lerpValueX = Mathf.Lerp(scrollSpeedX, scrollSpeedX2, lerpTime);
-            lerpValueY = Mathf.Lerp(scrollSpeedY, scrollSpeedY2, lerpTime);
-
-            circleMat.SetTextureOffset("_OverlayTex", new Vector2(Time.time * lerpValueX, Time.time * lerpValueY));
-
-            if(lerpValueX >= scrollSpeedX2 && lerpValueY >= scrollSpeedY2)
+            if(endValueX > startValueX)
             {
-                doingLerp = false;
-                scrollSpeedX = lerpValueX;
-                scrollSpeedY = lerpValueY;
+                valueToLerpX = Mathf.Lerp(startValueX, endValueX, timeElapsed / lerpDuration);
+            }
+            else
+            {
+                valueToLerpX = Mathf.Lerp(endValueX, startValueX, timeElapsed / lerpDuration);
             }
 
-        }
-        else
-        {
-            circleMat.SetTextureOffset("_OverlayTex", new Vector2(Time.time * scrollSpeedX, Time.time * scrollSpeedY));
-        }
+            if (endValueY > startValueY)
+            {
+                valueToLerpY = Mathf.Lerp(startValueY, endValueY, timeElapsed / lerpDuration);
+            }
+            else
+            {
+                valueToLerpY = Mathf.Lerp(endValueY, startValueY, timeElapsed / lerpDuration);
+            }
+
+            timeElapsed += Time.deltaTime;
+            
+            Debug.Log(valueToLerpX);
+            Debug.Log(valueToLerpY);
+            yield return null;
+        }        
+        startValueX = endValueX;
+        startValueY = endValueY;
+        lastTime = Time.time;
         
-       // Debug.Log()
     }
 }
