@@ -6,21 +6,37 @@ using DG.Tweening;
 public class EnemySpawn : MonoBehaviour
 {
     public GameObject EnemyPrefab;
-    GameObject Enemy;
+    public GameObject Enemy;
     private SpriteRenderer spawn;
     GameObject parent;
     public AudioClip enemySpawnSound;
     int? spawnSoundKey;
+
+    public bool spawnEnemyAtStart;
+
+    private void Start()
+    {
+        if(spawnEnemyAtStart)
+        {
+            SpawnAnimation();
+        }
+    }
     private void Awake()
     {
+ 
         spawn = GetComponent<SpriteRenderer>();
-        parent = GameObject.FindGameObjectWithTag("EnemyList");
+        if(!spawnEnemyAtStart)
+            parent = GameObject.FindGameObjectWithTag("EnemyList");
     }
+
     public void SpawnEnemy()
     {
         Enemy = Instantiate(EnemyPrefab, transform.position, transform.rotation);
-        Enemy.transform.parent = parent.transform;
-        Destroy(this.gameObject);
+        if (!spawnEnemyAtStart)
+            Enemy.transform.parent = parent.transform;
+
+        spawn.DOColor(Color.clear, 1f);
+
     }
 
 

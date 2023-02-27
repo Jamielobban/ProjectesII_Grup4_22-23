@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GunSemiauto : Gun
 {
+
+    //public override void Star
     public GunSemiauto(Transform _firePoint, WeaponValues _data) : base(_firePoint, _data)
     {
         weaponMechanism = new Seamiautomatica();

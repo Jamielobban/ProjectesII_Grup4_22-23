@@ -22,7 +22,7 @@ public class RecoilScript : MonoBehaviour
     {
         //_weaponHeadedBackToStartPosition = false;
         //_recoilSpeed = -transform.up * _weaponRecoilStartSpeed;
-        transform.DOLocalMove((new Vector3(-0.04f, -0.5f, 0.0f)), 0.05f, false);
+        transform.DOLocalMove((new Vector3(0.18f, -0.5f, 0.0f)), 0.05f, false);
         StartCoroutine(waitForPosition(0.06f));
     }
     private void Start()
@@ -47,7 +47,7 @@ public class RecoilScript : MonoBehaviour
         }
         else
         {
-            transform.DOLocalMove((new Vector3(-0.04f, -1f, 0.0f)), 0.1f, false);
+            transform.DOLocalMove((new Vector3(0.18f, -0.875f, 0.0f)), 0.1f, false);
             _recoilInEffect = false;
         }
         if (hasReachedPoint)

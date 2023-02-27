@@ -14,6 +14,7 @@ Material:
   - CHANGECOLOR3_ON
   - CHROMABERR_ON
   - FISHEYE_ON
+  - GLOWLIGHT_ON
   - HITEFFECT_ON
   - OUTBASE8DIR_ON
   - OUTBASEPIXELPERF_ON
@@ -122,7 +123,7 @@ Material:
     - _DistortAmount: 0.5
     - _DistortTexXSpeed: 5
     - _DistortTexYSpeed: 5
-    - _EditorDrawers: 6
+    - _EditorDrawers: 14
     - _FadeAmount: -0.1
     - _FadeBurnGlow: 2
     - _FadeBurnTransition: 0.075
@@ -168,9 +169,9 @@ Material:
     - _InnerOutlineGlow: 4
     - _InnerOutlineThickness: 1
     - _LitAmount: 1
-    - _MaxXUV: 0.125
+    - _MaxXUV: 0.25
     - _MaxYUV: 1
-    - _MinXUV: 0
+    - _MinXUV: 0.125
     - _MinYUV: 0
     - _MotionBlurAngle: 0.1
     - _MotionBlurDist: 1.25

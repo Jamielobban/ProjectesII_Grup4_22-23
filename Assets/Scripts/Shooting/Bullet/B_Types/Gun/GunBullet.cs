@@ -4,27 +4,36 @@ using UnityEngine;
 
 public class GunBullet : Bullet
 {
-        
-    
+    private PlayerMovement playerpos;
+    private RecoilScript _recoil;
+    public Turn will;
+    private GameObject rotatePoint;
+    public GameObject muzzleFlash;
+    public GameObject bulletShell;
+
     protected override void Start()
     {
         base.Start();
 
-        //bulletDamage = 20*_damageMultiplier;
-        //bulletRangeInMetres = 100;
-        //bulletSpeedMetresPerSec = 20;
-        //bulletRadius = 0.23f;
-        bulletData.bulletDamage *= bulletData._damageMultiplier;
+        rotatePoint = GameObject.FindGameObjectWithTag("PlayerFirePoint");
+        playerpos = FindObjectOfType<PlayerMovement>();
+        _recoil = FindObjectOfType<RecoilScript>();
+        will = FindObjectOfType<Turn>();
+
+        Instantiate(muzzleFlash, rotatePoint.transform.position, rotatePoint.transform.rotation);
+        Instantiate(bulletShell, will.transform.position, Quaternion.identity);
+
 
         rb = this.GetComponent<Rigidbody2D>();
+        bulletData.bulletDamage *= bulletData._damageMultiplier;
 
-        
-        //originalFirePoint.Rotate(0, 0, originalFirePoint.transform.rotation.z + Random.Range(-15, 15));
-        //rb.AddForce(originalFirePoint.up * -bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-        //Debug.Log(rb.velocity);
-        //originalVector = rb.velocity;
-        
-        
+        _recoil.AddRecoil();
+
+        playerpos.knockback = true;
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 0.1f), (-rb.velocity.y * 0.1f));
+
+
+
     }
 
     protected override void Update()

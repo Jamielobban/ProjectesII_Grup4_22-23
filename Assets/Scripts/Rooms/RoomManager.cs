@@ -6,83 +6,147 @@ public class RoomManager : MonoBehaviour
 {
     //public bool currentRoom = false;
 
-   
-    public int kills = 0;
+    public GameObject roomEnemies;
 
+    public int[] enemiesInEachRound;
 
-    public List<GameObject> objectsToEnable;
-    bool EnterRoom = false;
-    public int enemiesInRoom;
+    public EnemySpawn[] spawns;
 
-    public GameObject wallToSpawn;
+    bool inRoom;
 
+    int currentRound;
+
+    public int kills;
+
+    public GameObject roomTriggers;
+
+    public Palanca[] palancas;
+
+    public GameObject[] doors;
 
     //public GameObject room;
 
 
+    //Las puertas tienen que estar en el mismo puesto que su palanca
+
     public void Start()
     {
-        wallToSpawn.SetActive(true);
-        foreach (GameObject gameObject in objectsToEnable)
-        {
-            gameObject.SetActive(false);
-        }
-        
+        inRoom = false;
+        this.gameObject.tag = "Default";
+        roomTriggers.SetActive(true);
+
+        openDoors();
     }
 
-    private void Update()
+    void closeDoors()
     {
-        //if(lastNumberEnemiesInRoom != enemiesInRoom.Count)
-        //{
-        //    int difference = lastNumberEnemiesInRoom - enemiesInRoom.Count;
-        //    if(difference > 0)
-        //    {
-        //        kills += difference;
-        //    }
-        //    lastNumberEnemiesInRoom = enemiesInRoom.Count;
-        //}
-        //if (!this.gameObject.CompareTag("RoomManager"))
-        //{
-        //    kills = 0;
-        //}
+        for(int i = 0; i < doors.Length; i++)
+        {
+            if(i < palancas.Length)
+            {
+                if (palancas[i].puertaAbierta == true)
+                {
+                    doors[i].SetActive(true);
+
+                }
+            }
+            else
+            {
+                doors[i].SetActive(true);
+            }
+        }
+    }
+
+    void openDoors()
+    {
+        for (int i = 0; i < doors.Length; i++)
+        {
+            doors[i].SetActive(false);
+        }
+    }
+
+    public void StartRound()
+    {
+        roomTriggers.SetActive(false);
+
+        this.gameObject.tag = "RoomManager";
+        kills = 0;
+        currentRound = 0;
+        inRoom = true;
+        spawnRound(currentRound);
+        closeDoors();
     }
     public void Dead()
     {
         kills++;
 
-        if(kills == enemiesInRoom)
+        if(kills == enemiesInEachRound[currentRound])
         {
-            Destroy(wallToSpawn);
-
-            Destroy(this.gameObject);
-        }
-    }
-
-   
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player")&& !EnterRoom)
-        {
-            EnterRoom = true;
-            foreach (GameObject enemy in objectsToEnable)
+            if(currentRound < (enemiesInEachRound.Length-1))
             {
-                enemy.SetActive(true);
+                currentRound++;
+                spawnRound(currentRound);
             }
-            //currentRoom = true;
-            //cameraPos.GetComponent<CameraPos>().x = room;
-            wallToSpawn.SetActive(true);
-            this.gameObject.tag = "RoomManager";
-            Destroy(this.GetComponent<BoxCollider2D>());
+            else
+            {
+                endRoom();
+            }
+        }
+    }
+    void spawnRound(int round)
+    {
+        int enemies = 0;
+        if(round != 0)
+        {
+            enemies = enemiesInEachRound[round - 1];
+        }
+
+        for(int i = enemies; i < enemiesInEachRound[round]; i++)
+        {
+            spawns[i].SpawnAnimation();
+            StartCoroutine(SetEnemy(1.1f,spawns[i]));
+
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private IEnumerator SetEnemy(float time, EnemySpawn spawn)
     {
-        //if (collision.CompareTag("Player"))
-        //{
-        //    currentRoom = false;
-        //    //Destroy(gameObject);
-        //}
+        yield return new WaitForSeconds(time);
+        spawn.Enemy.transform.SetParent(roomEnemies.transform);
+
+
     }
+    void endRoom()
+    {
+        openDoors();
+        this.gameObject.tag = "Default";
+
+        for(int i = 0; i < palancas.Length; i++)
+        {
+            palancas[i].canOpen = true;
+        }
+    }
+
+    public void restartRoom()
+    {
+        openDoors();
+
+        for (int i = 0; i < palancas.Length; i++)
+        {
+            palancas[i].canOpen = false;
+        }
+
+        roomTriggers.SetActive(true);
+
+        this.gameObject.tag = "Default";
+
+        currentRound = 0;
+        inRoom = false;
+
+        foreach (GameObject childs in roomEnemies.transform) {
+            Destroy(childs);
+        }
+
+    }
+
 }

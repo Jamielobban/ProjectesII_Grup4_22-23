@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BalasExplosivas : Bullet
 {
@@ -8,23 +9,29 @@ public class BalasExplosivas : Bullet
     public GameObject explos;
     private PlayerMovement playerpos;
     private RecoilScript _recoil;
-    private Turn turningPoint;
     public GameObject bulletShell;
     public Turn will;
     private GameObject rotatePoint;
-    public GameObject muzzleFlash;
+    public GameObject MuzzleFlash;
     protected override void Start()
     {
         base.Start();
 
-        rotatePoint = GameObject.FindGameObjectWithTag("FirePoint");
+        rotatePoint = GameObject.FindGameObjectWithTag("PlayerFirePoint");
         playerpos = FindObjectOfType<PlayerMovement>();
         _recoil = FindObjectOfType<RecoilScript>();
         will = FindObjectOfType<Turn>();
 
         //bulletShell = Resources.Load<GameObject>("Prefab/BulletParticle");
-        Instantiate(muzzleFlash, rotatePoint.transform.position, rotatePoint.transform.rotation);
+        
+
+
+
         Instantiate(bulletShell,will.transform.position,Quaternion.identity);
+        GameObject go = Instantiate(MuzzleFlash);
+        go.transform.position = rotatePoint.transform.position;
+        go.transform.rotation = rotatePoint.transform.rotation;
+        //Instantiate(muzzleFlash, rotatePoint.transform.position, rotatePoint.transform.rotation);
         //bulletDamage = 5 * _damageMultiplier;
         //bulletRangeInMetres = 100;
         //bulletSpeedMetresPerSec = 50;
