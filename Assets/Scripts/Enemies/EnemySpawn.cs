@@ -25,13 +25,16 @@ public class EnemySpawn : MonoBehaviour
     {
  
         spawn = GetComponent<SpriteRenderer>();
-        parent = GameObject.FindGameObjectWithTag("EnemyList");
+        if(!spawnEnemyAtStart)
+            parent = GameObject.FindGameObjectWithTag("EnemyList");
     }
 
     public void SpawnEnemy()
     {
         Enemy = Instantiate(EnemyPrefab, transform.position, transform.rotation);
-        Enemy.transform.parent = parent.transform;
+        if (!spawnEnemyAtStart)
+            Enemy.transform.parent = parent.transform;
+
         spawn.DOColor(Color.clear, 1f);
 
     }

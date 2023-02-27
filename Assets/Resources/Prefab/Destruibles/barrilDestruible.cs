@@ -16,6 +16,8 @@ public class barrilDestruible : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        humo.GetComponent<SpriteRenderer>().sortingOrder = layer+1;
+
         modelo.SetActive(true);
         destruido = false;
         modelo.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = layer;
