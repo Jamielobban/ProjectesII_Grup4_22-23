@@ -41,8 +41,8 @@ public class RightHand : MonoBehaviour
     public Color usePowerUpColor;
 
     Image powerUpBarColor;
-    Material playerMat;    
-    float timeEndShake;
+    //Material playerMat;    
+    //float timeEndShake;
 
     enum PowerUpState { RELOADING, USING, FULL };
     PowerUpState powerUpState;
@@ -60,7 +60,7 @@ public class RightHand : MonoBehaviour
 
         UpdateUIWeapons();
         powerUpState = PowerUpState.RELOADING;
-        playerMat = GetComponentInParent<PlayerMovement>().body.material;
+        //playerMat = GetComponentInParent<PlayerMovement>().body.material;
         //shakeSeq = DOTween.Sequence();
     }
 
@@ -74,10 +74,10 @@ public class RightHand : MonoBehaviour
     }
     private void Update()
     {
-        if (playerMat.GetFloat("_ShakeUvSpeed") != 0 && timeEndShake <= Time.time)
-        {
-            playerMat.SetFloat("_ShakeUvSpeed", 0);
-        }
+        //if (playerMat.GetFloat("_ShakeUvSpeed") != 0 && timeEndShake <= Time.time)
+        //{
+        //    playerMat.SetFloat("_ShakeUvSpeed", 0);
+        //}
 
         //Debug.Log(playerMat);
         switch (powerUpState)
@@ -206,11 +206,11 @@ public class RightHand : MonoBehaviour
 
     void ShootShake()
     {
-        if(playerMat.GetFloat("_ShakeUvSpeed") == 0)
-        {
-            playerMat.SetFloat("_ShakeUvSpeed", 20);
-        }
-        timeEndShake = Time.time + 0.13f;
+        //if(playerMat.GetFloat("_ShakeUvSpeed") == 0)
+        //{
+        //    playerMat.SetFloat("_ShakeUvSpeed", 20);
+        //}
+        //timeEndShake = Time.time + 0.13f;
     }
 
     public Color GetColor()
