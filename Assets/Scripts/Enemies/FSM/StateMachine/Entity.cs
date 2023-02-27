@@ -167,46 +167,7 @@ public abstract class Entity : MonoBehaviour
 			sr.material.DOFloat(0, "_OutlineAlpha", 0.3f);
 		});
 		
-	}
-	//float minimum;
-	//float maximum;
-	//sr.material.SetFloat("_HitEffectGlow", 10);
-
-	//if (!maxHitBlendReached)
-	//{
-	//	minimum = 0;
-	//	maximum = 1;
-
-	//	sr.material.SetFloat("_HitEffectBlend", Mathf.Lerp(minimum, maximum, tHE));
-
-	//	tHE += 5 * Time.deltaTime;
-
-	//	if (sr.material.GetFloat("_HitEffectBlend") >= 1)
-	//	{
-	//		maxHitBlendReached = true;
-	//		tHE = 0;
-	//	}
-	//}
-	//else
-	//{
-	//	minimum = 1;
-	//	maximum = 0;
-
-	//	sr.material.SetFloat("_HitEffectBlend", Mathf.Lerp(minimum, maximum, tHE));
-
-	//	tHE += 5 * Time.deltaTime;
-
-	//	if (sr.material.GetFloat("_HitEffectBlend") <= 0)
-	//	{
-	//		maxHitBlendReached = false;
-	//		applyingHitEffect = false;
-	//		tHE = 0;
-	//	}
-	//}
-	//sr.material.DOFloat(0.6f, "_OutlineAlpha", 0.3f).OnComplete(()=>
-	//{
-	//	sr.material.DOFloat(0.6f, "_OutlineAlpha", 0.3f);
-	//});
+	}	
 
 	public virtual void FixedUpdate()
 	{		
