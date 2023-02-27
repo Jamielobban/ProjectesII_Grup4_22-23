@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootSound: {fileID: 8300000, guid: 6e70b23f80d0d704ab1fed656e7f646e, type: 3}
   reloadSound: {fileID: 8300000, guid: 12b7445ad5f178f49a7b28a7514e2eee, type: 3}
-  weaponSprite: {fileID: 21300000, guid: 4418a6577186a3d4ebc1fd5b98faf0c4, type: 3}
-  weaponColor: {r: 1, g: 1, b: 0, a: 1}
+  weaponSprite: {fileID: 21300000, guid: 11f356bccc2b09d418ac74e3abd3bcd4, type: 3}
+  weaponColor: {r: 1, g: 1, b: 1, a: 1}
   bulletTypePrefab: {fileID: 4178877447834849846, guid: 2b273d6bc49bd0742b10be6d8c7a9ef0, type: 3}
   bulletsInMagazine: {fileID: 11400000, guid: 060b67ad6222b9544b9c45a06f086b85, type: 2}
   magazinesInWeapon: {fileID: 11400000, guid: ada84c673b4f69c43a5587c9a777b4f8, type: 2}
@@ -24,6 +24,8 @@ MonoBehaviour:
   fireRateinSec: {fileID: 11400000, guid: b2eb87e7617593f45899c6af62d16050, type: 2}
   maxTimeOnPowerup: {fileID: 11400000, guid: d55eba3f6196a4d4982eb01b874dd022, type: 2}
   amplitudeGain: {fileID: 11400000, guid: a7fc0cbe65d20644d89c67aa62759be5, type: 2}
+  knockbackForce: {fileID: 11400000, guid: af50dbb8ff03aaf44b5cbd20a77ea4d1, type: 2}
+  knockbackMinimum: {fileID: 11400000, guid: 09dde761d5070c845b2f7c81f59b0181, type: 2}
   startReloading: {fileID: 11400000, guid: ca57f739317b2a241bf808f3ac592734, type: 2}
   timelastPowerupEnter: {fileID: 11400000, guid: 3ce68e8d2a0fcc94a9811e2b365de3b8, type: 2}
   timelastPowerupExit: {fileID: 11400000, guid: 3fc08531dfd9f054990986e283ec24fb, type: 2}
@@ -33,3 +35,4 @@ MonoBehaviour:
   reloading: {fileID: 11400000, guid: f0404f32038126e4a816950f90803726, type: 2}
   outOfAmmo: {fileID: 11400000, guid: 65037fb3bc3ad53468aebb6bbb33330c, type: 2}
   powerupAvailable: {fileID: 11400000, guid: 38473655e218a2344973d4079dc1ef08, type: 2}
+  firePoint: {x: -0.017, y: -0.061, z: 0}

@@ -31,7 +31,12 @@ public class WeaponValues : ScriptableObject
     public BoolValue reloading;    
     public BoolValue outOfAmmo;    
     public BoolValue powerupAvailable;
-    
+
+
+
+    [Header("Firepoint")]
+    public Vector3 firePoint;
+
     public void RestartValues()
     {
         bulletsInMagazine.RestartValues();

@@ -53,34 +53,42 @@ public class WeaponGenerator : MonoBehaviour
 
 
 
-        int random = Random.Range(0, 4);
+        int random = Random.Range(0, 5);
 
 
         weaponInHandInt = random;
 
         if (random == 0)
         {
+            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.754999995f, 0f);
             weaponInHand = new SniperAuto(firePoint, weaponsValues[0]);
         }
         else if (random == 1)
 
         {
-
+            //firePoint.localPosition = new Vector3(-0.0700000003f, -0.568000019f, 0f);
             weaponInHand = new SniperBolt(firePoint, weaponsValues[1]);
 
         }
         else if (random == 2)
 
         {
-
+            //firePoint.localPosition = new Vector3(-0.0700000003f, -0.568000019f, 0f);
             weaponInHand = new ShotgunAuto(firePoint, weaponsValues[2]);
 
         }
         else if (random == 3)
 
         {
-
+            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
             weaponInHand = new GunSemiauto(firePoint, weaponsValues[3]);
+
+        }
+        else if (random == 4)
+
+        {
+            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
+            weaponInHand = new ShotgunBolt(firePoint, weaponsValues[4]);
 
         }
 
@@ -116,7 +124,7 @@ public class WeaponGenerator : MonoBehaviour
 
 
 
-        do { random = Random.Range(0, 4); } while (weaponInHandInt == random);
+        do { random = Random.Range(0, 5); } while (weaponInHandInt == random);
 
 
 
@@ -126,28 +134,36 @@ public class WeaponGenerator : MonoBehaviour
 
         if (random == 0)
         {
+            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.754999995f, 0f);
             return new SniperAuto(firePoint, weaponsValues[0]);
 
         }
         else if (random == 1)
 
         {
-
+            //firePoint.localPosition = new Vector3(-0.0700000003f, -0.568000019f, 0f);
             return new SniperBolt(firePoint, weaponsValues[1]);
 
         }
         else if (random == 2)
 
         {
-
+            //firePoint.localPosition = new Vector3(-0.0700000003f, -0.568000019f, 0f);
             return new ShotgunAuto(firePoint, weaponsValues[2]);
 
         }
         else if (random == 3)
 
         {
+            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
+            return new GunSemiauto(firePoint, weaponsValues[3]);
 
-            weaponInHand = new GunSemiauto(firePoint, weaponsValues[3]);
+        }
+        else if (random == 4)
+
+        {
+            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
+            return new ShotgunBolt(firePoint, weaponsValues[4]);
 
         }
 
@@ -191,9 +207,9 @@ public class WeaponGenerator : MonoBehaviour
     public Weapon ReturnMyNextWeapon(Transform firePoint)
     {
         weaponInHandInt = nextWeaponInt;
-        int random = Random.Range(0, 4);
+        int random = Random.Range(0, 5);
 
-        do { random = Random.Range(0, 4); } while (random == weaponInHandInt);
+        do { random = Random.Range(0, 5); } while (random == weaponInHandInt);
 
         nextWeaponInt = random;
 
@@ -203,19 +219,30 @@ public class WeaponGenerator : MonoBehaviour
 
         if (random == 0)
         {
+            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.754999995f, 0f);
             return new SniperAuto(firePoint, weaponsValues[0]);
         }
         else if (random == 1)
         {
+            //firePoint.localPosition = new Vector3(-0.0700000003f, -0.568000019f, 0f);
             return new SniperBolt(firePoint, weaponsValues[1]);
         }
         else if (random == 2)
         {
+            //firePoint.localPosition = new Vector3(-0.0700000003f, -0.568000019f, 0f);
             return new ShotgunAuto(firePoint, weaponsValues[2]);
         }
         else if (random == 3)
         {
+            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
             return new GunSemiauto(firePoint, weaponsValues[3]);
+        }
+        else if (random == 4)
+
+        {
+            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
+            return new ShotgunBolt(firePoint, weaponsValues[4]);
+
         }
         //else if (random == 3)
         //{

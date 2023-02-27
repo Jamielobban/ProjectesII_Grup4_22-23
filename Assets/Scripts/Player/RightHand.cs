@@ -12,11 +12,11 @@ public class RightHand : MonoBehaviour
     [SerializeField] Transform firePoint;
     [SerializeField] SpriteRenderer sr;
 
-    public PowerUpTimer powerUpTimer;
+    //public PowerUpTimer powerUpTimer;
     public PowerUpTimer reloadBarTimer;
 
-    private RecoilScript _recoilSript;
-    public GameObject powerUpBar;
+    //private RecoilScript _recoilSript;
+    //public GameObject powerUpBar;
     public GameObject reloadBar;
     public TextMeshProUGUI bulletsInMagazine;
     public TextMeshProUGUI bulletsPerMagazine;
@@ -52,7 +52,8 @@ public class RightHand : MonoBehaviour
 
     private void Start()
     {
-        _recoilSript = GetComponent<RecoilScript>();
+        //WeaponGenerator.Instance();
+        //_recoilSript = GetComponent<RecoilScript>();
         nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint);
         weaponInHand.SetWeaponHand(ref sr);
         reloadBar.SetActive(false);

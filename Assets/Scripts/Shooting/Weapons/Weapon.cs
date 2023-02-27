@@ -173,6 +173,8 @@ public abstract class Weapon
     {
         _sr.sprite = data.weaponSprite;
         _sr.color = data.weaponColor;
+        firePoint.localPosition = data.firePoint;
+
     }
     //protected abstract float GenerateBaseFireRate();    
 
