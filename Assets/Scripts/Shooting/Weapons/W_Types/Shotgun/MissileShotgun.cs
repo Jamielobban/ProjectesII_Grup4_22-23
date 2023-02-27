@@ -31,11 +31,14 @@ public class MissileShotgun : Bullet
     public Turn will;
     private GameObject rotatePoint;
     public GameObject muzzleFlash;
+    private Rigidbody2D rbMissile;
     protected override void Start()
     {
         base.Start();
 
-        rotatePoint = GameObject.FindGameObjectWithTag("FirePoint");
+        rbMissile = GetComponent<Rigidbody2D>();
+
+        rotatePoint = GameObject.FindGameObjectWithTag("PlayerFirePoint");
         playerpos = FindObjectOfType<PlayerMovement>();
         _recoil = FindObjectOfType<RecoilScript>();
         will = FindObjectOfType<Turn>();
@@ -43,7 +46,6 @@ public class MissileShotgun : Bullet
 
         Instantiate(muzzleFlash, rotatePoint.transform.position, rotatePoint.transform.rotation);
         Instantiate(bulletShell, will.transform.position, Quaternion.identity);
-        rb = this.GetComponent<Rigidbody2D>();
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
         CinemachineShake.Instance.ShakeCamera(5f, .2f);
@@ -61,7 +63,7 @@ public class MissileShotgun : Bullet
     {
         base.Update();
         bulletData.bulletSpeedMetresPerSec.RuntimeValue += 0.5f;
-        rb.velocity = (bulletData.bulletSpeedMetresPerSec.RuntimeValue) * rb.velocity.normalized;
+        rbMissile.velocity = (bulletData.bulletSpeedMetresPerSec.RuntimeValue) * rb.velocity.normalized;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -15,7 +15,7 @@ public class GunBullet : Bullet
     {
         base.Start();
 
-        rotatePoint = GameObject.FindGameObjectWithTag("FirePoint");
+        rotatePoint = GameObject.FindGameObjectWithTag("PlayerFirePoint");
         playerpos = FindObjectOfType<PlayerMovement>();
         _recoil = FindObjectOfType<RecoilScript>();
         will = FindObjectOfType<Turn>();
