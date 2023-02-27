@@ -280,7 +280,7 @@ public class RightHand : MonoBehaviour
 
         if (weaponInHand.FixedUpdate())
         {
-            ShootShake();
+            //  ShootShake();
         }
     }
 
@@ -298,14 +298,14 @@ public class RightHand : MonoBehaviour
         //timeEndShake = Time.time + 0.13f;
     }
 
-    void ShootShake()
-    {
-        //if(playerMat.GetFloat("_ShakeUvSpeed") == 0)
-        //{
-        //    playerMat.SetFloat("_ShakeUvSpeed", 20);
-        //}
-        //timeEndShake = Time.time + 0.13f;
-    }
+    //void ShootShake()
+    //{
+    //    //if(playerMat.GetFloat("_ShakeUvSpeed") == 0)
+    //    //{
+    //    //    playerMat.SetFloat("_ShakeUvSpeed", 20);
+    //    //}
+    //    //timeEndShake = Time.time + 0.13f;
+    //}
 
     public Color GetColor()
     {
