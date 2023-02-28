@@ -21,6 +21,7 @@ Material:
   - OUTDIST_ON
   - OVERLAYMULT_ON
   - OVERLAY_ON
+  - PIXELATE_ON
   - ROUNDWAVEUV_ON
   m_InvalidKeywords:
   - _GLOWAFFECTLIGHT_ON
@@ -141,7 +142,7 @@ Material:
     - _Glow: 0
     - _GlowAffectLight: 1
     - _GlowGlobal: 4
-    - _GradBlend: 1
+    - _GradBlend: 0
     - _GradBoostX: 2.63
     - _GradBoostY: 3.65
     - _GradIsRadial: 0
@@ -185,7 +186,7 @@ Material:
     - _OnlyInnerOutline: 0
     - _OnlyOutline: 0
     - _OutlineAlpha: 1
-    - _OutlineDistortAmount: 0.03
+    - _OutlineDistortAmount: 0
     - _OutlineDistortTexXSpeed: 2
     - _OutlineDistortTexYSpeed: 2
     - _OutlineGlow: 100
@@ -196,7 +197,7 @@ Material:
     - _OverlayBlend: 1
     - _OverlayGlow: 8.3
     - _PinchUvAmount: 0.35
-    - _PixelateSize: 32
+    - _PixelateSize: 68
     - _PosterizeGamma: 0.75
     - _PosterizeNumColors: 8
     - _PosterizeOutline: 0
