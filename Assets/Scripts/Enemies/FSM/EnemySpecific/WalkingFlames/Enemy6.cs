@@ -15,6 +15,10 @@ public class Enemy6 : Entity
     [SerializeField]
     private D_IdleState idleStateData;
 
+    public float distanceToPassToIdle;
+
+    public GameObject burningCircle;
+    public GameObject explosion;
 
     public Enemy6()
     {
@@ -23,7 +27,7 @@ public class Enemy6 : Entity
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
+        base.FixedUpdate();        
     }
 
     public override Transform GetBurnValues()
@@ -52,6 +56,21 @@ public class Enemy6 : Entity
     public override void Update()
     {
         base.Update();
+
+        if(!isDead && vectorToPlayer.magnitude <= 3)
+        {
+            isDead = true;
+        }
+
+        if (isDead && stateMachine.currentState != deadState)
+        {
+            stateMachine.ChangeState(deadState);
+        }
+
+        if (!isDead && stateMachine.currentState != idleState && vectorToPlayer.magnitude >= distanceToPassToIdle && vectorToPlayer.magnitude >= enemyData.stopDistanceFromPlayer)
+        {
+            stateMachine.ChangeState(idleState);
+        }
     }
 
     protected override void GetDamage(float damageHit)

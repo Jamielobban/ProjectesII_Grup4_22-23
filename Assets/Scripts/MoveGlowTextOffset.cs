@@ -38,6 +38,8 @@ public class MoveGlowTextOffset : MonoBehaviour
         //    mat.SetTextureOffset("_OverlayTex", new Vector2(startValueX, startValueY) * Time.time);
         //}
         mat.SetTextureOffset("_OverlayTex", new Vector2(Mathf.Sin(Time.time), -Mathf.Cos(Time.time)) * vel);
+
+        mat.SetFloat("_RotateUvAmount", (Time.time * 0.5f) % 6.28f);
     }
     IEnumerator Lerp()
     {
