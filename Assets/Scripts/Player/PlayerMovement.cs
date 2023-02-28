@@ -23,8 +23,14 @@ public class PlayerMovement : MonoBehaviour
     public float knockbackForceDrop = 5f;
     public float knockbackMinimum;
     public bool knockbackSet;
+
+
     public int maxHealth = 100;
+    public int maxHearts = 9;
+    public int currentHearts;
     public float currentHealth;
+
+
     public bool isDead;
     private HealthBar healthBar;
     public dashCooldown dashUI1;
@@ -111,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         // GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
-        healthBar = Canvas.FindObjectOfType<HealthBar>();
+        //healthBar = Canvas.FindObjectOfType<HealthBar>();
         trail = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
         LayerIgnoreRaycast = LayerMask.NameToLayer("IgnoreEverything");
@@ -119,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
         dashUI1.SetMaxDashTimer(blinkRechargeTime);
         dashUI2.SetMaxDashTimer(blinkRechargeTime);
         dashUI3.SetMaxDashTimer(blinkRechargeTime);
-        healthBar.SetMaxHealth(maxHealth);
+        //healthBar.SetMaxHealth(maxHealth);
         playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
     }
@@ -129,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
 
         isDead = false;
         state = State.Normal;
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
         rollSpeed = 90f;
         justRolled = false;
         backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true);
@@ -382,7 +388,7 @@ public class PlayerMovement : MonoBehaviour
             currentHealth -= damage;
             GameObject.Instantiate(floorBlood, this.transform.position, this.transform.rotation);
             damageSoundKey = AudioManager.Instance.LoadSound(damageSound, this.gameObject.transform);
-            healthBar.SetHealth(currentHealth);
+            //healthBar.SetHealth(currentHealth);
         }
     }
 
