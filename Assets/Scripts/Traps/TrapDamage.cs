@@ -39,12 +39,12 @@ public class TrapDamage : MonoBehaviour
             StartCoroutine(Delay(0.5f));
             if (directionUp)
             {
-                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 3000, 0), ForceMode2D.Force);
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 4000, 0), ForceMode2D.Force);
 
             }
             else
             {
-                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, -3000, 0), ForceMode2D.Force);
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, -4000, 0), ForceMode2D.Force);
 
             }
 
