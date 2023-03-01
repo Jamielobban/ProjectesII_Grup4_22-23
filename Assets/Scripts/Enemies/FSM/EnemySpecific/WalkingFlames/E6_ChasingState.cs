@@ -6,6 +6,8 @@ using System.Linq;
 public class E6_ChasingState : ChasingState
 {
     Enemy6 enemy;
+    int? step1key;
+    int? step2key;
     public E6_ChasingState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_ChaseState stateData, Enemy6 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -25,6 +27,16 @@ public class E6_ChasingState : ChasingState
         base.Exit();
 
         enemy.agent.enabled = false;
+
+        if (step1key.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(step1key.Value);
+        }
+
+        if (step2key.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(step2key.Value);
+        }
 
         //if (followSoundKey.HasValue)
         //{
@@ -54,5 +66,14 @@ public class E6_ChasingState : ChasingState
         enemy.GetComponentsInChildren<Transform>().Where(t => (t.gameObject.CompareTag("FirePoint"))).ToArray()[0].localRotation = Quaternion.Euler(0, 0, angle * Mathf.Sign(enemy.transform.localScale.x));
 
         //enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.player.position, enemy.enemyData.speed * Time.fixedDeltaTime);
+    }
+
+    public void PlayStep1()
+    {
+        step1key = AudioManager.Instance.LoadSound(stateData.Stomp1, enemy.transform);
+    }
+    public void PlayStep2()
+    {
+        step2key = AudioManager.Instance.LoadSound(stateData.Stomp2, enemy.transform);
     }
 }

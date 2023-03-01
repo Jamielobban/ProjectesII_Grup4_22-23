@@ -23,13 +23,14 @@ public class E6_DeadState : DeadState
         GameObject.Instantiate(enemy.blood, enemy.transform.position, enemy.transform.rotation);
         GameObject.Instantiate(enemy.deadBlood, enemy.transform.position, enemy.transform.rotation);
         GameObject deadParticles = GameObject.Instantiate(stateData.deadParticles, entity.transform.position, entity.transform.rotation);
-        deadSoundKey = AudioManager.Instance.LoadSound(stateData.deadSound, enemy.transform.position);
+        //deadSoundKey = AudioManager.Instance.LoadSound(stateData.deadSound, enemy.transform.position);
 
 
         enemy.burningCircle.transform.DOScale(Vector3.zero, 0.25f);
         GameObject.Destroy(enemy.burningCircle, 0.25f);
+        deadSoundKey = AudioManager.Instance.LoadSound(enemy.explosionSound, enemy.explosion.transform.position, 0.15f);
         FunctionTimer.Create(() =>
-        {
+        {            
             GameObject explosion = GameObject.Instantiate(enemy.explosion, enemy.transform.position, Quaternion.identity);
             if (probabilityOfHearth == 0)
             {

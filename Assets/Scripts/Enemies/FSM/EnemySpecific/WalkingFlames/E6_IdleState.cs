@@ -87,4 +87,11 @@ public class E6_IdleState : IdleState
     {
         base.PhysicsUpdate();
     }
+
+    public void PlayStep1()
+    {
+    }
+    public void PlayStep2()
+    {
+    }
 }
