@@ -26,8 +26,8 @@ public class E6_DeadState : DeadState
         deadSoundKey = AudioManager.Instance.LoadSound(stateData.deadSound, enemy.transform.position);
 
 
-        enemy.burningCircle.transform.DOScale(Vector3.zero, 0.4f);
-        GameObject.Destroy(enemy.burningCircle, 0.4f);
+        enemy.burningCircle.transform.DOScale(Vector3.zero, 0.25f);
+        GameObject.Destroy(enemy.burningCircle, 0.25f);
         FunctionTimer.Create(() =>
         {
             GameObject explosion = GameObject.Instantiate(enemy.explosion, enemy.transform.position, Quaternion.identity);
@@ -39,7 +39,7 @@ public class E6_DeadState : DeadState
             GameObject.Destroy(enemy.gameObject);
 
 
-        }, 0.4f);
+        }, 0.25f);
     }
 
     public override void Exit()
