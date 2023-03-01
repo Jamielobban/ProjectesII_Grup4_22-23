@@ -7,7 +7,7 @@ public class HitboxRepeating : MonoBehaviour
     [SerializeField]
     float timeBetweenDamage;
     [SerializeField]
-    float damagePerTic;
+    int damagePerTic;
     [SerializeField]
     string tagToAffect;
 

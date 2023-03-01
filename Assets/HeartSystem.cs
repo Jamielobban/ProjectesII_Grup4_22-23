@@ -1,6 +1,7 @@
  using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class HeartSystem : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class HeartSystem : MonoBehaviour
     private void Start()
     {
         DrawHearts();
+        Transform[] heartArray = GetComponentsInChildren<Transform>().Where(t=>(t.GetComponent<HealthHeart>()._status != HeartStatus.Empty)).ToArray();
+        Transform heartToChange = heartArray[heartArray.Length - 1];
     }
     public void DrawHearts()
     {

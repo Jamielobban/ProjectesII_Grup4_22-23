@@ -5,7 +5,7 @@ using UnityEngine;
 public class ColiderHitbox : MonoBehaviour
 {
     [SerializeField]
-    float damage;
+    int damage;
     [SerializeField]
     string tagToDamage;
 

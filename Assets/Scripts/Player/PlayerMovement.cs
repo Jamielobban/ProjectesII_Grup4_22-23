@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     AudioClip backgroundTheme;
     int? backThemeKey;
-    public Animator anim;
-    public Animator fxAnim;
+    [SerializeField] Animator anim;
+    [SerializeField] Animator fxAnim;
     public SpriteRenderer playerSprite;
     public Transform firePoint;
     public RightHand _rightHand;
@@ -33,9 +33,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isDead;
     private HealthBar healthBar;
-    public dashCooldown dashUI1;
-    public dashCooldown dashUI2;
-    public dashCooldown dashUI3;
+    [SerializeField] dashCooldown dashUI1;
+    [SerializeField] dashCooldown dashUI2;
+    [SerializeField] dashCooldown dashUI3;
     public bool isDashing;
     public GameObject floorBlood;
 
@@ -104,6 +104,7 @@ public class PlayerMovement : MonoBehaviour
     public float currentBlinkRechargeTime2 = 0f;
     public float currentBlinkRechargeTime3 = 0f;
     [SerializeField] private int remainingBlinks;
+    [SerializeField] HeartSystem healthUI;
 
     float rollSpeedCheck;
 
@@ -136,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
         isDead = false;
         state = State.Normal;
         //currentHealth = maxHealth;
+        maxHealth = currentHearts;
         rollSpeed = 90f;
         justRolled = false;
         backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true);
@@ -381,11 +383,11 @@ public class PlayerMovement : MonoBehaviour
         }
         //rb.AddForce(movement * 500 * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         if (!isInvulnerable)
         {
-            currentHealth -= damage;
+            currentHearts -= damage;
             GameObject.Instantiate(floorBlood, this.transform.position, this.transform.rotation);
             damageSoundKey = AudioManager.Instance.LoadSound(damageSound, this.gameObject.transform);
             //healthBar.SetHealth(currentHealth);
@@ -419,10 +421,11 @@ public class PlayerMovement : MonoBehaviour
         trail.emitting = true;
     }
 
-    public void GetDamage(float damage)
+    public void GetDamage(int damage)
     {
         //Debug.Log(damage);
         OnHit(damage);
+        StartCoroutine(hurtAnimation());
 
     }
 
@@ -438,11 +441,11 @@ public class PlayerMovement : MonoBehaviour
         healthBar.SetHealth(currentHealth);
     }
 
-    private void OnHit(float damage)
+    private void OnHit(int damage)
     {
         TakeDamage(damage);
-        StartCoroutine(hurtAnimation());
-        if (currentHealth <= 0)
+        healthUI.DrawHearts();
+        if (currentHearts <= 0)
         {
             isDead = true;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -452,44 +455,22 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator hurtAnimation()
     {
         isInvulnerable = true;
+        Debug.Log("Now invulnerable");
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
-        for (int i = 0; i < weaponSprites.Length; i++)
-        {
-            weaponSprites[i].DOColor(hurtColor, 0.0f);
-        }
-        for (int i = 0; i < weaponSprites.Length; i++)
-        {
-            weaponSprites[i].DOColor(invulnerableColor, 0.15f);
-        }
+
         yield return new WaitForSeconds(0.20f);
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
-        for (int i = 0; i < weaponSprites.Length; i++)
-        {
-            weaponSprites[i].DOColor(hurtColor, 0.0f);
-        }
-        for (int i = 0; i < weaponSprites.Length; i++)
-        {
-            weaponSprites[i].DOColor(invulnerableColor, 0.15f);
-        }
+
         yield return new WaitForSeconds(0.20f);
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
-        for (int i = 0; i < weaponSprites.Length; i++)
-        {
-            weaponSprites[i].DOColor(hurtColor, 0.0f);
-        }
-        for (int i = 0; i < weaponSprites.Length; i++)
-        {
-            weaponSprites[i].DOColor(invulnerableColor, 0.15f);
-        }
+
         yield return new WaitForSeconds(0.20f);
         body.DOColor(OriginalColor, 0.0f);
-        for (int i = 0; i < weaponSprites.Length; i++)
-        {
-            weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
-        }
+
+        Debug.Log("No longer invlunerable");
         isInvulnerable = false;
 
     }

@@ -7,7 +7,7 @@ public class HealthHeart : MonoBehaviour
 {
     public Sprite fullHeart, halfHeart, emptyHeart;
     Image heartImage;
-
+    public HeartStatus _status;
 
     private void Awake()
     {
@@ -20,14 +20,18 @@ public class HealthHeart : MonoBehaviour
         {
             case HeartStatus.Empty:
                 heartImage.sprite = emptyHeart;
+                _status = status;
                 break;
             case HeartStatus.Half:
                 heartImage.sprite = halfHeart;
+                _status = status;
                 break;
             case HeartStatus.Full:
                 heartImage.sprite = fullHeart;
+                _status = status;
                 break;
         }
+
     }
 
 

@@ -9,7 +9,7 @@ public class EnemyProjectile : MonoBehaviour
     private void Start()
     {
         projectileSoundKey = AudioManager.Instance.LoadSound(bulletData.projectileSound, this.transform, 0, true);
-        Destroy(this.gameObject, 5f);
+        Destroy(this.gameObject, 50f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -17,7 +17,7 @@ public class EnemyProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.gameObject.SendMessage("GetDamage", bulletData.damage);
-            DestroyProjectile();
+            //DestroyProjectile();
         }
         if (other.CompareTag("MapLimit"))
         {
