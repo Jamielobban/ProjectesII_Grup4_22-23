@@ -12,6 +12,7 @@ Material:
   m_ValidKeywords:
   - CONTRAST_ON
   - DISTORT_ON
+  - FISHEYE_ON
   - GLOWLIGHT_ON
   - GLOWTEX_ON
   - GLOW_ON
@@ -20,6 +21,7 @@ Material:
   - OUTDIST_ON
   - OVERLAYMULT_ON
   - OVERLAY_ON
+  - PINCH_ON
   - ROTATEUV_ON
   - ROUNDWAVEUV_ON
   m_InvalidKeywords:
@@ -195,7 +197,7 @@ Material:
     - _OutlineWidth: 0.004
     - _OverlayBlend: 1
     - _OverlayGlow: 8.3
-    - _PinchUvAmount: 0.35
+    - _PinchUvAmount: 0.054
     - _PixelateSize: 32
     - _PosterizeGamma: 0.75
     - _PosterizeNumColors: 8
