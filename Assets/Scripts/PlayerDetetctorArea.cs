@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class PlayerDetetctorArea : MonoBehaviour
 {
-    bool playerInside = false;
+    [HideInInspector]
+    public bool playerInside = false;
+    public bool isEnemy4 = true;
     private void Update()
     {
-        GetComponentInParent<Enemy4>().inRange = playerInside;
+        if(isEnemy4)
+            GetComponentInParent<Enemy4>().inRange = playerInside;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
