@@ -8,6 +8,7 @@ public class E7_FiringState : FiringState
     Enemy7 enemy;
     float enterTime;
     GameObject bullet;
+    bool spawningBall;
     public E7_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy7 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -31,14 +32,13 @@ public class E7_FiringState : FiringState
     {
         base.LogicUpdate();
 
-        if (!enemy.doingAttack)
+       
+        if (((angle < 90 && angle > -90) && enemy.transform.localScale.x > 0) || ((angle > 90 || angle < -90) && enemy.transform.localScale.x < 0))
         {
-            if (((angle < 90 && angle > -90) && enemy.transform.localScale.x > 0) || ((angle > 90 || angle < -90) && enemy.transform.localScale.x < 0))
-            {
-                enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
+            enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
 
-            }           
-        }
+        }           
+        
 
         enemy.firePoint.localRotation = Quaternion.Euler(0, 0, angleFirePoint * Mathf.Sign(enemy.transform.localScale.x));
 
