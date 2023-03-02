@@ -8,12 +8,21 @@ public class HeartSystem : MonoBehaviour
 {
     public GameObject heartPrefab;
     public PlayerMovement player;
-    List<HealthHeart> hearts = new List<HealthHeart>();
-    public HealthHeart[] heartArray;
+    public List<HealthHeart> hearts = new List<HealthHeart>();
+    //public HealthHeart[] heartArray;
+    public List<HealthHeart> heartArray = new List<HealthHeart>();
+    //public HealthHeart[] emptyHeartArray;
+    public List<HealthHeart> emptyHeartArray = new List<HealthHeart>();
     public HealthHeart heartToChange;
-    public HealthHeart heartAnimation;
+    public HealthHeart emptyHeartToFlash;
 
     bool isHalf;
+
+
+    //Setup status to be
+   
+
+
     private void Start()
     {
         DrawHearts();
@@ -35,17 +44,30 @@ public class HeartSystem : MonoBehaviour
             hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
         }
 
-        heartArray = GetComponentsInChildren<HealthHeart>().Where(t => (t.GetComponent<HealthHeart>()._status != HeartStatus.Empty)).ToArray();
-        heartToChange = heartArray[heartArray.Length - 1];
-        
+        //heartArray = GetComponentsInChildren<HealthHeart>().Where(t => (t.GetComponent<HealthHeart>()._status != HeartStatus.Empty)).ToList();
+        //emptyHeartArray = GetComponentsInChildren<HealthHeart>().Where(t => (t.GetComponent<HealthHeart>()._status == HeartStatus.Empty)).ToList();
 
 
+        for (int i = 0; i < hearts.Count; i++)
+        {
+            if(hearts[i]._status != HeartStatus.Empty)
+            {
+                heartArray.Add(hearts[i]);
+            }
+            if ((player.maxHearts - player.currentHearts) <= 2)
+            {
+                emptyHeartToFlash = heartArray[heartArray.Count-1];
+            }
+            if (hearts[i]._status == HeartStatus.Empty) {
+
+                emptyHeartArray.Add(hearts[i]);
+                emptyHeartToFlash = emptyHeartArray[0];
+            }
+        }
+
+        heartToChange = heartArray[heartArray.Count - 1];
     }
 
-    private void Update()
-    {
-        //Debug.Log(isHalf);
-    }
     public void CreateEmptyHeart()
     {
         GameObject newHeart = Instantiate(heartPrefab);
@@ -61,7 +83,10 @@ public class HeartSystem : MonoBehaviour
         {
             Destroy(t.gameObject);
         }
+        heartArray = new List<HealthHeart>();
+        emptyHeartArray = new List<HealthHeart>();
         hearts = new List<HealthHeart>();
+        
     }
 
     public void FocusOnHeart()

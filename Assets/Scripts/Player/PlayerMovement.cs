@@ -261,8 +261,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (Input.GetButtonDown("Heal"))
                     {
-                       currentHealth = 99999;
-                        healthBar.SetHealth(currentHealth);
+                        isInvulnerable = true;
                     }
                     movement.x = Input.GetAxisRaw("Horizontal");
                     movement.y = Input.GetAxisRaw("Vertical");
@@ -431,20 +430,21 @@ public class PlayerMovement : MonoBehaviour
 
     public void Health()
     {
-        currentHealth += 10;
+        currentHearts +=1 ;
 
-        if (currentHealth > maxHealth)
+        if (currentHearts > maxHearts)
         {
-            currentHealth = maxHealth;
+            currentHearts = maxHearts;
         }
 
-        healthBar.SetHealth(currentHealth);
+        healthUI.DrawHearts();
     }
 
     private void OnHit(int damage)
     {
         TakeDamage(damage);
         healthUI.DrawHearts();
+
         if (currentHearts <= 0)
         {
             isDead = true;
@@ -455,21 +455,51 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator hurtAnimation()
     {
         isInvulnerable = true;
+
+        if (currentHearts % 2 == 0 && healthUI.emptyHeartArray != null)
+        {
+                healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = true;
+                Debug.Log("Flashed right heart");
+        }
+        else
+        {
+            healthUI.heartToChange.GetComponent<Animator>().enabled = true;
+            Debug.Log("Flashed half heart");
+        }
+
         //Debug.Log("Now invulnerable");
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
 
         yield return new WaitForSeconds(0.20f);
+
+        if (currentHearts % 2 == 0)
+        {
+            healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = false;
+            healthUI.emptyHeartToFlash.SetHeartImage(healthUI.emptyHeartToFlash._emptyStatus);
+        }
+        else
+        {
+            healthUI.heartToChange.GetComponent<Animator>().enabled = false;
+            healthUI.heartToChange.SetHeartImage(healthUI.heartToChange._status);
+        }
+
+
+
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
 
+
         yield return new WaitForSeconds(0.20f);
+
+
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
 
         yield return new WaitForSeconds(0.20f);
         body.DOColor(OriginalColor, 0.0f);
 
+       
         //Debug.Log("No longer invlunerable");
         isInvulnerable = false;
 

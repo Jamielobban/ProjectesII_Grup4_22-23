@@ -8,6 +8,7 @@ public class HealthHeart : MonoBehaviour
     public Sprite fullHeart, halfHeart, emptyHeart, flashHeart;
     Image heartImage;
     public HeartStatus _status;
+    public HeartStatus _emptyStatus;
 
     [SerializeField] PlayerMovement playerHeart;
     //public bool wasHalf;
@@ -16,7 +17,9 @@ public class HealthHeart : MonoBehaviour
     //public bool itsThisOne;
     private void Awake()
     {
+        _emptyStatus = HeartStatus.Empty;
         heartImage = GetComponent<Image>();
+        playerHeart = FindObjectOfType<PlayerMovement>();
     }
 
     private void Update()
@@ -51,6 +54,10 @@ public class HealthHeart : MonoBehaviour
                 
                 _status = status;
                 break;
+            case HeartStatus.Flash:
+                heartImage.sprite = flashHeart;
+                _status = status;
+                break;
         }
 
     }
@@ -61,4 +68,5 @@ public enum HeartStatus
     Empty = 0,
     Half = 1,
     Full = 2,
+    Flash = 3
 }
