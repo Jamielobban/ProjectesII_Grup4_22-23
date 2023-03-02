@@ -455,7 +455,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator hurtAnimation()
     {
         isInvulnerable = true;
-        Debug.Log("Now invulnerable");
+        //Debug.Log("Now invulnerable");
         body.DOColor(hurtColor, 0.0f);
         body.DOColor(invulnerableColor, 0.15f);
 
@@ -470,7 +470,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.20f);
         body.DOColor(OriginalColor, 0.0f);
 
-        Debug.Log("No longer invlunerable");
+        //Debug.Log("No longer invlunerable");
         isInvulnerable = false;
 
     }

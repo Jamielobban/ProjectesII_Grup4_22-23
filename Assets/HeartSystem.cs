@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class HeartSystem : MonoBehaviour
 {
     public GameObject heartPrefab;
     public PlayerMovement player;
     List<HealthHeart> hearts = new List<HealthHeart>();
+    public HealthHeart[] heartArray;
+    public HealthHeart heartToChange;
 
     private void Start()
     {
         DrawHearts();
-        Transform[] heartArray = GetComponentsInChildren<Transform>().Where(t=>(t.GetComponent<HealthHeart>()._status != HeartStatus.Empty)).ToArray();
-        Transform heartToChange = heartArray[heartArray.Length - 1];
     }
     public void DrawHearts()
     {
+
         ClearHearts();
 
         float maxHealthRemainder = player.maxHearts % 2;
@@ -28,7 +30,26 @@ public class HeartSystem : MonoBehaviour
         for (int i = 0; i < hearts.Count; i++)
         {
             int heartStatusRemainder = (int)(Mathf.Clamp(player.currentHearts - (i * 2), 0, 2));
-            hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);      
+            hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
+        }
+
+        heartArray = GetComponentsInChildren<HealthHeart>().Where(t => (t.GetComponent<HealthHeart>()._status != HeartStatus.Empty)).ToArray();
+        heartToChange = heartArray[heartArray.Length - 1];
+
+        if (heartToChange._status == HeartStatus.Full)
+        {
+            Debug.Log("Full");
+            return;
+        }
+        if (heartToChange._status == HeartStatus.Half)
+        {
+            Debug.Log("Half");
+            return;
+        }
+        if (heartToChange._status == HeartStatus.Empty)
+        {
+            Debug.Log("Empty");
+            return;
         }
     }
     public void CreateEmptyHeart()
@@ -42,7 +63,7 @@ public class HeartSystem : MonoBehaviour
     }
     public void ClearHearts()
     {
-        foreach(Transform t in transform)
+        foreach (Transform t in transform)
         {
             Destroy(t.gameObject);
         }
