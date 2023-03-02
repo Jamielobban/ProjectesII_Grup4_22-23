@@ -11,7 +11,9 @@ public class HeartSystem : MonoBehaviour
     List<HealthHeart> hearts = new List<HealthHeart>();
     public HealthHeart[] heartArray;
     public HealthHeart heartToChange;
+    public HealthHeart heartAnimation;
 
+    bool isHalf;
     private void Start()
     {
         DrawHearts();
@@ -35,22 +37,14 @@ public class HeartSystem : MonoBehaviour
 
         heartArray = GetComponentsInChildren<HealthHeart>().Where(t => (t.GetComponent<HealthHeart>()._status != HeartStatus.Empty)).ToArray();
         heartToChange = heartArray[heartArray.Length - 1];
+        
 
-        if (heartToChange._status == HeartStatus.Full)
-        {
-            Debug.Log("Full");
-            return;
-        }
-        if (heartToChange._status == HeartStatus.Half)
-        {
-            Debug.Log("Half");
-            return;
-        }
-        if (heartToChange._status == HeartStatus.Empty)
-        {
-            Debug.Log("Empty");
-            return;
-        }
+
+    }
+
+    private void Update()
+    {
+        //Debug.Log(isHalf);
     }
     public void CreateEmptyHeart()
     {
@@ -68,5 +62,10 @@ public class HeartSystem : MonoBehaviour
             Destroy(t.gameObject);
         }
         hearts = new List<HealthHeart>();
+    }
+
+    public void FocusOnHeart()
+    {
+
     }
 }
