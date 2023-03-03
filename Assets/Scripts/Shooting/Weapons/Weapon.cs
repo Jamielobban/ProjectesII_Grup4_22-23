@@ -28,7 +28,7 @@ public abstract class Weapon
     public float timer;
     bool firstEnter = true;
 
-
+    public bool shotFired = false;
     public Weapon(Transform _firePoint, WeaponValues _data)
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -156,6 +156,7 @@ public abstract class Weapon
             {                
                 if (weaponMechanism.Shoot(data.bulletTypePrefab, firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue))
                 {
+                    shotFired = true;
                     LoadOrReloadWhenNeedIt();
                     return true;
                 }                

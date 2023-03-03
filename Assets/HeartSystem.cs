@@ -50,15 +50,16 @@ public class HeartSystem : MonoBehaviour
 
         for (int i = 0; i < hearts.Count; i++)
         {
-            if(hearts[i]._status != HeartStatus.Empty)
+            if (hearts[i]._status != HeartStatus.Empty)
             {
                 heartArray.Add(hearts[i]);
             }
             if ((player.maxHearts - player.currentHearts) <= 2)
             {
-                emptyHeartToFlash = heartArray[heartArray.Count-1];
+                emptyHeartToFlash = heartArray[heartArray.Count - 1];
             }
-            if (hearts[i]._status == HeartStatus.Empty) {
+            if (hearts[i]._status == HeartStatus.Empty)
+            {
 
                 emptyHeartArray.Add(hearts[i]);
                 emptyHeartToFlash = emptyHeartArray[0];
@@ -86,11 +87,6 @@ public class HeartSystem : MonoBehaviour
         heartArray = new List<HealthHeart>();
         emptyHeartArray = new List<HealthHeart>();
         hearts = new List<HealthHeart>();
-        
-    }
-
-    public void FocusOnHeart()
-    {
 
     }
 }

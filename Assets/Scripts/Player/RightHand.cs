@@ -12,15 +12,15 @@ public class RightHand : MonoBehaviour
     [SerializeField] Transform firePoint;
     [SerializeField] SpriteRenderer sr;
 
-    public PowerUpTimer powerUpTimer;
-    public PowerUpTimer reloadBarTimer;
-
+    //public PowerUpTimer powerUpTimer;
+    //public PowerUpTimer reloadBarTimer;
+    [SerializeField] AmmoUISystem ammoUI;
     private RecoilScript _recoilSript;
-    public GameObject powerUpBar;
-    public GameObject reloadBar;
-    public TextMeshProUGUI bulletsInMagazine;
-    public TextMeshProUGUI bulletsPerMagazine;
-    public TextMeshProUGUI magazineNumber;
+    //public GameObject powerUpBar;
+    //public GameObject reloadBar;
+    //public TextMeshProUGUI bulletsInMagazine;
+    //public TextMeshProUGUI bulletsPerMagazine;
+    //public TextMeshProUGUI magazineNumber;
     private float reloadTimer = 0f;
     private float startedReload;
     //private delegate void OnPowerupDelegate();
@@ -50,12 +50,12 @@ public class RightHand : MonoBehaviour
     public Image actualWeaponUI, nextWeaponUI;
     
 
-    private void Start()
+    private void Awake()
     {
         _recoilSript = GetComponent<RecoilScript>();
         nextWeapon = WeaponGenerator.Instance.SetMyInitialWeaponAndReturnMyNext(ref weaponInHand, firePoint);
         weaponInHand.SetWeaponHand(ref sr);
-        reloadBar.SetActive(false);
+        //reloadBar.SetActive(false);
         //powerUpBarColor = powerUpBar.GetComponent<Image>();
 
         UpdateUIWeapons();
@@ -66,11 +66,12 @@ public class RightHand : MonoBehaviour
 
     void UpdateUIWeapons()
     {
-        actualWeaponUI.sprite = weaponInHand.GetSprite();
-        nextWeaponUI.sprite = nextWeapon.GetSprite();
+        ammoUI.DrawAmmo();
+        //actualWeaponUI.sprite = weaponInHand.GetSprite();
+        //nextWeaponUI.sprite = nextWeapon.GetSprite();
 
-        actualWeaponUI.color = weaponInHand.GetWeaponColor();
-        nextWeaponUI.color = nextWeapon.GetWeaponColor();
+        //actualWeaponUI.color = weaponInHand.GetWeaponColor();
+        //nextWeaponUI.color = nextWeapon.GetWeaponColor();
     }
     private void Update()
     {
@@ -105,64 +106,21 @@ public class RightHand : MonoBehaviour
         //Reload Bar
         if (weaponInHand.GetReloadingState())
         {
-            reloadBar.SetActive(true);
+            //reloadBar.SetActive(true);
             if (firstTime3)
             {
-                reloadBarTimer.SetMaxTime(weaponInHand.GetReloadTimeInSec() + 0.5f);
+                //reloadBarTimer.SetMaxTime(weaponInHand.GetReloadTimeInSec() + 0.5f);
                 firstTime = false;
             }
             reloadTimer += Time.deltaTime;
-            reloadBarTimer.SetTime(reloadTimer);
+            //reloadBarTimer.SetTime(reloadTimer);
             if (reloadTimer > weaponInHand.GetReloadTimeInSec() + 0.5f)
             {
                 firstTime3 = true;
-                reloadBar.SetActive(false);
+                //reloadBar.SetActive(false);
                 reloadTimer = 0f;
             }
         }
-
-        //Weapon powerup UI
-        //if (!weaponInHand.GetState())
-        //{
-
-        //    //if (powerUpTimer.GetMaxTime() <= 20)
-        //    //{
-        //    //    powerUpTimer.SetMaxTime(20);
-        //    //    firstTime = true;
-
-        //    //}
-        //    //if (powerUpBarColor.fillAmount == 1)
-        //    //{
-        //    //    powerUpState = PowerUpState.FULL;
-
-        //    //}
-        //    //else
-        //    //{
-        //    //    powerUpState = PowerUpState.RELOADING;
-
-        //    //}
-
-        //    //powerUpTimer.SetTime(weaponInHand.GetTime());
-        //}
-        //if (weaponInHand.GetState())
-        //{
-        //    powerUpState = PowerUpState.USING;
-
-        //    if (firstTime)
-        //    {
-        //        powerUpTimer.SetMaxTime(weaponInHand.SetTimeLeftPowerup());
-        //        firstTime = false;
-        //    }
-
-        //    powerUpTimer.SetTime(weaponInHand.GetTimeLeftPowerup());
-
-        //    //powerUpBar.color = new Color(202,187,43,255);
-
-        //    //CBBC2B
-        //    //394AA6
-
-        //    //Debug.Log("Activated");
-        //}
 
         //Debug.Log(playerMat);
         switch (powerUpState)
@@ -190,18 +148,18 @@ public class RightHand : MonoBehaviour
         //Reload Bar
         if (weaponInHand.GetReloadingState())
         {
-            reloadBar.SetActive(true);
+            //reloadBar.SetActive(true);
             if (firstTime3)
             {
-                reloadBarTimer.SetMaxTime(weaponInHand.GetReloadTimeInSec() + 0.5f);
+                //reloadBarTimer.SetMaxTime(weaponInHand.GetReloadTimeInSec() + 0.5f);
                 firstTime = false;
             }
             reloadTimer += Time.deltaTime;
-            reloadBarTimer.SetTime(reloadTimer);
+            //reloadBarTimer.SetTime(reloadTimer);
             if (reloadTimer > weaponInHand.GetReloadTimeInSec() + 0.5f)
             {
                 firstTime3 = true;
-                reloadBar.SetActive(false);
+                //reloadBar.SetActive(false);
                 reloadTimer = 0f;
             }
         }
@@ -250,9 +208,9 @@ public class RightHand : MonoBehaviour
         //}
 
         //Weapon ammo UI
-        bulletsInMagazine.text = weaponInHand.GetBulletsInMagazine().ToString();
-        bulletsPerMagazine.text = weaponInHand.GetBulletsPerMagazine().ToString();
-        magazineNumber.text = weaponInHand.GetCurrentMagazines().ToString();
+        //bulletsInMagazine.text = weaponInHand.GetBulletsInMagazine().ToString();
+        //ulletsPerMagazine.text = weaponInHand.GetBulletsPerMagazine().ToString();
+        //magazineNumber.text = weaponInHand.GetCurrentMagazines().ToString();
 
         // Debug.Log(weaponInHand.GetBulletsInMagazine());
 
@@ -262,12 +220,12 @@ public class RightHand : MonoBehaviour
         if (weaponInHand.GetIfOutOffAmmo())
         {
             //Debug.Log("in");
-            if (reloadBar.activeSelf)
-            {
-                firstTime3 = true;
-                reloadBar.SetActive(false);
-                reloadTimer = 0f;
-            }
+            //if (reloadBar.activeSelf)
+            //{
+            //    firstTime3 = true;
+            //    reloadBar.SetActive(false);
+            //    reloadTimer = 0f;
+            //}
             timeToPass = weaponInHand.GetTime();
             weaponInHand = nextWeapon;
             weaponInHand.SetWeaponHand(ref sr);
@@ -285,8 +243,13 @@ public class RightHand : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        
+    {
+
+        if (weaponInHand.shotFired)
+        {
+            UpdateUIWeapons();
+            weaponInHand.shotFired = false;
+        }
     }
 
     void ShootShake()
