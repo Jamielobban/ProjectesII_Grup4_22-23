@@ -138,6 +138,7 @@ public abstract class Weapon
     {
         return data.reloading.RuntimeValue;
     }
+
     public void SetTime(float timePassed)
     {
         data.timelastPowerupEnter.RuntimeValue = Time.time;
