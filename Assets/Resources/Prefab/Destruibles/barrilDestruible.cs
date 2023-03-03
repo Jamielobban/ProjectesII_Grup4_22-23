@@ -20,17 +20,39 @@ public class barrilDestruible : MonoBehaviour
 
         modelo.SetActive(true);
         destruido = false;
-        modelo.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = layer;
-        modelo.transform.GetChild(1).GetComponent<SpriteRenderer>().sortingOrder = layer;
 
-        for (int i = 0; i <3; i++)
+        if (modelo.transform.childCount == 0)
         {
+            modelo.GetComponent<SpriteRenderer>().sortingOrder = layer;
+
+        }
+        else
+        {
+            for (int i = 0; i < modelo.transform.childCount; i++)
+            {
+                modelo.transform.GetChild(i).GetComponent<SpriteRenderer>().sortingOrder = layer;
+            }
+        }
+        for (int i = 0; i < modelos.Length; i++)
+        {
+            if(modelos[i].transform.childCount == 0)
+            {
             modelos[i].GetComponent<SpriteRenderer>().sortingOrder = layer;
+
+            }
+            else
+            {
+                 for (int e = 0; e < modelos[i].transform.childCount; e++)
+                {
+                    modelos[i].transform.GetChild(e).GetComponent<SpriteRenderer>().sortingOrder = layer;
+                }
+            }
+       
         }
     }
     void destroyModel()
     {
-        int i = Random.RandomRange(0, 2);
+        int i = Random.RandomRange(0, (modelos.Length-1));
         modelo.SetActive(false);
         modelos[i].SetActive(true);
         humo.GetComponent<Animator>().SetTrigger("Open");
@@ -53,7 +75,7 @@ public class barrilDestruible : MonoBehaviour
 
     public void restart()
     {
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < modelos.Length; i++)
         {
         modelos[i].SetActive(false);
         }
