@@ -45,6 +45,11 @@ public class E7_SlashState : SlashState
 
         enemy.GetComponentsInChildren<Transform>().Where(t => (t.gameObject.CompareTag("FirePoint"))).ToArray()[0].localRotation = Quaternion.Euler(0, 0, angle * Mathf.Sign(enemy.transform.localScale.x));
     }
+    
+    public void DetectPlayer()
+    {
+
+    }
 
     public void AnimationStarted()
     {

@@ -79,7 +79,7 @@ public class Enemy7 : Entity
         }
         else if(stateMachine.currentState == chasingState && agent.enabled)
         {
-            agent.speed = enemyData.speed * 3;
+            agent.speed = enemyData.speed * 4;
         }
 
         if (isDead && stateMachine.currentState != deadState)
@@ -97,16 +97,16 @@ public class Enemy7 : Entity
             stateMachine.ChangeState(firingState);
         }
 
-        if(stateMachine.currentState != slashState && stateMachine.currentState != firingState && agent.enabled && Time.time - lastTimeFliped >= 0.6f)
+        if(stateMachine.currentState != slashState && stateMachine.currentState != firingState && agent.enabled /*&& Time.time - lastTimeFliped >= 0.6f*/)
         {
-            if (agent.desiredVelocity.x > 0)
+            if (agent.desiredVelocity.x > 0.2f)
             {
                 Vector3 aux = this.transform.localScale;
                 aux.x = -Mathf.Abs(aux.x);
                 this.transform.localScale = aux;
                 lastTimeFliped = Time.time;
             }
-            else if(agent.desiredVelocity.x < 0)
+            else if (agent.desiredVelocity.x < -0.2f)
             {
                 Vector3 aux = this.transform.localScale;
                 aux.x = Mathf.Abs(aux.x);
@@ -115,9 +115,9 @@ public class Enemy7 : Entity
             }
             else
             {
-                if(stateMachine.currentState == chasingState)
+                if (stateMachine.currentState == chasingState)
                 {
-                    if(player.transform.position.x > this.transform.position.x)
+                    if (player.transform.position.x > this.transform.position.x)
                     {
                         Vector3 aux = this.transform.localScale;
                         aux.x = -Mathf.Abs(aux.x);
@@ -125,7 +125,7 @@ public class Enemy7 : Entity
                         lastTimeFliped = Time.time;
 
                     }
-                    else if(player.transform.position.x < this.transform.position.x)
+                    else if (player.transform.position.x < this.transform.position.x)
                     {
                         Vector3 aux = this.transform.localScale;
                         aux.x = Mathf.Abs(aux.x);

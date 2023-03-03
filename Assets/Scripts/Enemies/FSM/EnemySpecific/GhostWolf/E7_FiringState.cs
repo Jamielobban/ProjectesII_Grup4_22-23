@@ -75,6 +75,7 @@ public class E7_FiringState : FiringState
 
     public void ApplyImpulse()
     {
+        bullet.transform.rotation = enemy.GetComponent<Entity>().GetFirePointTransform().rotation;
         bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponent<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
     }
 }

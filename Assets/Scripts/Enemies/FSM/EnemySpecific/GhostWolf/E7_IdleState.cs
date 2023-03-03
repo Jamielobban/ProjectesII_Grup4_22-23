@@ -8,6 +8,8 @@ public class E7_IdleState : IdleState
     Enemy7 enemy;
     Vector3 actualDestination;
     Vector3 error;
+    int randomIndex;
+    int actualIndex;
     public E7_IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData, Enemy7 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -19,7 +21,8 @@ public class E7_IdleState : IdleState
 
         enemy.agent.enabled = true;
 
-        actualDestination = enemy.idleTravelPoints[Random.Range(0, enemy.idleTravelPoints.Length)];
+        actualIndex = Random.Range(0, enemy.idleTravelPoints.Length);
+        actualDestination = enemy.idleTravelPoints[actualIndex];
 
         error = new Vector3(0.1f, 0.1f, 0);
     }
@@ -48,7 +51,9 @@ public class E7_IdleState : IdleState
             aux.z = 0;
             if (aux.x <= error.x && aux.y <= error.y)
             {
-                actualDestination = enemy.idleTravelPoints[Random.Range(0, enemy.idleTravelPoints.Length)];
+                do { randomIndex = Random.Range(0, enemy.idleTravelPoints.Length); } while(randomIndex == actualIndex);
+                actualIndex = randomIndex;
+                actualDestination = enemy.idleTravelPoints[actualIndex];
             }
 
             enemy.agent.SetDestination(actualDestination);
