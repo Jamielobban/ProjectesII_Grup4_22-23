@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class E4_DeadState : DeadState
 {
@@ -19,7 +18,7 @@ public class E4_DeadState : DeadState
         if (probabilityOfHearth == 0)
         {
             Object.Instantiate(stateData.hearth, enemy.transform.position, Quaternion.identity);
-        }        
+        }
     }
 
     public override void Exit()
