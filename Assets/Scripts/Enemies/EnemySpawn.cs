@@ -7,17 +7,15 @@ public class EnemySpawn : MonoBehaviour
 {
     public GameObject EnemyPrefab;
     public GameObject Enemy;
+    private SpriteRenderer spawn;
     GameObject parent;
     public AudioClip enemySpawnSound;
     int? spawnSoundKey;
-
-    private Animator spawn;
 
     public bool spawnEnemyAtStart;
 
     private void Start()
     {
-        spawn = this.GetComponent<Animator>();
         if(spawnEnemyAtStart)
         {
             SpawnAnimation();
@@ -26,6 +24,7 @@ public class EnemySpawn : MonoBehaviour
     private void Awake()
     {
  
+        spawn = GetComponent<SpriteRenderer>();
         if(!spawnEnemyAtStart)
             parent = GameObject.FindGameObjectWithTag("EnemyList");
     }
@@ -36,16 +35,16 @@ public class EnemySpawn : MonoBehaviour
         if (!spawnEnemyAtStart)
             Enemy.transform.parent = parent.transform;
 
+        spawn.DOColor(Color.clear, 1f);
 
     }
 
 
     public void SpawnAnimation()
     {
-        spawn.SetTrigger("Spawn");
-
         spawnSoundKey = AudioManager.Instance.LoadSound(enemySpawnSound, this.transform.position);
-        Invoke("SpawnEnemy", 0.4f);
+        spawn.DOColor(Color.red, 1f);
+        Invoke("SpawnEnemy", 1f);
     }
 
 

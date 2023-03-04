@@ -23,7 +23,7 @@ public class Palanca : MonoBehaviour
     {
         slice.fillAmount = 0;
         button.SetActive(false);
-        door.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = -5;
+        door.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
     }
 
     // Update is called once per frame
@@ -83,6 +83,7 @@ public class Palanca : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         door.GetComponent<BoxCollider2D>().enabled = false;
+        door.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = 5;
 
     }
 

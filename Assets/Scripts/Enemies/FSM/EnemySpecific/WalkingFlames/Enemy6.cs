@@ -15,6 +15,20 @@ public class Enemy6 : Entity
     [SerializeField]
     private D_IdleState idleStateData;
 
+    public float distanceToPassToIdle;
+
+    public GameObject burningCircle;
+    public GameObject explosion;
+
+    public AudioClip burningCircleSound;
+    int? circleSoundKey;
+    
+    public AudioClip explosionSound;
+    int? explosionSoundKey;
+
+    public AudioClip[] zombieSounds;
+    float lastTimeZSPlayed;
+    float timeBetweenSound;
 
     public Enemy6()
     {
@@ -23,7 +37,7 @@ public class Enemy6 : Entity
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
+        base.FixedUpdate();        
     }
 
     public override Transform GetBurnValues()
@@ -47,15 +61,54 @@ public class Enemy6 : Entity
         stateMachine.Initialize(chasingState);
 
         agent.speed = enemyData.speed;
+        circleSoundKey = AudioManager.Instance.LoadSound(burningCircleSound, burningCircle.transform, 0, true);
+
+        timeBetweenSound = Random.Range(3, 8);
+        lastTimeZSPlayed = 0;
     }
 
     public override void Update()
     {
         base.Update();
+
+        if(!isDead && (Time.time - lastTimeZSPlayed >= timeBetweenSound || lastTimeZSPlayed == 0))
+        {
+            AudioManager.Instance.LoadSound(zombieSounds[Random.Range(0, zombieSounds.Length)], this.transform);
+            lastTimeZSPlayed = Time.time;
+            timeBetweenSound = Random.Range(3, 8);
+        }
+
+        if(!isDead && vectorToPlayer.magnitude <= 3)
+        {
+            isDead = true;
+        }
+
+        if (isDead && stateMachine.currentState != deadState)
+        {
+            stateMachine.ChangeState(deadState);
+        }
+
+        if (!isDead && stateMachine.currentState != idleState && vectorToPlayer.magnitude >= distanceToPassToIdle && vectorToPlayer.magnitude >= enemyData.stopDistanceFromPlayer)
+        {
+            stateMachine.ChangeState(idleState);
+        }
     }
 
     protected override void GetDamage(float damageHit)
     {
         base.GetDamage(damageHit);
+    }
+
+    public void SearchFunction(string funcName)
+    {
+        if (this.gameObject == null || stateMachine.currentState == null || stateMachine.currentState == deadState)
+            return;
+        var exampleType = stateMachine.currentState.GetType();
+        var exampleMethod = exampleType.GetMethod(funcName);
+        try { exampleMethod.Invoke(stateMachine.currentState, null); } catch { /*Debug.Log(funcName); Debug.Log(stateMachine.currentState);*/ };
+        if (this.gameObject == null)
+        {
+            CancelInvoke();
+        }
     }
 }

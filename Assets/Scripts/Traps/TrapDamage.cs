@@ -10,7 +10,6 @@ public class TrapDamage : MonoBehaviour
 
     GameObject[] enemies;
 
-    public bool empujar;
     
     // Start is called before the first frame update
     void Start()
@@ -38,20 +37,16 @@ public class TrapDamage : MonoBehaviour
             collision.gameObject.SendMessage("GetDamage", 10);
             check = false;
             StartCoroutine(Delay(0.5f));
-            if(empujar)
+            if (directionUp)
             {
-                if (directionUp)
-                {
-                    collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 4000, 0), ForceMode2D.Force);
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 4000, 0), ForceMode2D.Force);
 
-                }
-                else
-                {
-                    collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, -4000, 0), ForceMode2D.Force);
-
-                }
             }
-        
+            else
+            {
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, -4000, 0), ForceMode2D.Force);
+
+            }
 
         }
         //else if (collision.gameObject.CompareTag("Enemy"))
