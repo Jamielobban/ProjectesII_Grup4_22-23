@@ -4,26 +4,15 @@ using UnityEngine;
 
 public class PlayerDetetctorArea : MonoBehaviour
 {
-    [HideInInspector]
-    public bool playerInside = false;
-    public bool isEnemy4 = true;
-    public bool isEnemy8 = false;
+    bool playerInside = false;
     private void Update()
     {
-        if(isEnemy4)
-            GetComponentInParent<Enemy4>().inRange = playerInside;
-        else if(isEnemy8)
-            GetComponentInParent<Enemy8>().inRange = playerInside;
+        GetComponentInParent<Enemy4>().inRange = playerInside;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
+        if(collision.CompareTag("Player"))
             playerInside = true;
-
-            
-        }
-            
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
