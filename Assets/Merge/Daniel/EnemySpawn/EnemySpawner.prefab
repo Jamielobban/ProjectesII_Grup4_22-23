@@ -43,12 +43,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4575900913035887074}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ac2a60273fa99440b5367a0cfdb6090, type: 3}
+  m_Script: {fileID: 11500000, guid: 5999fbf9de6862941b8749250544a000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyPrefab: {fileID: 8405310305926585271, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+  EnemyPrefab: {fileID: 0}
   Enemy: {fileID: 0}
-  enemySpawnSound: {fileID: 8300000, guid: 019df458c785cea4bb321fd5a8cb49bc, type: 3}
+  parent: {fileID: 0}
+  enemySpawnSound: {fileID: 0}
   spawnEnemyAtStart: 0
 --- !u!212 &-6281430479799677975
 SpriteRenderer:
@@ -112,7 +113,7 @@ Animator:
   m_GameObject: {fileID: 4575900913035887074}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 646711f3ec09df142a927a900216627b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4f343c53cf64cd547abb0af9ac501713, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
