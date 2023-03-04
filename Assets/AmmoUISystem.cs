@@ -28,11 +28,10 @@ public class AmmoUISystem : MonoBehaviour
 
     public void DrawAmmo()
     {
-
+        ammoPrefab.GetComponent<AmmoRifleImage>().fullAmmo = rightHand.weaponInHand.GetFullSprite();
+        ammoPrefab.GetComponent<AmmoRifleImage>().emptyAmmo = rightHand.weaponInHand.GetEmptySprite();
+        ammoPrefab.GetComponent<AmmoRifleImage>().flashAmmo = rightHand.weaponInHand.GetFlashSprite();
         ClearAmmo();
-
-
-        Debug.Log(rightHand.GetWeaponInHand()); 
 
         //float maxHealthRemainder = player.maxHearts % 2;
         //int heartsToMake = (int)((player.maxHearts / 2) + maxHealthRemainder);

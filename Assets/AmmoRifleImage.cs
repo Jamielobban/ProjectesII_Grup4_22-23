@@ -9,6 +9,9 @@ public class AmmoRifleImage : MonoBehaviour
     [SerializeField] Image AmmoSprite;
 
     public AmmoStatus _status;
+
+    public RightHand rightHand;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +21,7 @@ public class AmmoRifleImage : MonoBehaviour
     public void SetAmmoImage(AmmoStatus status)
     {
         switch (status)
+
         {
             case AmmoStatus.Empty:
                 AmmoSprite.sprite = emptyAmmo;

@@ -37,6 +37,9 @@ public class WeaponValues : ScriptableObject
     [Header("Firepoint")]
     public Vector3 firePoint;
 
+    [Header("UI")]
+    public Sprite fullAmmo, emptyAmmo, flashAmmo;
+
     public void RestartValues()
     {
         bulletsInMagazine.RestartValues();

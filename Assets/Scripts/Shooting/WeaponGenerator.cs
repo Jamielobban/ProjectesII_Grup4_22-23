@@ -53,7 +53,7 @@ public class WeaponGenerator : MonoBehaviour
 
 
 
-        int random = Random.Range(0, 5);
+        int random = Random.Range(0, 4);
 
 
         weaponInHandInt = random;
@@ -84,13 +84,13 @@ public class WeaponGenerator : MonoBehaviour
             weaponInHand = new GunSemiauto(firePoint, weaponsValues[3]);
 
         }
-        else if (random == 4)
+        //else if (random == 4)
 
-        {
-            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
-            weaponInHand = new ShotgunBolt(firePoint, weaponsValues[4]);
+        //{
+        //    //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
+        //    weaponInHand = new ShotgunBolt(firePoint, weaponsValues[4]);
 
-        }
+        //}
 
         //else if(random == 3)
 
@@ -124,7 +124,7 @@ public class WeaponGenerator : MonoBehaviour
 
 
 
-        do { random = Random.Range(0, 5); } while (weaponInHandInt == random);
+        do { random = Random.Range(0, 4); } while (weaponInHandInt == random);
 
 
 
@@ -159,13 +159,13 @@ public class WeaponGenerator : MonoBehaviour
             return new GunSemiauto(firePoint, weaponsValues[3]);
 
         }
-        else if (random == 4)
+        //else if (random == 4)
 
-        {
-            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
-            return new ShotgunBolt(firePoint, weaponsValues[4]);
+        //{
+        //    //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
+        //    return new ShotgunBolt(firePoint, weaponsValues[4]);
 
-        }
+        //}
 
         //else if(random == 3){
 
@@ -207,9 +207,9 @@ public class WeaponGenerator : MonoBehaviour
     public Weapon ReturnMyNextWeapon(Transform firePoint)
     {
         weaponInHandInt = nextWeaponInt;
-        int random = Random.Range(0, 5);
+        int random = Random.Range(0, 4);
 
-        do { random = Random.Range(0, 5); } while (random == weaponInHandInt);
+        do { random = Random.Range(0, 4); } while (random == weaponInHandInt);
 
         nextWeaponInt = random;
 
@@ -237,13 +237,13 @@ public class WeaponGenerator : MonoBehaviour
             //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
             return new GunSemiauto(firePoint, weaponsValues[3]);
         }
-        else if (random == 4)
+        //else if (random == 4)
 
-        {
-            //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
-            return new ShotgunBolt(firePoint, weaponsValues[4]);
+        //{
+        //    //firePoint.localPosition = new Vector3(-0.0170000009f, -0.0610000007f, 0f);
+        //    return new ShotgunBolt(firePoint, weaponsValues[4]);
 
-        }
+        //}
         //else if (random == 3)
         //{
         //    return new ShotgunAuto(firePoint, weaponsValues[3]);

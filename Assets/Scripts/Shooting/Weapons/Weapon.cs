@@ -139,6 +139,20 @@ public abstract class Weapon
         return data.reloading.RuntimeValue;
     }
 
+
+    public Sprite GetEmptySprite()
+    {
+        return data.emptyAmmo;
+    }
+
+    public Sprite GetFullSprite()
+    {
+        return data.fullAmmo;
+    }
+    public Sprite GetFlashSprite()
+    {
+        return data.flashAmmo;
+    }
     public void SetTime(float timePassed)
     {
         data.timelastPowerupEnter.RuntimeValue = Time.time;
