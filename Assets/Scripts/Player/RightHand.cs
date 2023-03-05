@@ -75,53 +75,6 @@ public class RightHand : MonoBehaviour
     }
     private void Update()
     {
-        //if (playerMat.GetFloat("_ShakeUvSpeed") != 0 && timeEndShake <= Time.time)
-        //{
-        //    playerMat.SetFloat("_ShakeUvSpeed", 0);
-        //}
-
-        //Debug.Log(playerMat);
-        switch (powerUpState)
-        {
-            case PowerUpState.RELOADING:
-                //powerUpBarColor.color = reloadingColor;
-                firstTime4 = true;
-                break;
-            case PowerUpState.FULL:
-                powerUpBarColor.color = fullChargeColor;
-
-                break;
-            case PowerUpState.USING:
-                powerUpBarColor.color = usePowerUpColor;
-                if (firstTime4)
-                {
-                    //Debug.Log(weaponInHand.GetTimeLeftPowerup());
-                    CinemachineShake.Instance.ShakeCamera(5f, weaponInHand.GetTimeLeftPowerup());
-                    firstTime4 = false;
-                }
-                break;
-            default:
-                break;
-        }
-        //Reload Bar
-        if (weaponInHand.GetReloadingState())
-        {
-            //reloadBar.SetActive(true);
-            if (firstTime3)
-            {
-                //reloadBarTimer.SetMaxTime(weaponInHand.GetReloadTimeInSec() + 0.5f);
-                firstTime = false;
-            }
-            reloadTimer += Time.deltaTime;
-            //reloadBarTimer.SetTime(reloadTimer);
-            if (reloadTimer > weaponInHand.GetReloadTimeInSec() + 0.5f)
-            {
-                firstTime3 = true;
-                //reloadBar.SetActive(false);
-                reloadTimer = 0f;
-            }
-        }
-
         //Debug.Log(playerMat);
         switch (powerUpState)
         {
@@ -148,72 +101,37 @@ public class RightHand : MonoBehaviour
         //Reload Bar
         if (weaponInHand.GetReloadingState())
         {
+            //Debug.Log("1");
             //reloadBar.SetActive(true);
             if (firstTime3)
             {
-                //reloadBarTimer.SetMaxTime(weaponInHand.GetReloadTimeInSec() + 0.5f);
-                firstTime = false;
+                //ammoUI.CreateEmptyAmmo();
+                //StartCoroutine(UIUpdate(weaponInHand.GetReloadTimeInSec()));
+                //EmptyAmmo();
+                ammoUI.StartCoroutine(ammoUI.ReloadAmmo(weaponInHand.GetReloadTimeInSec()));
+                //.Log(firstTime3);
+                firstTime3 = false;
             }
             reloadTimer += Time.deltaTime;
             //reloadBarTimer.SetTime(reloadTimer);
             if (reloadTimer > weaponInHand.GetReloadTimeInSec() + 0.5f)
             {
+                //foreach (AmmoRifleImage image in ammoUI.rifleAmmoArray)
+                //{
+                //    image.GetComponent<AmmoRifleImage>().SetAmmoImage(AmmoRifleImage.AmmoStatus.Full);
+
+                //}
+                Debug.Log(weaponInHand.GetReloadingState());
                 firstTime3 = true;
                 //reloadBar.SetActive(false);
                 reloadTimer = 0f;
             }
         }
-
-        //Weapon powerup UI
-        //if (!weaponInHand.GetState())
-        //{
-
-        //    //if (powerUpTimer.GetMaxTime() <= 20)
-        //    //{
-        //    //    powerUpTimer.SetMaxTime(20);
-        //    //    firstTime = true;
-
-        //    //}
-        //    //if (powerUpBarColor.fillAmount == 1)
-        //    //{
-        //    //    powerUpState = PowerUpState.FULL;
-
-        //    //}
-        //    //else
-        //    //{
-        //    //    powerUpState = PowerUpState.RELOADING;
-
-        //    //}
-
-        //    //powerUpTimer.SetTime(weaponInHand.GetTime());
-        //}
-        //if (weaponInHand.GetState())
-        //{
-        //    powerUpState = PowerUpState.USING;
-
-        //    if (firstTime)
-        //    {
-        //        powerUpTimer.SetMaxTime(weaponInHand.SetTimeLeftPowerup());
-        //        firstTime = false;
-        //    }
-
-        //    powerUpTimer.SetTime(weaponInHand.GetTimeLeftPowerup());
-
-        //    //powerUpBar.color = new Color(202,187,43,255);
-
-        //    //CBBC2B
-        //    //394AA6
-
-        //    //Debug.Log("Activated");
-        //}
-
-        //Weapon ammo UI
-        //bulletsInMagazine.text = weaponInHand.GetBulletsInMagazine().ToString();
-        //ulletsPerMagazine.text = weaponInHand.GetBulletsPerMagazine().ToString();
-        //magazineNumber.text = weaponInHand.GetCurrentMagazines().ToString();
-
-        // Debug.Log(weaponInHand.GetBulletsInMagazine());
-
+        else
+        {
+            //ammoUI.DrawAmmo();
+            //Debug.Log("Update in update else");
+        }
 
         weaponInHand.Update();
 
@@ -231,7 +149,7 @@ public class RightHand : MonoBehaviour
             weaponInHand.SetWeaponHand(ref sr);
             weaponInHand.SetTime(timeToPass);
             nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon(firePoint);
-            firstTime = true;
+            Debug.Log("Update in update right hand");
             UpdateUIWeapons();
 
         }
@@ -248,6 +166,7 @@ public class RightHand : MonoBehaviour
         if (weaponInHand.shotFired)
         {
             UpdateUIWeapons();
+            //Debug.Log("Update in fixed");
             weaponInHand.shotFired = false;
         }
     }
@@ -270,6 +189,15 @@ public class RightHand : MonoBehaviour
     //    //timeEndShake = Time.time + 0.13f;
     //}
 
+
+    //private void EmptyAmmo()
+    //{
+    //    foreach (AmmoRifleImage image in ammoUI.rifleAmmoArray)
+    //    {
+    //        image.GetComponent<AmmoRifleImage>().SetAmmoImage(AmmoRifleImage.AmmoStatus.Empty);
+    //        //ammoUI.DrawAmmo();
+    //    }
+    //}
     public Color GetColor()
     {
         return weaponInHand.GetWeaponColor();

@@ -9,7 +9,7 @@ public class AmmoUISystem : MonoBehaviour
 
 
     public GameObject ammoPrefab;
-   
+
     public List<AmmoRifleImage> rifleAmmoArray = new List<AmmoRifleImage>();
     //public HealthHeart[] heartArray;
     //public List<AmmoRifleImage> heartArray = new List<AmmoRifleImage>();
@@ -28,24 +28,46 @@ public class AmmoUISystem : MonoBehaviour
 
     public void DrawAmmo()
     {
+        ClearAmmo();
+
+        //Debug.Log("Update");
         ammoPrefab.GetComponent<AmmoRifleImage>().fullAmmo = rightHand.weaponInHand.GetFullSprite();
         ammoPrefab.GetComponent<AmmoRifleImage>().emptyAmmo = rightHand.weaponInHand.GetEmptySprite();
         ammoPrefab.GetComponent<AmmoRifleImage>().flashAmmo = rightHand.weaponInHand.GetFlashSprite();
-        ClearAmmo();
-
-        //float maxHealthRemainder = player.maxHearts % 2;
-        //int heartsToMake = (int)((player.maxHearts / 2) + maxHealthRemainder);
 
         int maxAmmoToMake = rightHand.weaponInHand.GetBulletsPerMagazine();
         int ammoToMake = (int)(rightHand.weaponInHand.GetBulletsInMagazine());
-        for (int i = 0; i < maxAmmoToMake; i++)
+
+        //float maxHealthRemainder = player.maxHearts % 2;
+        //int heartsToMake = (int)((player.maxHearts / 2) + maxHealthRemainder);
+        if (!rightHand.weaponInHand.GetReloadingState())
         {
-            CreateEmptyAmmo();
+            for (int i = 0; i < maxAmmoToMake; i++)
+            {
+                CreateEmptyAmmo();
+            }
+            for (int i = 0; i < rifleAmmoArray.Count; i++)
+            {
+                int ammoRemainder = (int)(Mathf.Clamp(rightHand.weaponInHand.GetBulletsInMagazine() - (i * 1), 0, 1));
+                rifleAmmoArray[i].SetAmmoImage((AmmoRifleImage.AmmoStatus)ammoRemainder);
+            }
         }
-        for (int i = 0; i < rifleAmmoArray.Count; i++)
+        else
         {
-            int ammoRemainder = (int)(Mathf.Clamp(rightHand.weaponInHand.GetBulletsInMagazine() - (i * 1), 0, 1));
-            rifleAmmoArray[i].SetAmmoImage((AmmoRifleImage.AmmoStatus)ammoRemainder);
+            for (int i = 0; i < maxAmmoToMake; i++)
+            {
+                CreateEmptyAmmo();
+            }
+        }
+    }
+
+    public IEnumerator ReloadAmmo(float time)
+    {
+        for (int i = 0; i < rightHand.weaponInHand.GetBulletsInMagazine(); i++)
+        {
+            rifleAmmoArray[0].SetAmmoImage(AmmoRifleImage.AmmoStatus.Full);
+            rifleAmmoArray[i].SetAmmoImage(AmmoRifleImage.AmmoStatus.Full);
+            yield return new WaitForSeconds(time / rightHand.weaponInHand.GetBulletsInMagazine());
         }
     }
 
