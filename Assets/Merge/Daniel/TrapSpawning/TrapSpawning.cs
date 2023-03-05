@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TrapSpawning : MonoBehaviour
 {
-    public List<TrampaBolaHielo> trampas;
+    public List<Trampas> trampas;
 
 
     // Start is called before the first frame update

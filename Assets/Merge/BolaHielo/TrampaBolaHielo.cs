@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrampaBolaHielo : MonoBehaviour
+public class TrampaBolaHielo : Trampas
 {
     public GameObject arrow;
     public Transform spawnPoint;
@@ -25,32 +25,26 @@ public class TrampaBolaHielo : MonoBehaviour
 
 
     public int force;
+    public float startTime;
 
-    public bool stopSpawning;
     // Start is called before the first frame update
     void Start()
     {
 
-        stopSpawning = false;
 
 
     }
 
-    public void StartSpawning()
+    public override void  StartSpawning()
     {
-        StartCoroutine(shoot());
+        StartCoroutine(shoot(startTime));
 
     }
-    private IEnumerator shoot()
+    private IEnumerator shoot(float time)
     {
-        if (time == 0)
-        {
-            yield return new WaitForSeconds(Random.RandomRange(1f, 2f));
-        }
-        else
-        {
-            yield return new WaitForSeconds(time);
-        }
+        yield return new WaitForSeconds(time);
+
+ 
 
         arrowThrowKey = AudioManager.Instance.LoadSound(arrowThrow, this.transform, 0, false);
         GameObject bola = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
@@ -65,8 +59,16 @@ public class TrampaBolaHielo : MonoBehaviour
         }
         else
         {
-            StartCoroutine(shoot());
+            if (this.time == 0)
+            {
+                StartCoroutine(shoot(Random.RandomRange(1f, 2f)));
 
+            }
+            else
+            {
+                StartCoroutine(shoot(this.time));
+
+            }
         }
 
     }
@@ -80,6 +82,8 @@ public class TrampaBolaHielo : MonoBehaviour
                 arrowHitKey = AudioManager.Instance.LoadSound(arrowHit, list.transform.GetChild(i).position, 0, false);
                 list.transform.GetChild(i).GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                 list.transform.GetChild(i).gameObject.transform.GetComponent<Animator>().SetTrigger("Stop");
+                Destroy(list.transform.GetChild(i).gameObject.GetComponent<CircleCollider2D>());
+
                 Destroy(list.transform.GetChild(i).gameObject, 1f);
             }
 
