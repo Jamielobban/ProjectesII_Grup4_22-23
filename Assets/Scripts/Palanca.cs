@@ -21,7 +21,6 @@ public class Palanca : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canOpen = false;
         slice.fillAmount = 0;
         button.SetActive(false);
         door.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1;

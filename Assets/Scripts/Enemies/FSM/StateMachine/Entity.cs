@@ -71,6 +71,7 @@ public abstract class Entity : MonoBehaviour
 
 	public virtual void Start()
     {
+		//Debug.Log("in");
 		rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
 		originalGlowValue = sr.material.GetFloat("_Glow");
