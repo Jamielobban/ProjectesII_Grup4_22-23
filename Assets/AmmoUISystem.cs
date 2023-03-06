@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class AmmoUISystem : MonoBehaviour
 {
@@ -63,12 +64,22 @@ public class AmmoUISystem : MonoBehaviour
 
     public IEnumerator ReloadAmmo(float time)
     {
-        for (int i = 0; i < rightHand.weaponInHand.GetBulletsInMagazine(); i++)
+
+        float timer = (time / (rightHand.weaponInHand.GetBulletsPerMagazine() + 1f));
+        Debug.Log(timer);
+        for (int i = 0; i < rightHand.weaponInHand.GetBulletsPerMagazine(); i++)
         {
             rifleAmmoArray[0].SetAmmoImage(AmmoRifleImage.AmmoStatus.Full);
             rifleAmmoArray[i].SetAmmoImage(AmmoRifleImage.AmmoStatus.Full);
-            yield return new WaitForSeconds(time / rightHand.weaponInHand.GetBulletsInMagazine());
+            yield return new WaitForSeconds(time / (rightHand.weaponInHand.GetBulletsPerMagazine()+1f));
         }
+
+        for (int i = rifleAmmoArray.Count - 1; i >= 0; i--)
+        {
+            rifleAmmoArray[i].transform.DOJump(rifleAmmoArray[i].transform.position, 10, 1, 0.3f, false);
+            yield return new WaitForSeconds(1f/(rightHand.weaponInHand.GetBulletsPerMagazine())-0.05f);
+        }
+
     }
 
 

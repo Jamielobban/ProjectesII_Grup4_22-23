@@ -121,7 +121,7 @@ public class RightHand : MonoBehaviour
                 //    image.GetComponent<AmmoRifleImage>().SetAmmoImage(AmmoRifleImage.AmmoStatus.Full);
 
                 //}
-                Debug.Log(weaponInHand.GetReloadingState());
+                //Debug.Log(weaponInHand.GetReloadingState());
                 firstTime3 = true;
                 //reloadBar.SetActive(false);
                 reloadTimer = 0f;
