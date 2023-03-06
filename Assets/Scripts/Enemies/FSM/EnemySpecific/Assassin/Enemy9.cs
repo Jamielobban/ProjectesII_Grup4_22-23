@@ -19,7 +19,8 @@ public class Enemy9 : Entity
     private D_FiringState firingStateData;
 
     public bool enemyVariant;
-    public float distanceToPassToIdle;   
+    public float distanceToPassToIdle;
+    public float lastTimeFliped;
 
     //variant 0 jump llarg
 
@@ -57,6 +58,7 @@ public class Enemy9 : Entity
         idleState = new E9_IdleState(this, stateMachine, "idle", idleStateData, this);
 
         stateMachine.Initialize(chasingState);
+        lastTimeFliped = 0;
 
         agent.speed = enemyData.speed;
     }
@@ -73,6 +75,47 @@ public class Enemy9 : Entity
         if (!isDead && stateMachine.currentState != idleState && vectorToPlayer.magnitude >= distanceToPassToIdle && vectorToPlayer.magnitude >= enemyData.stopDistanceFromPlayer)
         {
             stateMachine.ChangeState(idleState);
+        }
+
+        if (stateMachine.currentState != firingState && stateMachine.currentState != idleState && stateMachine.currentState != deadState && agent.enabled /*&& Time.time - lastTimeFliped >= 0.6f*/)
+        {
+            if (agent.desiredVelocity.x < 0.2f)
+            {
+                Vector3 aux = this.transform.localScale;
+                aux.x = -Mathf.Abs(aux.x);
+                this.transform.localScale = aux;
+                lastTimeFliped = Time.time;
+            }
+            else if (agent.desiredVelocity.x > -0.2f)
+            {
+                Vector3 aux = this.transform.localScale;
+                aux.x = Mathf.Abs(aux.x);
+                this.transform.localScale = aux;
+                lastTimeFliped = Time.time;
+            }
+            else
+            {
+                if (stateMachine.currentState == chasingState)
+                {
+                    if (player.transform.position.x > this.transform.position.x)
+                    {
+                        Vector3 aux = this.transform.localScale;
+                        aux.x = -Mathf.Abs(aux.x);
+                        this.transform.localScale = aux;
+                        lastTimeFliped = Time.time;
+
+                    }
+                    else if (player.transform.position.x < this.transform.position.x)
+                    {
+                        Vector3 aux = this.transform.localScale;
+                        aux.x = Mathf.Abs(aux.x);
+                        this.transform.localScale = aux;
+                        lastTimeFliped = Time.time;
+
+                    }
+                }
+            }
+
         }
     }
 

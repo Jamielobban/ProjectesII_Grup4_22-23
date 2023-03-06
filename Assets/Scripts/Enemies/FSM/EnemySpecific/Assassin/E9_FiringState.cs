@@ -36,12 +36,26 @@ public class E9_FiringState : FiringState
                 stateMachine.ChangeState(enemy.chasingState);
             }
         }
-        //else
-        //{
 
-        //}
+        if (animationDone)
+        {
+            if(enemy.transform.position.x > enemy.player.transform.position.x)
+            {
+                Vector3 aux = enemy.transform.localScale;
+                aux.x = -Mathf.Abs(aux.x);
+                enemy.transform.localScale = aux;
+            }
+            else
+            {
+                Vector3 aux = enemy.transform.localScale;
+                aux.x = Mathf.Abs(aux.x);
+                enemy.transform.localScale = aux;
+            }
+        }
 
-        
+        enemy.GetComponentsInChildren<Transform>().Where(t => (t.gameObject.CompareTag("FirePoint"))).ToArray()[0].localRotation = Quaternion.Euler(0, 0, angleFirePoint * Mathf.Sign(enemy.transform.localScale.x));
+
+
     }
 
     public void StartAnimation()
@@ -111,13 +125,13 @@ public class E9_FiringState : FiringState
             enemy.anim.SetBool("waitingRestTime", true);
             
 
-            FunctionTimer.Create(() =>
-            {
-                if (enemy != null && !enemy.GetIfIsDead())
-                {
-                    animationDone = true;
-                }
-            }, 3f);
+            //FunctionTimer.Create(() =>
+            //{
+            //    if (enemy != null && !enemy.GetIfIsDead())
+            //    {
+            //        animationDone = true;
+            //    }
+            //}, 3f);
 
             FunctionTimer.Create(() =>
             {
@@ -137,10 +151,10 @@ public class E9_FiringState : FiringState
 
     public void EndAnimation()
     {
-        if (enemy.enemyVariant)
-        {
+        //if (enemy.enemyVariant)
+        //{
             animationDone = true;
-        }        
+        //}        
     }
     
 
@@ -148,13 +162,7 @@ public class E9_FiringState : FiringState
     {
         base.PhysicsUpdate();
 
-        if (((angle < 90 && angle > -90) && enemy.transform.localScale.x < 0) || ((angle > 90 || angle < -90) && enemy.transform.localScale.x > 0) && animationDone)
-        {
-            enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
-
-        }
-
-        enemy.GetComponentsInChildren<Transform>().Where(t => (t.gameObject.CompareTag("FirePoint"))).ToArray()[0].localRotation = Quaternion.Euler(0, 0, angle * Mathf.Sign(enemy.transform.localScale.x));
+        
 
         //enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.player.position, enemy.enemyData.speed * Time.fixedDeltaTime);
         

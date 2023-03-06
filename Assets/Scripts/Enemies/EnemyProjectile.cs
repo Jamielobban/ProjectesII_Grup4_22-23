@@ -40,7 +40,8 @@ public class EnemyProjectile : MonoBehaviour
 
     void DestroyProjectile()
     {
-        FreeChilds();
+        if(movePlayer)
+            FreeChilds();
 
         Transform[] parents = GetComponentsInParent<Transform>().Where(t => (t.GetComponent<Rigidbody2D>())).ToArray();
         if(parents.Length > 0)

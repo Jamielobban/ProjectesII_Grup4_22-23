@@ -55,7 +55,21 @@ public class E9_ChasingState : ChasingState
             }
         }
 
-        
+        if (enemy.enemyVariant && enemy.agent.enabled)
+        {
+            enemy.agent.SetDestination(new Vector3(enemy.player.position.x, enemy.player.position.y, enemy.transform.position.z));
+        }
+        else
+        {
+            if (entity.vectorToPlayer.magnitude >= enemy.enemyData.stopDistanceFromPlayer)
+            {
+                enemy.agent.SetDestination(new Vector3(enemy.player.position.x, enemy.player.position.y, enemy.transform.position.z));
+            }
+            else if (entity.vectorToPlayer.magnitude <= 7 && enemy.agent)
+            {
+                enemy.agent.SetDestination(enemy.player.position + (-enemy.vectorToPlayer.normalized * 7));
+            }
+        }
     }
 
     public void EndAnimation()
@@ -75,30 +89,15 @@ public class E9_ChasingState : ChasingState
     {
         base.PhysicsUpdate();
 
-        if (((angle < 90 && angle > -90) && enemy.transform.localScale.x < 0) || ((angle > 90 || angle < -90) && enemy.transform.localScale.x > 0))
-        {
-            enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
+        //if (((angle < 90 && angle > -90) && enemy.transform.localScale.x < 0) || ((angle > 90 || angle < -90) && enemy.transform.localScale.x > 0))
+        //{
+        //    enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
 
-        }
+        //}
 
         enemy.GetComponentsInChildren<Transform>().Where(t => (t.gameObject.CompareTag("FirePoint"))).ToArray()[0].localRotation = Quaternion.Euler(0, 0, angle * Mathf.Sign(enemy.transform.localScale.x));
 
         //enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.player.position, enemy.enemyData.speed * Time.fixedDeltaTime);
-        if (enemy.enemyVariant)
-        {
-            enemy.agent.SetDestination(new Vector3(enemy.player.position.x, enemy.player.position.y, enemy.transform.position.z));
-        }
-        else
-        {
-            if(entity.vectorToPlayer.magnitude >= enemy.enemyData.stopDistanceFromPlayer)
-            {
-                enemy.agent.SetDestination(new Vector3(enemy.player.position.x, enemy.player.position.y, enemy.transform.position.z));
-            }
-            else if(entity.vectorToPlayer.magnitude <= 7)
-            {
-
-                enemy.agent.SetDestination(enemy.player.position + (-enemy.vectorToPlayer.normalized * 6));
-            }
-        }
+        
     }
 }
