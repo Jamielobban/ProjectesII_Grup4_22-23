@@ -44,6 +44,8 @@ public class ArrowTrap : Trampas
     {
             yield return new WaitForSeconds(time);
         
+        this.gameObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Shoot");
+        yield return new WaitForSeconds(0.15f);
 
         arrowThrowKey = AudioManager.Instance.LoadSound(arrowThrow, this.transform, 0, false);
         GameObject flecha = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
