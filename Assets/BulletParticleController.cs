@@ -17,10 +17,6 @@ public class BulletParticleController : MonoBehaviour
     void Start()
     {
         ps = GetComponent<ParticleSystem>();
-    }
-
-    private void Update()
-    {
         StartCoroutine(waitForFreeze());
     }
     private IEnumerator waitForFreeze()

@@ -8,8 +8,8 @@ public class BloodController : MonoBehaviour
 
     private PlayerMovement playerpos;
     private CompositeCollider2D bloodcollider;
-    //int damage = 5;
-    float ticRate = 0.5f;
+    int damage = 1;
+    float ticRate = 1.5f;
     List<PlayerMovement> players = new List<PlayerMovement>();
      
     void Start()
@@ -21,7 +21,8 @@ public class BloodController : MonoBehaviour
     {
         foreach (PlayerMovement player in players)
         {
-           //player.TakeDamage(damage);
+           player.TakeDamage(damage);
+           player.healthUI.DrawHearts();
         }
     }
     // Update is called once per frame

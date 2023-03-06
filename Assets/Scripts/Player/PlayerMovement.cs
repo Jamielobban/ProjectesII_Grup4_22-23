@@ -104,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
     public float currentBlinkRechargeTime2 = 0f;
     public float currentBlinkRechargeTime3 = 0f;
     [SerializeField] private int remainingBlinks;
-    [SerializeField] HeartSystem healthUI;
+    [SerializeField] public HeartSystem healthUI;
 
     float rollSpeedCheck;
 
