@@ -21,7 +21,7 @@ public class ParticleCollector : MonoBehaviour
         {
             ParticleSystem.Particle p = particles[i];
             p.remainingLifetime = 0;
-            Debug.Log("Collected 1");
+            //Debug.Log("Collected 1");
             particles[i] = p;
         }
         ps.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, particles);
