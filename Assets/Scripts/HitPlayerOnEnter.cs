@@ -5,7 +5,7 @@ using UnityEngine;
 public class HitPlayerOnEnter : MonoBehaviour
 {
     [SerializeField]
-    float damage;
+    int damage;
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
