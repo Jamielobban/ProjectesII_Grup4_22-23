@@ -19,8 +19,7 @@ public class Enemy9 : Entity
     private D_FiringState firingStateData;
 
     public bool enemyVariant;
-    public float distanceToPassToIdle;
-    public bool inRange = false;
+    public float distanceToPassToIdle;   
 
     //variant 0 jump llarg
 

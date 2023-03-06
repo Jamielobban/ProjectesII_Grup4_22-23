@@ -34,7 +34,7 @@ public class PlayerDetetctorArea : MonoBehaviour
                 GetComponentInParent<Enemy8>().inRange = playerInside;
                 break;
             case 9:
-                GetComponentInParent<Enemy9>().inRange = playerInside;
+                //GetComponentInParent<Enemy9>().inRange = playerInside;
                 break;
             case 10:
                 break;

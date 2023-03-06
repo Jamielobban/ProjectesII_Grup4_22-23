@@ -82,6 +82,19 @@ public class E9_IdleState : IdleState
         }
     }
 
+    public void EndAnimation()
+    {
+    }
+
+    public void ShootSlash()
+    {
+    }
+
+    public void StartAnimation()
+    {
+
+    }
+
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();

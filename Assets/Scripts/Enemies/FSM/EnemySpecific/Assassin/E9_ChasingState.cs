@@ -47,12 +47,27 @@ public class E9_ChasingState : ChasingState
         }
         else
         {
-            if (enemy.inRange)
+            inRange = entity.vectorToPlayer.magnitude < enemy.enemyData.stopDistanceFromPlayer && entity.vectorToPlayer.magnitude >= 6;
+
+            if (inRange)
             {
                 stateMachine.ChangeState(enemy.firingState);
             }
         }
 
+        
+    }
+
+    public void EndAnimation()
+    {
+    }
+
+    public void ShootSlash()
+    {
+    }
+
+    public void StartAnimation()
+    {
         
     }
 
@@ -75,13 +90,14 @@ public class E9_ChasingState : ChasingState
         }
         else
         {
-            if(enemy.transform.position.x < enemy.player.transform.position.x)
+            if(entity.vectorToPlayer.magnitude >= enemy.enemyData.stopDistanceFromPlayer)
             {
-                enemy.agent.SetDestination(new Vector3(enemy.player.position.x - 5, enemy.player.position.y, enemy.transform.position.z));
+                enemy.agent.SetDestination(new Vector3(enemy.player.position.x, enemy.player.position.y, enemy.transform.position.z));
             }
-            else
+            else if(entity.vectorToPlayer.magnitude <= 7)
             {
-                enemy.agent.SetDestination(new Vector3(enemy.player.position.x + 5, enemy.player.position.y, enemy.transform.position.z));
+
+                enemy.agent.SetDestination(enemy.player.position + (-enemy.vectorToPlayer.normalized * 6));
             }
         }
     }

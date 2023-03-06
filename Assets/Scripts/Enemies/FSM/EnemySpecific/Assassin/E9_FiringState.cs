@@ -47,6 +47,21 @@ public class E9_FiringState : FiringState
     public void StartAnimation()
     {
         animationDone = false;
+
+        if (!enemy.enemyVariant)
+        {
+            //if(enemy.player.transform.position.x < enemy.transform.position.x)
+            //{
+            //    enemy.transform.DOMoveX(enemy.transform.position.x - 5, 0.5f);
+            //}
+            //else
+            //{
+            //    enemy.transform.DOMoveX(enemy.transform.position.x + 5, 0.5f);
+            //}
+
+            //enemy.player.position + (-enemy.vectorToPlayer.normalized * 6)
+            enemy.transform.DOMove(enemy.transform.position + (enemy.vectorToPlayer.normalized * 5), 0.5f);
+        }
         
     }
 
@@ -84,22 +99,17 @@ public class E9_FiringState : FiringState
 
             bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponentInChildren<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
 
-            enemy.anim.SetBool("waitingRestTime", true);
+            var color = bullet.GetComponentInChildren<SpriteRenderer>().color;
+            color.a = 0;
+            bullet.GetComponentInChildren<SpriteRenderer>().color = color;
+            bullet.GetComponentInChildren<SpriteRenderer>().DOFade(1, 0.3f);
 
-            //FunctionTimer.Create(() =>
-            //{
-            //    if (enemy != null && !enemy.GetIfIsDead())
-            //    {
-            //        if(enemy.player.position.x > enemy.transform.position.x)
-            //        {
-            //            enemy.transform.position += new Vector3(4.8f, 0, 0);
-            //        }
-            //        else
-            //        {
-            //            enemy.transform.position += new Vector3(-4.8f, 0, 0);
-            //        }                    
-            //    }
-            //}, 0.4f);
+            Transform t = bullet.GetComponentsInChildren<Transform>().Where(t => t.GetComponent<SpriteRenderer>()).ToArray()[0];
+            t.localScale = Vector3.zero;
+            t.DOScale(Vector3.one, 0.3f);
+
+            enemy.anim.SetBool("waitingRestTime", true);
+            
 
             FunctionTimer.Create(() =>
             {
@@ -107,7 +117,7 @@ public class E9_FiringState : FiringState
                 {
                     animationDone = true;
                 }
-            }, 1);
+            }, 3f);
 
             FunctionTimer.Create(() =>
             {
