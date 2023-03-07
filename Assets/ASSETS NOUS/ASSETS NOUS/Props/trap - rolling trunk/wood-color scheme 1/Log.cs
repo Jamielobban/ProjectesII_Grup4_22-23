@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Log : MonoBehaviour
+public class Log : Trampas
 {
     public GameObject log;
     public Transform end;
@@ -18,18 +18,28 @@ public class Log : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(animation(3f));
         logsNum = 0;
     }
+    public override void StartSpawning()
+    {
+        StartCoroutine(animation(0f));
 
+    }
     private IEnumerator animation(float time)
     {
         yield return new WaitForSeconds(time);
         logDoorKey = AudioManager.Instance.LoadSound(doorLogSound, this.transform, 0, false);
         this.GetComponent<Animator>().SetTrigger("Triger");
-        StartCoroutine(Spawn(0.6f));
 
-        StartCoroutine(animation(Random.Range(2.0f,3.0f)));
+        StartCoroutine(Spawn(0.6f));
+        if (stopSpawning)
+        {
+            stopSpawning = false;
+        }
+        else
+        {
+            StartCoroutine(animation(Random.Range(2.0f, 3.0f)));
+        }
     }
 
     private IEnumerator Spawn(float time)

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4892932560781425751}
   - component: {fileID: 3238478122366950885}
+  - component: {fileID: 2657964668157222490}
+  - component: {fileID: 918981527565937140}
   m_Layer: 0
   m_Name: Cofre
   m_TagString: Untagged
@@ -46,10 +48,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6143b1c458601b448d38c5007b6b3ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newWeapon: {fileID: 0}
-  button: {fileID: 0}
-  chess: {fileID: 0}
+  newWeapon: {fileID: 990112841888717085}
+  button: {fileID: 3374308389942526944}
+  chess: {fileID: 5830672788799713085}
   palanca: {fileID: 0}
+--- !u!61 &2657964668157222490
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990112841888717085}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.019290924, y: -1.2090607}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.702446, y: 3.4181213}
+  m_EdgeRadius: 0
+--- !u!61 &918981527565937140
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990112841888717085}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0000038146973, y: 0.17089844}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.0793839, y: 1.84552}
+  m_EdgeRadius: 0
 --- !u!1 &2598216540270876142
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,15 +533,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -3
-  m_Sprite: {fileID: -420884465, guid: e9aa341bb4afff4488b9fd0b16df46a7, type: 3}
+  m_Sprite: {fileID: 460351187, guid: 7b3bfc813f2f5344e975867220170fdd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.28125, y: 3.75}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &6807235686680566057
@@ -500,7 +554,7 @@ Animator:
   m_GameObject: {fileID: 5830672788799713085}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ce96b53e63acdf84188e026fa0db5568, type: 2}
+  m_Controller: {fileID: 9100000, guid: a96b043edb9e8384b8385f0e09b2cad2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
