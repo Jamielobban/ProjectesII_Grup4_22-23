@@ -123,9 +123,9 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         LayerIgnoreRaycast = LayerMask.NameToLayer("IgnoreEverything");
         PlayerMask = LayerMask.NameToLayer("Player");
-        dashUI1.SetMaxDashTimer(blinkRechargeTime);
-        dashUI2.SetMaxDashTimer(blinkRechargeTime);
-        dashUI3.SetMaxDashTimer(blinkRechargeTime);
+        //dashUI1.SetMaxDashTimer(blinkRechargeTime);
+        //dashUI2.SetMaxDashTimer(blinkRechargeTime);
+        //dashUI3.SetMaxDashTimer(blinkRechargeTime);
         //healthBar.SetMaxHealth(maxHealth);
         playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
@@ -137,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
         isDead = false;
         state = State.Normal;
         //currentHealth = maxHealth;
-        maxHealth = currentHearts;
+        maxHearts = currentHearts;
         rollSpeed = 90f;
         justRolled = false;
         backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true);

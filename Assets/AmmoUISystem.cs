@@ -29,12 +29,12 @@ public class AmmoUISystem : MonoBehaviour
 
     public void DrawAmmo()
     {
-        ClearAmmo();
-
-        //Debug.Log("Update");
         ammoPrefab.GetComponent<AmmoRifleImage>().fullAmmo = rightHand.weaponInHand.GetFullSprite();
         ammoPrefab.GetComponent<AmmoRifleImage>().emptyAmmo = rightHand.weaponInHand.GetEmptySprite();
         ammoPrefab.GetComponent<AmmoRifleImage>().flashAmmo = rightHand.weaponInHand.GetFlashSprite();
+        ClearAmmo();
+
+        //Debug.Log("Update");
 
         int maxAmmoToMake = rightHand.weaponInHand.GetBulletsPerMagazine();
         int ammoToMake = (int)(rightHand.weaponInHand.GetBulletsInMagazine());
