@@ -14,8 +14,19 @@ public class Enemy11 : Entity
     private D_DeadState deadStateData;
     [SerializeField]
     private D_IdleState idleStateData;
+    
+    public LayerMask laserAffectsLayer;
+
+    public Color laserFollow;
+    public Color laserDamage;
+    public int laserDamageAmount;
+
+    public AudioClip laserAlarm;
+    public AudioClip laserShot;
 
     public float distanceToPassToIdle;
+
+    public GameObject shadow;
 
     public override void FixedUpdate()
     {
