@@ -80,7 +80,7 @@ public class E11_FiringState : FiringState
                     AudioManager.Instance.GetAudioFromDictionaryIfPossible(laserAlarmKey.Value).pitch = 3;
                 }
             }
-        }, 1);
+        }, 1.4f);
 
         FunctionTimer.Create(() => {
             if (m_lineRenderer != null)
@@ -112,6 +112,7 @@ public class E11_FiringState : FiringState
             {
                 m_lineRenderer.material.SetFloat("_FlickerFreq", 0);
                 doLaserRedSound = true;
+                rotateFirePoint = false;
             }
         }, 5.5f);
 
@@ -122,7 +123,6 @@ public class E11_FiringState : FiringState
                 m_lineRenderer.material.SetColor("_Color", enemy.laserDamage);
                 m_lineRenderer.material.SetColor("_GlowColor", enemy.laserDamage);
                 m_lineRenderer.widthMultiplier = 3;
-                rotateFirePoint = false;
                 canApplyDamge = true;
                 if (laserAlarmKey.HasValue)
                 {
