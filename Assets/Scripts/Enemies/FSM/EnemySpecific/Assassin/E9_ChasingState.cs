@@ -61,7 +61,7 @@ public class E9_ChasingState : ChasingState
         }
         else
         {
-            if (entity.vectorToPlayer.magnitude >= enemy.enemyData.stopDistanceFromPlayer)
+            if (entity.vectorToPlayer.magnitude >= enemy.enemyData.stopDistanceFromPlayer && enemy.agent)
             {
                 enemy.agent.SetDestination(new Vector3(enemy.player.position.x, enemy.player.position.y, enemy.transform.position.z));
             }

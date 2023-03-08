@@ -55,6 +55,8 @@ MonoBehaviour:
   agent: {fileID: 0}
   sr: {fileID: 6475697247214181313}
   burnPrefab: {fileID: 3564664467013247471, guid: e4b5b15301115b443bd61b63bdc3487f, type: 3}
+  isAVariant: 1
+  colorChange: 197
   firePoint: {fileID: 6475697247988392218}
   enemyData: {fileID: 11400000, guid: 4645530e3ca29364aaaffb6a9b768c34, type: 2}
   blood: {fileID: 5131986925755455784, guid: 11d09c4b86434884c9d334ba4d7fe419, type: 3}
@@ -65,6 +67,7 @@ MonoBehaviour:
   firingStateData: {fileID: 11400000, guid: 8de1821512de6e54e8dd2300fe9152da, type: 2}
   enemyVariant: 0
   distanceToPassToIdle: 28
+  lastTimeFliped: 0
 --- !u!195 &6475697247202672696
 NavMeshAgent:
   m_ObjectHideFlags: 0
