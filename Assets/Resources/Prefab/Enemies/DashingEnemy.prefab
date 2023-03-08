@@ -79,11 +79,12 @@ MonoBehaviour:
   firePoint: {fileID: 5945361997779601342}
   enemyData: {fileID: 11400000, guid: e6fbccf10e1a89e45b89f86c47ea6af8, type: 2}
   blood: {fileID: 5131986925755455784, guid: 11d09c4b86434884c9d334ba4d7fe419, type: 3}
-  deadBlood: {fileID: 5131986925755455784, guid: 4fea703dcdeb5fa478ed5ad8e58fe837, type: 3}
+  deadBlood: {fileID: 3578897204085140966, guid: 4fea703dcdeb5fa478ed5ad8e58fe837, type: 3}
   chasingStateData: {fileID: 11400000, guid: 6675248e417476047a3119053d041940, type: 2}
   idleStateData: {fileID: 11400000, guid: bfb00c072249a204d97ae2503b86d2ec, type: 2}
   dashStateData: {fileID: 11400000, guid: 69d3d67d494c59046b601514a060770d, type: 2}
   deadStateData: {fileID: 11400000, guid: 7f06bce409c2848439336a9bb5fe4a0b, type: 2}
+  distanceToPassToIdle: 0
 --- !u!58 &6823037512772952567
 CircleCollider2D:
   m_ObjectHideFlags: 0

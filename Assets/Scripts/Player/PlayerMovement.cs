@@ -115,6 +115,10 @@ public class PlayerMovement : MonoBehaviour
     bool justRolled;
 
     public BlitController myBlit;
+
+    public bool disableDash;
+    public bool disableWeapons;
+
     private void Awake()
     {
         // GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
@@ -149,6 +153,17 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(disableWeapons && rotatePoint.activeSelf == true)
+        {
+            rotatePoint.SetActive(false);
+        }
+        else if(!disableWeapons && rotatePoint.activeSelf == false)
+        {
+            rotatePoint.SetActive(true);
+
+        }
+
         dir = rotatePoint.transform.position - firePoint.transform.position;
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         //Debug.Log(angle);
@@ -174,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
         weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
 
 
-        if ((Time.time - lastDash) >= timeBetweenDashes)
+        if (((Time.time - lastDash) >= timeBetweenDashes)&& !disableDash)
         {
             canDash = true;
         }
@@ -186,12 +201,12 @@ public class PlayerMovement : MonoBehaviour
         //dashController();
         if (remainingBlinks == 2)
         {
-            dashUI1.SetDashTimer(0);
+            //dashUI1.SetDashTimer(0);
             //currentBlinkRechargeTime += Time.deltaTime;
             //dashUI1.SetDashTimer(currentBlinkRechargeTime);
             if ((Time.time - lastDash) >= timeBetweenDashes)
             {
-                dashUI1.SetDashTimer(currentBlinkRechargeTime);
+                //dashUI1.SetDashTimer(currentBlinkRechargeTime);
                 currentBlinkRechargeTime += Time.deltaTime;
             }
             if (currentBlinkRechargeTime >= blinkRechargeTime)
@@ -202,13 +217,13 @@ public class PlayerMovement : MonoBehaviour
         }
         if (remainingBlinks == 1)
         {
-            dashUI2.SetDashTimer(0);
+            //dashUI2.SetDashTimer(0);
             //currentBlinkRechargeTime += Time.deltaTime;
             //dashUI1.SetDashTimer(currentBlinkRechargeTime);
             if ((Time.time - lastDash) >= timeBetweenDashes)
             {
                 currentBlinkRechargeTime2 += Time.deltaTime;
-                dashUI2.SetDashTimer(currentBlinkRechargeTime2);
+                //dashUI2.SetDashTimer(currentBlinkRechargeTime2);
             }
             if (currentBlinkRechargeTime2 >= blinkRechargeTime)
             {
@@ -218,13 +233,13 @@ public class PlayerMovement : MonoBehaviour
         }
         if (remainingBlinks == 0)
         {
-            dashUI3.SetDashTimer(0);
+            //dashUI3.SetDashTimer(0);
             //currentBlinkRechargeTime += Time.deltaTime;
             //dashUI1.SetDashTimer(currentBlinkRechargeTime);
             if ((Time.time - lastDash) >= timeBetweenDashes)
             {
                 currentBlinkRechargeTime3 += Time.deltaTime;
-                dashUI3.SetDashTimer(currentBlinkRechargeTime3);
+                //dashUI3.SetDashTimer(currentBlinkRechargeTime3);
             }
             if (currentBlinkRechargeTime3 >= blinkRechargeTime)
             {

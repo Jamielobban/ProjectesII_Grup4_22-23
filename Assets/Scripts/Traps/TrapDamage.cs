@@ -34,7 +34,7 @@ public class TrapDamage : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && check)
         {
 
-            collision.gameObject.SendMessage("GetDamage", 10);
+            collision.gameObject.SendMessage("GetDamage", 1);
             check = false;
             StartCoroutine(Delay(0.5f));
             if (!noEmpujar)

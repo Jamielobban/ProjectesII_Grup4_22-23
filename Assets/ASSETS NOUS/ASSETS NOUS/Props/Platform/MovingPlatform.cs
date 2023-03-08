@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    public GameObject[] points;
+    public List<GameObject>  points;
+    public float[] waitsTime;
     public float velocity;
     //Cuando llega al final vuelve al principio
     public bool loop;
     int nextPosition;
     bool direction;
-    public float waitTime;
     float currentWaitTime;
+
+    public float waitTime;
     // Start is called before the first frame update
     void Start()
     {
+
         currentWaitTime = Time.realtimeSinceStartup;
         nextPosition = 0;
         transform.position = points[nextPosition].transform.position;
@@ -27,12 +30,12 @@ public class MovingPlatform : MonoBehaviour
         {
             if (loop)
             {
-                nextPosition = (nextPosition + 1) % points.Length;
+                nextPosition = (nextPosition + 1) % points.Count;
                 currentWaitTime = Time.realtimeSinceStartup;
             }
             else
             {
-                if (direction && nextPosition + 1 == points.Length)
+                if (direction && nextPosition + 1 == points.Count)
                 {
                     direction = false;
                 }
@@ -50,11 +53,23 @@ public class MovingPlatform : MonoBehaviour
             }
         }
 
-        if (currentWaitTime + waitTime < Time.realtimeSinceStartup)
+        if(waitsTime.Length == 0)
         {
-            transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity);
+            if (currentWaitTime + waitTime < Time.realtimeSinceStartup)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity);
 
+            }
         }
+        else
+        {
+            if (currentWaitTime + waitsTime[nextPosition] < Time.realtimeSinceStartup)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity);
+
+            }
+        }
+  
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

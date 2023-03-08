@@ -30,7 +30,10 @@ public class barrilDestruible : MonoBehaviour
         {
             for (int i = 0; i < modelo.transform.childCount; i++)
             {
-                modelo.transform.GetChild(i).GetComponent<SpriteRenderer>().sortingOrder = layer;
+                if(modelo.transform.GetChild(i).GetComponent<SpriteRenderer>() != null)
+                {
+                    modelo.transform.GetChild(i).GetComponent<SpriteRenderer>().sortingOrder = layer;
+                }
             }
         }
         for (int i = 0; i < modelos.Length; i++)
@@ -67,7 +70,7 @@ public class barrilDestruible : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.CompareTag("Bullet") && !destruido)
+        if((collision.CompareTag("Bullet")|| collision.CompareTag("EnemyBullet")) && !destruido)
         {
             destroyModel();
         }
