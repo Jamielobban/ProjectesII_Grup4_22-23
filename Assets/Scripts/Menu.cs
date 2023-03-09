@@ -19,7 +19,16 @@ public class Menu : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene(1);
+        if(!(PlayerPrefs.GetInt("SalaPrincipal") != 0))
+        {
+            SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
+
+        }
+        else
+        {
+            SceneManager.LoadScene(2);
+
+        }
 
     }
 }
