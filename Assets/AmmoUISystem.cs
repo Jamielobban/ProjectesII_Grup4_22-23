@@ -22,10 +22,14 @@ public class AmmoUISystem : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        DrawAmmo();
-    }
+    {        
+        if(rightHand.weaponInHand != null)
+        {
+            DrawAmmo();
+        }
 
+    }
+    
 
     public void DrawAmmo()
     {
