@@ -21,6 +21,7 @@ public class Enemy10 : Entity
     private D_FiringState firingStateData;
 
     public float distanceToPassToIdle;
+    public GameObject venomSummon;
 
     public override void FixedUpdate()
     {

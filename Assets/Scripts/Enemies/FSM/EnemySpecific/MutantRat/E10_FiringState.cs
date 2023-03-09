@@ -78,5 +78,13 @@ public class E10_FiringState : FiringState
         bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.up * 8, ForceMode2D.Impulse);
 
         bullet.GetComponentInChildren<SpriteRenderer>().DOFade(0, 0.7f);
+
+        FunctionTimer.Create(() =>
+        {
+
+            GameObject summon = GameObject.Instantiate(enemy.venomSummon, enemy.player.transform);
+            summon.GetComponent<VenomSummonScript>().bullet = stateData.bulletType;
+
+        }, 0.8f);
     }
 }
