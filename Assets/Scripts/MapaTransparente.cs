@@ -36,7 +36,7 @@ public class MapaTransparente : MonoBehaviour
             }
             else
             {
-                this.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = layerAbajo;
+                this.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = layerArriba;
                 SpriteRenderer color = this.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
 
                 color.color = new Color(color.color.r, color.color.g, color.color.b, 0.5f);

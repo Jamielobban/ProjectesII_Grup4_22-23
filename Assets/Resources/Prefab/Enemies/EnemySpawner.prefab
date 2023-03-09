@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8990120376065898294}
+  - component: {fileID: 1602158541302279488}
   - component: {fileID: -6281430479799677975}
-  - component: {fileID: 7256223427142818424}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -33,6 +33,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1602158541302279488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4575900913035887074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ac2a60273fa99440b5367a0cfdb6090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyPrefab: {fileID: 8405310305926585271, guid: 5798b249a5df23b45a9469c46ef5ed71, type: 3}
+  Enemy: {fileID: 0}
+  enemySpawnSound: {fileID: 8300000, guid: 019df458c785cea4bb321fd5a8cb49bc, type: 3}
 --- !u!212 &-6281430479799677975
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -85,20 +100,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7256223427142818424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4575900913035887074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5999fbf9de6862941b8749250544a000, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyPrefab: {fileID: 0}
-  Enemy: {fileID: 0}
-  parent: {fileID: 0}
-  enemySpawnSound: {fileID: 8300000, guid: 019df458c785cea4bb321fd5a8cb49bc, type: 3}
-  spawnEnemyAtStart: 0

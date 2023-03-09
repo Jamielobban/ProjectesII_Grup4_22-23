@@ -4,38 +4,35 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    public List<GameObject>  points;
-    public float[] waitsTime;
+    public GameObject[] points;
     public float velocity;
     //Cuando llega al final vuelve al principio
     public bool loop;
-    public int nextPosition;
-    public bool direction;
-    float currentWaitTime;
-
+    int nextPosition;
+    bool direction;
     public float waitTime;
-    bool start;
+    float currentWaitTime;
     // Start is called before the first frame update
     void Start()
     {
-        start = true;
-        currentWaitTime = Time.time;
+        currentWaitTime = Time.realtimeSinceStartup;
+        nextPosition = 0;
         transform.position = points[nextPosition].transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(points[nextPosition].transform.position, transform.position) < 0.01f && !start)
+        if (Vector3.Distance(points[nextPosition].transform.position, transform.position) < 0.01f)
         {
             if (loop)
             {
-                nextPosition = (nextPosition + 1) % points.Count;
-                currentWaitTime = Time.time;
+                nextPosition = (nextPosition + 1) % points.Length;
+                currentWaitTime = Time.realtimeSinceStartup;
             }
             else
             {
-                if (direction && nextPosition + 1 == points.Count)
+                if (direction && nextPosition + 1 == points.Length)
                 {
                     direction = false;
                 }
@@ -48,58 +45,16 @@ public class MovingPlatform : MonoBehaviour
                     nextPosition++;
                 else
                     nextPosition--;
-                currentWaitTime = Time.time;
+                currentWaitTime = Time.realtimeSinceStartup;
 
             }
         }
 
-        if(start)
+        if (currentWaitTime + waitTime < Time.realtimeSinceStartup)
         {
-            if (waitsTime.Length == 0)
-            {
-                if (currentWaitTime + waitTime < Time.time)
-                {
-                    start = false;
-                }
-            }
-            else
-            {
-                int a;
-                if (direction)
-                    a = -1;
-                else
-                    a = 1;
+            transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity);
 
-                if (currentWaitTime + waitsTime[nextPosition+a] < Time.time)
-                {
-                    start = false;
-
-                }
-            }
         }
-
-        if(waitsTime.Length == 0)
-        {
-            if (currentWaitTime + waitTime < Time.time)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity*Time.deltaTime);
-
-            }
-        }
-        else
-        {
-            int a;
-            if (direction)
-                a = -1;
-            else
-                a = 1;
-            if (currentWaitTime + waitsTime[nextPosition+a] < Time.time)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
-
-            }
-        }
-  
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

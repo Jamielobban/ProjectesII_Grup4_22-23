@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+using TMPro;
 
 public class AmmoUISystem : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class AmmoUISystem : MonoBehaviour
     public GameObject ammoPrefab;
 
     public List<AmmoRifleImage> rifleAmmoArray = new List<AmmoRifleImage>();
+
+    public TMP_Text ammoCounter;
     //public HealthHeart[] heartArray;
     //public List<AmmoRifleImage> heartArray = new List<AmmoRifleImage>();
     //public HealthHeart[] emptyHeartArray;
@@ -22,20 +26,17 @@ public class AmmoUISystem : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {        
-        if(rightHand.weaponInHand != null)
-        {
-            DrawAmmo();
-        }
-
+    {
+        DrawAmmo();
     }
-    
+
 
     public void DrawAmmo()
     {
         ammoPrefab.GetComponent<AmmoRifleImage>().fullAmmo = rightHand.weaponInHand.GetFullSprite();
         ammoPrefab.GetComponent<AmmoRifleImage>().emptyAmmo = rightHand.weaponInHand.GetEmptySprite();
         ammoPrefab.GetComponent<AmmoRifleImage>().flashAmmo = rightHand.weaponInHand.GetFlashSprite();
+        ammoCounter.text = rightHand.weaponInHand.GetBulletsInMagazine().ToString();
         ClearAmmo();
 
         //Debug.Log("Update");
@@ -68,20 +69,23 @@ public class AmmoUISystem : MonoBehaviour
 
     public IEnumerator ReloadAmmo(float time)
     {
-
+        //rifleAmmoArray[0].SetAmmoImage(AmmoRifleImage.AmmoStatus.Empty);
+        //Debug.Log(rifleAmmoArray[0]);
         float timer = (time / (rightHand.weaponInHand.GetBulletsPerMagazine() + 1f));
-        Debug.Log(timer);
+        rifleAmmoArray[0].SetAmmoImage(AmmoRifleImage.AmmoStatus.Empty);
+        ammoCounter.text = 0.ToString();
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < rightHand.weaponInHand.GetBulletsPerMagazine(); i++)
         {
-            rifleAmmoArray[0].SetAmmoImage(AmmoRifleImage.AmmoStatus.Full);
             rifleAmmoArray[i].SetAmmoImage(AmmoRifleImage.AmmoStatus.Full);
-            yield return new WaitForSeconds(time / (rightHand.weaponInHand.GetBulletsPerMagazine()+1f));
+            ammoCounter.text = (i + 1).ToString();
+            yield return new WaitForSeconds(time / (rightHand.weaponInHand.GetBulletsPerMagazine() + 1.25f));
         }
 
         for (int i = rifleAmmoArray.Count - 1; i >= 0; i--)
         {
             rifleAmmoArray[i].transform.DOJump(rifleAmmoArray[i].transform.position, 10, 1, 0.3f, false);
-            yield return new WaitForSeconds(1f/(rightHand.weaponInHand.GetBulletsPerMagazine())-0.05f);
+            yield return new WaitForSeconds(1f / (rightHand.weaponInHand.GetBulletsPerMagazine()) - 0.05f);
         }
 
     }

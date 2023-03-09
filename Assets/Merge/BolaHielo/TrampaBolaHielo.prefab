@@ -40,23 +40,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 33572692072477630, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
       propertyPath: m_Name
-      value: TrampaBolaHielo
-      objectReference: {fileID: 0}
-    - target: {fileID: 3115774645119523413, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
-      propertyPath: m_Size.x
-      value: 3.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 3115774645119523413, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
-      propertyPath: m_Size.y
-      value: 3.84375
+      value: ArrowTrap Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3115774645119523413, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1974161862, guid: e64fe9da5a8d65a4694cd77517b44e5c, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 3115774645119523413, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
       propertyPath: m_WasSpriteAssigned
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5461245678498057436, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
       propertyPath: m_RootOrder
@@ -102,22 +94,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5825990491682077684, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7920462779416548284, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7920462779416548284, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7933259429502367556, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 4978fc08761b14d4bb5b2589c286c493, type: 2}
     m_RemovedComponents:
     - {fileID: 3934034854873626953, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
@@ -138,7 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c95256519253d046ac2de2528c8bdb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopSpawning: 0
   arrow: {fileID: 1776168864416848617, guid: bdf8cb3b51dd3a043b2b2e195492a228, type: 3}
   spawnPoint: {fileID: 7874112420758254538}
   end: {fileID: 5679183434240982707}
@@ -148,7 +123,7 @@ MonoBehaviour:
   arrowHit: {fileID: 8300000, guid: add2fa40453b9e34abb07033c0c5c84e, type: 3}
   time: 0.5
   force: -750
-  startTime: 0
+  stopSpawning: 0
 --- !u!4 &5679183434240982707 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7494148999962158971, guid: 38dbd448967f34b4db4be3094cfa3493, type: 3}
