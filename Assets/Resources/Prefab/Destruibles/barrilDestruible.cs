@@ -9,10 +9,12 @@ public class barrilDestruible : MonoBehaviour
     public GameObject modelo;
 
     public GameObject humo;
+    public GameObject hearth;
 
     bool destruido;
 
     public int layer;
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +62,11 @@ public class barrilDestruible : MonoBehaviour
         modelos[i].SetActive(true);
         humo.GetComponent<Animator>().SetTrigger("Open");
         destruido = true;
+
+        int rand = Random.RandomRange(0, 15);
+        if(rand == 0)
+            Instantiate(hearth, this.transform.position, Quaternion.identity, this.transform);
+
     }
 
     // Update is called once per frame
@@ -78,6 +85,13 @@ public class barrilDestruible : MonoBehaviour
 
     public void restart()
     {
+        for(int i = 0; i < this.transform.childCount; i++)
+        {
+            if(this.transform.GetChild(i).GetComponent<Curacion>() != null)
+            {
+                Destroy(this.transform.GetChild(i).gameObject);
+            }
+        }
         for(int i = 0; i < modelos.Length; i++)
         {
         modelos[i].SetActive(false);
