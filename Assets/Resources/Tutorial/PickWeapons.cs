@@ -16,7 +16,7 @@ public class PickWeapons : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        weapons.SetActive(true);
+        weapons.SetActive(false);
         end = false;
         button.SetActive(false);
     }
