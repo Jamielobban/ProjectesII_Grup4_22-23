@@ -45,18 +45,22 @@ public class E7_IdleState : IdleState
         }
         else
         {
-            Vector3 aux;            
-            aux.x = Mathf.Abs(enemy.transform.position.x - actualDestination.x);
-            aux.y = Mathf.Abs(enemy.transform.position.y - actualDestination.y);
-            aux.z = 0;
-            if (aux.x <= error.x && aux.y <= error.y)
+            if(enemy.idleTravelPoints.Length > 0)
             {
-                do { randomIndex = Random.Range(0, enemy.idleTravelPoints.Length); } while(randomIndex == actualIndex);
-                actualIndex = randomIndex;
-                actualDestination = enemy.idleTravelPoints[actualIndex];
-            }
+                Vector3 aux;
+                aux.x = Mathf.Abs(enemy.transform.position.x - actualDestination.x);
+                aux.y = Mathf.Abs(enemy.transform.position.y - actualDestination.y);
+                aux.z = 0;
+                if (aux.x <= error.x && aux.y <= error.y)
+                {
+                    do { randomIndex = Random.Range(0, enemy.idleTravelPoints.Length); } while (randomIndex == actualIndex);
+                    actualIndex = randomIndex;
+                    actualDestination = enemy.idleTravelPoints[actualIndex];
+                }
 
-            enemy.agent.SetDestination(actualDestination);
+                enemy.agent.SetDestination(actualDestination);
+            }
+            
         }
         
 

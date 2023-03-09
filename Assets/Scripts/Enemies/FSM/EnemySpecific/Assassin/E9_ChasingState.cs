@@ -85,6 +85,16 @@ public class E9_ChasingState : ChasingState
         
     }
 
+    public void DoStomp1()
+    {
+        AudioManager.Instance.LoadSound(stateData.Stomp1, enemy.transform);
+    }
+
+    public void DoStomp2()
+    {
+        AudioManager.Instance.LoadSound(stateData.Stomp2, enemy.transform);
+    }
+
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();

@@ -25,6 +25,9 @@ public class VenomSummonScript : MonoBehaviour
     [SerializeField]
     Vector4 clippingValues4;
 
+    public AudioClip moveSound;
+    public AudioClip circleSound;
+
     float startTime;
     float timePassed;
     float lastTimeSetDirection;
@@ -149,6 +152,7 @@ public class VenomSummonScript : MonoBehaviour
 
         if((Time.time - lastTimeSetDirection >= timeTravelling || lastTimeSetDirection == 0) && !stop)
         {
+            AudioManager.Instance.LoadSound(moveSound, this.transform);
             timeTravelling = Random.Range(0.3f, 0.7f);
             Vector3 aux = Random.insideUnitCircle * 3f;
             this.transform.DOLocalMove(aux, timeTravelling);
@@ -171,7 +175,7 @@ public class VenomSummonScript : MonoBehaviour
                 empty.transform.position = this.transform.position;
                 this.transform.parent = empty.transform;
 
-                this.transform.DOPunchScale(new Vector3(0.4f, 0.4f, 0.4f), 0.6f, 5);                
+                this.transform.DOPunchScale(new Vector3(0.4f, 0.4f, 0.4f), 0.6f, 5);    
 
                 sequenceImpactShader = DOTween.Sequence();
 
@@ -179,6 +183,8 @@ public class VenomSummonScript : MonoBehaviour
                 sequenceImpactShader.Join(veg2Mat.DOFloat(25, "_Glow", 0.3f));
                 sequenceImpactShader.Join(veg3Mat.DOFloat(25, "_Glow", 0.3f));
                 sequenceImpactShader.Join(veg4Mat.DOFloat(25, "_Glow", 0.3f));
+
+                AudioManager.Instance.LoadSound(circleSound, this.transform);
 
                 sequenceImpactShader.OnComplete(() =>
                 {

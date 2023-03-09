@@ -14,6 +14,11 @@ public class E10_DeadState : DeadState
     public override void Enter()
     {
         base.Enter();
+
+        if (probabilityOfHearth == 0)
+        {
+            Object.Instantiate(stateData.hearth, enemy.transform.position, Quaternion.identity);
+        }
     }
 
     public override void Exit()
@@ -29,5 +34,8 @@ public class E10_DeadState : DeadState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        //deadSoundKey = AudioManager.Instance.LoadSound(stateData.deadSound, enemy.transform.position);
+        GameObject deadParticles = GameObject.Instantiate(stateData.deadParticles, entity.transform.position, entity.transform.rotation);
+        GameObject.Destroy(enemy.gameObject);
     }
 }

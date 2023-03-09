@@ -9,6 +9,8 @@ public class E7_FiringState : FiringState
     float enterTime;
     GameObject bullet;
     bool spawningBall;
+    int? wolfHowlSound;
+
     public E7_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy7 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -67,6 +69,7 @@ public class E7_FiringState : FiringState
     public void AnimationStarted()
     {
         enemy.doingAttack = true;
+        wolfHowlSound = AudioManager.Instance.LoadSound(stateData.shootShound, enemy.transform);
     }
     public void AnimationEnded()
     {

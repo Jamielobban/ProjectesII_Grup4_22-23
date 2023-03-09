@@ -92,6 +92,7 @@ public class AudioManager : MonoBehaviour
         audioNameAndItsRange.Add("GotaSound", 7f);
         audioNameAndItsRange.Add("ArrowImpact", 2.5f);
         audioNameAndItsRange.Add("elevator", 1000f);
+        audioNameAndItsRange.Add("slashVerd",15);
         
     }
 

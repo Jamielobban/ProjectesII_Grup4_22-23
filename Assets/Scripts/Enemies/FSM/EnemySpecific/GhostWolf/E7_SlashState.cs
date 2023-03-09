@@ -6,6 +6,7 @@ using System.Linq;
 public class E7_SlashState : SlashState
 {
     Enemy7 enemy;
+    int? biteSound;
     public E7_SlashState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_SlashState stateData, Enemy7 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -54,6 +55,8 @@ public class E7_SlashState : SlashState
     public void AnimationStarted()
     {
         enemy.doingAttack = true;
+        biteSound = AudioManager.Instance.LoadSound(stateData.slashSound, enemy.transform);
+
     }
     public void AnimationEnded()
     {

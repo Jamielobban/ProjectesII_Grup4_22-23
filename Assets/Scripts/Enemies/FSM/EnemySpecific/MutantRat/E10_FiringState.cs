@@ -9,6 +9,7 @@ public class E10_FiringState : FiringState
     Enemy10 enemy;
     float lastTimeAttackExit;
     bool animationDone;
+    int? throwSoundKey;
     public E10_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy10 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -59,6 +60,8 @@ public class E10_FiringState : FiringState
     public void StartAnimation()
     {
         animationDone = false;
+
+        throwSoundKey = AudioManager.Instance.LoadSound(stateData.shootShound, enemy.transform.position, 0.2f);
     }
 
     public void EndAttack()
@@ -81,9 +84,10 @@ public class E10_FiringState : FiringState
 
         FunctionTimer.Create(() =>
         {
-
+            
             GameObject summon = GameObject.Instantiate(enemy.venomSummon, enemy.player.transform);
             summon.GetComponent<VenomSummonScript>().bullet = stateData.bulletType;
+                        
 
         }, 0.8f);
     }

@@ -23,6 +23,8 @@ public class Enemy10 : Entity
     public float distanceToPassToIdle;
     public GameObject venomSummon;
 
+    int? ratSounds;
+
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -41,6 +43,8 @@ public class Enemy10 : Entity
     public override void Start()
     {
         base.Start();
+
+        ratSounds = AudioManager.Instance.LoadSound(idleStateData.idleSounds, this.transform, 0, true);
 
         chasingState = new E10_ChasingState(this, stateMachine, "chase", chasingStateData, this);
         firingState = new E10_FiringState(this, stateMachine, "fire", firingStateData, this);

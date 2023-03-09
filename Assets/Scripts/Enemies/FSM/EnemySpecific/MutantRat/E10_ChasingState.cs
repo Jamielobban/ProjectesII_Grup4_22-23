@@ -6,6 +6,7 @@ using System.Linq;
 public class E10_ChasingState : ChasingState
 {
     Enemy10 enemy;
+    private int? followSoundKey;
     public E10_ChasingState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_ChaseState stateData, Enemy10 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -16,13 +17,14 @@ public class E10_ChasingState : ChasingState
         base.Enter();
 
         enemy.agent.enabled = true;
+        
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        enemy.agent.enabled = false;
+        enemy.agent.enabled = false;        
     }
 
     public override void LogicUpdate()
