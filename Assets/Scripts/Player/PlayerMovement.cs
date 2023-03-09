@@ -121,8 +121,13 @@ public class PlayerMovement : MonoBehaviour
     CheckpointsList list;
 
     public bool endTutorial;
+
+    public Vector3 lastPositionSave;
     private void Awake()
     {
+        StartCoroutine(guardarPosicion());
+
+        lastPositionSave = this.transform.position;
         endTutorial = false;
         healthUI.DrawHearts();
 
@@ -145,6 +150,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void Reaparecer()
     {
+        if (anim.GetBool("Fall"))
+        {
+            anim.SetBool("Return", true);
+            anim.SetBool("Fall", false);
+
+        }
+        this.transform.GetChild(3).gameObject.SetActive(true);
+
+        body.sortingOrder = 0;
         if (list.find)
         {
             list.restart();
@@ -152,7 +166,9 @@ public class PlayerMovement : MonoBehaviour
             healthUI.DrawHearts();
 
             this.transform.position = list.actualSpawn.position;
-
+            canMove = true;
+            disableDash = false;
+            disableWeapons = false;
         }
         else
         {
@@ -162,17 +178,45 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
+    private IEnumerator guardarPosicion()
+    {
+        yield return new WaitForSeconds(2f);
 
+        yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null));
+        lastPositionSave = this.transform.position;
+
+        StartCoroutine(guardarPosicion());
+    }
     public void SpawnSalaPrincipal()
     {
+        body.sortingOrder = 0;
+
         currentHearts = maxHearts;
         healthUI.DrawHearts();
         SceneManager.LoadScene(2);
 
     }
 
+    public void reaparecerCaida()
+    {
+        body.enabled = true;
+
+        canMove = true;
+        disableDash = false;
+        disableWeapons = false;
+        body.sortingOrder = 0;
+
+
+        this.transform.position = lastPositionSave;
+    }
     public void empezar()
     {
+
+        body.sortingOrder = 0;
+
+        canMove = true;
+        disableDash = false;
+        disableWeapons = false;
         currentHearts = maxHearts;
         healthUI.DrawHearts();
 
@@ -181,7 +225,13 @@ public class PlayerMovement : MonoBehaviour
     }
     public void reiniciar()
     {
+        body.enabled = true;
 
+        body.sortingOrder = 0;
+
+        canMove = true;
+        disableDash = false;
+        disableWeapons = false;
         currentHearts = maxHearts;
         healthUI.DrawHearts();
 
@@ -192,7 +242,7 @@ public class PlayerMovement : MonoBehaviour
         isDead = false;
         state = State.Normal;
         //currentHealth = maxHealth;
-        maxHearts = currentHearts;
+        currentHearts = maxHearts;
         rollSpeed = 90f;
         justRolled = false;
         backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true);
@@ -228,11 +278,11 @@ public class PlayerMovement : MonoBehaviour
             playerSprite.flipX = false;
         }
 
-        if (angle > 0 && angle < 180)
+        if ((angle > 0 && angle < 180)&&canMove)
         {
             playerSprite.sortingOrder = 0;
         }
-        else
+        else if(canMove)
         {
             playerSprite.sortingOrder = 1;
         }
@@ -396,7 +446,7 @@ public class PlayerMovement : MonoBehaviour
                     //{
                     //    weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
                     //}
-                    isDashing = false;
+                    //isDashing = false;
                     justRolled = true;
                     dashTimer2 = Time.time;
                     dashTime = dashTimer2 - dashTimer;
@@ -471,7 +521,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnRollingEffects()
     {
-        StartCoroutine(waitForLayerChange(0.45f));
+        StartCoroutine(waitForLayerChange(0.25f));
         gameObject.layer = LayerIgnoreRaycast;
         //transform.DOScale((new Vector3(0.9f, 0.7f, 1f)), 0.0f);
         //transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
@@ -582,9 +632,11 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         gameObject.layer = PlayerMask;
         fxAnim.SetBool("isDashingFX", false);
+        isDashing = false;
+
         //anim.SetBool("isDashing", false);
     }
-    
+
     private IEnumerator TakeLavaCoroutine(float time) {
         InvokeRepeating("TakeLavaDamage()", 0.5f, 1f);
         yield return new WaitForSeconds(time);

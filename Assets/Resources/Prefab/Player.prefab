@@ -100,13 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 6852020775407180378}
   sr: {fileID: 6852020773992823755}
-  powerUpTimer: {fileID: 0}
-  reloadBarTimer: {fileID: 0}
-  powerUpBar: {fileID: 0}
-  reloadBar: {fileID: 0}
-  bulletsInMagazine: {fileID: 0}
-  bulletsPerMagazine: {fileID: 0}
-  magazineNumber: {fileID: 0}
+  ammoUI: {fileID: 0}
   timeToPass: 0
   firstTime3: 1
   firstTime4: 1
@@ -223,7 +217,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 62a07459047e7cc438e0e54b42b56714, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -315,6 +309,8 @@ MonoBehaviour:
   knockbackMinimum: 0
   knockbackSet: 0
   maxHealth: 100
+  maxHearts: 9
+  currentHearts: 0
   currentHealth: 0
   isDead: 0
   dashUI1: {fileID: 0}
@@ -322,6 +318,7 @@ MonoBehaviour:
   dashUI3: {fileID: 0}
   isDashing: 0
   floorBlood: {fileID: 4891040840000462560, guid: 0fc2b21afbd510b4eb804ef24e729336, type: 3}
+  isInBlood: 0
   knockbackForceCheck: 0
   state: 0
   moveSpeed: 9.5
@@ -355,6 +352,12 @@ MonoBehaviour:
   currentBlinkRechargeTime2: 0
   currentBlinkRechargeTime3: 0
   remainingBlinks: 3
+  healthUI: {fileID: 0}
+  myBlit: {fileID: 0}
+  disableDash: 0
+  disableWeapons: 0
+  endTutorial: 0
+  lastPositionSave: {x: 0, y: 0, z: 0}
 --- !u!96 &6852020774505889635
 TrailRenderer:
   serializedVersion: 2

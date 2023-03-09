@@ -122,8 +122,19 @@ public class CheckPoints : MonoBehaviour
 
                 }
             }
-            else if (Input.GetButton("TeleportToBase") && !descansar)                 
+            else if (Input.GetButton("TeleportToBase") && !descansar)
             {
+                if (!encendido)
+                {
+
+                    encendido = true;
+                    PlayerPrefs.SetInt(nameSave, (encendido ? 1 : 0));
+                    velasApagadas.SetActive(false);
+                    velasEncendidas.SetActive(true);
+
+                }
+                SetSpawn();
+
                 player.SpawnSalaPrincipal();
             }
 
