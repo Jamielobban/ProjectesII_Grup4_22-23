@@ -117,16 +117,10 @@ public class PlayerMovement : MonoBehaviour
     public BlitController myBlit;
     private void Awake()
     {
-        // GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
-        //healthBar = Canvas.FindObjectOfType<HealthBar>();
         trail = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
         LayerIgnoreRaycast = LayerMask.NameToLayer("IgnoreEverything");
         PlayerMask = LayerMask.NameToLayer("Player");
-        //dashUI1.SetMaxDashTimer(blinkRechargeTime);
-        //dashUI2.SetMaxDashTimer(blinkRechargeTime);
-        //dashUI3.SetMaxDashTimer(blinkRechargeTime);
-        //healthBar.SetMaxHealth(maxHealth);
         playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
     }
@@ -386,7 +380,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isInvulnerable)
         {
-            currentHearts -= damage;
+            if(currentHearts > 0) { 
+                currentHearts -= damage;
+            }
+            else
+            {
+                currentHearts = 0;
+            }
             GameObject.Instantiate(floorBlood, this.transform.position, this.transform.rotation);
             damageSoundKey = AudioManager.Instance.LoadSound(damageSound, this.gameObject.transform);
             //healthBar.SetHealth(currentHealth);
@@ -410,19 +410,11 @@ public class PlayerMovement : MonoBehaviour
     {
         StartCoroutine(waitForLayerChange(0.45f));
         gameObject.layer = LayerIgnoreRaycast;
-        //transform.DOScale((new Vector3(0.9f, 0.7f, 1f)), 0.0f);
-        //transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
-        //body.DOColor(dashColor, 0.0f);
-        //for (int i = 0; i < weaponSprites.Length; i++)
-        //{
-        //    weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
-        //}
         trail.emitting = true;
     }
 
     public void GetDamage(int damage)
     {
-        //Debug.Log(damage);
         OnHit(damage);
         StartCoroutine(hurtAnimation());
 
@@ -440,68 +432,82 @@ public class PlayerMovement : MonoBehaviour
         healthUI.DrawHearts();
     }
 
-    private void OnHit(int damage)
+    public void OnHit(int damage)
     {
         TakeDamage(damage);
-        healthUI.DrawHearts();
 
         if (currentHearts <= 0)
         {
             isDead = true;
+            healthUI.DrawAllEmpty();
+            Debug.Log(currentHearts);
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            //Debug.Log("Dead");
+        }
+        else
+        {
+            healthUI.DrawHearts();
+            //Debug.Log("Still alive");
         }
     }
 
-    private IEnumerator hurtAnimation()
+    public IEnumerator hurtAnimation()
     {
-        isInvulnerable = true;
-
-        if (currentHearts % 2 == 0 && healthUI.emptyHeartArray != null)
+        if (!isDead)
         {
+            isInvulnerable = true;
+
+            if (currentHearts % 2 == 0 && healthUI.emptyHeartArray != null)
+            {
                 healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = true;
-                Debug.Log("Flashed right heart");
+                //Debug.Log("Flashed right heart");
+            }
+            else
+            {
+                healthUI.heartToChange.GetComponent<Animator>().enabled = true;
+                //Debug.Log("Flashed half heart");
+            }
+
+            //Debug.Log("Now invulnerable");
+            body.DOColor(hurtColor, 0.0f);
+            body.DOColor(invulnerableColor, 0.15f);
+
+            yield return new WaitForSeconds(0.20f);
+
+            if (currentHearts % 2 == 0)
+            {
+                healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = false;
+                healthUI.emptyHeartToFlash.SetHeartImage(healthUI.emptyHeartToFlash._emptyStatus);
+            }
+            else
+            {
+                healthUI.heartToChange.GetComponent<Animator>().enabled = false;
+                healthUI.heartToChange.SetHeartImage(healthUI.heartToChange._status);
+            }
+
+
+
+            body.DOColor(hurtColor, 0.0f);
+            body.DOColor(invulnerableColor, 0.15f);
+
+
+            yield return new WaitForSeconds(0.20f);
+
+
+            body.DOColor(hurtColor, 0.0f);
+            body.DOColor(invulnerableColor, 0.15f);
+
+            yield return new WaitForSeconds(0.20f);
+            body.DOColor(OriginalColor, 0.0f);
+
+
+            //Debug.Log("No longer invlunerable");
+            isInvulnerable = false;
         }
         else
         {
-            healthUI.heartToChange.GetComponent<Animator>().enabled = true;
-            Debug.Log("Flashed half heart");
+            yield break;
         }
-
-        //Debug.Log("Now invulnerable");
-        body.DOColor(hurtColor, 0.0f);
-        body.DOColor(invulnerableColor, 0.15f);
-
-        yield return new WaitForSeconds(0.20f);
-
-        if (currentHearts % 2 == 0)
-        {
-            healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = false;
-            healthUI.emptyHeartToFlash.SetHeartImage(healthUI.emptyHeartToFlash._emptyStatus);
-        }
-        else
-        {
-            healthUI.heartToChange.GetComponent<Animator>().enabled = false;
-            healthUI.heartToChange.SetHeartImage(healthUI.heartToChange._status);
-        }
-
-
-
-        body.DOColor(hurtColor, 0.0f);
-        body.DOColor(invulnerableColor, 0.15f);
-
-
-        yield return new WaitForSeconds(0.20f);
-
-
-        body.DOColor(hurtColor, 0.0f);
-        body.DOColor(invulnerableColor, 0.15f);
-
-        yield return new WaitForSeconds(0.20f);
-        body.DOColor(OriginalColor, 0.0f);
-
-       
-        //Debug.Log("No longer invlunerable");
-        isInvulnerable = false;
 
     }
 
