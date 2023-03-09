@@ -9,29 +9,29 @@ public class MovingPlatform : MonoBehaviour
     public float velocity;
     //Cuando llega al final vuelve al principio
     public bool loop;
-    int nextPosition;
-    bool direction;
+    public int nextPosition;
+    public bool direction;
     float currentWaitTime;
 
     public float waitTime;
+    bool start;
     // Start is called before the first frame update
     void Start()
     {
-
-        currentWaitTime = Time.realtimeSinceStartup;
-        nextPosition = 0;
+        start = true;
+        currentWaitTime = Time.time;
         transform.position = points[nextPosition].transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(points[nextPosition].transform.position, transform.position) < 0.01f)
+        if (Vector3.Distance(points[nextPosition].transform.position, transform.position) < 0.01f && !start)
         {
             if (loop)
             {
                 nextPosition = (nextPosition + 1) % points.Count;
-                currentWaitTime = Time.realtimeSinceStartup;
+                currentWaitTime = Time.time;
             }
             else
             {
@@ -48,24 +48,54 @@ public class MovingPlatform : MonoBehaviour
                     nextPosition++;
                 else
                     nextPosition--;
-                currentWaitTime = Time.realtimeSinceStartup;
+                currentWaitTime = Time.time;
 
+            }
+        }
+
+        if(start)
+        {
+            if (waitsTime.Length == 0)
+            {
+                if (currentWaitTime + waitTime < Time.time)
+                {
+                    start = false;
+                }
+            }
+            else
+            {
+                int a;
+                if (direction)
+                    a = -1;
+                else
+                    a = 1;
+
+                if (currentWaitTime + waitsTime[nextPosition+a] < Time.time)
+                {
+                    start = false;
+
+                }
             }
         }
 
         if(waitsTime.Length == 0)
         {
-            if (currentWaitTime + waitTime < Time.realtimeSinceStartup)
+            if (currentWaitTime + waitTime < Time.time)
             {
-                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity);
+                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity*Time.deltaTime);
 
             }
         }
         else
         {
-            if (currentWaitTime + waitsTime[nextPosition] < Time.realtimeSinceStartup)
+            int a;
+            if (direction)
+                a = -1;
+            else
+                a = 1;
+            if (currentWaitTime + waitsTime[nextPosition+a] < Time.time)
             {
-                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity);
+                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
 
             }
         }

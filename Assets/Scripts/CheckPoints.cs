@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CheckPoints : MonoBehaviour
 {
-    public string name;
     public Transform spawn;
 
     public GameObject velasEncendidas;
@@ -16,40 +16,81 @@ public class CheckPoints : MonoBehaviour
 
     public GameObject button;
 
-    public GameObject menu;
-    public GameObject menuButton;
 
-    public TextMeshProUGUI boton;
-    public TextMeshProUGUI nombre;
     PlayerMovement player;
+
+
+    CheckpointsList list;
+
+    bool descansar;
+    public int id;
+    public bool UnlockAtStart;
+    string nameSave; 
 
     // Start is called before the first frame update
     void Start()
     {
-        menuButton.transform.GetChild(1).GetChild(1).gameObject.GetComponent<Button>().onClick.AddListener(Spawn);
+        nameSave = "encendido" + id;
+        encendido = (PlayerPrefs.GetInt(nameSave) != 0);
 
+        if (UnlockAtStart&& !encendido)
+        {
+            PlayerPrefs.SetInt("IDCheckpoints", id);
+            PlayerPrefs.SetInt("IDScene", SceneManager.GetActiveScene().buildIndex);
+
+            encendido = true;
+            PlayerPrefs.SetInt(nameSave, (encendido ? 1 : 0));
+            descansar = true;
+            velasApagadas.SetActive(false);
+            velasEncendidas.SetActive(true);
+        }
+        else
+        {
+           
+            if (encendido)
+            {
+                descansar = false;
+                velasApagadas.SetActive(false);
+                velasEncendidas.SetActive(true);
+            }
+            else
+            {
+
+                descansar = false;
+                velasApagadas.SetActive(true);
+                velasEncendidas.SetActive(false);
+            }
+
+        }
         button.SetActive(false);
-        menu.SetActive(false);
-        velasApagadas.SetActive(true);
-        velasEncendidas.SetActive(false);
-        menuButton.SetActive(false);
 
-        boton.text = name;
-        nombre.text = name;
+        list = GameObject.FindGameObjectWithTag("CheckPoints").GetComponent<CheckpointsList>();
+
+
+
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
+    
     // Update is called once per frame
     void Update()
     {
         
+    }
+    private IEnumerator move()
+    {
+        yield return new WaitForSeconds(0.5f);
+        player.canMove = true;
+        descansar = false;
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
         {
+            if(!descansar)
             button.SetActive(true);
 
         }
@@ -58,27 +99,34 @@ public class CheckPoints : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (Input.GetButton("Interact"))
+            if (Input.GetButton("Interact") && !descansar)
             {
+                descansar = true;
+
                 button.SetActive(false);
 
-                menu.SetActive(true);
+                list.restart();
 
-                menu.GetComponent<MenuCheckPoints>().EnterMenu();
 
+                SetSpawn();
+
+                StartCoroutine(move());
+                player.canMove = false;
 
                 if (!encendido)
                 {
                     encendido = true;
+                    PlayerPrefs.SetInt(nameSave, (encendido ? 1 : 0));
                     velasApagadas.SetActive(false);
                     velasEncendidas.SetActive(true);
-                    menuButton.SetActive(true);
 
                 }
-
-                player.canMove = false;
-                player.actualSpawn = spawn;
             }
+            else if (Input.GetButton("TeleportToBase") && !descansar)                 
+            {
+                player.SpawnSalaPrincipal();
+            }
+
         }
     }
 
@@ -86,18 +134,19 @@ public class CheckPoints : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            descansar = false;
+
             button.SetActive(false);
 
         }
     }
 
-    void Spawn()
+    void SetSpawn()
     {
-        player.actualSpawn = spawn;
-        player.Spawn();
-        player.canMove = true;
-        menu.SetActive(false);
 
+        list.actualSpawn = spawn;
+        list.setId(id);
 
+        player.reiniciar();
     }
 }

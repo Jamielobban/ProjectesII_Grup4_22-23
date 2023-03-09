@@ -26,12 +26,13 @@ public class trampaSuelo : Trampas
     void Start()
     {
         getDamage.enabled = false;
+        StartCoroutine(Open(startTime));
+
     }
     public override void StartSpawning()
     {
         this.gameObject.transform.GetChild(0).GetComponent<Animator>().SetBool("Spawn", true);
 
-        StartCoroutine(Open(startTime));
 
     }
 
@@ -55,6 +56,7 @@ public class trampaSuelo : Trampas
     }
     private IEnumerator Open(float time)
     {
+
         yield return new WaitForSeconds(time);
 
         this.gameObject.transform.GetChild(0).GetComponent<Animator>().SetBool("Up", true);
@@ -72,6 +74,14 @@ public class trampaSuelo : Trampas
 
 
 
+
+       
+            StartCoroutine(Open(timeDown));
+        
+    }
+    // Update is called once per frame
+    void Update()
+    {
         if (stopSpawning)
         {
 
@@ -79,14 +89,5 @@ public class trampaSuelo : Trampas
 
             stopSpawning = false;
         }
-        else
-        { 
-            StartCoroutine(Open(timeDown));
-        }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

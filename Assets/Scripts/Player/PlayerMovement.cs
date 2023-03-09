@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -39,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
     public bool isDashing;
     public GameObject floorBlood;
 
-    public Transform actualSpawn;
     public bool isInBlood;
 
     public float knockbackForceCheck;
@@ -118,9 +118,17 @@ public class PlayerMovement : MonoBehaviour
 
     public bool disableDash;
     public bool disableWeapons;
+    CheckpointsList list;
 
+    public bool endTutorial;
     private void Awake()
     {
+        endTutorial = false;
+        healthUI.DrawHearts();
+
+        if(GameObject.FindGameObjectWithTag("CheckPoints") != null)
+        list = GameObject.FindGameObjectWithTag("CheckPoints").GetComponent<CheckpointsList>();
+
         // GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
         //healthBar = Canvas.FindObjectOfType<HealthBar>();
         trail = GetComponent<TrailRenderer>();
@@ -135,6 +143,49 @@ public class PlayerMovement : MonoBehaviour
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
     }
 
+    public void Reaparecer()
+    {
+        if (list.find)
+        {
+            list.restart();
+            currentHearts = maxHearts;
+            healthUI.DrawHearts();
+
+            this.transform.position = list.actualSpawn.position;
+
+        }
+        else
+        {
+            SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene"));
+
+        }
+
+
+    }
+
+    public void SpawnSalaPrincipal()
+    {
+        currentHearts = maxHearts;
+        healthUI.DrawHearts();
+        SceneManager.LoadScene(2);
+
+    }
+
+    public void empezar()
+    {
+        currentHearts = maxHearts;
+        healthUI.DrawHearts();
+
+        this.transform.position = list.actualSpawn.position;
+
+    }
+    public void reiniciar()
+    {
+
+        currentHearts = maxHearts;
+        healthUI.DrawHearts();
+
+    }
     public void Start()
     {
 
@@ -416,10 +467,7 @@ public class PlayerMovement : MonoBehaviour
             healthBar.SetHealth(currentHealth);
         }
     }
-    public void Spawn()
-    {
-        this.transform.position = actualSpawn.position;
-    }
+
 
     void OnRollingEffects()
     {

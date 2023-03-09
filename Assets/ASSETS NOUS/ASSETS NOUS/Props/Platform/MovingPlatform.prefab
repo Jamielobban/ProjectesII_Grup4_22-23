@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4061044220957000531}
   - component: {fileID: 8859411789599424485}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: -20
   m_Sprite: {fileID: -1344067939, guid: db5533ac016e63f4a9417ae47c2f4ced, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2283589719939303463}
   - component: {fileID: 7528064924421799769}
   - component: {fileID: 6946114211438846904}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MovingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,8 +135,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points: []
-  velocity: 0.05
+  waitsTime: []
+  velocity: 20
   loop: 0
+  nextPosition: 0
+  direction: 0
   waitTime: 1
 --- !u!61 &6946114211438846904
 BoxCollider2D:
@@ -175,7 +178,7 @@ GameObject:
   - component: {fileID: 1384749252550648049}
   - component: {fileID: 8344710972594047399}
   - component: {fileID: 11111634032415826}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GameObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +336,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1486780700411510966}
   - component: {fileID: 6710672860839762761}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2163999781399497242}
   - component: {fileID: 4883190604498025948}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -586,7 +589,7 @@ GameObject:
   - component: {fileID: 4470358714673455953}
   - component: {fileID: 4302016098785390268}
   - component: {fileID: 6556293624211646564}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
