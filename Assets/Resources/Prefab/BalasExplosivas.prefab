@@ -114,9 +114,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3592690956939338295}
+  - component: {fileID: 2025203107597609600}
   - component: {fileID: 2342637671788317161}
   - component: {fileID: 1207653315007249732}
-  - component: {fileID: 8228925850780304414}
   m_Layer: 12
   m_Name: BalasExplosivas
   m_TagString: Bullet
@@ -140,6 +140,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2025203107597609600
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8152819366165555573}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.11071861}
+  serializedVersion: 2
+  m_Radius: 0.20810544
 --- !u!50 &2342637671788317161
 Rigidbody2D:
   serializedVersion: 4
@@ -188,19 +204,3 @@ MonoBehaviour:
   bulletShell: {fileID: 1920896335013489960, guid: b0a43ff5dd387224fb552c2ae62ee735, type: 3}
   will: {fileID: 0}
   MuzzleFlash: {fileID: 5688211391314532309, guid: 798b55cd91047074fa54f02639656df0, type: 3}
---- !u!70 &8228925850780304414
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8152819366165555573}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
-  m_Direction: 0
