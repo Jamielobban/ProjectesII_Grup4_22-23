@@ -13,13 +13,10 @@ public class PickWeapons : MonoBehaviour
     public Mensajes conversacion;
 
     bool end;
-
-    public AmmoUISystem ammo;
-    public PlayerMovement player;
     // Start is called before the first frame update
     void Start()
     {
-        weapons.SetActive(false);
+        weapons.SetActive(true);
         end = false;
         button.SetActive(false);
     }
@@ -46,8 +43,7 @@ public class PickWeapons : MonoBehaviour
             if (Input.GetButton("Interact"))
             {
                 weapons.SetActive(true);
-                player.disableWeapons = false;
-                ammo.DrawAmmo();
+
                 end = true;
                 conversacion.conversation++;
                 button.SetActive(false);

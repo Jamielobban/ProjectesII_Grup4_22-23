@@ -163,7 +163,7 @@ public class RightHand : MonoBehaviour
     private void FixedUpdate()
     {
 
-        if (weaponInHand.shotFired)
+        if (weaponInHand.shotFired && !weaponInHand.GetReloadingState())
         {
             UpdateUIWeapons();
             //Debug.Log("Update in fixed");
@@ -180,24 +180,7 @@ public class RightHand : MonoBehaviour
         //timeEndShake = Time.time + 0.13f;
     }
 
-    //void ShootShake()
-    //{
-    //    //if(playerMat.GetFloat("_ShakeUvSpeed") == 0)
-    //    //{
-    //    //    playerMat.SetFloat("_ShakeUvSpeed", 20);
-    //    //}
-    //    //timeEndShake = Time.time + 0.13f;
-    //}
-
-
-    //private void EmptyAmmo()
-    //{
-    //    foreach (AmmoRifleImage image in ammoUI.rifleAmmoArray)
-    //    {
-    //        image.GetComponent<AmmoRifleImage>().SetAmmoImage(AmmoRifleImage.AmmoStatus.Empty);
-    //        //ammoUI.DrawAmmo();
-    //    }
-    //}
+ 
     public Color GetColor()
     {
         return weaponInHand.GetWeaponColor();

@@ -15,60 +15,49 @@ public class Log : Trampas
 
     public Transform spawnPoint;
     int logsNum;
-    bool a;
     // Start is called before the first frame update
     void Start()
     {
-        a = false;
         logsNum = 0;
-        StartCoroutine(animation(0f));
-
     }
     public override void StartSpawning()
     {
-        a = true;
+        StartCoroutine(animation(0f));
+
     }
     private IEnumerator animation(float time)
     {
-            yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(time);
+        logDoorKey = AudioManager.Instance.LoadSound(doorLogSound, this.transform, 0, false);
+        this.GetComponent<Animator>().SetTrigger("Triger");
 
-        if (a)
+        StartCoroutine(Spawn(0.6f));
+        if (stopSpawning)
         {
-            logDoorKey = AudioManager.Instance.LoadSound(doorLogSound, this.transform, 0, false);
-            this.GetComponent<Animator>().SetTrigger("Triger");
-
-             StartCoroutine(Spawn(0.6f));
-
+            stopSpawning = false;
         }
-
+        else
+        {
             StartCoroutine(animation(Random.Range(2.0f, 3.0f)));
-        
+        }
     }
 
     private IEnumerator Spawn(float time)
     {
-        if (a)
-        {
-            yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(time);
 
 
-            logs.Add(Instantiate(log, spawnPoint.position, spawnPoint.rotation) as GameObject);
-            logs[logsNum].GetComponent<Rigidbody2D>().AddForce(-transform.up * 500);
-            logs[logsNum].transform.SetParent(this.gameObject.transform.parent);
+        logs.Add(Instantiate(log, spawnPoint.position, spawnPoint.rotation) as GameObject);
+        logs[logsNum].GetComponent<Rigidbody2D>().AddForce(-transform.up*500);
+        logs[logsNum].transform.SetParent(this.gameObject.transform.parent);
 
-            logsNum++;
-        }
+        logsNum++;
+
     }
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if (stopSpawning)
-        {
-            a = false;
-            stopSpawning = false;
-        }
-
-        for (int i = 0; i < logsNum; i++)
+        for(int i = 0; i < logsNum; i++)
         {
             if(Vector3.Distance(logs[i].transform.position,end.position) < 0.1f)
             {
