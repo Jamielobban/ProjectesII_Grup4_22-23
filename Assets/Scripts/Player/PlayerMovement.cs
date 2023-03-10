@@ -241,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
         isDead = false;
         state = State.Normal;
         //currentHealth = maxHealth;
-        maxHearts = currentHearts;
+        currentHearts = maxHearts;
         rollSpeed = 90f;
         justRolled = false;
         backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true);
