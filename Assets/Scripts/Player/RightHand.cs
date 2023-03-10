@@ -8,7 +8,7 @@ using DG.Tweening;
 
 public class RightHand : MonoBehaviour
 {
-    public Weapon weaponInHand, nextWeapon;
+    public Weapon weaponInHand;
     [SerializeField] Transform firePoint;
     [SerializeField] SpriteRenderer sr;
 
@@ -24,17 +24,16 @@ public class RightHand : MonoBehaviour
     private bool firstTime = true;
     private bool firstTime1 = true;
     public bool firstTime3 = true;
-    public bool firstTime4 = true;
-
+    public bool firstTime4 = true;    
     public bool isCharing;
     public bool hasCharged;
     public bool isGoingDown;
-
     public Color reloadingColor;
     public Color fullChargeColor;
     public Color usePowerUpColor;
     Image powerUpBarColor;
-       
+
+    int index;
     float timeEndShake;
     bool weaponEquiped = false;
     enum PowerUpState { RELOADING, USING, FULL }; 
@@ -54,13 +53,7 @@ public class RightHand : MonoBehaviour
     {
         //Reload Bar
 
-        if(!stuffSetted && weaponEquiped)
-        {
-            _recoilSript = GetComponent<RecoilScript>();
-            weaponInHand.SetWeaponHand(ref sr);
-            UpdateUIWeapons();
-            stuffSetted = true;
-        }
+        
 
         if (weaponEquiped)
         {
@@ -79,12 +72,25 @@ public class RightHand : MonoBehaviour
                 }
             }
 
-            weaponInHand.Update();
+            //Debug.Log(weaponInHand.Update());
+            if(WeaponGenerator.Instance.SetWeapon(weaponInHand.Update(), ref weaponInHand, ref firePoint))
+            {
+                weaponInHand.SetWeaponHand(ref sr);
+                UpdateUIWeapons();
+            }
+
+            if (!stuffSetted && weaponEquiped)
+            {
+                _recoilSript = GetComponent<RecoilScript>();
+                weaponInHand.SetWeaponHand(ref sr);
+                UpdateUIWeapons();
+                stuffSetted = true;
+            }
 
             if (weaponInHand.GetIfOutOffAmmo())
             {
 
-                weaponInHand = nextWeapon;
+                
                 weaponInHand.SetWeaponHand(ref sr);
 
                 //nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon(firePoint);---------------------------
@@ -97,6 +103,7 @@ public class RightHand : MonoBehaviour
         
         
     }
+    
 
     private void FixedUpdate()
     {
@@ -121,8 +128,9 @@ public class RightHand : MonoBehaviour
         return weaponInHand;
     }
 
-    public void WeaponEquiped()
-    {
+    public void EquipWeapon(string weaponName)
+    {        
+        WeaponGenerator.Instance.EquipWeapon(weaponName, ref weaponInHand, ref firePoint);
         weaponEquiped = true;
     }
 }

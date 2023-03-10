@@ -34,7 +34,7 @@ public class Weapon
         player = GameObject.FindGameObjectWithTag("Player");
         firePoint = _firePoint;
         data = _data;
-        data.RestartValues();
+        //data.RestartValues();
         powerupPressed = Resources.Load<AudioClip>("Sounds/Powerup/powerupPressed");
         powerupEmpty = Resources.Load<AudioClip>("Sounds/Powerup/powerup0");
         powerupMax = Resources.Load<AudioClip>("Sounds/Powerup/powerupMax");
@@ -53,40 +53,22 @@ public class Weapon
         case MechanismTypes.FLOW:
                 weaponMechanism = new Flow();
             break;
-            default:
+        default:
             break;
         }
     }
 
 
-    public virtual void Update()
-    {        
-        
-        if (!data.powerActive.RuntimeValue)
-        {
-            if(data.powerupAvailable.RuntimeValue && firstEnter)
-            {
-                powerupMaxKey = AudioManager.Instance.LoadSound(powerupMax, player.transform);
-                firstEnter = false;
-            }
-            data.timePassed.RuntimeValue = Time.time - data.timelastPowerupExit.RuntimeValue;
-        }        
+    public virtual int Update()
+    {
+        CheckShooting();
 
-        if (data.powerActive.RuntimeValue)
-        {
-            data.timeLeftPowerup.RuntimeValue = data.maxTimeOnPowerup.RuntimeValue - (Time.time - data.timelastPowerupEnter.RuntimeValue);
-            firstEnter = true;
-        }        
-
-        InputsUpdate();
+        int returnValue = InputsUpdate();
 
         LogicUpdate();
 
-    }
-    public virtual bool FixedUpdate()
-    {
-        return CheckShooting();
-    }
+        return returnValue;
+    }    
     public float GetReloadTimeInSec()
     {
         return data.reloadTimeInSec.RuntimeValue;
@@ -187,7 +169,7 @@ public class Weapon
 
     
 
-    private void InputsUpdate()
+    private int InputsUpdate()
     {          
         if (Input.GetButtonDown("Reload") && data.bulletsInMagazine.RuntimeValue < data.bulletsInMagazine.InitialValue && !data.outOfAmmo.RuntimeValue && data.magazinesInWeapon.RuntimeValue > 0)
         {
@@ -201,13 +183,21 @@ public class Weapon
             }
            
         }
-        else if (Input.GetButtonDown("PassWeapon"))
+        else 
         {
-            data.outOfAmmo.RuntimeValue = true;
-            data.timePassed.RuntimeValue = 0;
+            float wheelValue = Input.mouseScrollDelta.y;
+            if(wheelValue > 0)
+            {
+                return 1;
+            }
+            if (wheelValue < 0)
+            {
+                return -1;
+            }
         }
 
-    }
+        return 0;
+    }     
 
     protected void LoadOrReloadWhenNeedIt()
     {

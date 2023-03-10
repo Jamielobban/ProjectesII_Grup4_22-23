@@ -16,7 +16,7 @@ public class WeaponGenerator : MonoBehaviour
 
 
 
-    int /*weaponInHandInt, nextWeaponInt,*/ weaponIndex;
+    int weaponIndex;
 
     //private int arrayPositionInHand;
     //private int arrayPositionOfNext;
@@ -41,13 +41,13 @@ public class WeaponGenerator : MonoBehaviour
     private void Start()
     {
         weaponIndex = 0;
-        weaponIndexOrder.Add(0);
+       // weaponIndexOrder.Add(3);
     }
     private void Update()
     {
-
+        //Debug.Log(weaponIndexOrder.Count);
     }
-    public void SetWeapon(int indexChange, ref Weapon weaponInHand, ref Transform firePoint)
+    public bool SetWeapon(int indexChange, ref Weapon weaponInHand, ref Transform firePoint)
     {
         switch (indexChange)
         {
@@ -64,7 +64,11 @@ public class WeaponGenerator : MonoBehaviour
             case 0:
                 if (!setFirstWeapon)
                 {
-                    return;
+                    return false;
+                }
+                else
+                {
+                    setFirstWeapon = false;
                 }
                 break;
             case 1:
@@ -78,15 +82,33 @@ public class WeaponGenerator : MonoBehaviour
                 }
                 break;            
             default:
-                return;
+                return false;
 
                 
         }
         
         weaponInHand = new Weapon(firePoint, weaponsValues[weaponIndexOrder[weaponIndex]]);
         setFirstWeapon = false;
+        return true;
     }
 
+    public void EquipWeapon(string weaponName, ref Weapon weaponInHand, ref Transform firePoint)
+    {        
+        for(int i = 0; i < weaponsValues.Length; i++)
+        {
+            //Debug.Log(weaponsValues[i].WeaponName);
+
+            if (weaponsValues[i].WeaponName == weaponName)
+            {               
+                weaponIndexOrder.Add(i);
+            }
+        }
+
+        if(weaponInHand == null)
+        {
+            this.SetWeapon(0, ref weaponInHand, ref firePoint);
+        }
+    }
     
 
     

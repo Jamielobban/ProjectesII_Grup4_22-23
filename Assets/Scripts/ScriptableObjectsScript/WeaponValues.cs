@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class WeaponValues : ScriptableObject
 {
-    
+    public string WeaponName;
     public MechanismTypes mechanismType;
 
     [Header("Parametrizable variables")]
