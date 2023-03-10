@@ -4,18 +4,30 @@ using UnityEngine;
 
 public class SpawnGusanos : EnemySpawn
 {
-    public List<Vector3> holesPositions = new List<Vector3>();
+    public List<Vector3> holesPositions;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+
+        spawn = this.GetComponent<Animator>();
+
         if (spawnEnemyAtStart)
         {
             SpawnAnimation();
         }
-        EnemyPrefab.GetComponent<Enemy3>().holesPositions = holesPositions;
     }
 
+    public override void SpawnEnemy()
+    {
+        Enemy = Instantiate(EnemyPrefab, transform.position, transform.rotation);
+        Enemy.GetComponent<Enemy3>().holesPositions = holesPositions;
+
+        if (!spawnEnemyAtStart)
+            Enemy.transform.parent = parent.transform;
+
+
+    }
     // Update is called once per frame
     void Update()
     {

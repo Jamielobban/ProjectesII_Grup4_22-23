@@ -11,7 +11,7 @@ public class EnemySpawn : MonoBehaviour
     public AudioClip enemySpawnSound;
     int? spawnSoundKey;
 
-    private Animator spawn;
+    protected Animator spawn;
 
     public bool spawnEnemyAtStart;
 
@@ -23,6 +23,8 @@ public class EnemySpawn : MonoBehaviour
             SpawnAnimation();
         }
     }
+
+
     private void Awake()
     {
 
@@ -30,7 +32,7 @@ public class EnemySpawn : MonoBehaviour
             parent = GameObject.FindGameObjectWithTag("EnemyList");
     }
 
-    public void SpawnEnemy()
+    public virtual void SpawnEnemy()
     {
         Enemy = Instantiate(EnemyPrefab, transform.position, transform.rotation);
         if (!spawnEnemyAtStart)

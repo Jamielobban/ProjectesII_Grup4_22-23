@@ -122,9 +122,11 @@ public class PlayerMovement : MonoBehaviour
 
     public bool endTutorial;
 
+    public bool restart;
     public Vector3 lastPositionSave;
     private void Awake()
     {
+        restart = false;
         StartCoroutine(guardarPosicion());
 
         lastPositionSave = this.transform.position;
@@ -157,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
         this.transform.GetChild(3).gameObject.SetActive(true);
-
+        isDead = false;
         body.sortingOrder = 0;
         if (list.find)
         {
@@ -200,7 +202,7 @@ public class PlayerMovement : MonoBehaviour
     public void reaparecerCaida()
     {
         body.enabled = true;
-
+        isDead = false;
         canMove = true;
         disableDash = false;
         disableWeapons = false;
@@ -213,7 +215,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
         body.sortingOrder = 0;
-
+        isDead = false;
         canMove = true;
         disableDash = false;
         disableWeapons = false;
@@ -225,6 +227,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void reiniciar()
     {
+        isDead = false;
         body.enabled = true;
 
         body.sortingOrder = 0;
@@ -544,8 +547,12 @@ public class PlayerMovement : MonoBehaviour
     public void GetDamage(int damage)
     {
         //Debug.Log(damage);
-        OnHit(damage);
-        StartCoroutine(hurtAnimation());
+        if(!isDead)
+        {
+            OnHit(damage);
+            StartCoroutine(hurtAnimation());
+        }
+
 
     }
 
@@ -566,10 +573,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentHearts <= 0)
         {
+            restart = true;
+
             isDead = true;
             healthUI.DrawAllEmpty();
             Debug.Log(currentHearts);
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            canMove = true;
+            disableDash = false;
+            disableWeapons = false;
+
             //Debug.Log("Dead");
         }
         else

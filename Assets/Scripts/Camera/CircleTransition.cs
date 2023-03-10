@@ -23,8 +23,9 @@ public class CircleTransition : MonoBehaviour
 
     private void Update()
     {
-        if (playerCheck.isDead)
+        if (playerCheckpoints.restart)
         {
+            playerCheckpoints.restart = false;
             CloseBlackScreen();
         }
         //else if (Input.GetKeyDown((KeyCode.Alpha2)))
@@ -114,19 +115,20 @@ public class CircleTransition : MonoBehaviour
 
     public void ResetCurrentScene()
     {
-        if(!playerCheckpoints.endTutorial)
-        {
-           playerCheckpoints.Reaparecer();
 
-        }
-        else
-        {
-            //Establecer el spawn al salir por primera vez de la sala principal
-            PlayerPrefs.SetInt("IDCheckpoints", 1);
-            PlayerPrefs.SetInt("IDScene", 3);
-            playerCheckpoints.SpawnSalaPrincipal();
-        }
+            if (!playerCheckpoints.endTutorial)
+            {
+                playerCheckpoints.Reaparecer();
 
+            }
+            else
+            {
+                //Establecer el spawn al salir por primera vez de la sala principal
+                PlayerPrefs.SetInt("IDCheckpoints", 1);
+                PlayerPrefs.SetInt("IDScene", 3);
+                playerCheckpoints.SpawnSalaPrincipal();
+            }
+        
 
     }
 }
