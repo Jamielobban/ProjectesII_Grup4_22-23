@@ -34,19 +34,19 @@ public class TrapDamage : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && check)
         {
 
-            collision.gameObject.SendMessage("GetDamage", 10);
+            collision.gameObject.SendMessage("GetDamage", 1);
             check = false;
             StartCoroutine(Delay(0.5f));
             if (!noEmpujar)
             {
                 if (directionUp)
                 {
-                    collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 4000, 0), ForceMode2D.Force);
+                    collision.gameObject.GetComponent<Rigidbody2D>().AddForce(this.transform.up*4000, ForceMode2D.Force);
 
                 }
                 else
                 {
-                    collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, -4000, 0), ForceMode2D.Force);
+                    collision.gameObject.GetComponent<Rigidbody2D>().AddForce(-this.transform.up * 4000, ForceMode2D.Force);
 
                 }
             }
