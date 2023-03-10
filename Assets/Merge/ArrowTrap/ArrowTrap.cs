@@ -29,7 +29,7 @@ public class ArrowTrap : Trampas
     void Start()
     {
         a = false;
-            StartCoroutine(shoot(startTime));
+        StartCoroutine(shoot(startTime));
 
 
 
@@ -38,8 +38,23 @@ public class ArrowTrap : Trampas
     {
         a = true;
 
-        
 
+
+    }
+    private IEnumerator anim()
+    {
+        yield return new WaitForSeconds(0.15f);
+        if (a)
+        {
+            arrowThrowKey = AudioManager.Instance.LoadSound(arrowThrow, this.transform, 0, false);
+            GameObject flecha = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
+
+            arrowAirKey = AudioManager.Instance.LoadSound(arrowAir, flecha.transform, 0, false);
+
+            flecha.GetComponent<Rigidbody2D>().AddForce(transform.up * -1500);
+            flecha.transform.SetParent(list.gameObject.transform);
+
+        }
     }
     private IEnumerator shoot(float time)
     {
@@ -53,18 +68,7 @@ public class ArrowTrap : Trampas
             this.gameObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Shoot");
         }
 
-            yield return new WaitForSeconds(0.15f);
-        if(a)
-        { 
-            arrowThrowKey = AudioManager.Instance.LoadSound(arrowThrow, this.transform, 0, false);
-            GameObject flecha = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
-
-            arrowAirKey = AudioManager.Instance.LoadSound(arrowAir, flecha.transform, 0, false);
-
-            flecha.GetComponent<Rigidbody2D>().AddForce(transform.up * -1500);
-            flecha.transform.SetParent(list.gameObject.transform);
-
-        }
+        StartCoroutine(anim());
 
         if (this.time == 0)
         {
