@@ -583,7 +583,8 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             healthUI.DrawHearts();
-            //Debug.Log("Still alive");
+            //healthUI.ShakeHeart(healthUI.heartToChange);
+            Debug.Log("Im hit");
         }
     }
 
@@ -594,12 +595,12 @@ public class PlayerMovement : MonoBehaviour
         if (currentHearts % 2 == 0 && healthUI.emptyHeartArray != null)
         {
                 healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = true;
-                Debug.Log("Flashed right heart");
+                //Debug.Log("Flashed right heart");
         }
         else
         {
             healthUI.heartToChange.GetComponent<Animator>().enabled = true;
-            Debug.Log("Flashed half heart");
+            //Debug.Log("Flashed half heart");
         }
 
         //Debug.Log("Now invulnerable");

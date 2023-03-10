@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 using System;
 
 public class HeartSystem : MonoBehaviour
@@ -29,7 +30,7 @@ public class HeartSystem : MonoBehaviour
     }
     public void DrawHearts()
     {
-        Debug.Log("draw");
+        //Debug.Log("draw");
         ClearHearts();
 
         float maxHealthRemainder = player.maxHearts % 2;
@@ -67,6 +68,8 @@ public class HeartSystem : MonoBehaviour
         }
 
         heartToChange = heartArray[heartArray.Count - 1];
+
+        Debug.Log(heartToChange.transform.position);
     }
 
     public void CreateEmptyHeart()
@@ -98,4 +101,11 @@ public class HeartSystem : MonoBehaviour
         }
     }
 
+
+    public void ShakeHeart(HealthHeart heart)
+    {
+        heart.transform.DOJump(heart.transform.position, 10, 1, 0.3f, false);
+        Debug.Log(heart.transform.position);
+
+    }
 }
