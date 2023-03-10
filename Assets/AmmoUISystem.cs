@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 
 public class AmmoUISystem : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class AmmoUISystem : MonoBehaviour
     public GameObject ammoPrefab;
 
     public List<AmmoRifleImage> rifleAmmoArray = new List<AmmoRifleImage>();
+
+
+
+
+    public TMP_Text ammoCounter;
+    public TMP_Text magazineCounter;
     //public HealthHeart[] heartArray;
     //public List<AmmoRifleImage> heartArray = new List<AmmoRifleImage>();
     //public HealthHeart[] emptyHeartArray;

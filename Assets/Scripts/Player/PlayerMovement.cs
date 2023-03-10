@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public bool knockbackSet;
 
 
-    public int maxHealth = 100;
+    //public int maxHealth = 100;
     public int maxHearts = 9;
     public int currentHearts;
     public float currentHealth;
@@ -124,6 +124,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool restart;
     public Vector3 lastPositionSave;
+
+    public bool isHit;
     private void Awake()
     {
         restart = false;
@@ -584,14 +586,15 @@ public class PlayerMovement : MonoBehaviour
         {
             healthUI.DrawHearts();
             //healthUI.ShakeHeart(healthUI.heartToChange);
-            Debug.Log("Im hit");
+            //Debug.Log("Im hit");
         }
     }
 
     private IEnumerator hurtAnimation()
     {
         isInvulnerable = true;
-
+        isHit = true;
+        //Debug.Log(isHit);
         if (currentHearts % 2 == 0 && healthUI.emptyHeartArray != null)
         {
                 healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = true;
@@ -638,7 +641,8 @@ public class PlayerMovement : MonoBehaviour
        
         //Debug.Log("No longer invlunerable");
         isInvulnerable = false;
-
+        isHit = false;
+        //Debug.Log(isHit);
     }
 
     private IEnumerator waitForUpdateDash(float time)

@@ -115,7 +115,7 @@ public class CircleTransition : MonoBehaviour
 
     public void ResetCurrentScene()
     {
-
+        
             if (!playerCheckpoints.endTutorial)
             {
                 playerCheckpoints.Reaparecer();
