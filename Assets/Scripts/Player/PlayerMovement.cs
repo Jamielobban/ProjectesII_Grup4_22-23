@@ -502,12 +502,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isInvulnerable)
         {
-            currentHearts -= damage;
+            if (currentHearts > 0)
+            {
+                currentHearts -= damage;
+            }
+            else
+            {
+                currentHearts = 0;
+            }
             GameObject.Instantiate(floorBlood, this.transform.position, this.transform.rotation);
             damageSoundKey = AudioManager.Instance.LoadSound(damageSound, this.gameObject.transform);
             //healthBar.SetHealth(currentHealth);
         }
     }
+
 
     public void TakeLavaDamage()
     {
@@ -552,16 +560,22 @@ public class PlayerMovement : MonoBehaviour
 
         healthUI.DrawHearts();
     }
-
-    private void OnHit(int damage)
+    public void OnHit(int damage)
     {
         TakeDamage(damage);
-        healthUI.DrawHearts();
 
         if (currentHearts <= 0)
         {
             isDead = true;
+            healthUI.DrawAllEmpty();
+            Debug.Log(currentHearts);
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            //Debug.Log("Dead");
+        }
+        else
+        {
+            healthUI.DrawHearts();
+            //Debug.Log("Still alive");
         }
     }
 
