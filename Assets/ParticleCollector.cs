@@ -17,12 +17,17 @@ public class ParticleCollector : MonoBehaviour
 
     ParticleSystem.LimitVelocityOverLifetimeModule limitVelocityOverLifetime;
 
+    ParticleSystem.TriggerModule triggersBox;
+    public BoxCollider2D boxToCollide;
+
     private void Start()
     {
-        myRb = GetComponent<CircleCollider2D>();
         ps = GetComponent<ParticleSystem>();
+        boxToCollide = GameObject.FindGameObjectWithTag("ParticleCollector").GetComponent<BoxCollider2D>();
+        myRb = GetComponent<CircleCollider2D>();
         potions = FindObjectOfType<PotionSystem>();
         limitVelocityOverLifetime = ps.limitVelocityOverLifetime;
+        triggersBox = ps.trigger;
         //PlayerMask = LayerMask.NameToLayer("Player");
     }
 
@@ -60,6 +65,7 @@ public class ParticleCollector : MonoBehaviour
         {
             // Debug.Log("Hitting the player");
             ps.externalForces.AddInfluence(forceField);
+            triggersBox.AddCollider(boxToCollide);
             //ps.velocityOverLifetime.enabled = false;
             limitVelocityOverLifetime.dampen = 0;
             limitVelocityOverLifetime.drag = 0;

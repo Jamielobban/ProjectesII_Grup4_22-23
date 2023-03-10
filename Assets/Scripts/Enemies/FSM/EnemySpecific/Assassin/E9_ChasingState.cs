@@ -61,7 +61,7 @@ public class E9_ChasingState : ChasingState
         }
         else
         {
-            if (entity.vectorToPlayer.magnitude >= enemy.enemyData.stopDistanceFromPlayer)
+            if (entity.vectorToPlayer.magnitude >= enemy.enemyData.stopDistanceFromPlayer && enemy.agent)
             {
                 enemy.agent.SetDestination(new Vector3(enemy.player.position.x, enemy.player.position.y, enemy.transform.position.z));
             }
@@ -83,6 +83,16 @@ public class E9_ChasingState : ChasingState
     public void StartAnimation()
     {
         
+    }
+
+    public void DoStomp1()
+    {
+        AudioManager.Instance.LoadSound(stateData.Stomp1, enemy.transform);
+    }
+
+    public void DoStomp2()
+    {
+        AudioManager.Instance.LoadSound(stateData.Stomp2, enemy.transform);
     }
 
     public override void PhysicsUpdate()

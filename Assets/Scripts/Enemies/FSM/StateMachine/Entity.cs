@@ -22,7 +22,11 @@ public abstract class Entity : MonoBehaviour
 	[SerializeField]
 	protected SpriteRenderer sr;	
 	[SerializeField]
-	protected GameObject burnPrefab;	
+	protected GameObject burnPrefab;
+	[SerializeField]
+	bool isAVariant = false;
+	[SerializeField]
+	float colorChange = 0;
 	protected GameObject burnFireShader;
 	protected float enemyHealth;
 	public Transform firePoint;
@@ -213,7 +217,7 @@ public abstract class Entity : MonoBehaviour
 	}
 
 	void ImpactBullet(Vector3 bulletPosition, TransformMovementType type)
-    {
+	{
 		if (sequenceImpactShader.IsPlaying())
 		{
 			//Debug.Log("isPlaying");
@@ -231,22 +235,26 @@ public abstract class Entity : MonoBehaviour
 		sr.material.SetFloat("_HitEffectBlend", 0);
 		sr.material.SetColor("_HitEffectColor", new Color(1, 0.99806f, 0.93816f, 1));
 		sr.material.SetFloat("_PinchUvAmount", 0);
+		if (isAVariant)
+		{
+			sr.material.SetFloat("_HsvShift", 0);
+		}
 
 		if ((shaker == null || !shaker.IsPlaying()) && type != TransformMovementType.NOTHING)
 		{
 			Vector3 direction = bulletPosition - transform.position;
 			direction = direction.normalized;
-			
-			if(type == TransformMovementType.PUNCH)
-            {
+
+			if (type == TransformMovementType.PUNCH)
+			{
 				shaker = transform.DOPunchPosition(-direction * 2, 0.2f, 0, 1, false);
 			}
-			else if(type == TransformMovementType.SHAKE)
-            {
+			else if (type == TransformMovementType.SHAKE)
+			{
 				shaker = transform.DOShakePosition(0.2f, 0.5f, 10, 45, false, true, ShakeRandomnessMode.Harmonic);
 			}
-			else if(type == TransformMovementType.JUMP)
-            {
+			else if (type == TransformMovementType.JUMP)
+			{
 				shaker = transform.DOJump(transform.position, 0.5f, 1, 0.2f, false);
 			}
 
@@ -280,8 +288,17 @@ public abstract class Entity : MonoBehaviour
 			sequenceImpactShader.Join(sr.material.DOColor(new Color(1, 1, 0.34434f, 1), "_HitEffectColor", 0.2f));
 			sequenceImpactShader.Join(sr.material.DOFloat(0, "_PinchUvAmount", 0.2f));
 			sequenceImpactShader.Join(sr.material.DOFloat(originalGlowValue, "_Glow", 0.2f));
-		});
-	}
+			FunctionTimer.Create(() =>
+			{
+				if(this.transform != null && isAVariant && sr.material.GetFloat("_ChromAberrAmount") == 0)
+                {
+					sr.material.SetFloat("_HsvShift", colorChange);
+                }
+			}, 0.2f);
+		});	
+
+
+	}  
 
 	void UpdateNewHeealthState(HealthStateTypes damageType)
     {

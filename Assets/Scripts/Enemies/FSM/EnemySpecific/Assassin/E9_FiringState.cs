@@ -75,6 +75,7 @@ public class E9_FiringState : FiringState
 
             //enemy.player.position + (-enemy.vectorToPlayer.normalized * 6)
             enemy.transform.DOMove(enemy.transform.position + (enemy.vectorToPlayer.normalized * 5), 0.5f);
+            AudioManager.Instance.LoadSound(stateData.shootShound, enemy.transform);
         }
         
     }
@@ -84,6 +85,8 @@ public class E9_FiringState : FiringState
         if (enemy.enemyVariant)
         {
             GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position, enemy.GetComponent<Entity>().GetFirePointTransform().rotation);
+
+            AudioManager.Instance.LoadSound(stateData.attackSounds, enemy.transform);
 
             //fireSoundKey = AudioManager.Instance.LoadSound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);
             Quaternion aux2 = bullet.GetComponent<Transform>().rotation;
@@ -110,6 +113,9 @@ public class E9_FiringState : FiringState
         else
         {
             GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position, enemy.GetComponent<Entity>().GetFirePointTransform().rotation);
+
+            AudioManager.Instance.LoadSound(stateData.attackSounds2, enemy.transform);
+
 
             bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponentInChildren<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
 
@@ -166,5 +172,15 @@ public class E9_FiringState : FiringState
 
         //enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.player.position, enemy.enemyData.speed * Time.fixedDeltaTime);
         
+    }
+
+    public void DoStomp1()
+    {
+
+    }
+
+    public void DoStomp2()
+    {
+
     }
 }

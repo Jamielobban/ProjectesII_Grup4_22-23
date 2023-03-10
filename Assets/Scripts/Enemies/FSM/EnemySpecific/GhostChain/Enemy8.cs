@@ -17,6 +17,7 @@ public class Enemy8 : Entity
     private D_SlashState slashStateData;
 
     public bool inRange;
+    int? cryingSounds;
 
     public override void FixedUpdate()
     {
@@ -43,6 +44,8 @@ public class Enemy8 : Entity
 
         stateMachine.Initialize(chasingState);
 
+        cryingSounds = AudioManager.Instance.LoadSound(chasingStateData.followSounds, this.transform, 0, true);
+
         agent.speed = enemyData.speed;
     }
 
@@ -53,7 +56,7 @@ public class Enemy8 : Entity
         if (isDead && stateMachine.currentState != deadState)
         {
             stateMachine.ChangeState(deadState);
-        }        
+        }
         
     }
     protected override void GetDamage(float damageHit)

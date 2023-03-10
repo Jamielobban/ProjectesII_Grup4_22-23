@@ -8,6 +8,7 @@ public class E8_SlashState : SlashState
     Enemy8 enemy;
     public bool doingAttack;
     float lastAttackTime;
+    int? chainsSounds;
     public E8_SlashState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_SlashState stateData, Enemy8 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;       
@@ -43,6 +44,7 @@ public class E8_SlashState : SlashState
     public void StartAttack()
     {
         enemy.transform.DOPunchPosition(enemy.vectorToPlayer.normalized * 5, 1, 2);
+        chainsSounds = AudioManager.Instance.LoadSound(stateData.slashSound, enemy.transform);
 
         FunctionTimer.Create(() =>
         {

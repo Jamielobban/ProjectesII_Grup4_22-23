@@ -95,6 +95,15 @@ public class E9_IdleState : IdleState
 
     }
 
+    public void DoStomp1()
+    {
+
+    }
+
+    public void DoStomp2()
+    {
+
+    }
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();

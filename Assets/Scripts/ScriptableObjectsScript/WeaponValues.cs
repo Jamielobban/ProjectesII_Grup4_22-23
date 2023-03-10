@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu]
 public class WeaponValues : ScriptableObject
 {
+    public string WeaponName;
+    public MechanismTypes mechanismType;
+
     [Header("Parametrizable variables")]
     public AudioClip shootSound;    
     public AudioClip reloadSound;    

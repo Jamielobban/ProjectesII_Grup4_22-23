@@ -22,7 +22,11 @@ public class E7_IdleState : IdleState
         enemy.agent.enabled = true;
 
         actualIndex = Random.Range(0, enemy.idleTravelPoints.Length);
-        actualDestination = enemy.idleTravelPoints[actualIndex];
+        if(enemy.idleTravelPoints.Length > 0)
+        {
+
+            actualDestination = enemy.idleTravelPoints[actualIndex];
+        }
 
         error = new Vector3(0.1f, 0.1f, 0);
     }
@@ -45,18 +49,22 @@ public class E7_IdleState : IdleState
         }
         else
         {
-            Vector3 aux;            
-            aux.x = Mathf.Abs(enemy.transform.position.x - actualDestination.x);
-            aux.y = Mathf.Abs(enemy.transform.position.y - actualDestination.y);
-            aux.z = 0;
-            if (aux.x <= error.x && aux.y <= error.y)
+            if(enemy.idleTravelPoints.Length > 0)
             {
-                do { randomIndex = Random.Range(0, enemy.idleTravelPoints.Length); } while(randomIndex == actualIndex);
-                actualIndex = randomIndex;
-                actualDestination = enemy.idleTravelPoints[actualIndex];
-            }
+                Vector3 aux;
+                aux.x = Mathf.Abs(enemy.transform.position.x - actualDestination.x);
+                aux.y = Mathf.Abs(enemy.transform.position.y - actualDestination.y);
+                aux.z = 0;
+                if (aux.x <= error.x && aux.y <= error.y)
+                {
+                    do { randomIndex = Random.Range(0, enemy.idleTravelPoints.Length); } while (randomIndex == actualIndex);
+                    actualIndex = randomIndex;
+                    actualDestination = enemy.idleTravelPoints[actualIndex];
+                }
 
-            enemy.agent.SetDestination(actualDestination);
+                enemy.agent.SetDestination(actualDestination);
+            }
+            
         }
         
 
