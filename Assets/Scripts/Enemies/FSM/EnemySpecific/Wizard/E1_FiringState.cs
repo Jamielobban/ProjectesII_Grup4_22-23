@@ -180,10 +180,10 @@ public class E1_FiringState : FiringState
     }
     public void ShootLoop()
     {
-        Debug.Log("In1");
+        //Debug.Log("In1");
         if (enemy.GetVariant() != Enemy1Variants.BIGFATMAN)
         {
-            Debug.Log("In2");
+            //Debug.Log("In2");
 
 
             float waitTime = 0;

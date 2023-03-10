@@ -41,11 +41,6 @@ public class Palanca : MonoBehaviour
 
         }
     }
-
-    public virtual void Action()
-    {
-
-    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && !puertaAbierta && canOpen)
@@ -73,7 +68,7 @@ public class Palanca : MonoBehaviour
                 puertaAbierta = true;
                 button.SetActive(false);
                 this.gameObject.transform.GetChild(0).gameObject.GetComponent<Animator>().SetTrigger("Open");
-                Action();
+
             }
 
             if (isPressed)
@@ -83,7 +78,6 @@ public class Palanca : MonoBehaviour
             }
         }
     }
-
     private IEnumerator open(float time)
     {
         yield return new WaitForSeconds(time);
