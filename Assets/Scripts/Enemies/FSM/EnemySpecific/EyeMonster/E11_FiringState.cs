@@ -13,7 +13,7 @@ public class E11_FiringState : FiringState
     private float defDistanceRay = 100;
     LineRenderer m_lineRenderer;
 
-    const float widthX = 0.2f;//0.104f
+    const float widthX = 0.35f;//0.104f
     bool rotateFirePoint = true;
 
     bool canApplyDamge = false;
