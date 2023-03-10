@@ -24,6 +24,7 @@ public class ParticleCollector : MonoBehaviour
     {
         ps = GetComponent<ParticleSystem>();
         boxToCollide = GameObject.FindGameObjectWithTag("ParticleCollector").GetComponent<BoxCollider2D>();
+        forceField = GameObject.FindGameObjectWithTag("ParticleForce").GetComponent<ParticleSystemForceField>();
         myRb = GetComponent<CircleCollider2D>();
         potions = FindObjectOfType<PotionSystem>();
         limitVelocityOverLifetime = ps.limitVelocityOverLifetime;

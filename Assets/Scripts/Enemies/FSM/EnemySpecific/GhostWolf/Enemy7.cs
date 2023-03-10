@@ -137,7 +137,7 @@ public class Enemy7 : Entity
             }
 
         }
-        Debug.Log(doingAttack);
+        //Debug.Log(doingAttack);
         //if(!isDead && !doingAttack && stateMachine.currentState != slashState && vectorToPlayer.magnitude <= 3 && (player.position.x >= transform.position.x + 2 || transform.position.x >= player.position.x + 2))
         //{
         //    stateMachine.ChangeState(slashState);

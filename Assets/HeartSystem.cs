@@ -29,7 +29,7 @@ public class HeartSystem : MonoBehaviour
     }
     public void DrawHearts()
     {
-        Debug.Log("draw");
+        //Debug.Log("draw");
         ClearHearts();
 
         float maxHealthRemainder = player.maxHearts % 2;

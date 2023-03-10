@@ -27,6 +27,7 @@ public class Caida : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         player.reaparecerCaida();
+        if(sombra != null)
         sombra.transform.GetChild(3).gameObject.SetActive(true);
 
 

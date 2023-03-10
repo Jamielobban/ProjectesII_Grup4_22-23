@@ -21,7 +21,11 @@ public class ChangeTexture : MonoBehaviour
 
     public void SetTexture(int arrayTexturePosition)
     {
-        sr.material.SetTexture("_GlowTex", arrayTextures[arrayTexturePosition]);
+        if(sr != null)
+        {
+            sr.material.SetTexture("_GlowTex", arrayTextures[arrayTexturePosition]);
+        }
+
         //Debug.Log(arrayTexturePosition);
     }
 }

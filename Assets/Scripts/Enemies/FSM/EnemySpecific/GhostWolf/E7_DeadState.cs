@@ -17,8 +17,9 @@ public class E7_DeadState : DeadState
 
         if (probabilityOfHearth == 0)
         {
-            Object.Instantiate(stateData.hearth, enemy.transform.position, Quaternion.identity);
+            Object.Instantiate(stateData.bullets, enemy.transform.position, Quaternion.identity);
         }
+        Object.Instantiate(stateData.orbes, enemy.transform.position, Quaternion.identity);
     }
 
     public override void Exit()

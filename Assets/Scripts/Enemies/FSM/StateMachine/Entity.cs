@@ -290,9 +290,18 @@ public abstract class Entity : MonoBehaviour
 			sequenceImpactShader.Join(sr.material.DOFloat(originalGlowValue, "_Glow", 0.2f));
 			FunctionTimer.Create(() =>
 			{
-				if(this.transform != null && isAVariant && sr.material.GetFloat("_ChromAberrAmount") == 0)
+				if( this != null)
                 {
-					sr.material.SetFloat("_HsvShift", colorChange);
+					if(sr.transform != null)
+                    {
+						if (isAVariant) 
+						{
+							if (sr.material.GetFloat("_ChromAberrAmount") == 0)
+							{
+								sr.material.SetFloat("_HsvShift", colorChange);
+							}
+						}
+                    }
                 }
 			}, 0.2f);
 		});	

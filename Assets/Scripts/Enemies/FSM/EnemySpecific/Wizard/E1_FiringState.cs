@@ -189,8 +189,19 @@ public class E1_FiringState : FiringState
             float waitTime = 0;
             for (int j = 0; j < stateData.numberOfBursts; j++, waitTime += 0.2f)
             {
-                FunctionTimer.Create(FireProjectile, waitTime);
-                FunctionTimer.Create(() => { if (!enemy.GetIfIsDead()) enemy.anim.SetBool("waitingTimeAttack", true); }, waitTime + 0.2f);
+                FunctionTimer.Create(() =>
+                {
+                    if(enemy != null && !enemy.GetIfIsDead())
+                    {
+                        FireProjectile();
+                    }
+                }, waitTime);
+                FunctionTimer.Create(() => {
+                    if (enemy != null && !enemy.GetIfIsDead())
+                    {
+                        enemy.anim.SetBool("waitingTimeAttack", true);
+                    }
+                }, waitTime + 0.2f);
             }
         }
         //else

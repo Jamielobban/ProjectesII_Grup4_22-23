@@ -140,9 +140,10 @@ public class RoomManager : MonoBehaviour
     private IEnumerator SetEnemy(float time, EnemySpawn spawn)
     {
         yield return new WaitForSeconds(time);
-        spawn.Enemy.transform.SetParent(roomEnemies.transform);
-
-
+        if(spawn.Enemy != null && spawn.Enemy.transform != null && roomEnemies.transform != null)
+        {
+            spawn.Enemy.transform.SetParent(roomEnemies.transform);
+        }
     }
     void endRoom()
     {

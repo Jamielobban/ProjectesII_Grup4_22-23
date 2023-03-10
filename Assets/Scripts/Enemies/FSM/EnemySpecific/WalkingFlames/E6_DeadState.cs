@@ -34,8 +34,9 @@ public class E6_DeadState : DeadState
             GameObject explosion = GameObject.Instantiate(enemy.explosion, enemy.transform.position, Quaternion.identity);
             if (probabilityOfHearth == 0)
             {
-                Object.Instantiate(stateData.hearth, enemy.transform.position, Quaternion.identity);
+                Object.Instantiate(stateData.bullets, enemy.transform.position, Quaternion.identity);
             }
+            Object.Instantiate(stateData.orbes, enemy.transform.position, Quaternion.identity);
 
             GameObject.Destroy(enemy.gameObject);
 
