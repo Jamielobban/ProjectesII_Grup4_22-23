@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInside: 0
-  enemyNumber: 0
+  isEnemy4: 0
 --- !u!1 &434303112401957437
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +210,11 @@ MonoBehaviour:
   deadStateData: {fileID: 11400000, guid: c1a63cf6a29a1c040879ed320781c775, type: 2}
   idleStateData: {fileID: 11400000, guid: c11b2a9e8e79ddc40823f47c716963b7, type: 2}
   slashStateData: {fileID: 11400000, guid: b6a6875cf81ed4b47bb82f8848dc933e, type: 2}
-  idleTravelPoints: []
+  idleTravelPoints:
+  - {x: 5, y: 3, z: 0}
+  - {x: 5, y: -3, z: 0}
+  - {x: -1.5, y: 0, z: 0}
+  - {x: 12, y: 0, z: 0}
   distanceToPassToIdle: 20
   doingAttack: 0
   lastTimeShoot: 0

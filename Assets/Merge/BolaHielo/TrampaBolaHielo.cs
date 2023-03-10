@@ -27,62 +27,54 @@ public class TrampaBolaHielo : Trampas
     public int force;
     public float startTime;
 
-    bool spawn;
     // Start is called before the first frame update
     void Start()
     {
-        spawn = false;
-        StartCoroutine(shoot(startTime));
+
 
 
     }
 
     public override void  StartSpawning()
     {
-        spawn = true;
+        StartCoroutine(shoot(startTime));
+
     }
     private IEnumerator shoot(float time)
     {
         yield return new WaitForSeconds(time);
 
+ 
 
-        if (spawn)
+        arrowThrowKey = AudioManager.Instance.LoadSound(arrowThrow, this.transform, 0, false);
+        GameObject bola = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
+
+        arrowAirKey = AudioManager.Instance.LoadSound(arrowAir, bola.transform, 0, false);
+
+        bola.GetComponent<Rigidbody2D>().AddForce(transform.up * force);
+        bola.transform.SetParent(list.gameObject.transform);
+        if (stopSpawning)
         {
-
-            this.gameObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Shoot");
-            arrowThrowKey = AudioManager.Instance.LoadSound(arrowThrow, this.transform, 0, false);
-            GameObject bola = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
-
-            arrowAirKey = AudioManager.Instance.LoadSound(arrowAir, bola.transform, 0, false);
-
-            bola.GetComponent<Rigidbody2D>().AddForce(transform.up * force);
-            bola.transform.SetParent(list.gameObject.transform);
-
-
-  
-
-        }    
-
-        if (this.time == 0)
-        {
-            StartCoroutine(shoot(Random.RandomRange(1f, 2f)));
-
+            stopSpawning = false;
         }
         else
         {
-            StartCoroutine(shoot(this.time));
+            if (this.time == 0)
+            {
+                StartCoroutine(shoot(Random.RandomRange(1f, 2f)));
 
+            }
+            else
+            {
+                StartCoroutine(shoot(this.time));
+
+            }
         }
+
     }
     // Update is called once per frame
     private void FixedUpdate()
-    {     
-        if (stopSpawning)
-        {
-            spawn = false;
-            stopSpawning = false;
-        }
-
+    {
         for (int i = 0; i < list.transform.childCount; i++)
         {
             if (Vector3.Distance(list.transform.GetChild(i).position, end.position) < 0.5f)

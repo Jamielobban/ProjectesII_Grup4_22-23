@@ -30,43 +30,44 @@ public class HeartSystem : MonoBehaviour
     public void DrawHearts()
     {
 
-        ClearHearts();
+     
+            ClearHearts();
 
-        float maxHealthRemainder = player.maxHearts % 2;
-        int heartsToMake = (int)((player.maxHearts / 2) + maxHealthRemainder);
-        for (int i = 0; i < heartsToMake; i++)
-        {
-            CreateEmptyHeart();
-        }
-        for (int i = 0; i < hearts.Count; i++)
-        {
-            int heartStatusRemainder = (int)(Mathf.Clamp(player.currentHearts - (i * 2), 0, 2));
-            hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
-        }
-
-        //heartArray = GetComponentsInChildren<HealthHeart>().Where(t => (t.GetComponent<HealthHeart>()._status != HeartStatus.Empty)).ToList();
-        //emptyHeartArray = GetComponentsInChildren<HealthHeart>().Where(t => (t.GetComponent<HealthHeart>()._status == HeartStatus.Empty)).ToList();
-
-
-        for (int i = 0; i < hearts.Count; i++)
-        {
-            if (hearts[i]._status != HeartStatus.Empty)
+            float maxHealthRemainder = player.maxHearts % 2;
+            int heartsToMake = (int)((player.maxHearts / 2) + maxHealthRemainder);
+            for (int i = 0; i < heartsToMake; i++)
             {
-                heartArray.Add(hearts[i]);
+                CreateEmptyHeart();
             }
-            if ((player.maxHearts - player.currentHearts) <= 2)
+            for (int i = 0; i < hearts.Count; i++)
             {
-                emptyHeartToFlash = heartArray[heartArray.Count - 1];
+                int heartStatusRemainder = (int)(Mathf.Clamp(player.currentHearts - (i * 2), 0, 2));
+                hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
             }
-            if (hearts[i]._status == HeartStatus.Empty)
+
+            //heartArray = GetComponentsInChildren<HealthHeart>().Where(t => (t.GetComponent<HealthHeart>()._status != HeartStatus.Empty)).ToList();
+            //emptyHeartArray = GetComponentsInChildren<HealthHeart>().Where(t => (t.GetComponent<HealthHeart>()._status == HeartStatus.Empty)).ToList();
+
+
+            for (int i = 0; i < hearts.Count; i++)
             {
+                if (hearts[i]._status != HeartStatus.Empty)
+                {
+                    heartArray.Add(hearts[i]);
+                }
+                if ((player.maxHearts - player.currentHearts) <= 2)
+                {
+                    emptyHeartToFlash = heartArray[heartArray.Count - 1];
+                }
+                if (hearts[i]._status == HeartStatus.Empty)
+                {
 
-                emptyHeartArray.Add(hearts[i]);
-                emptyHeartToFlash = emptyHeartArray[0];
+                    emptyHeartArray.Add(hearts[i]);
+                    emptyHeartToFlash = emptyHeartArray[0];
+                }
             }
-        }
 
-        heartToChange = heartArray[heartArray.Count - 1];
+            heartToChange = heartArray[heartArray.Count - 1];
     }
 
     public void CreateEmptyHeart()
@@ -84,9 +85,17 @@ public class HeartSystem : MonoBehaviour
         {
             Destroy(t.gameObject);
         }
-        heartArray = new List<HealthHeart>();
-        emptyHeartArray = new List<HealthHeart>();
-        hearts = new List<HealthHeart>();
+            heartArray = new List<HealthHeart>();
+            emptyHeartArray = new List<HealthHeart>();
+            hearts = new List<HealthHeart>();
 
+    }
+
+    public void DrawAllEmpty()
+    {
+        foreach(HealthHeart heart in heartArray)
+        {
+            heart.SetHeartImage(HeartStatus.Empty);
+        }
     }
 }

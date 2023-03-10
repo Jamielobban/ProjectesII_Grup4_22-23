@@ -24,19 +24,18 @@ public class ArrowTrap : Trampas
 
 
     public float startTime;
-    bool a;
     // Start is called before the first frame update
     void Start()
     {
-        a = false;
-            StartCoroutine(shoot(startTime));
+
 
 
 
     }
     public override void StartSpawning()
     {
-        a = true;
+
+            StartCoroutine(shoot(startTime));
 
         
 
@@ -44,48 +43,38 @@ public class ArrowTrap : Trampas
     private IEnumerator shoot(float time)
     {
             yield return new WaitForSeconds(time);
+        
+        this.gameObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Shoot");
+        yield return new WaitForSeconds(0.15f);
 
-        if (a)
+        arrowThrowKey = AudioManager.Instance.LoadSound(arrowThrow, this.transform, 0, false);
+        GameObject flecha = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
+
+        arrowAirKey = AudioManager.Instance.LoadSound(arrowAir, flecha.transform, 0, false);
+
+        flecha.GetComponent<Rigidbody2D>().AddForce(transform.up * -1500);
+        flecha.transform.SetParent(list.gameObject.transform);
+        if (stopSpawning)
         {
-
-
-
-            this.gameObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Shoot");
-        }
-
-            yield return new WaitForSeconds(0.15f);
-        if(a)
-        { 
-            arrowThrowKey = AudioManager.Instance.LoadSound(arrowThrow, this.transform, 0, false);
-            GameObject flecha = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
-
-            arrowAirKey = AudioManager.Instance.LoadSound(arrowAir, flecha.transform, 0, false);
-
-            flecha.GetComponent<Rigidbody2D>().AddForce(transform.up * -1500);
-            flecha.transform.SetParent(list.gameObject.transform);
-
-        }
-
-        if (this.time == 0)
-        {
-            StartCoroutine(shoot(Random.RandomRange(1f, 2f)));
-
+            stopSpawning = false;
         }
         else
         {
-            StartCoroutine(shoot(this.time));
+            if (this.time == 0)
+            {
+                StartCoroutine(shoot(Random.RandomRange(1f, 2f)));
 
+            }
+            else
+            {
+                StartCoroutine(shoot(this.time));
+
+            }
         }
-        
     }
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if (stopSpawning)
-        {
-            stopSpawning = false;
-            a = false;
-        }
         for (int i = 0; i < list.transform.childCount; i++)
         {
             if (Vector3.Distance(list.transform.GetChild(i).transform.position, end.position) < 0.5f)
