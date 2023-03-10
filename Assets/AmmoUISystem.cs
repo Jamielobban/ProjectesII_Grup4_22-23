@@ -22,19 +22,23 @@ public class AmmoUISystem : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        //DrawAmmo();
-    }
+    {        
+        if(rightHand.weaponInHand != null)
+        {
+            DrawAmmo();
+        }
 
+    }
+    
 
     public void DrawAmmo()
     {
-        ClearAmmo();
-
-        //Debug.Log("Update");
         ammoPrefab.GetComponent<AmmoRifleImage>().fullAmmo = rightHand.weaponInHand.GetFullSprite();
         ammoPrefab.GetComponent<AmmoRifleImage>().emptyAmmo = rightHand.weaponInHand.GetEmptySprite();
         ammoPrefab.GetComponent<AmmoRifleImage>().flashAmmo = rightHand.weaponInHand.GetFlashSprite();
+        ClearAmmo();
+
+        //Debug.Log("Update");
 
         int maxAmmoToMake = rightHand.weaponInHand.GetBulletsPerMagazine();
         int ammoToMake = (int)(rightHand.weaponInHand.GetBulletsInMagazine());

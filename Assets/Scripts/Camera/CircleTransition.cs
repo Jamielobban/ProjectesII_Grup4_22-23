@@ -14,15 +14,18 @@ public class CircleTransition : MonoBehaviour
     private Vector2 _playerCanvasPos;
     public PlayerMovement playerSignal;
 
+    public PlayerMovement playerCheckpoints;
     private void Awake()
     {
+        playerCheckpoints = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
            _canvas = GetComponent<Canvas>();
     }
 
     private void Update()
     {
-        if (playerCheck.isDead)
+        if (playerCheckpoints.restart)
         {
+            playerCheckpoints.restart = false;
             CloseBlackScreen();
         }
         //else if (Input.GetKeyDown((KeyCode.Alpha2)))
@@ -112,6 +115,20 @@ public class CircleTransition : MonoBehaviour
 
     public void ResetCurrentScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            if (!playerCheckpoints.endTutorial)
+            {
+                playerCheckpoints.Reaparecer();
+
+            }
+            else
+            {
+                //Establecer el spawn al salir por primera vez de la sala principal
+                PlayerPrefs.SetInt("IDCheckpoints", 1);
+                PlayerPrefs.SetInt("IDScene", 3);
+                playerCheckpoints.SpawnSalaPrincipal();
+            }
+        
+
     }
 }

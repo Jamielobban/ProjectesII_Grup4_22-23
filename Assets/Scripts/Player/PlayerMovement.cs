@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -39,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
     public bool isDashing;
     public GameObject floorBlood;
 
-    public Transform actualSpawn;
     public bool isInBlood;
 
     public float knockbackForceCheck;
@@ -115,29 +115,137 @@ public class PlayerMovement : MonoBehaviour
     bool justRolled;
 
     public BlitController myBlit;
+
+    public bool disableDash;
+    public bool disableWeapons;
+    CheckpointsList list;
+
+    public bool endTutorial;
+
+    public bool restart;
+    public Vector3 lastPositionSave;
     private void Awake()
     {
+        restart = false;
+        StartCoroutine(guardarPosicion());
+
+        lastPositionSave = this.transform.position;
+        endTutorial = false;
+        healthUI.DrawHearts();
+
+        if(GameObject.FindGameObjectWithTag("CheckPoints") != null)
+        list = GameObject.FindGameObjectWithTag("CheckPoints").GetComponent<CheckpointsList>();
+
         // GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
         //healthBar = Canvas.FindObjectOfType<HealthBar>();
         trail = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
         LayerIgnoreRaycast = LayerMask.NameToLayer("IgnoreEverything");
         PlayerMask = LayerMask.NameToLayer("Player");
-        dashUI1.SetMaxDashTimer(blinkRechargeTime);
-        dashUI2.SetMaxDashTimer(blinkRechargeTime);
-        dashUI3.SetMaxDashTimer(blinkRechargeTime);
+        //dashUI1.SetMaxDashTimer(blinkRechargeTime);
+        //dashUI2.SetMaxDashTimer(blinkRechargeTime);
+        //dashUI3.SetMaxDashTimer(blinkRechargeTime);
         //healthBar.SetMaxHealth(maxHealth);
         playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
     }
 
+    public void Reaparecer()
+    {
+        if (anim.GetBool("Fall"))
+        {
+            anim.SetBool("Return", true);
+            anim.SetBool("Fall", false);
+
+        }
+        this.transform.GetChild(3).gameObject.SetActive(true);
+        isDead = false;
+        body.sortingOrder = 0;
+        if (list.find)
+        {
+            list.restart();
+            currentHearts = maxHearts;
+            healthUI.DrawHearts();
+
+            this.transform.position = list.actualSpawn.position;
+            canMove = true;
+            disableDash = false;
+            disableWeapons = false;
+        }
+        else
+        {
+            SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene"));
+
+        }
+
+
+    }
+    private IEnumerator guardarPosicion()
+    {
+        yield return new WaitForSeconds(2f);
+
+        yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null));
+        lastPositionSave = this.transform.position;
+
+        StartCoroutine(guardarPosicion());
+    }
+    public void SpawnSalaPrincipal()
+    {
+        body.sortingOrder = 0;
+
+        currentHearts = maxHearts;
+        healthUI.DrawHearts();
+        SceneManager.LoadScene(2);
+
+    }
+
+    public void reaparecerCaida()
+    {
+        body.enabled = true;
+        isDead = false;
+        canMove = true;
+        disableDash = false;
+        disableWeapons = false;
+        body.sortingOrder = 0;
+
+
+        this.transform.position = lastPositionSave;
+    }
+    public void empezar()
+    {
+
+        body.sortingOrder = 0;
+        isDead = false;
+        canMove = true;
+        disableDash = false;
+        disableWeapons = false;
+        currentHearts = maxHearts;
+        healthUI.DrawHearts();
+
+        this.transform.position = list.actualSpawn.position;
+
+    }
+    public void reiniciar()
+    {
+        isDead = false;
+        body.enabled = true;
+
+        body.sortingOrder = 0;
+
+        canMove = true;
+        disableDash = false;
+        disableWeapons = false;
+        currentHearts = maxHearts;
+        healthUI.DrawHearts();
+
+    }
     public void Start()
     {
 
         isDead = false;
         state = State.Normal;
         //currentHealth = maxHealth;
-        maxHealth = currentHearts;
+        currentHearts = maxHearts;
         rollSpeed = 90f;
         justRolled = false;
         backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true);
@@ -149,6 +257,17 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(disableWeapons && rotatePoint.activeSelf == true)
+        {
+            rotatePoint.SetActive(false);
+        }
+        else if(!disableWeapons && rotatePoint.activeSelf == false)
+        {
+            rotatePoint.SetActive(true);
+
+        }
+
         dir = rotatePoint.transform.position - firePoint.transform.position;
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         //Debug.Log(angle);
@@ -162,11 +281,11 @@ public class PlayerMovement : MonoBehaviour
             playerSprite.flipX = false;
         }
 
-        if (angle > 0 && angle < 180)
+        if ((angle > 0 && angle < 180)&&canMove)
         {
             playerSprite.sortingOrder = 0;
         }
-        else
+        else if(canMove)
         {
             playerSprite.sortingOrder = 1;
         }
@@ -174,7 +293,7 @@ public class PlayerMovement : MonoBehaviour
         weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
 
 
-        if ((Time.time - lastDash) >= timeBetweenDashes)
+        if (((Time.time - lastDash) >= timeBetweenDashes)&& !disableDash)
         {
             canDash = true;
         }
@@ -186,12 +305,12 @@ public class PlayerMovement : MonoBehaviour
         //dashController();
         if (remainingBlinks == 2)
         {
-            dashUI1.SetDashTimer(0);
+            //dashUI1.SetDashTimer(0);
             //currentBlinkRechargeTime += Time.deltaTime;
             //dashUI1.SetDashTimer(currentBlinkRechargeTime);
             if ((Time.time - lastDash) >= timeBetweenDashes)
             {
-                dashUI1.SetDashTimer(currentBlinkRechargeTime);
+                //dashUI1.SetDashTimer(currentBlinkRechargeTime);
                 currentBlinkRechargeTime += Time.deltaTime;
             }
             if (currentBlinkRechargeTime >= blinkRechargeTime)
@@ -202,13 +321,13 @@ public class PlayerMovement : MonoBehaviour
         }
         if (remainingBlinks == 1)
         {
-            dashUI2.SetDashTimer(0);
+            //dashUI2.SetDashTimer(0);
             //currentBlinkRechargeTime += Time.deltaTime;
             //dashUI1.SetDashTimer(currentBlinkRechargeTime);
             if ((Time.time - lastDash) >= timeBetweenDashes)
             {
                 currentBlinkRechargeTime2 += Time.deltaTime;
-                dashUI2.SetDashTimer(currentBlinkRechargeTime2);
+                //dashUI2.SetDashTimer(currentBlinkRechargeTime2);
             }
             if (currentBlinkRechargeTime2 >= blinkRechargeTime)
             {
@@ -218,13 +337,13 @@ public class PlayerMovement : MonoBehaviour
         }
         if (remainingBlinks == 0)
         {
-            dashUI3.SetDashTimer(0);
+            //dashUI3.SetDashTimer(0);
             //currentBlinkRechargeTime += Time.deltaTime;
             //dashUI1.SetDashTimer(currentBlinkRechargeTime);
             if ((Time.time - lastDash) >= timeBetweenDashes)
             {
                 currentBlinkRechargeTime3 += Time.deltaTime;
-                dashUI3.SetDashTimer(currentBlinkRechargeTime3);
+                //dashUI3.SetDashTimer(currentBlinkRechargeTime3);
             }
             if (currentBlinkRechargeTime3 >= blinkRechargeTime)
             {
@@ -330,7 +449,7 @@ public class PlayerMovement : MonoBehaviour
                     //{
                     //    weaponSprites[i].DOColor(weaponHand.GetColor(), 0.5f);
                     //}
-                    isDashing = false;
+                    //isDashing = false;
                     justRolled = true;
                     dashTimer2 = Time.time;
                     dashTime = dashTimer2 - dashTimer;
@@ -386,12 +505,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isInvulnerable)
         {
-            currentHearts -= damage;
+            if (currentHearts > 0)
+            {
+                currentHearts -= damage;
+            }
+            else
+            {
+                currentHearts = 0;
+            }
             GameObject.Instantiate(floorBlood, this.transform.position, this.transform.rotation);
             damageSoundKey = AudioManager.Instance.LoadSound(damageSound, this.gameObject.transform);
             //healthBar.SetHealth(currentHealth);
         }
     }
+
 
     public void TakeLavaDamage()
     {
@@ -401,14 +528,11 @@ public class PlayerMovement : MonoBehaviour
             healthBar.SetHealth(currentHealth);
         }
     }
-    public void Spawn()
-    {
-        this.transform.position = actualSpawn.position;
-    }
+
 
     void OnRollingEffects()
     {
-        StartCoroutine(waitForLayerChange(0.45f));
+        StartCoroutine(waitForLayerChange(0.25f));
         gameObject.layer = LayerIgnoreRaycast;
         //transform.DOScale((new Vector3(0.9f, 0.7f, 1f)), 0.0f);
         //transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
@@ -423,8 +547,12 @@ public class PlayerMovement : MonoBehaviour
     public void GetDamage(int damage)
     {
         //Debug.Log(damage);
-        OnHit(damage);
-        StartCoroutine(hurtAnimation());
+        if(!isDead)
+        {
+            OnHit(damage);
+            StartCoroutine(hurtAnimation());
+        }
+
 
     }
 
@@ -439,16 +567,27 @@ public class PlayerMovement : MonoBehaviour
 
         healthUI.DrawHearts();
     }
-
-    private void OnHit(int damage)
+    public void OnHit(int damage)
     {
         TakeDamage(damage);
-        healthUI.DrawHearts();
 
         if (currentHearts <= 0)
         {
+            restart = true;
+
             isDead = true;
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            healthUI.DrawAllEmpty();
+            Debug.Log(currentHearts);
+            canMove = true;
+            disableDash = false;
+            disableWeapons = false;
+
+            //Debug.Log("Dead");
+        }
+        else
+        {
+            healthUI.DrawHearts();
+            //Debug.Log("Still alive");
         }
     }
 
@@ -519,9 +658,11 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         gameObject.layer = PlayerMask;
         fxAnim.SetBool("isDashingFX", false);
+        isDashing = false;
+
         //anim.SetBool("isDashing", false);
     }
-    
+
     private IEnumerator TakeLavaCoroutine(float time) {
         InvokeRepeating("TakeLavaDamage()", 0.5f, 1f);
         yield return new WaitForSeconds(time);

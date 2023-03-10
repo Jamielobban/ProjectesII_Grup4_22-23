@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrampaBolaHielo : MonoBehaviour
+public class TrampaBolaHielo : Trampas
 {
     public GameObject arrow;
     public Transform spawnPoint;
@@ -25,54 +25,64 @@ public class TrampaBolaHielo : MonoBehaviour
 
 
     public int force;
+    public float startTime;
 
-    public bool stopSpawning;
+    bool spawn;
     // Start is called before the first frame update
     void Start()
     {
+        spawn = false;
+        StartCoroutine(shoot(startTime));
 
-        stopSpawning = false;
-
-
-    }
-
-    public void StartSpawning()
-    {
-        StartCoroutine(shoot());
 
     }
-    private IEnumerator shoot()
+
+    public override void  StartSpawning()
     {
-        if (time == 0)
+        spawn = true;
+    }
+    private IEnumerator shoot(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+
+        if (spawn)
         {
-            yield return new WaitForSeconds(Random.RandomRange(1f, 2f));
+
+            this.gameObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Shoot");
+            arrowThrowKey = AudioManager.Instance.LoadSound(arrowThrow, this.transform, 0, false);
+            GameObject bola = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
+
+            arrowAirKey = AudioManager.Instance.LoadSound(arrowAir, bola.transform, 0, false);
+
+            bola.GetComponent<Rigidbody2D>().AddForce(transform.up * force);
+            bola.transform.SetParent(list.gameObject.transform);
+
+
+  
+
+        }    
+
+        if (this.time == 0)
+        {
+            StartCoroutine(shoot(Random.RandomRange(1f, 2f)));
+
         }
         else
         {
-            yield return new WaitForSeconds(time);
-        }
-
-        arrowThrowKey = AudioManager.Instance.LoadSound(arrowThrow, this.transform, 0, false);
-        GameObject bola = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
-
-        arrowAirKey = AudioManager.Instance.LoadSound(arrowAir, bola.transform, 0, false);
-
-        bola.GetComponent<Rigidbody2D>().AddForce(transform.up * force);
-        bola.transform.SetParent(list.gameObject.transform);
-        if (stopSpawning)
-        {
-            stopSpawning = false;
-        }
-        else
-        {
-            StartCoroutine(shoot());
+            StartCoroutine(shoot(this.time));
 
         }
-
     }
     // Update is called once per frame
     private void FixedUpdate()
-    {
+    {     
+        if (stopSpawning)
+        {
+            spawn = false;
+            stopSpawning = false;
+        }
+
         for (int i = 0; i < list.transform.childCount; i++)
         {
             if (Vector3.Distance(list.transform.GetChild(i).position, end.position) < 0.5f)
@@ -80,6 +90,8 @@ public class TrampaBolaHielo : MonoBehaviour
                 arrowHitKey = AudioManager.Instance.LoadSound(arrowHit, list.transform.GetChild(i).position, 0, false);
                 list.transform.GetChild(i).GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                 list.transform.GetChild(i).gameObject.transform.GetComponent<Animator>().SetTrigger("Stop");
+                Destroy(list.transform.GetChild(i).gameObject.GetComponent<CircleCollider2D>());
+
                 Destroy(list.transform.GetChild(i).gameObject, 1f);
             }
 

@@ -10,7 +10,7 @@ public class AmmoRifleImage : MonoBehaviour
 
     public AmmoStatus _status;
 
-    public RightHand rightHand;
+    //public RightHand rightHand;
 
     // Start is called before the first frame update
     void Start()

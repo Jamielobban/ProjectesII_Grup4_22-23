@@ -89,4 +89,13 @@ public class HeartSystem : MonoBehaviour
         hearts = new List<HealthHeart>();
 
     }
+
+    public void DrawAllEmpty()
+    {
+        foreach (HealthHeart heart in heartArray)
+        {
+            heart.SetHeartImage(HeartStatus.Empty);
+        }
+    }
+
 }

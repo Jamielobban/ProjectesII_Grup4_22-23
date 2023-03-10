@@ -23,7 +23,6 @@ public class Palanca : MonoBehaviour
     {
         slice.fillAmount = 0;
         button.SetActive(false);
-        door.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = -1;
     }
 
     // Update is called once per frame
@@ -41,6 +40,11 @@ public class Palanca : MonoBehaviour
 
 
         }
+    }
+
+    public virtual void Action()
+    {
+
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -69,7 +73,7 @@ public class Palanca : MonoBehaviour
                 puertaAbierta = true;
                 button.SetActive(false);
                 this.gameObject.transform.GetChild(0).gameObject.GetComponent<Animator>().SetTrigger("Open");
-
+                Action();
             }
 
             if (isPressed)
@@ -79,11 +83,11 @@ public class Palanca : MonoBehaviour
             }
         }
     }
+
     private IEnumerator open(float time)
     {
         yield return new WaitForSeconds(time);
         door.GetComponent<BoxCollider2D>().enabled = false;
-        door.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sortingOrder = 5;
 
     }
 

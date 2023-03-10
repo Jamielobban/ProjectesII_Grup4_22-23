@@ -35,7 +35,10 @@ public class RoomManager : MonoBehaviour
         this.gameObject.tag = "Default";
         roomTriggers.SetActive(true);
 
-        openDoors();
+        for (int i = 0; i < doors.Length; i++)
+        {
+            doors[i].SetActive(false);
+        }
     }
 
     void closeDoors()
@@ -46,13 +49,23 @@ public class RoomManager : MonoBehaviour
             {
                 if (palancas[i].puertaAbierta == true)
                 {
-                    doors[i].SetActive(true);
+                  
+                        doors[i].SetActive(true);
+                    if (doors[i].transform.childCount == 1)
+                    {
+                        doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Close");
 
+                    }
                 }
             }
             else
             {
                 doors[i].SetActive(true);
+                if (doors[i].transform.childCount == 1)
+                {
+                    doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Close");
+
+                }
             }
         }
     }
@@ -61,10 +74,25 @@ public class RoomManager : MonoBehaviour
     {
         for (int i = 0; i < doors.Length; i++)
         {
+            if(doors[i].transform.childCount == 1)
+            {
+                doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
+                StartCoroutine(OpenDoor(3f, i));
+            }
+            else
+            {
             doors[i].SetActive(false);
+
+            }
         }
     }
+    private IEnumerator OpenDoor(float time, int i)
+    {
+        yield return new WaitForSeconds(time);
+        doors[i].SetActive(false);
 
+
+    }
     public void StartRound()
     {
         roomTriggers.SetActive(false);
@@ -143,9 +171,11 @@ public class RoomManager : MonoBehaviour
         currentRound = 0;
         inRoom = false;
 
-        foreach (GameObject childs in roomEnemies.transform) {
-            Destroy(childs);
+        for(int i = 0; i < roomEnemies.transform.childCount; i++)
+        {
+            Destroy(roomEnemies.transform.GetChild(i).gameObject);
         }
+ 
 
     }
 
