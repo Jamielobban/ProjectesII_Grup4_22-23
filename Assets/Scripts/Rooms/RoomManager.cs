@@ -77,7 +77,7 @@ public class RoomManager : MonoBehaviour
             if(doors[i].transform.childCount == 1)
             {
                 doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
-                StartCoroutine(OpenDoor(0.5f, i));
+                StartCoroutine(OpenDoor(3f, i));
             }
             else
             {
@@ -171,9 +171,11 @@ public class RoomManager : MonoBehaviour
         currentRound = 0;
         inRoom = false;
 
-        foreach (GameObject childs in roomEnemies.transform) {
-            Destroy(childs);
+        for(int i = 0; i < roomEnemies.transform.childCount; i++)
+        {
+            Destroy(roomEnemies.transform.GetChild(i).gameObject);
         }
+ 
 
     }
 
