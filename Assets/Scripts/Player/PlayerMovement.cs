@@ -136,16 +136,12 @@ public class PlayerMovement : MonoBehaviour
         if(GameObject.FindGameObjectWithTag("CheckPoints") != null)
         list = GameObject.FindGameObjectWithTag("CheckPoints").GetComponent<CheckpointsList>();
 
-        // GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().enemiesInRoom.Remove(this.gameObject);
-        //healthBar = Canvas.FindObjectOfType<HealthBar>();
+
         trail = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
         LayerIgnoreRaycast = LayerMask.NameToLayer("IgnoreEverything");
         PlayerMask = LayerMask.NameToLayer("Player");
-        //dashUI1.SetMaxDashTimer(blinkRechargeTime);
-        //dashUI2.SetMaxDashTimer(blinkRechargeTime);
-        //dashUI3.SetMaxDashTimer(blinkRechargeTime);
-        //healthBar.SetMaxHealth(maxHealth);
+
         playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
     }
@@ -245,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
         isDead = false;
         state = State.Normal;
         //currentHealth = maxHealth;
-        currentHearts = maxHearts;
+        maxHearts = currentHearts;
         rollSpeed = 90f;
         justRolled = false;
         backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true);

@@ -22,7 +22,11 @@ public class E7_IdleState : IdleState
         enemy.agent.enabled = true;
 
         actualIndex = Random.Range(0, enemy.idleTravelPoints.Length);
-        actualDestination = enemy.idleTravelPoints[actualIndex];
+        if(enemy.idleTravelPoints.Length > 0)
+        {
+
+            actualDestination = enemy.idleTravelPoints[actualIndex];
+        }
 
         error = new Vector3(0.1f, 0.1f, 0);
     }
