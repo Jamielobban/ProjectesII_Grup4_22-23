@@ -10,6 +10,7 @@ public class TeleportSalaPrincipal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         button.SetActive(true);
     }
 
@@ -25,6 +26,8 @@ public class TeleportSalaPrincipal : MonoBehaviour
             button.SetActive(true);
             if (Input.GetButton("Interact"))
             {
+                PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
+
                 SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene"));
 
             }

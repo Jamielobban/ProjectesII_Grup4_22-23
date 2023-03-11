@@ -167,11 +167,9 @@ public class PlayerMovement : MonoBehaviour
     }
     public void SpawnSalaPrincipal()
     {
-        body.sortingOrder = 0;
 
         currentHearts = maxHearts;
         healthUI.DrawHearts();
-        SceneManager.LoadScene(2);
 
     }
 

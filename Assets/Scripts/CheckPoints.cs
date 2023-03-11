@@ -25,7 +25,7 @@ public class CheckPoints : MonoBehaviour
     bool descansar;
     public int id;
     public bool UnlockAtStart;
-    string nameSave; 
+    string nameSave;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,7 @@ public class CheckPoints : MonoBehaviour
         nameSave = "encendido" + id;
         encendido = (PlayerPrefs.GetInt(nameSave) != 0);
 
-        if (UnlockAtStart&& !encendido)
+        if (UnlockAtStart && !encendido)
         {
             PlayerPrefs.SetInt("IDScene", SceneManager.GetActiveScene().buildIndex);
 
@@ -46,7 +46,7 @@ public class CheckPoints : MonoBehaviour
         }
         else
         {
-           
+
             if (encendido)
             {
                 if ((PlayerPrefs.GetInt("isDead") != 0))
@@ -70,7 +70,6 @@ public class CheckPoints : MonoBehaviour
         }
         button.SetActive(false);
 
-        list = GameObject.FindGameObjectWithTag("CheckPoints").GetComponent<CheckpointsList>();
 
 
 
@@ -78,11 +77,11 @@ public class CheckPoints : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
-    
+
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private IEnumerator move()
     {
@@ -94,10 +93,10 @@ public class CheckPoints : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            if(!descansar)
-            button.SetActive(true);
+            if (!descansar)
+                button.SetActive(true);
 
         }
     }
@@ -110,6 +109,8 @@ public class CheckPoints : MonoBehaviour
                 descansar = true;
 
                 button.SetActive(false);
+
+                PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
 
 
                 string KeyName = "Sala" + 0;
@@ -147,9 +148,7 @@ public class CheckPoints : MonoBehaviour
                     velasEncendidas.SetActive(true);
 
                 }
-                SetSpawn();
-
-                player.SpawnSalaPrincipal();
+                returnBase();
             }
 
         }
@@ -165,8 +164,18 @@ public class CheckPoints : MonoBehaviour
 
         }
     }
+    void returnBase()
+    {
 
-    void SetSpawn()
+        PlayerPrefs.SetInt("IDScene", SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(2);
+
+        player.SpawnSalaPrincipal();
+
+
+    }
+
+        void SetSpawn()
     {
 
         PlayerPrefs.SetInt("IDScene", SceneManager.GetActiveScene().buildIndex);
