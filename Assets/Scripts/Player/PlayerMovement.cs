@@ -149,31 +149,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void Reaparecer()
     {
-        if (anim.GetBool("Fall"))
-        {
-            anim.SetBool("Return", true);
-            anim.SetBool("Fall", false);
-
-        }
-        this.transform.GetChild(3).gameObject.SetActive(true);
-        isDead = false;
-        body.sortingOrder = 0;
-        if (list.find)
-        {
-            list.restart();
-            currentHearts = maxHearts;
-            healthUI.DrawHearts();
-
-            this.transform.position = list.actualSpawn.position;
-            canMove = true;
-            disableDash = false;
-            disableWeapons = false;
-        }
-        else
-        {
+       
             SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene"));
 
-        }
+        
 
 
     }
@@ -224,14 +203,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void reiniciar()
     {
-        isDead = false;
-        body.enabled = true;
 
-        body.sortingOrder = 0;
-
-        canMove = true;
-        disableDash = false;
-        disableWeapons = false;
         currentHearts = maxHearts;
         healthUI.DrawHearts();
 

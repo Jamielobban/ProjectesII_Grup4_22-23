@@ -61,7 +61,7 @@ public class Caida : MonoBehaviour
         if(collision.CompareTag("Player") && (collision.transform.parent.GetComponent<MovingPlatform>() == null))
         {
             collision.transform.GetChild(3).gameObject.SetActive(false);
-            sr.sortingOrder = -53;
+            sr.sortingOrder = -51;
             anim.SetBool("Return", false);
 
             anim.SetBool("Fall", true);

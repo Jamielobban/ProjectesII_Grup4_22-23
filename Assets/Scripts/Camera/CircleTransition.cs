@@ -119,6 +119,7 @@ public class CircleTransition : MonoBehaviour
             if (!playerCheckpoints.endTutorial)
             {
                 playerCheckpoints.Reaparecer();
+                PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
 
             }
             else

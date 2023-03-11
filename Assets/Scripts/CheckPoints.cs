@@ -19,7 +19,7 @@ public class CheckPoints : MonoBehaviour
 
     PlayerMovement player;
 
-
+    Transform playerTtransform;
     CheckpointsList list;
 
     bool descansar;
@@ -30,12 +30,12 @@ public class CheckPoints : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerTtransform = GameObject.FindGameObjectWithTag("Player").transform;
         nameSave = "encendido" + id;
         encendido = (PlayerPrefs.GetInt(nameSave) != 0);
 
         if (UnlockAtStart&& !encendido)
         {
-            PlayerPrefs.SetInt("IDCheckpoints", id);
             PlayerPrefs.SetInt("IDScene", SceneManager.GetActiveScene().buildIndex);
 
             encendido = true;
@@ -49,6 +49,12 @@ public class CheckPoints : MonoBehaviour
            
             if (encendido)
             {
+                if ((PlayerPrefs.GetInt("isDead") != 0))
+                {
+                    playerTtransform.position = spawn.position;
+                    PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
+                }
+
                 descansar = false;
                 velasApagadas.SetActive(false);
                 velasEncendidas.SetActive(true);
@@ -105,8 +111,16 @@ public class CheckPoints : MonoBehaviour
 
                 button.SetActive(false);
 
-                list.restart();
 
+                string KeyName = "Sala" + 0;
+                int i = 0;
+                while (PlayerPrefs.HasKey(KeyName))
+                {
+
+                    PlayerPrefs.SetInt(KeyName, (false ? 1 : 0));
+                    i++;
+                    KeyName = "Sala" + i;
+                }
 
                 SetSpawn();
 
@@ -155,8 +169,8 @@ public class CheckPoints : MonoBehaviour
     void SetSpawn()
     {
 
-        list.actualSpawn = spawn;
-        list.setId(id);
+        PlayerPrefs.SetInt("IDScene", SceneManager.GetActiveScene().buildIndex);
+
 
         player.reiniciar();
     }

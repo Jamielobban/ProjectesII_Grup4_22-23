@@ -24,13 +24,18 @@ public class RoomManager : MonoBehaviour
 
     public GameObject[] doors;
 
+    public int idRoom;
     //public GameObject room;
-
+    bool alreadyEnter;
+    string nameSave;
 
     //Las puertas tienen que estar en el mismo puesto que su palanca
 
     public void Start()
     {
+        nameSave = "Sala" + idRoom;
+
+        alreadyEnter = (PlayerPrefs.GetInt(nameSave) != 0);
         inRoom = false;
         this.gameObject.tag = "Default";
         roomTriggers.SetActive(true);
@@ -82,6 +87,9 @@ public class RoomManager : MonoBehaviour
 
     void openDoors()
     {
+        alreadyEnter = true;
+        PlayerPrefs.SetInt(nameSave, (alreadyEnter ? 1 : 0));
+
         for (int i = 0; i < doors.Length; i++)
         {
             if(doors[i].transform.childCount == 1)
@@ -107,14 +115,17 @@ public class RoomManager : MonoBehaviour
     }
     public void StartRound()
     {
-        roomTriggers.SetActive(false);
+        if (!alreadyEnter)
+        {
+            roomTriggers.SetActive(false);
 
-        this.gameObject.tag = "RoomManager";
-        kills = 0;
-        currentRound = 0;
-        inRoom = true;
-        spawnRound(currentRound);
-        closeDoors();
+            this.gameObject.tag = "RoomManager";
+            kills = 0;
+            currentRound = 0;
+            inRoom = true;
+            spawnRound(currentRound);
+            closeDoors();
+        }
     }
     public void Dead()
     {
