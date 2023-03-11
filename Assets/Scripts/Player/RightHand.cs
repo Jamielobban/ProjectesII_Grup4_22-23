@@ -57,6 +57,7 @@ public class RightHand : MonoBehaviour
 
         if (weaponEquiped)
         {
+            
             if (weaponInHand.GetReloadingState())
             {
                 if (firstTime3)

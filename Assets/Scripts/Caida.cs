@@ -35,7 +35,7 @@ public class Caida : MonoBehaviour
     private IEnumerator daño(GameObject sombra)
     {
         yield return new WaitForSeconds(0.5f);
-        player.GetDamage(1);
+        player.OnHit(1);
 
         if (!player.isDead)
         {
@@ -65,6 +65,7 @@ public class Caida : MonoBehaviour
             anim.SetBool("Return", false);
 
             anim.SetBool("Fall", true);
+            player.isFall = true;
 
             player.canMove = false;
             player.disableDash = true;

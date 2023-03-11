@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
     private float lastDash;
     public bool canMove = false;
     public bool isMoving = false;
-
+    public bool isFall;
     [SerializeField] private int maxBlinks = 3;
     [SerializeField] private float blinkRechargeTime;
 
@@ -127,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 lastPositionSave;
     private void Awake()
     {
+        isFall = false;
         restart = false;
         StartCoroutine(guardarPosicion());
 
@@ -175,6 +176,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void reaparecerCaida()
     {
+        isFall = false;
         body.enabled = true;
         isDead = false;
         canMove = true;
@@ -514,7 +516,7 @@ public class PlayerMovement : MonoBehaviour
     public void GetDamage(int damage)
     {
         //Debug.Log(damage);
-        if(!isDead)
+        if(!isDead && !isFall)
         {
             OnHit(damage);
             StartCoroutine(hurtAnimation());
