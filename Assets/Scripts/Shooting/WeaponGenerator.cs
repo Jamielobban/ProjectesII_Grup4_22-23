@@ -39,9 +39,36 @@ public class WeaponGenerator : MonoBehaviour
     }
 
     private void Start()
-    {
+    {        
         weaponIndex = 0;
-       // weaponIndexOrder.Add(3);
+
+        for (int i = 0; i < weaponsValues.Length; i++)
+        {
+            //Debug.Log(weaponsValues[i].WeaponName);
+
+            if (PlayerPrefs.GetInt(weaponsValues[i].WeaponName + "Desbloqueada") == 1)
+            {
+                weaponIndexOrder.Add(i);
+               
+            }
+        }
+
+        if (weaponIndexOrder.Count != 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponInHand = new Weapon(GameObject.FindGameObjectWithTag("PlayerFirePoint").transform, weaponsValues[PlayerPrefs.GetInt("CurrentWeapon")]);
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponEquiped = true;
+        }
+
+        // weaponIndexOrder.Add(3);
+    }
+
+    public void GetWeapons()
+    {
+        if (weaponIndexOrder.Count != 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponInHand = new Weapon(GameObject.FindGameObjectWithTag("PlayerFirePoint").transform, weaponsValues[PlayerPrefs.GetInt("CurrentWeapon")]);
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponEquiped = true;
+        }
     }
     private void Update()
     {
@@ -88,6 +115,8 @@ public class WeaponGenerator : MonoBehaviour
         }
         
         weaponInHand = new Weapon(firePoint, weaponsValues[weaponIndexOrder[weaponIndex]]);
+        PlayerPrefs.SetInt("CurrentWeapon", weaponIndexOrder[weaponIndex]);
+
         setFirstWeapon = false;
         return true;
     }
@@ -101,12 +130,19 @@ public class WeaponGenerator : MonoBehaviour
             if (weaponsValues[i].WeaponName == weaponName)
             {               
                 weaponIndexOrder.Add(i);
+                PlayerPrefs.SetInt(weaponName + "Desbloqueada", 1);
+                weaponInHand = new Weapon(firePoint, weaponsValues[i]);
+                PlayerPrefs.SetInt("CurrentWeapon", i);
+
             }
         }
 
         if(weaponInHand == null)
         {
+
             this.SetWeapon(0, ref weaponInHand, ref firePoint);
+            PlayerPrefs.SetInt("CurrentWeapon", 0);
+
         }
     }
     

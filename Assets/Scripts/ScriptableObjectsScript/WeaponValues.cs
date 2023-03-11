@@ -43,6 +43,23 @@ public class WeaponValues : ScriptableObject
     [Header("UI")]
     public Sprite fullAmmo, emptyAmmo, flashAmmo;
 
+    public void SavePlayerPrefs()
+    {
+        PlayerPrefs.SetInt(WeaponName + "balas", bulletsInMagazine.RuntimeValue + (bulletsInMagazine.InitialValue* (magazinesInWeapon.RuntimeValue-1)));
+    }
+
+    private void Awake()
+    {
+        GetPlayerPrefs();
+    }
+
+    public void GetPlayerPrefs()
+    {
+        magazinesInWeapon.RuntimeValue = (int)((PlayerPrefs.GetInt(WeaponName + "balas") / bulletsInMagazine.InitialValue)+1);
+        bulletsInMagazine.RuntimeValue = bulletsInMagazine.InitialValue%PlayerPrefs.GetInt(WeaponName + "balas");
+
+
+    }
     public void RestartValues()
     {
         bulletsInMagazine.RestartValues();

@@ -20,7 +20,8 @@ public class ExitRoom : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 
         if (((PlayerPrefs.GetInt("Lado")+2)%4 == lado) && ((PlayerPrefs.GetInt("isDead") == 0)))
-        {         
+        {
+            GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().GetWeapons();
             if (!vertical)
             {
                 if (sentido == -1)
@@ -39,7 +40,7 @@ public class ExitRoom : MonoBehaviour
 
             anim.SetTrigger("TransicionEntrar");
             player.disableDash = true;
-            player.disableWeapons = true;
+            player.GetComponentInChildren<RightHand>().weaponEquiped = false;
             player.canMove = false;
 
 
@@ -88,7 +89,7 @@ public class ExitRoom : MonoBehaviour
                 PlayerPrefs.SetInt("Lado", lado);
 
                 player.disableDash = true;
-                player.disableWeapons = true;
+                player.GetComponentInChildren<RightHand>().weaponEquiped = false;
                 player.canMove = false;
 
                 collision.transform.GetChild(1).GetComponent<Animator>().SetTrigger("ExitRoom");
@@ -133,7 +134,7 @@ public class ExitRoom : MonoBehaviour
         {
             player.entrandoSala = false;
             player.disableDash = false;
-            player.disableWeapons = false;
+            player.GetComponentInChildren<RightHand>().weaponEquiped = true;
             player.canMove = true;
             playerTransform.transform.GetChild(1).GetComponent<Animator>().SetTrigger("EnterRoom");
 

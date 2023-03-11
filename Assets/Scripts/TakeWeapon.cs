@@ -8,6 +8,17 @@ public class TakeWeapon : MonoBehaviour
     string weapoName;
 
     bool took = false;
+
+    private void Start()
+    {
+        if(PlayerPrefs.GetInt(weapoName + "Desbloqueada") == 1)
+        {
+            this.gameObject.SetActive(false);
+
+        }
+    }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && !took)

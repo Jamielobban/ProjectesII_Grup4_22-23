@@ -19,11 +19,12 @@ public class Menu : MonoBehaviour
 
     public void Play()
     {
+
         if(!(PlayerPrefs.GetInt("SalaPrincipal") != 0))
         {
             PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
 
-            SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
+            SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 3));
 
         }
         else

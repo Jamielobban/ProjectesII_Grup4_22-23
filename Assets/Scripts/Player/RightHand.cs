@@ -35,7 +35,7 @@ public class RightHand : MonoBehaviour
 
     int index;
     float timeEndShake;
-    bool weaponEquiped = false;
+    public bool weaponEquiped = false;
     enum PowerUpState { RELOADING, USING, FULL }; 
     public Image actualWeaponUI, nextWeaponUI;
 

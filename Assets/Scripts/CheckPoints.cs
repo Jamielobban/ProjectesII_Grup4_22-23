@@ -51,10 +51,22 @@ public class CheckPoints : MonoBehaviour
             {
                 if ((PlayerPrefs.GetInt("isDead") != 0))
                 {
+
+                    GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().GetWeapons();
+
                     playerTtransform.position = spawn.position;
                     PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
                 }
 
+                string KeyName = "Sala" + 0;
+                int i = 0;
+                while (PlayerPrefs.HasKey(KeyName))
+                {
+
+                    PlayerPrefs.SetInt(KeyName, (false ? 1 : 0));
+                    i++;
+                    KeyName = "Sala" + i;
+                }
                 descansar = false;
                 velasApagadas.SetActive(false);
                 velasEncendidas.SetActive(true);
