@@ -49,10 +49,10 @@ public class CheckPoints : MonoBehaviour
 
             if (encendido)
             {
+                GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().GetWeapons();
                 if ((PlayerPrefs.GetInt("isDead") != 0))
                 {
 
-                    GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().GetWeapons();
 
                     playerTtransform.position = spawn.position;
                     PlayerPrefs.SetInt("isDead", (false ? 1 : 0));

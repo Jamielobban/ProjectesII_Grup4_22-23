@@ -18,6 +18,7 @@ public class ExitRoom : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player");
 
         if (((PlayerPrefs.GetInt("Lado")+2)%4 == lado) && ((PlayerPrefs.GetInt("isDead") == 0)))
         {
