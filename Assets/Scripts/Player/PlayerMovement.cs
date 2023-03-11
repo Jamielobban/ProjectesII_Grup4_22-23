@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isInBlood;
 
+    public bool entrandoSala;
     public float knockbackForceCheck;
 
     public State state;
@@ -237,7 +238,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Start()
     {
-
+        entrandoSala = true;
         isDead = false;
         state = State.Normal;
         //currentHealth = maxHealth;

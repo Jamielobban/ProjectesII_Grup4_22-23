@@ -37,7 +37,10 @@ public class RoomManager : MonoBehaviour
 
         for (int i = 0; i < doors.Length; i++)
         {
-            doors[i].SetActive(false);
+            if (doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>() != null)
+                doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = false;
+            else
+                doors[i].SetActive(false);
         }
     }
 
@@ -60,10 +63,17 @@ public class RoomManager : MonoBehaviour
             }
             else
             {
-                doors[i].SetActive(true);
                 if (doors[i].transform.childCount == 1)
                 {
                     doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Close");
+                    if (doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>() != null)
+                        doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = true;
+                    else
+                        doors[i].SetActive(true);
+                }
+                else
+                {
+                    doors[i].SetActive(true);
 
                 }
             }
@@ -77,7 +87,10 @@ public class RoomManager : MonoBehaviour
             if(doors[i].transform.childCount == 1)
             {
                 doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
-                StartCoroutine(OpenDoor(3f, i));
+                if (doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>() != null)
+                    doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = false;
+                else
+                    doors[i].SetActive(false);
             }
             else
             {
@@ -89,7 +102,6 @@ public class RoomManager : MonoBehaviour
     private IEnumerator OpenDoor(float time, int i)
     {
         yield return new WaitForSeconds(time);
-        doors[i].SetActive(false);
 
 
     }
