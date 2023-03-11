@@ -35,7 +35,7 @@ public class EnemySpawn : MonoBehaviour
     public virtual void SpawnEnemy()
     {
         Enemy = Instantiate(EnemyPrefab, transform.position, transform.rotation);
-        if (!spawnEnemyAtStart)
+        if (spawnEnemyAtStart)
             Enemy.transform.parent = parent.transform;
 
 

@@ -269,11 +269,11 @@ public class PlayerMovement : MonoBehaviour
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         //Debug.Log(angle);
 
-        if (angle > -90 && angle < 90)
+        if (angle > -90 && angle < 90 && canMove)
         {
             playerSprite.flipX = true;
         }
-        else
+        else if (canMove)
         {
             playerSprite.flipX = false;
         }
