@@ -109,7 +109,17 @@ public class Gancho : MonoBehaviour
     {
         if (collision.CompareTag("Gancho") && !enganchado && player.GetComponent<PlayerMovement>().canMove)
         {
-            ganchos.Add(collision.gameObject);
+            bool isInside = false;
+            for (int i = 0; i < ganchos.Count; i++)
+            {
+
+                if (ganchos[i] == collision.gameObject)
+                {
+                    isInside = true;
+                }
+            }
+            if(!isInside)
+                ganchos.Add(collision.gameObject);
 
             float distancia = 5000;
             for (int i = 0; i < ganchos.Count; i++)

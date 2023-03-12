@@ -31,6 +31,9 @@ public class AudioManager : MonoBehaviour
 
             audioSorcePrefabClone.GetComponent<AudioPrefabScript>().defaultSoundValue = volume;
             audioSorcePrefabClone.GetComponent<AudioPrefabScript>().amIsfx = isSFX;
+            audioSorcePrefabClone.GetComponent<AudioPrefabScript>().myId = audioSorcePrefabClone.GetInstanceID();
+
+
 
             audioSource = audioSorcePrefabClone.GetComponent<AudioSource>();
 
@@ -78,6 +81,7 @@ public class AudioManager : MonoBehaviour
 
             audioSorcePrefabClone.GetComponent<AudioPrefabScript>().defaultSoundValue = volume;
             audioSorcePrefabClone.GetComponent<AudioPrefabScript>().amIsfx = isSFX;
+            audioSorcePrefabClone.GetComponent<AudioPrefabScript>().myId = audioSorcePrefabClone.GetInstanceID();
 
             audioSource = audioSorcePrefabClone.GetComponent<AudioSource>();
 
@@ -152,6 +156,17 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         RemoveEmptyPositions();
+
+        int num = 0;
+        foreach (var aux in audiosPlaying)
+        {
+            if (!aux.Value.audioSorcePrefabClone.GetComponent<AudioSource>().isPlaying)
+            {
+                num++;
+            }
+        }
+        Debug.Log(num);
+
         //Debug.Log(audiosPlaying.Count);
         //foreach(var pair in audiosPlaying)
         //{
