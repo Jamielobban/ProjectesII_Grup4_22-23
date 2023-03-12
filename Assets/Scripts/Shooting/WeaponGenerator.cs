@@ -114,6 +114,10 @@ public class WeaponGenerator : MonoBehaviour
     private void Update()
     {
         //Debug.Log(weaponIndexOrder.Count);
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            PlayerPrefs.DeleteAll();
+        }
     }
     public bool SetWeapon(int indexChange, ref Weapon weaponInHand, ref Transform firePoint)
     {

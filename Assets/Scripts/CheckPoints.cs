@@ -152,19 +152,19 @@ public class CheckPoints : MonoBehaviour
 
                 }
             }
-            else if (Input.GetButton("TeleportToBase") && !descansar)
-            {
-                if (!encendido)
-                {
+            //else if (Input.GetButton("TeleportToBase") && !descansar)
+            //{
+            //    if (!encendido)
+            //    {
 
-                    encendido = true;
-                    PlayerPrefs.SetInt(nameSave, (encendido ? 1 : 0));
-                    velasApagadas.SetActive(false);
-                    velasEncendidas.SetActive(true);
+            //        encendido = true;
+            //        PlayerPrefs.SetInt(nameSave, (encendido ? 1 : 0));
+            //        velasApagadas.SetActive(false);
+            //        velasEncendidas.SetActive(true);
 
-                }
-                returnBase();
-            }
+            //    }
+            //    returnBase();
+            //}
 
         }
     }

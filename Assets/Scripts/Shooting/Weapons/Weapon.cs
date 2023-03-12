@@ -59,6 +59,10 @@ public class Weapon
     }
 
 
+    public string GetWeaponName()
+    {
+        return data.WeaponName;
+    }
     public virtual int Update()
     {
         CheckShooting();

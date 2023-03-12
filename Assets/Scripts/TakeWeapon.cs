@@ -11,13 +11,13 @@ public class TakeWeapon : MonoBehaviour
 
     private void Start()
     {
-        
 
-        if ((PlayerPrefs.GetInt(weapoName + "Desbloqueada", 0) == 1)||GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().getWeaponUnlock(weapoName))
-        {
-            this.gameObject.SetActive(false);
 
-        }
+        //if ((PlayerPrefs.GetInt(weapoName + "Desbloqueada", 0) == 1) || GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().getWeaponUnlock(weapoName))
+        //{
+            this.gameObject.SetActive(true);
+
+        //}
     }
 
 

@@ -95,9 +95,9 @@ public class Menu : MonoBehaviour
     public void Play()
     {
 
-        if ((PlayerPrefs.GetInt("SalaPrincipal", 0) != 0))
-        {
-            PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
+        //if ((PlayerPrefs.GetInt("SalaPrincipal", 0) != 0))
+        //{
+        //    PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
 
             //    SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 3));
 
@@ -107,8 +107,8 @@ public class Menu : MonoBehaviour
         //    SceneManager.LoadScene(2);
 
             //}
-            SceneManager.LoadScene(3);
-        }
+        //}
+         SceneManager.LoadScene(1);
     }
 
     public void ExitGame()
