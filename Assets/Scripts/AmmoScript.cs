@@ -6,11 +6,16 @@ public class AmmoScript : MonoBehaviour
 {
     [SerializeField]
     GameObject colider;
+    [SerializeField]
+    SpriteRenderer sr;
 
     bool hasAmmo = false;
     bool setupDone = false;
+    [HideInInspector]
     public string weaponAmmoName;
+    [HideInInspector]
     public Sprite weaponAmmoSprite;
+    [HideInInspector]
     public GameObject weaponGenerator;
 
     private void Start()
@@ -35,6 +40,7 @@ public class AmmoScript : MonoBehaviour
             int indexInValues = weaponGenerator.GetComponent<WeaponGenerator>().weaponIndexOrder[Random.Range(0, listSize)];
             weaponAmmoName = weaponGenerator.GetComponent<WeaponGenerator>().weaponsValues[indexInValues].WeaponName;
             weaponAmmoSprite = weaponGenerator.GetComponent<WeaponGenerator>().weaponsValues[indexInValues].weaponSprite;
+            sr.sprite = weaponAmmoSprite;
             colider.SetActive(true);
             setupDone = true;
         }

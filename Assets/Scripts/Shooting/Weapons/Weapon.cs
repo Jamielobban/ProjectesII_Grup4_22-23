@@ -220,6 +220,11 @@ public class Weapon
         }
     }
 
+    public string GetWeaponName()
+    {
+        return data.WeaponName;
+    }
+
     public bool GetIfOutOffAmmo()
     {
         //if (data.outOfAmmo.RuntimeValue)

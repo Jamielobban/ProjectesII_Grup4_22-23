@@ -31,11 +31,8 @@ public class E6_DeadState : DeadState
         deadSoundKey = AudioManager.Instance.LoadSound(enemy.explosionSound, enemy.explosion.transform.position, 0.15f);
         FunctionTimer.Create(() =>
         {            
-            GameObject explosion = GameObject.Instantiate(enemy.explosion, enemy.transform.position, Quaternion.identity);
-            if (probabilityOfHearth == 0)
-            {
-                Object.Instantiate(stateData.bullets, enemy.transform.position, Quaternion.identity);
-            }
+            GameObject explosion = GameObject.Instantiate(enemy.explosion, enemy.transform.position, Quaternion.identity);            
+            Object.Instantiate(stateData.bullets, enemy.transform.position, Quaternion.identity);
             Object.Instantiate(stateData.orbes, enemy.transform.position, Quaternion.identity);
 
             GameObject.Destroy(enemy.gameObject);

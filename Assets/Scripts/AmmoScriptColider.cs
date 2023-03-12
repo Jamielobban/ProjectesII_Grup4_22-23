@@ -21,6 +21,11 @@ public class AmmoScriptColider : MonoBehaviour
         {
             WeaponValues aux = ammoParent.GetComponent<AmmoScript>().weaponGenerator.GetComponent<WeaponGenerator>().weaponsValues.Where(wv => wv.WeaponName == parentWeaponName).ToArray()[0];
             aux.magazinesInWeapon.RuntimeValue += 1;
+            if (collision.GetComponentInChildren<RightHand>().weaponInHand.GetWeaponName() == parentWeaponName)
+            {
+                collision.GetComponentInChildren<RightHand>().UpdateUIWeapons();
+            }
+            Destroy(ammoParent.gameObject);
             //collision.GetComponentInChildren<RightHand>().draw
         }
     }
