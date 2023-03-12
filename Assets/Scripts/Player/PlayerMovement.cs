@@ -87,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
     public bool canMove = false;
     public bool isMoving = false;
     public bool isFall;
+
+    public bool OnAir;
     [SerializeField] private int maxBlinks = 3;
     [SerializeField] private float blinkRechargeTime;
 
@@ -162,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        //yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null));
+        yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null));
         lastPositionSave = this.transform.position;
 
         StartCoroutine(guardarPosicion());
@@ -266,8 +268,8 @@ public class PlayerMovement : MonoBehaviour
 
 
         if (((Time.time - lastDash) >= timeBetweenDashes)&& !disableDash)
-        {
-            canDash = true;
+        {            if(!OnAir)
+                canDash = true;
         }
         else
         {
