@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3332048604292246765}
   - component: {fileID: 3332048604292246767}
-  - component: {fileID: 3332048604292246764}
+  - component: {fileID: 7212944271888777557}
   m_Layer: 0
   m_Name: Colider
   m_TagString: Untagged
@@ -59,7 +59,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9670055, y: 1.9733362}
   m_EdgeRadius: 0
---- !u!114 &3332048604292246764
+--- !u!114 &7212944271888777557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3332048604292246754}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7846877c63ee26f498e261d9d7fb1c33, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b0f6b9ed68d10a4ba648b4a2a9dd8c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ammoParent: {fileID: 3332048605289082916}
@@ -81,7 +81,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3332048605289082918}
-  - component: {fileID: 3332048605289082919}
+  - component: {fileID: 330996349468794686}
   m_Layer: 0
   m_Name: Ammo
   m_TagString: Untagged
@@ -106,7 +106,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3332048605289082919
+--- !u!114 &330996349468794686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3332048605289082916}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94de0f4fbf3986d41974ef46f89c3cba, type: 3}
+  m_Script: {fileID: 11500000, guid: 97914287db9be0b4ba6fbb8bc8f8a557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   colider: {fileID: 3332048604292246754}

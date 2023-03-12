@@ -15,10 +15,10 @@ public class E2_DeadState : DeadState
     {
         base.Enter();
         deadSoundKey = AudioManager.Instance.LoadSound(stateData.deadSound, enemy.transform.position);
-        if (probabilityOfHearth == 0)
-        {
+        //if (probabilityOfHearth == 0)
+        //{
             Object.Instantiate(stateData.bullets, enemy.transform.position, Quaternion.identity);
-        }
+        //}
         Object.Instantiate(stateData.orbes, enemy.transform.position, Quaternion.identity);
     }
 
