@@ -25,6 +25,16 @@ public class Menu : MonoBehaviour
     GameObject GameName;
     [SerializeField]
     GameObject CreditThings;
+    [SerializeField]
+    BoolValue musicEnabled;
+    [SerializeField]
+    BoolValue sfxEnabled;
+    [SerializeField]
+    FloatValue musicValue;
+    [SerializeField]
+    FloatValue sfxValue;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,5 +94,24 @@ public class Menu : MonoBehaviour
         BackButton.SetActive(false);
         BackClick.SetActive(false);
         CreditThings.SetActive(false);
+    }
+
+    public void MusicEnabledChange()
+    {        
+        musicEnabled.RuntimeValue = !musicEnabled.RuntimeValue;
+
+        if (!musicEnabled.RuntimeValue)
+        {
+            musicValue.RuntimeValue = 0;
+        }
+    }
+    public void SFXEnabledChange()
+    {
+        sfxEnabled.RuntimeValue = !sfxEnabled.RuntimeValue;
+
+        if (!sfxEnabled.RuntimeValue)
+        {
+            sfxValue.RuntimeValue = 0;
+        }
     }
 }
