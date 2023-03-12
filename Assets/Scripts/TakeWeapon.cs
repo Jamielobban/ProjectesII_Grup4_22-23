@@ -27,6 +27,7 @@ public class TakeWeapon : MonoBehaviour
         {            
             collision.GetComponentInChildren<RightHand>().EquipWeapon(weapoName);
             Destroy(this.transform.parent.gameObject);
+            took = true;
         }
     }
 }

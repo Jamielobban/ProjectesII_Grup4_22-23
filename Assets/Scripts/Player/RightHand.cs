@@ -145,6 +145,8 @@ public class RightHand : MonoBehaviour
     public void EquipWeapon(string weaponName)
     {        
         WeaponGenerator.Instance.EquipWeapon(weaponName, ref weaponInHand, ref firePoint);
+        UpdateUIWeapons();
+        weaponInHand.SetWeaponHand(ref sr);
         weaponEquiped = true;
     }
 }

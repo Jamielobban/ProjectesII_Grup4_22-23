@@ -355,7 +355,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (canMove && !isDead)
                 {
-                    if (Input.GetButton("Heal"))
+                    if (Input.GetKey(KeyCode.P))
                     {
                         time += Time.deltaTime;
                         if(potionsSystem.amountToFill > 50)
@@ -378,9 +378,9 @@ public class PlayerMovement : MonoBehaviour
                     movement.y = Input.GetAxisRaw("Vertical");
                     moveDir = new Vector3(movement.x, movement.y).normalized;
                     //
-                    if (Input.GetButtonDown("Parry"))
+                    if (Input.GetKeyDown(KeyCode.Q))
                     {
-                        Debug.Log("Parry");
+                        //Debug.Log("Parry");
                         myBlit.isExpanding = true;
                     }
                     if (moveDir.magnitude == 1)

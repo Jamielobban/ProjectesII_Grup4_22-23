@@ -45,7 +45,7 @@ public class Gancho : MonoBehaviour
 
         }
 
-        if (ganchoMasCercano != null && Input.GetButton("Interact") && !enganchado)
+        if (ganchoMasCercano != null && Input.GetMouseButtonDown(1) && !enganchado)
         {
             enganchado = true;
             lanzarCuerda = true;
