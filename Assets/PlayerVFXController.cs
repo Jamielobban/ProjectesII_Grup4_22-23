@@ -23,7 +23,7 @@ public class PlayerVFXController : MonoBehaviour
                 //LOOKING TO THE LEFT
                 effectsRunning.enabled = true;
                 effectsRunning.flipX = false;
-                Debug.Log("LOOKING TO THE LEFT");
+                //Debug.Log("LOOKING TO THE LEFT");
                 //this.transform.localPosition = new Vector3(1.5f, 0, 0);
                 this.transform.localPosition = new Vector3(0.2f, 0, 0);
             }
@@ -32,7 +32,7 @@ public class PlayerVFXController : MonoBehaviour
                 // LOOKING TO THE RIGHT
                 effectsRunning.enabled = true;
                 effectsRunning.flipX = true;
-                Debug.Log("LOOKING TO THE RIGHT");
+                //Debug.Log("LOOKING TO THE RIGHT");
                 //this.transform.localPosition = new Vector3(-1.475f, 0, 0);
                 this.transform.localPosition = new Vector3(-0.2f, 0, 0);
             }
@@ -43,14 +43,14 @@ public class PlayerVFXController : MonoBehaviour
                 effectsRunning.flipX = true;
                 //this.transform.localPosition = new Vector3(-1.475f, 0, 0);
                 this.transform.localPosition = new Vector3(-0.3f, 0, 0);
-                Debug.Log("LOOKING LEFT AND MOVING LEFT");
+                //Debug.Log("LOOKING LEFT AND MOVING LEFT");
             }
             else if ((player.angle > 90 || player.angle < -90) && player.movement.x >= 1)
             {
                 // LOOKING TO THE RIGHT AND MOVING RIGHT
                 effectsRunning.enabled = true;
                 effectsRunning.flipX = false;
-                Debug.Log("LOOKING TO THE RIGHT AND MOVING RIGHT");
+                //Debug.Log("LOOKING TO THE RIGHT AND MOVING RIGHT");
                 //this.transform.localPosition = new Vector3(1.5f, 0, 0);
                 this.transform.localPosition = new Vector3(0.3f, 0, 0);
             }
@@ -59,14 +59,14 @@ public class PlayerVFXController : MonoBehaviour
             {
                 effectsRunning.enabled = true;
                 //effectsRunning.flipX = true;
-                Debug.Log("Dashed to the left");
+                //Debug.Log("Dashed to the left");
                 this.transform.localPosition = new Vector3(-0.5f, 0, 0);
             }
             else if ((player.angle > 90 || player.angle < -90) && player.movement.x >= 1 && player.isDashing)
             {
                 effectsRunning.enabled = true;
                 effectsRunning.flipX = false;
-                Debug.Log("Dashed to the right");
+                //Debug.Log("Dashed to the right");
                 this.transform.localPosition = new Vector3(.08f, 0, 0);
             }
 
