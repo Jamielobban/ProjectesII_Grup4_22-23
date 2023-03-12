@@ -6,6 +6,14 @@ public class AudioPrefabScript : MonoBehaviour
 {
     [SerializeField]
     AudioSource audioSource;
+    public BoolValue sfxEnabled;
+    public BoolValue musciEnabled;
+    public FloatValue sfxValue;
+    public FloatValue musciValue;
+
+    public float defaultSoundValue = 1;
+    public bool amIsfx = true;
+
     bool playing = false;
     
     public int? myId = null;
@@ -27,5 +35,31 @@ public class AudioPrefabScript : MonoBehaviour
                 AudioManager.Instance.RemoveAudio(myId.Value);
             }
         }
+        else
+        {
+            if (amIsfx)
+            {
+                if (sfxEnabled.RuntimeValue)
+                {
+                    audioSource.volume = defaultSoundValue * sfxValue.RuntimeValue;
+                }
+                else
+                {
+                    audioSource.volume = 0;
+                }
+            }
+            else
+            {
+                if (musciEnabled.RuntimeValue)
+                {
+                    audioSource.volume = defaultSoundValue * musciValue.RuntimeValue;
+                }
+                else
+                {
+                    audioSource.volume = 0;
+                }
+            }
+        }
+
     }
 }

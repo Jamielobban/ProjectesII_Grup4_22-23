@@ -219,11 +219,11 @@ public class PlayerMovement : MonoBehaviour
         currentHearts = maxHearts;
         rollSpeed = 90f;
         justRolled = false;
-        backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true);
-        if (backThemeKey.HasValue)
-        {
-            AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).volume = 0.4f;
-        }
+        backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true, false, 0.4f);
+        //if (backThemeKey.HasValue)
+        //{
+        //    AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).volume = 0.4f;
+        //}
     }
     // Update is called once per frame
     void Update()
