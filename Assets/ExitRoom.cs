@@ -21,7 +21,7 @@ public class ExitRoom : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         playerTransform = GameObject.FindGameObjectWithTag("Player");
 
-        if (((PlayerPrefs.GetInt("Lado", 0) + 2) % 4 == lado) && ((PlayerPrefs.GetInt("isDead") == 0)))
+        if (((PlayerPrefs.GetInt("Lado") + 2) % 4 == lado) && ((PlayerPrefs.GetInt("isDead") == 0)))
         {
             GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().GetWeapons();
 
