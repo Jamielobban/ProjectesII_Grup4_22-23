@@ -222,11 +222,11 @@ public class Weapon
 
     public bool GetIfOutOffAmmo()
     {
-        if (data.outOfAmmo.RuntimeValue)
-            nextWeaponKey = AudioManager.Instance.LoadSound(nextWeapon, player.transform);
+        //if (data.outOfAmmo.RuntimeValue)
+        //    nextWeaponKey = AudioManager.Instance.LoadSound(nextWeapon, player.transform);
         return data.outOfAmmo.RuntimeValue;
-    }   
-   
+    }
+
 
     public float GetFireRate()
     {
