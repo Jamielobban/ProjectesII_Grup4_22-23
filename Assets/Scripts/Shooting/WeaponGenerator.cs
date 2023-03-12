@@ -108,8 +108,12 @@ public class WeaponGenerator : MonoBehaviour
     {
         if (weaponIndexOrder.Count != 0)
         {
+            if (GameObject.FindGameObjectWithTag("Player") != null)
+            {
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponInHand = new Weapon(GameObject.FindGameObjectWithTag("PlayerFirePoint").transform, weaponsValues[currentWeapon]);
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponEquiped = true;
+            }
+
         }
     }
     private void Update()

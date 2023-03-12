@@ -31,6 +31,13 @@ public class CheckPoints : MonoBehaviour
     {
         playerTtransform = GameObject.FindGameObjectWithTag("Player").transform;
         nameSave = "encendido" + SceneManager.GetActiveScene().buildIndex;
+        if(UnlockAtStart)
+        {
+            PlayerPrefs.SetInt("IDScene", SceneManager.GetActiveScene().buildIndex);
+            PlayerPrefs.SetInt(nameSave, (true ? 1 : 0));
+
+        }
+
         encendido = (PlayerPrefs.GetInt(nameSave) != 0);
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
@@ -148,19 +155,19 @@ public class CheckPoints : MonoBehaviour
 
                 }
             }
-            else if (Input.GetButton("TeleportToBase") && !descansar)
-            {
-                if (!encendido)
-                {
+            //else if (Input.GetButton("TeleportToBase") && !descansar)
+            //{
+            //    if (!encendido)
+            //    {
 
-                    encendido = true;
-                    PlayerPrefs.SetInt(nameSave, (encendido ? 1 : 0));
-                    velasApagadas.SetActive(false);
-                    velasEncendidas.SetActive(true);
+            //        encendido = true;
+            //        PlayerPrefs.SetInt(nameSave, (encendido ? 1 : 0));
+            //        velasApagadas.SetActive(false);
+            //        velasEncendidas.SetActive(true);
 
-                }
-                returnBase();
-            }
+            //    }
+            //    returnBase();
+            //}
 
         }
     }
