@@ -6,6 +6,8 @@ public class AudioPrefabScript : MonoBehaviour
 {
     [SerializeField]
     AudioSource audioSource;
+    [SerializeField]
+    BoolValue gamePaused;
     public BoolValue sfxEnabled;
     public BoolValue musciEnabled;
     public FloatValue sfxValue;
@@ -22,21 +24,36 @@ public class AudioPrefabScript : MonoBehaviour
     
     // Update is called once per frame
     void Update()
-    {
+    {        
 
         if (audioSource.isPlaying && !playing)
         {
-            playing = true;
+            playing = true;            
         }
-        if (!audioSource.isPlaying && playing)
+
+        if(audioSource.isPlaying && gamePaused.RuntimeValue)
         {
-            if (myId.HasValue)
-            {
-                AudioManager.Instance.RemoveAudio(myId.Value);
+            audioSource.Pause();
+        }
+
+        if (!audioSource.isPlaying && playing)
+        {            
+            if(audioSource.time == audioSource.clip.length)
+            { 
+                //auido terminado
+                if (myId.HasValue)
+                {
+                    AudioManager.Instance.RemoveAudio(myId.Value);
+                }
             }
+            else if(!gamePaused.RuntimeValue)
+            {
+                audioSource.UnPause();
+            }
+                
         }
         else
-        {
+        {            
             if (amIsfx)
             {
                 if (sfxEnabled.RuntimeValue)
@@ -62,4 +79,5 @@ public class AudioPrefabScript : MonoBehaviour
         }
 
     }
+    
 }

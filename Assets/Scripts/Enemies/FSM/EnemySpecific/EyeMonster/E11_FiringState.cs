@@ -242,7 +242,7 @@ public class E11_FiringState : FiringState
                     //{
                     //    aux.volume = 1;
                     //}
-                    AudioManager.Instance.ChangeDefaultVolumeValueOfAudio(laserAlarmKey.Value, 0);
+                    AudioManager.Instance.ChangeDefaultVolumeValueOfAudio(laserAlarmKey.Value, 1);
                 }
             }
             else

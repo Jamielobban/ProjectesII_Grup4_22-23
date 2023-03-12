@@ -28,6 +28,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     GameObject GamePausedText;
 
+    [SerializeField]
+    BoolValue gamePaused;
+
     void Start()
     {
         
@@ -74,6 +77,15 @@ public class PauseMenu : MonoBehaviour
                 GamePausedText.SetActive(true);
                 Time.timeScale = 0;
             }
+        }
+
+        if (MenuContainer.activeInHierarchy)
+        {
+            gamePaused.RuntimeValue = true;
+        }
+        else
+        {
+            gamePaused.RuntimeValue = false;
         }
     }
 

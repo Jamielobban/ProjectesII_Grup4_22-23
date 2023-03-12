@@ -76,6 +76,9 @@ public class AudioManager : MonoBehaviour
 
             audioSorcePrefabClone = Instantiate(audioSourcePrefab, position, Quaternion.identity);
 
+            audioSorcePrefabClone.GetComponent<AudioPrefabScript>().defaultSoundValue = volume;
+            audioSorcePrefabClone.GetComponent<AudioPrefabScript>().amIsfx = isSFX;
+
             audioSource = audioSorcePrefabClone.GetComponent<AudioSource>();
 
             audioSource.maxDistance = maxDistance;
@@ -149,7 +152,7 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         RemoveEmptyPositions();
-        ////Debug.Log(audiosPlaying.Count);
+        Debug.Log(audiosPlaying.Count);
         //foreach(var pair in audiosPlaying)
         //{
         //    Debug.Log(pair.Value.audioClipName);
@@ -235,12 +238,22 @@ public class AudioManager : MonoBehaviour
 
     public void ChangeDefaultVolumeValueOfAudio(int key, float newDefaultValue)
     {
-        Transform prefab = GetAudioFromDictionaryIfPossible(key).transform;
+        Transform prefab;
+        var aux = GetAudioFromDictionaryIfPossible(key);
 
-        if(prefab != null)
+        if(aux != null)
         {
+            prefab = aux.transform;
             prefab.GetComponent<AudioPrefabScript>().defaultSoundValue = newDefaultValue;
+
         }
+       
+
+
+
+        //if (prefab != null)
+        //{
+        //}
     }
 
     private bool CheckIfShouldPlay(AudioClip clip, float delay)

@@ -127,23 +127,13 @@ public class Menu : MonoBehaviour
         CreditThings.SetActive(false);
     }
 
-    public void MusicEnabledChange()
-    {        
-        musicEnabled.RuntimeValue = !musicEnabled.RuntimeValue;
-
-        if (!musicEnabled.RuntimeValue)
-        {
-            musicValue.RuntimeValue = 0;
-        }
-    }
-    public void SFXEnabledChange()
+    public void MusicEnabledChange(bool newValue)
     {
-        sfxEnabled.RuntimeValue = !sfxEnabled.RuntimeValue;
-
-        if (!sfxEnabled.RuntimeValue)
-        {
-            sfxValue.RuntimeValue = 0;
-        }
+        musicEnabled.RuntimeValue = newValue;        
+    }
+    public void SFXEnabledChange(bool newValue)
+    {
+        sfxEnabled.RuntimeValue = newValue;        
     }
     public void ResumeGame()
     {
@@ -182,5 +172,15 @@ public class Menu : MonoBehaviour
         SettingsThings.SetActive(false);
         BackToPauseButton.SetActive(false);
         BackToPauseClick.SetActive(false);
+    }
+
+    public void SFXValueChanged(float value)
+    {
+        sfxValue.RuntimeValue = value;
+    }
+
+    public void MusicValueChanged(float value)
+    {
+        musicValue.RuntimeValue = value;
     }
 }

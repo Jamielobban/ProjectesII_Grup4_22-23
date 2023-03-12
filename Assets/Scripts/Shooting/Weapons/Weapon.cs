@@ -130,7 +130,7 @@ public class Weapon
     private bool CheckShooting()
     {
         
-        if (!data.outOfAmmo.RuntimeValue && !data.reloading.RuntimeValue)
+        if (!data.outOfAmmo.RuntimeValue && !data.reloading.RuntimeValue && Time.timeScale != 0)
         {
             if (!data.powerActive.RuntimeValue)
             {                
