@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoomManager : MonoBehaviour
 {
@@ -24,7 +25,6 @@ public class RoomManager : MonoBehaviour
 
     public GameObject[] doors;
 
-    public int idRoom;
     //public GameObject room;
     bool alreadyEnter;
     string nameSave;
@@ -33,7 +33,7 @@ public class RoomManager : MonoBehaviour
 
     public void Start()
     {
-        nameSave = "Sala" + idRoom;
+        nameSave = "Sala" + SceneManager.GetActiveScene().buildIndex;
 
         alreadyEnter = (PlayerPrefs.GetInt(nameSave) != 0);
         inRoom = false;

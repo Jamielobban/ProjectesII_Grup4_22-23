@@ -23,6 +23,7 @@ public class WeaponGenerator : MonoBehaviour
     public float totalTime;
     bool setFirstWeapon = true;
 
+    int currentWeapon;
     public static WeaponGenerator Instance { get; private set; }
 
     private void Awake()
@@ -40,7 +41,8 @@ public class WeaponGenerator : MonoBehaviour
     }
 
     private void Start()
-    {        
+    {
+        restartStates();
         weaponIndex = 0;
 
         for (int i = 0; i < weaponsValues.Length; i++)
@@ -56,13 +58,47 @@ public class WeaponGenerator : MonoBehaviour
 
         if (weaponIndexOrder.Count != 0)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponInHand = new Weapon(GameObject.FindGameObjectWithTag("PlayerFirePoint").transform, weaponsValues[PlayerPrefs.GetInt("CurrentWeapon")]);
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponInHand = new Weapon(GameObject.FindGameObjectWithTag("PlayerFirePoint").transform, weaponsValues[currentWeapon]);
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponEquiped = true;
         }
 
         // weaponIndexOrder.Add(3);
     }
 
+    public void saveWeaponsState()
+    {
+        for(int i = 0; i < weaponsValues.Length; i++)
+        {
+            weaponsValues[i].SavePlayerPrefs();
+
+        }
+        PlayerPrefs.SetInt("CurrentWeapon", currentWeapon);
+
+    }
+
+    public bool getWeaponUnlock(string name)
+    {
+        bool a = false;
+        for (int i = 0; i < weaponsValues.Length; i++)
+        {
+            if(weaponsValues[i].WeaponName == name)
+            {
+                a = weaponsValues[i].unLock;
+            }
+        }
+        return a;
+
+        
+    }
+    public void restartStates()
+    {
+        for (int i = 0; i < weaponsValues.Length; i++)
+        {
+            weaponsValues[i].restartWeapon();
+
+        }
+        currentWeapon = PlayerPrefs.GetInt("CurrentWeapon");
+    }
     public void GetWeapons()
     {
         if (weaponIndexOrder.Count != 0)
@@ -116,7 +152,8 @@ public class WeaponGenerator : MonoBehaviour
         }
         
         weaponInHand = new Weapon(firePoint, weaponsValues[weaponIndexOrder[weaponIndex]]);
-        PlayerPrefs.SetInt("CurrentWeapon", weaponIndexOrder[weaponIndex]);
+        currentWeapon = weaponIndexOrder[weaponIndex];
+
 
         setFirstWeapon = false;
         return true;
@@ -131,9 +168,9 @@ public class WeaponGenerator : MonoBehaviour
             if (weaponsValues[i].WeaponName == weaponName)
             {               
                 weaponIndexOrder.Add(i);
-                PlayerPrefs.SetInt(weaponName + "Desbloqueada", 1);
+                weaponsValues[i].unLock = true;
                 weaponInHand = new Weapon(firePoint, weaponsValues[i]);
-                PlayerPrefs.SetInt("CurrentWeapon", i);
+                currentWeapon = i;
 
             }
         }
@@ -142,7 +179,7 @@ public class WeaponGenerator : MonoBehaviour
         {
 
             this.SetWeapon(0, ref weaponInHand, ref firePoint);
-            PlayerPrefs.SetInt("CurrentWeapon", 0);
+            currentWeapon = 0;
 
         }
     }

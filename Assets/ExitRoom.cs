@@ -17,6 +17,7 @@ public class ExitRoom : MonoBehaviour
     public Transform spawn;
     void Start()
     {
+
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         playerTransform = GameObject.FindGameObjectWithTag("Player");
 
@@ -74,6 +75,7 @@ public class ExitRoom : MonoBehaviour
                 StartCoroutine(transicion());
                 StartCoroutine(cambioEscena());
 
+                PlayerPrefs.SetInt("Hearts", player.currentHearts);
 
                 if (!vertical)
                 {
@@ -102,6 +104,8 @@ public class ExitRoom : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+
+
             if(!player.entrandoSala)
             {
                 if (vertical)

@@ -53,16 +53,16 @@ public class CheckpointsList : MonoBehaviour
     }
     void setTransform(int id)
     {
-        for(int i = 0; i <checkpoints.Count;i++)
-        {
-            if(checkpoints[i].id == id)
-            {
-                find = true;
-                actualSpawn = checkpoints[i].spawn;
-                player.empezar();
+        //for(int i = 0; i <checkpoints.Count;i++)
+        //{
+        //    if(checkpoints[i].id == id)
+        //    {
+        //        find = true;
+        //        actualSpawn = checkpoints[i].spawn;
+        //        player.empezar();
 
-            }
-        }
+        //    }
+        //}
 
         if(find == false)
         {
