@@ -51,7 +51,7 @@ public class WeaponValues : ScriptableObject
 
     public void restartWeapon()
     {
-        unLock = ((PlayerPrefs.GetInt(WeaponName + "Desbloqueada", 0) == 1));
+        unLock = ((PlayerPrefs.GetInt(WeaponName + "Desbloqueada") == 1));
         GetPlayerPrefs();
     }
     private void Awake()

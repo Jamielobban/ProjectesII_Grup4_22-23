@@ -96,14 +96,8 @@ public class WeaponGenerator : MonoBehaviour
         {
             weaponsValues[i].restartWeapon();
 
-            weaponsValues[2].restartWeapon();
-            weaponsValues[3].restartWeapon();
-
-
-        currentWeapon = PlayerPrefs.GetInt("CurrentWeapon", 0);
-
-        GetWeapons();
-
+        }
+        currentWeapon = PlayerPrefs.GetInt("CurrentWeapon");
     }
     public void GetWeapons()
     {
