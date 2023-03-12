@@ -26,17 +26,13 @@ public class PlayerMovement : MonoBehaviour
     public bool knockbackSet;
 
 
-    public int maxHealth = 100;
-    public int maxHearts = 9;
+    public int maxHearts;
     public int currentHearts;
     public float currentHealth;
 
 
     public bool isDead;
     private HealthBar healthBar;
-    [SerializeField] dashCooldown dashUI1;
-    [SerializeField] dashCooldown dashUI2;
-    [SerializeField] dashCooldown dashUI3;
     public bool isDashing;
     public GameObject floorBlood;
 
@@ -125,8 +121,14 @@ public class PlayerMovement : MonoBehaviour
 
     public bool restart;
     public Vector3 lastPositionSave;
+
+    float time = 0;
+
+    [SerializeField] PotionSystem potionsSystem;
+
     private void Awake()
     {
+        healthUI = FindObjectOfType<HeartSystem>();
         restart = false;
         StartCoroutine(guardarPosicion());
 
@@ -137,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
         if(GameObject.FindGameObjectWithTag("CheckPoints") != null)
         list = GameObject.FindGameObjectWithTag("CheckPoints").GetComponent<CheckpointsList>();
 
+        //DontDestroyOnLoad(this);
 
         trail = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -145,22 +148,19 @@ public class PlayerMovement : MonoBehaviour
 
         playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
+
+        potionsSystem = FindObjectOfType<PotionSystem>();
     }
 
     public void Reaparecer()
     {
-       
-            SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene"));
-
-        
-
-
+      SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene"));
     }
     private IEnumerator guardarPosicion()
     {
         yield return new WaitForSeconds(2f);
 
-        yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null));
+        //yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null));
         lastPositionSave = this.transform.position;
 
         StartCoroutine(guardarPosicion());
@@ -208,9 +208,11 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Start()
     {
+        canDash = true;
         entrandoSala = true;
         isDead = false;
-        state = State.Normal;
+
+        state = State.Rolling;
         //currentHealth = maxHealth;
         currentHearts = maxHearts;
         rollSpeed = 90f;
@@ -302,6 +304,7 @@ public class PlayerMovement : MonoBehaviour
                 currentBlinkRechargeTime2 = 0f;
             }
         }
+        //Debug.Log(time);
         if (remainingBlinks == 0)
         {
             //dashUI3.SetDashTimer(0);
@@ -345,9 +348,24 @@ public class PlayerMovement : MonoBehaviour
 
                 if (canMove && !isDead)
                 {
-                    if (Input.GetButtonDown("Heal"))
+                    if (Input.GetButton("Heal"))
                     {
-                        isInvulnerable = true;
+                        time += Time.deltaTime;
+                        if(potionsSystem.amountToFill > 50)
+                        {
+                            CinemachineShake.Instance.ShakeCamera(5f, .2f);
+                            potionsSystem.potionPrefab.transform.DOShakePosition(0.5f, 1f, 5, 45, false,false, ShakeRandomnessMode.Full);
+                        }
+                        if(time >= 1f && potionsSystem.amountToFill >= 50)
+                        {
+                            potionsSystem.amountToFill -= 50;
+                            potionsSystem.CheckPotionStatus();
+                            Health();
+                        }
+                    }
+                    if (Input.GetButtonUp("Heal") || time >= 1.5f)
+                    {
+                        time = 0;
                     }
                     movement.x = Input.GetAxisRaw("Horizontal");
                     movement.y = Input.GetAxisRaw("Vertical");
@@ -525,7 +543,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Health()
     {
-        currentHearts +=1 ;
+        currentHearts +=2;
 
         if (currentHearts > maxHearts)
         {
@@ -615,7 +633,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         currentBlinkRechargeTime += Time.deltaTime;
-        dashUI1.SetDashTimer(currentBlinkRechargeTime);
+        //dashUI1.SetDashTimer(currentBlinkRechargeTime);
     }
 
 

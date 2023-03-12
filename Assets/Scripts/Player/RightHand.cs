@@ -40,9 +40,11 @@ public class RightHand : MonoBehaviour
     public Image actualWeaponUI, nextWeaponUI;
 
     public bool stuffSetted = false;
+    [SerializeField] WeaponGenerator weapon;
     private void Awake()
     {
-              
+        weapon = GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>();
+        ammoUI = FindObjectOfType<AmmoUISystem>();
     }
 
     void UpdateUIWeapons()
@@ -57,46 +59,50 @@ public class RightHand : MonoBehaviour
 
         if (weaponEquiped)
         {
-            if (weaponInHand.GetReloadingState())
+            if(weapon.weaponIndexOrder.Count != 0)
             {
-                if (firstTime3)
+
+                if (weaponInHand.GetReloadingState())
                 {
-                    ammoUI.StartCoroutine(ammoUI.ReloadAmmo(weaponInHand.GetReloadTimeInSec()));
-                    firstTime3 = false;
+                    if (firstTime3)
+                    {
+                        ammoUI.StartCoroutine(ammoUI.ReloadAmmo(weaponInHand.GetReloadTimeInSec()));
+                        firstTime3 = false;
+                    }
+                    reloadTimer += Time.deltaTime;
+                    if (reloadTimer > weaponInHand.GetReloadTimeInSec() + 0.5f)
+                    {
+                        firstTime3 = true;
+                        reloadTimer = 0f;
+                    }
                 }
-                reloadTimer += Time.deltaTime;
-                if (reloadTimer > weaponInHand.GetReloadTimeInSec() + 0.5f)
+
+                //Debug.Log(weaponInHand.Update());
+                if(WeaponGenerator.Instance.SetWeapon(weaponInHand.Update(), ref weaponInHand, ref firePoint))
                 {
-                    firstTime3 = true;
-                    reloadTimer = 0f;
+                    weaponInHand.SetWeaponHand(ref sr);
+                    UpdateUIWeapons();
                 }
-            }
 
-            //Debug.Log(weaponInHand.Update());
-            if(WeaponGenerator.Instance.SetWeapon(weaponInHand.Update(), ref weaponInHand, ref firePoint))
-            {
-                weaponInHand.SetWeaponHand(ref sr);
-                UpdateUIWeapons();
-            }
+                if (!stuffSetted && weaponEquiped)
+                {
+                    _recoilSript = GetComponent<RecoilScript>();
+                    weaponInHand.SetWeaponHand(ref sr);
+                    UpdateUIWeapons();
+                    stuffSetted = true;
+                }
 
-            if (!stuffSetted && weaponEquiped)
-            {
-                _recoilSript = GetComponent<RecoilScript>();
-                weaponInHand.SetWeaponHand(ref sr);
-                UpdateUIWeapons();
-                stuffSetted = true;
-            }
-
-            if (weaponInHand.GetIfOutOffAmmo())
-            {
+                if (weaponInHand.GetIfOutOffAmmo())
+                {
 
                 
-                weaponInHand.SetWeaponHand(ref sr);
+                    weaponInHand.SetWeaponHand(ref sr);
 
-                //nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon(firePoint);---------------------------
-                Debug.Log("Update in update right hand");
-                UpdateUIWeapons();
+                    //nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon(firePoint);---------------------------
+                    Debug.Log("Update in update right hand");
+                    UpdateUIWeapons();
 
+                }
             }
         }
 
@@ -109,11 +115,14 @@ public class RightHand : MonoBehaviour
     {
         if (weaponEquiped)
         {
-            if (weaponInHand.shotFired)
+            if (weapon.weaponIndexOrder.Count != 0)
             {
-                UpdateUIWeapons();
-                //Debug.Log("Update in fixed");
-                weaponInHand.shotFired = false;
+                if (weaponInHand.shotFired)
+                {
+                    UpdateUIWeapons();
+                    //Debug.Log("Update in fixed");
+                    weaponInHand.shotFired = false;
+                }
             }
         }        
     }    

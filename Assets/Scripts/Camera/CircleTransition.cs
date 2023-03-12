@@ -15,10 +15,22 @@ public class CircleTransition : MonoBehaviour
     public PlayerMovement playerSignal;
 
     public PlayerMovement playerCheckpoints;
+
+    public static CircleTransition Instance { get; private set; }
+
     private void Awake()
     {
         playerCheckpoints = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-           _canvas = GetComponent<Canvas>();
+        _canvas = GetComponent<Canvas>();
+        if (Instance != null && Instance != _canvas)
+        {
+            Destroy(_canvas);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(_canvas);
+        }
     }
 
     private void Update()

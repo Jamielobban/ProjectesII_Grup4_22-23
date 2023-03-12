@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponGenerator : MonoBehaviour
 {
     [SerializeField]
-    List<int> weaponIndexOrder = new List< int >();
+    public List<int> weaponIndexOrder = new List< int >();
     [SerializeField]
     WeaponValues[] weaponsValues = new WeaponValues[4]; //Sniper, shotgun, Pistol - Auto, Semi, Bolt
     
@@ -35,6 +35,7 @@ public class WeaponGenerator : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            GetWeapons();
         }
     }
 
