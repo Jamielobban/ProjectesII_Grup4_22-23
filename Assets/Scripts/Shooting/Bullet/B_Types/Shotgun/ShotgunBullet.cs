@@ -35,7 +35,7 @@ public class ShotgunBullet : Bullet
         muzzleFlash = Resources.Load<GameObject>("Prefab/MuzzleFlash");
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
-        CinemachineShake.Instance.ShakeCamera(10f, .2f);
+        CinemachineShake.Instance.ShakeCamera(10f, .1f);
 
         if (powerUpOn)
         {

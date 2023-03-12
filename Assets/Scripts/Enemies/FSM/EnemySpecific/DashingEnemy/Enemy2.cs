@@ -77,11 +77,11 @@ public class Enemy2 : Entity
         {
             if(stateMachine.currentState == dashingState)
             {
-                collision.gameObject.SendMessage("GetDamage", 25);
+                collision.gameObject.SendMessage("GetDamage", 2);
             }
             else
             {
-                collision.gameObject.SendMessage("GetDamage", 8);
+                collision.gameObject.SendMessage("GetDamage", 1);
             }
 
             lastTimeDamaged = Time.time;
@@ -91,7 +91,7 @@ public class Enemy2 : Entity
     {
         if (collision.CompareTag("Player") && Time.time - lastTimeDamaged >= 1)
         {
-            collision.gameObject.SendMessage("GetDamage", 8);
+            collision.gameObject.SendMessage("GetDamage", 2);
             lastTimeDamaged = Time.time;
         }
     }

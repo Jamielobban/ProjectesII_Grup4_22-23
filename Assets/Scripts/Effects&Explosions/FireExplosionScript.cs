@@ -21,7 +21,7 @@ public class FireExplosionScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.gameObject.SendMessage("GetDamage", 11);            
+            collision.gameObject.SendMessage("GetDamage", 1);            
         }
     }
 

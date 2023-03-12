@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shaderTypes: 0
+  shaderTypes: 3
   normalStrength: 5
   normalSmoothing: 1
   computingNormal: 0
@@ -224,6 +224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90988386c468a354b96981a5eae3c510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenDamage: 0.1
-  damagePerTic: 5
+  timeBetweenDamage: 0.5
+  damagePerTic: 1
   tagToAffect: Player
