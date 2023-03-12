@@ -200,19 +200,21 @@ public class E11_FiringState : FiringState
 
                 if (_hit.transform.gameObject.CompareTag("Player"))
                 {
-                    AudioSource aux = AudioManager.Instance.GetAudioFromDictionaryIfPossible(laserShotKey.Value);
-                    if(aux != null)
-                    {
-                        aux.volume = 1;
-                    }
+                    //AudioSource aux = AudioManager.Instance.GetAudioFromDictionaryIfPossible(laserShotKey.Value);
+                    //if(aux != null)
+                    //{
+                    //    aux.volume = 1;
+                    //}
+                    AudioManager.Instance.ChangeDefaultVolumeValueOfAudio(laserAlarmKey.Value, 1);
                 }
                 else
                 {
-                    AudioSource aux = AudioManager.Instance.GetAudioFromDictionaryIfPossible(laserShotKey.Value);
-                    if (aux != null)
-                    {
-                        aux.volume = 0f;
-                    }
+                    //AudioSource aux = AudioManager.Instance.GetAudioFromDictionaryIfPossible(laserShotKey.Value);
+                    //if (aux != null)
+                    //{
+                    //    aux.volume = 0f;
+                    //}
+                    AudioManager.Instance.ChangeDefaultVolumeValueOfAudio(laserAlarmKey.Value, 0);
                 }
                 doLaserRedSound = false;
             }
@@ -225,31 +227,34 @@ public class E11_FiringState : FiringState
                     canApplyDamge = false;
                     if (laserShotKey.HasValue)
                     {
-                        AudioSource aux = AudioManager.Instance.GetAudioFromDictionaryIfPossible(laserShotKey.Value);
-                        if (aux != null)
-                        {
-                            aux.volume = 1f;
-                        }
+                        //AudioSource aux = AudioManager.Instance.GetAudioFromDictionaryIfPossible(laserShotKey.Value);
+                        //if (aux != null)
+                        //{
+                        //    aux.volume = 1f;
+                        //}
+                        AudioManager.Instance.ChangeDefaultVolumeValueOfAudio(laserAlarmKey.Value, 1);
                     }
                 }
                 if (laserAlarmKey.HasValue)
                 {
-                    AudioSource aux = AudioManager.Instance.GetAudioFromDictionaryIfPossible(laserAlarmKey.Value);
-                    if(aux != null)
-                    {
-                        aux.volume = 1;
-                    }
+                    //AudioSource aux = AudioManager.Instance.GetAudioFromDictionaryIfPossible(laserAlarmKey.Value);
+                    //if(aux != null)
+                    //{
+                    //    aux.volume = 1;
+                    //}
+                    AudioManager.Instance.ChangeDefaultVolumeValueOfAudio(laserAlarmKey.Value, 1);
                 }
             }
             else
             {
                 if (laserAlarmKey.HasValue)
                 {
-                    AudioSource aux = AudioManager.Instance.GetAudioFromDictionaryIfPossible(laserAlarmKey.Value);
-                    if (aux != null)
-                    {
-                        aux.volume = 0;
-                    }
+                    //AudioSource aux = AudioManager.Instance.GetAudioFromDictionaryIfPossible(laserAlarmKey.Value);
+                    //if (aux != null)
+                    //{
+                    //    aux.volume = 0;
+                    //}
+                    AudioManager.Instance.ChangeDefaultVolumeValueOfAudio(laserAlarmKey.Value, 0);
                 }
             }
             Draw2DRay(enemy.firePoint.position, _hit.point);
