@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2863957006903703162
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39,7 +39,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 56, y: -34.2}
-  m_SizeDelta: {x: 92.71, y: 38.129997}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8182148847592359587
 CanvasRenderer:
@@ -267,10 +267,10 @@ RectTransform:
   m_Father: {fileID: 2863957006903703162}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 46.355, y: -19.064999}
-  m_SizeDelta: {x: 82.71, y: 28.13}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7910155020015194857
 CanvasRenderer:
@@ -509,7 +509,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.8, y: -34.2}
+  m_AnchoredPosition: {x: -73.5, y: -34.2}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7875127819453028003
@@ -803,6 +803,10 @@ MonoBehaviour:
   velasEncendidas: {fileID: 5402562590159620893}
   velasApagadas: {fileID: 5402562590450901299}
   button: {fileID: 2147047928753259886}
+  allRooms: {fileID: 0}
+  destruibles: {fileID: 0}
+  spawns: {fileID: 0}
+  id: 0
   UnlockAtStart: 0
 --- !u!1 &5402562590450901299
 GameObject:
