@@ -67,23 +67,12 @@ public class Menu : MonoBehaviour
     void Start()
     {
         
-        if(musicValue != null)
-        {
-            musicValue.RuntimeValue = PlayerPrefs.GetFloat("musicValue", 1);
-        }
-        if (sfxValue != null)
-        {
-            sfxValue.RuntimeValue = PlayerPrefs.GetFloat("sfxValue", 1);
-        }
-        if (musicEnabled != null)
-        {
-            musicEnabled.RuntimeValue = PlayerPrefs.GetInt("MusicEnabled", 1) == 1 ? true : false;
-        }
-        if(sfxEnabled != null)
-        {
-            sfxEnabled.RuntimeValue = PlayerPrefs.GetInt("MusicEnabled", 1) == 1 ? true : false;
+        
+        musicValue.RuntimeValue = PlayerPrefs.GetFloat("musicValue", 1);
+        sfxValue.RuntimeValue = PlayerPrefs.GetFloat("sfxValue", 1);
 
-        }
+        musicEnabled.RuntimeValue = PlayerPrefs.GetInt("MusicEnabled", 1) == 1? true : false;
+        sfxEnabled.RuntimeValue = PlayerPrefs.GetInt("MusicEnabled", 1) == 1 ? true : false;
     }
 
     // Update is called once per frame
@@ -95,20 +84,19 @@ public class Menu : MonoBehaviour
     public void Play()
     {
 
-        if ((PlayerPrefs.GetInt("SalaPrincipal", 0) != 0))
+        if((PlayerPrefs.GetInt("SalaPrincipal", 0) != 0))
         {
             PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
 
-            //    SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 3));
+            SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 3));
 
-        //}
-        //else
-        //{
-        //    SceneManager.LoadScene(2);
-
-            //}
-            SceneManager.LoadScene(3);
         }
+        else
+        {
+            SceneManager.LoadScene(10);
+
+        }
+
     }
 
     public void ExitGame()

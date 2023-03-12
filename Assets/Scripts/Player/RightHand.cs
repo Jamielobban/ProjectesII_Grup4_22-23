@@ -45,16 +45,17 @@ public class RightHand : MonoBehaviour
     {
         weapon = GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>();
         ammoUI = FindObjectOfType<AmmoUISystem>();
-        canChangeWeapon = true;
     }
 
-    public void UpdateUIWeapons()
+    void UpdateUIWeapons()
     {
         ammoUI.DrawAmmo();        
     }
     private void Update()
     {
-        //Reload Bar        
+        //Reload Bar
+
+        
 
         if (weaponEquiped)
         {
@@ -79,15 +80,11 @@ public class RightHand : MonoBehaviour
                 }
 
                 //Debug.Log(weaponInHand.Update());
-                if (canChangeWeapon)
+                if(WeaponGenerator.Instance.SetWeapon(weaponInHand.Update(), ref weaponInHand, ref firePoint) && canChangeWeapon)
                 {
-                    if (WeaponGenerator.Instance.SetWeapon(weaponInHand.Update(), ref weaponInHand, ref firePoint))
-                    {
-                        weaponInHand.SetWeaponHand(ref sr);
-                        UpdateUIWeapons();
-                    }
+                    weaponInHand.SetWeaponHand(ref sr);
+                    UpdateUIWeapons();
                 }
-                
 
                 if (!stuffSetted && weaponEquiped)
                 {
