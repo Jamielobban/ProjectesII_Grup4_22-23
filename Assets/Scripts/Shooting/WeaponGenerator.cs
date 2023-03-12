@@ -38,8 +38,7 @@ public class WeaponGenerator : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             GetWeapons();
         }
-    }
-
+    }    
     private void Start()
     {
         restartStates();

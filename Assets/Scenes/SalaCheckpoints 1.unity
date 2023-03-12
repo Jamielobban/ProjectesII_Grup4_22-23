@@ -18583,7 +18583,7 @@ Transform:
   m_Children:
   - {fileID: 919094790}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1183892315 stripped
 Animator:
@@ -96189,57 +96189,6 @@ Transform:
   m_Father: {fileID: 411965316}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2006093977
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2006093979}
-  - component: {fileID: 2006093978}
-  m_Layer: 0
-  m_Name: WeaponGenerator
-  m_TagString: WeaponGenerator
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2006093978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2006093977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaaa9e585f586d94fb878583794182d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponIndexOrder: 
-  weaponsValues:
-  - {fileID: 11400000, guid: 9565cd13ecf634f4bb541c1e6ed06036, type: 2}
-  - {fileID: 11400000, guid: 4f19c662a29e4f74397047c5764cc23e, type: 2}
-  - {fileID: 11400000, guid: 68daadc9d7103344aa85d1be4f6a8fc7, type: 2}
-  - {fileID: 11400000, guid: ab2b5c1ec5814ab48b668a528b0d4b59, type: 2}
-  totalTime: 0
---- !u!4 &2006093979
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2006093977}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8041336, y: 4.567039, z: -0.30759424}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2037587380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96358,6 +96307,10 @@ PrefabInstance:
     - target: {fileID: 5864100834580233416, guid: a9aabccb9b59d194d85be56692537367, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6855753927804427680, guid: a9aabccb9b59d194d85be56692537367, type: 3}
+      propertyPath: UnlockAtStart
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9aabccb9b59d194d85be56692537367, type: 3}

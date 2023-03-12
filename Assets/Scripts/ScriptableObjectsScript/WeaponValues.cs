@@ -52,25 +52,34 @@ public class WeaponValues : ScriptableObject
     public void restartWeapon()
     {
         unLock = ((PlayerPrefs.GetInt(WeaponName + "Desbloqueada",0) == 1));
-        GetPlayerPrefs();
+        GetPlayerPrefs();       
+
     }
     private void Awake()
     {
-        unLock = false;
-        restartWeapon();
+        //unLock = false;
+        //restartWeapon();
+
     }
 
     public void GetPlayerPrefs()
     {
+        int a = 0;
+        if (bulletsInMagazine != null)
+        {
+            a = bulletsInMagazine.InitialValue * 3;
 
-        bulletsInMagazine.RuntimeValue = PlayerPrefs.GetInt(WeaponName + "balas", bulletsInMagazine.InitialValue * 3) % bulletsInMagazine.InitialValue;
+            bulletsInMagazine.RuntimeValue = PlayerPrefs.GetInt(WeaponName + "balas", a) % bulletsInMagazine.InitialValue;
+        }
+        
 
-        if (bulletsInMagazine.RuntimeValue == 0)
+        if (bulletsInMagazine.RuntimeValue == 0 && bulletsInMagazine != null)
             bulletsInMagazine.RuntimeValue = bulletsInMagazine.InitialValue;
 
-        magazinesInWeapon.RuntimeValue = (int)((PlayerPrefs.GetInt(WeaponName + "balas", bulletsInMagazine.InitialValue * 3) / bulletsInMagazine.InitialValue));
+        if(magazinesInWeapon != null && bulletsInMagazine != null)
+        magazinesInWeapon.RuntimeValue = (int)((PlayerPrefs.GetInt(WeaponName + "balas", a) / bulletsInMagazine.InitialValue));
 
-        if (bulletsInMagazine.RuntimeValue == bulletsInMagazine.InitialValue && magazinesInWeapon.RuntimeValue != 0)
+        if (bulletsInMagazine.RuntimeValue == bulletsInMagazine.InitialValue && magazinesInWeapon.RuntimeValue != 0 && magazinesInWeapon != null && bulletsInMagazine != null)
         {
             magazinesInWeapon.RuntimeValue--;
         }

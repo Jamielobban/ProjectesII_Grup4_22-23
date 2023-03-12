@@ -31,6 +31,10 @@ public class CheckPoints : MonoBehaviour
     {
         playerTtransform = GameObject.FindGameObjectWithTag("Player").transform;
         nameSave = "encendido" + SceneManager.GetActiveScene().buildIndex;
+        if (UnlockAtStart)
+        {
+            PlayerPrefs.SetInt(nameSave, (true ? 1 : 0));
+        }
         encendido = (PlayerPrefs.GetInt(nameSave) != 0);
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
