@@ -23,6 +23,7 @@ public class EnterRoom : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
+            collision.GetComponent<PlayerMovement>().lastPositionSave = collision.transform.position;
             room.StartRound();
         }
     }
