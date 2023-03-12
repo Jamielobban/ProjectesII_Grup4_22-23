@@ -66,7 +66,13 @@ public class Menu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        
+        musicValue.RuntimeValue = PlayerPrefs.GetFloat("musicValue", 1);
+        sfxValue.RuntimeValue = PlayerPrefs.GetFloat("sfxValue", 1);
 
+        musicEnabled.RuntimeValue = PlayerPrefs.GetInt("MusicEnabled", 1) == 1? true : false;
+        sfxEnabled.RuntimeValue = PlayerPrefs.GetInt("MusicEnabled", 1) == 1 ? true : false;
     }
 
     // Update is called once per frame
@@ -129,10 +135,13 @@ public class Menu : MonoBehaviour
 
     public void MusicEnabledChange(bool newValue)
     {
+        PlayerPrefs.SetInt("MusicEnabled", (newValue ? 1 : 0));
         musicEnabled.RuntimeValue = newValue;        
     }
     public void SFXEnabledChange(bool newValue)
     {
+        PlayerPrefs.SetInt("SFXEnabled", (newValue ? 1 : 0));
+
         sfxEnabled.RuntimeValue = newValue;        
     }
     public void ResumeGame()
@@ -176,11 +185,15 @@ public class Menu : MonoBehaviour
 
     public void SFXValueChanged(float value)
     {
+        PlayerPrefs.SetFloat("sfxValue", value);
+
         sfxValue.RuntimeValue = value;
     }
 
     public void MusicValueChanged(float value)
     {
+        PlayerPrefs.SetFloat("musicValue", value);
+
         musicValue.RuntimeValue = value;
     }
 }
