@@ -62,15 +62,16 @@ public class WeaponValues : ScriptableObject
 
     public void GetPlayerPrefs()
     {
-
+        if(bulletsInMagazine != null)
         bulletsInMagazine.RuntimeValue = PlayerPrefs.GetInt(WeaponName + "balas", bulletsInMagazine.InitialValue * 3) % bulletsInMagazine.InitialValue;
 
-        if (bulletsInMagazine.RuntimeValue == 0)
+        if (bulletsInMagazine.RuntimeValue == 0 && bulletsInMagazine != null)
             bulletsInMagazine.RuntimeValue = bulletsInMagazine.InitialValue;
 
-        magazinesInWeapon.RuntimeValue = (int)((PlayerPrefs.GetInt(WeaponName + "balas", bulletsInMagazine.InitialValue * 3) / bulletsInMagazine.InitialValue));
+        if (bulletsInMagazine != null && magazinesInWeapon != null)
+            magazinesInWeapon.RuntimeValue = (int)((PlayerPrefs.GetInt(WeaponName + "balas", bulletsInMagazine.InitialValue * 3) / bulletsInMagazine.InitialValue));
 
-        if (bulletsInMagazine.RuntimeValue == bulletsInMagazine.InitialValue && magazinesInWeapon.RuntimeValue != 0)
+        if (bulletsInMagazine.RuntimeValue == bulletsInMagazine.InitialValue && magazinesInWeapon.RuntimeValue != 0 && bulletsInMagazine != null && magazinesInWeapon != null)
         {
             magazinesInWeapon.RuntimeValue--;
         }

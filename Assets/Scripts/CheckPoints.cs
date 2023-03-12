@@ -38,7 +38,7 @@ public class CheckPoints : MonoBehaviour
 
         }
 
-        encendido = (PlayerPrefs.GetInt(nameSave) != 0);
+        encendido = (PlayerPrefs.GetInt(nameSave, 0) != 0);
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 

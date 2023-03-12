@@ -84,7 +84,7 @@ public class Menu : MonoBehaviour
     public void Play()
     {
 
-        if(!(PlayerPrefs.GetInt("SalaPrincipal", 0) != 0))
+        if((PlayerPrefs.GetInt("SalaPrincipal", 0) != 0))
         {
             PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
 
