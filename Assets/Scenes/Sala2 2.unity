@@ -734,6 +734,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!4 &52215380 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6852020774505889634, guid: 37e2de9deb119b24b86730ee19d93aad, type: 3}
+  m_PrefabInstance: {fileID: 1795556278}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &110971574
 GameObject:
   m_ObjectHideFlags: 0
@@ -87512,7 +87517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1977565597}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40.1, y: 0.8999999, z: -10}
+  m_LocalPosition: {x: 38.61, y: -2.497, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -87546,7 +87551,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073503516}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40.1, y: 0.8999999, z: -10}
+  m_LocalPosition: {x: 38.61, y: -2.497, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -87608,7 +87613,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_Follow: {fileID: 52215380}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 15
