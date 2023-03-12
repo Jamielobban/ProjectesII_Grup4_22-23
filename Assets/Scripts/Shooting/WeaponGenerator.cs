@@ -5,10 +5,10 @@ using UnityEngine;
 public class WeaponGenerator : MonoBehaviour
 {
     [SerializeField]
-    public List<int> weaponIndexOrder = new List< int >();
+    public List<int> weaponIndexOrder = new List<int>();
     [SerializeField]
     public WeaponValues[] weaponsValues = new WeaponValues[4]; //Sniper, shotgun, Pistol - Auto, Semi, Bolt
-    
+
 
     //Mechanism[] mechanismTypes = new Mechanism[3] { new Automatica(), new Seamiautomatica(), new Repeticion() };
 
@@ -52,7 +52,7 @@ public class WeaponGenerator : MonoBehaviour
             if (PlayerPrefs.GetInt(weaponsValues[i].WeaponName + "Desbloqueada") == 1)
             {
                 weaponIndexOrder.Add(i);
-               
+
             }
         }
 
@@ -67,7 +67,7 @@ public class WeaponGenerator : MonoBehaviour
 
     public void saveWeaponsState()
     {
-        for(int i = 0; i < weaponsValues.Length; i++)
+        for (int i = 0; i < weaponsValues.Length; i++)
         {
             weaponsValues[i].SavePlayerPrefs();
 
@@ -81,22 +81,22 @@ public class WeaponGenerator : MonoBehaviour
         bool a = false;
         for (int i = 0; i < weaponsValues.Length; i++)
         {
-            if(weaponsValues[i].WeaponName == name)
+            if (weaponsValues[i].WeaponName == name)
             {
                 a = weaponsValues[i].unLock;
             }
         }
         return a;
 
-        
+
     }
     public void restartStates()
     {
-             weaponsValues[1].restartWeapon();
-            weaponsValues[0].restartWeapon();
+        weaponsValues[1].restartWeapon();
+        weaponsValues[0].restartWeapon();
 
-            weaponsValues[2].restartWeapon();
-            weaponsValues[3].restartWeapon();
+        weaponsValues[2].restartWeapon();
+        weaponsValues[3].restartWeapon();
 
 
         currentWeapon = PlayerPrefs.GetInt("CurrentWeapon", 0);
@@ -121,7 +121,7 @@ public class WeaponGenerator : MonoBehaviour
         switch (indexChange)
         {
             case -1:
-                if(weaponIndex <= 0)
+                if (weaponIndex <= 0)
                 {
                     weaponIndex = weaponIndexOrder.Count - 1;
                 }
@@ -149,13 +149,13 @@ public class WeaponGenerator : MonoBehaviour
                 {
                     weaponIndex++;
                 }
-                break;            
+                break;
             default:
                 return false;
 
-                
+
         }
-        
+
         weaponInHand = new Weapon(firePoint, weaponsValues[weaponIndexOrder[weaponIndex]]);
         currentWeapon = weaponIndexOrder[weaponIndex];
 
@@ -165,13 +165,13 @@ public class WeaponGenerator : MonoBehaviour
     }
 
     public void EquipWeapon(string weaponName, ref Weapon weaponInHand, ref Transform firePoint)
-    {        
-        for(int i = 0; i < weaponsValues.Length; i++)
+    {
+        for (int i = 0; i < weaponsValues.Length; i++)
         {
             //Debug.Log(weaponsValues[i].WeaponName);
 
             if (weaponsValues[i].WeaponName == weaponName)
-            {               
+            {
                 weaponIndexOrder.Add(i);
                 weaponsValues[i].unLock = true;
                 weaponInHand = new Weapon(firePoint, weaponsValues[i]);
@@ -180,7 +180,7 @@ public class WeaponGenerator : MonoBehaviour
             }
         }
 
-        if(weaponInHand == null)
+        if (weaponInHand == null)
         {
 
             this.SetWeapon(0, ref weaponInHand, ref firePoint);
@@ -188,8 +188,8 @@ public class WeaponGenerator : MonoBehaviour
 
         }
     }
-    
 
-    
-    
+
+
+
 }
