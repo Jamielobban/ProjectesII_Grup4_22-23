@@ -7,7 +7,7 @@ public class WeaponGenerator : MonoBehaviour
     [SerializeField]
     public List<int> weaponIndexOrder = new List< int >();
     [SerializeField]
-    WeaponValues[] weaponsValues = new WeaponValues[4]; //Sniper, shotgun, Pistol - Auto, Semi, Bolt
+    public WeaponValues[] weaponsValues = new WeaponValues[4]; //Sniper, shotgun, Pistol - Auto, Semi, Bolt
     
 
     //Mechanism[] mechanismTypes = new Mechanism[3] { new Automatica(), new Seamiautomatica(), new Repeticion() };
@@ -92,18 +92,22 @@ public class WeaponGenerator : MonoBehaviour
     }
     public void restartStates()
     {
-        for (int i = 0; i < weaponsValues.Length; i++)
-        {
-            weaponsValues[i].restartWeapon();
+             weaponsValues[1].restartWeapon();
+            weaponsValues[0].restartWeapon();
 
-        }
+            weaponsValues[2].restartWeapon();
+            weaponsValues[3].restartWeapon();
+
+
         currentWeapon = PlayerPrefs.GetInt("CurrentWeapon");
+        GameObject.FindGameObjectWithTag("RightHand").GetComponent<RightHand>().EquipWeapon(weaponsValues[currentWeapon].WeaponName);
+
     }
     public void GetWeapons()
     {
         if (weaponIndexOrder.Count != 0)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponInHand = new Weapon(GameObject.FindGameObjectWithTag("PlayerFirePoint").transform, weaponsValues[PlayerPrefs.GetInt("CurrentWeapon")]);
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponInHand = new Weapon(GameObject.FindGameObjectWithTag("PlayerFirePoint").transform, weaponsValues[currentWeapon]);
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponEquiped = true;
         }
     }

@@ -87,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
     public bool canMove = false;
     public bool isMoving = false;
     public bool isFall;
+
+    public bool OnAir;
     [SerializeField] private int maxBlinks = 3;
     [SerializeField] private float blinkRechargeTime;
 
@@ -162,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        //yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null));
+        yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null));
         lastPositionSave = this.transform.position;
 
         StartCoroutine(guardarPosicion());
@@ -220,11 +222,11 @@ public class PlayerMovement : MonoBehaviour
         currentHearts = maxHearts;
         rollSpeed = 90f;
         justRolled = false;
-        backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true, false, 0.4f);
-        //if (backThemeKey.HasValue)
-        //{
-        //    AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).volume = 0.4f;
-        //}
+        backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true);
+        if (backThemeKey.HasValue)
+        {
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).volume = 0.4f;
+        }
     }
     // Update is called once per frame
     void Update()
@@ -266,8 +268,8 @@ public class PlayerMovement : MonoBehaviour
 
 
         if (((Time.time - lastDash) >= timeBetweenDashes)&& !disableDash)
-        {
-            canDash = true;
+        {            if(!OnAir)
+                canDash = true;
         }
         else
         {
@@ -586,12 +588,12 @@ public class PlayerMovement : MonoBehaviour
         if (currentHearts % 2 == 0 && healthUI.emptyHeartArray != null)
         {
                 healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = true;
-                //Debug.Log("Flashed right heart");
+                Debug.Log("Flashed right heart");
         }
         else
         {
             healthUI.heartToChange.GetComponent<Animator>().enabled = true;
-            //Debug.Log("Flashed half heart");
+            Debug.Log("Flashed half heart");
         }
 
         //Debug.Log("Now invulnerable");

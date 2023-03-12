@@ -26,32 +26,6 @@ public class Menu : MonoBehaviour
     [SerializeField]
     GameObject CreditThings;
     [SerializeField]
-    GameObject SettingsThings;
-    [SerializeField]
-    GameObject BackToPauseButton;
-    [SerializeField]
-    GameObject BackToPauseClick;
-    [SerializeField]
-    GameObject GamePausedText;
-    [SerializeField]
-    GameObject MenuContainer;
-    [SerializeField]
-    GameObject MenuTopParent;
-    [SerializeField]
-    GameObject ResumeButton;
-    [SerializeField]
-    GameObject ResumeClick;
-    [SerializeField]
-    GameObject OpenSettingsButton;
-    [SerializeField]
-    GameObject OpenSettingsClick;
-    [SerializeField]
-    GameObject BackMainButton;
-    [SerializeField]
-    GameObject BackMainClick;
-
-
-    [SerializeField]
     BoolValue musicEnabled;
     [SerializeField]
     BoolValue sfxEnabled;
@@ -59,8 +33,6 @@ public class Menu : MonoBehaviour
     FloatValue musicValue;
     [SerializeField]
     FloatValue sfxValue;
-
-
 
 
     // Start is called before the first frame update
@@ -127,60 +99,22 @@ public class Menu : MonoBehaviour
         CreditThings.SetActive(false);
     }
 
-    public void MusicEnabledChange(bool newValue)
-    {
-        musicEnabled.RuntimeValue = newValue;        
-    }
-    public void SFXEnabledChange(bool newValue)
-    {
-        sfxEnabled.RuntimeValue = newValue;        
-    }
-    public void ResumeGame()
-    {
-        MenuTopParent.GetComponent<PauseMenu>().ClosePauseMenu();
-    }
+    public void MusicEnabledChange()
+    {        
+        musicEnabled.RuntimeValue = !musicEnabled.RuntimeValue;
 
-    public void BackToMain()
-    {
-        MenuTopParent.GetComponent<PauseMenu>().GoToMain();
+        if (!musicEnabled.RuntimeValue)
+        {
+            musicValue.RuntimeValue = 0;
+        }
     }
-
-    public void Settings()
+    public void SFXEnabledChange()
     {
-        ResumeButton.SetActive(false);
-        ResumeClick.SetActive(false);
-        BackMainButton.SetActive(false);
-        BackMainClick.SetActive(false);
-        OpenSettingsButton.SetActive(false);
-        OpenSettingsClick.SetActive(false);
-        GamePausedText.SetActive(false);
-        SettingsThings.SetActive(true);
-        BackToPauseButton.SetActive(true);
-        BackToPauseClick.SetActive(true);
+        sfxEnabled.RuntimeValue = !sfxEnabled.RuntimeValue;
 
-    }
-
-    public void BackToPauseMenu()
-    {
-        ResumeButton.SetActive(true);
-        ResumeClick.SetActive(true);
-        BackMainButton.SetActive(true);
-        BackMainClick.SetActive(true);
-        OpenSettingsButton.SetActive(true);
-        OpenSettingsClick.SetActive(true);
-        GamePausedText.SetActive(true);
-        SettingsThings.SetActive(false);
-        BackToPauseButton.SetActive(false);
-        BackToPauseClick.SetActive(false);
-    }
-
-    public void SFXValueChanged(float value)
-    {
-        sfxValue.RuntimeValue = value;
-    }
-
-    public void MusicValueChanged(float value)
-    {
-        musicValue.RuntimeValue = value;
+        if (!sfxEnabled.RuntimeValue)
+        {
+            sfxValue.RuntimeValue = 0;
+        }
     }
 }
