@@ -24,6 +24,7 @@ public class ExitRoom : MonoBehaviour
         if (((PlayerPrefs.GetInt("Lado")+2)%4 == lado) && ((PlayerPrefs.GetInt("isDead") == 0)))
         {
             GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().GetWeapons();
+
             if (!vertical)
             {
                 if (sentido == -1)
@@ -72,6 +73,7 @@ public class ExitRoom : MonoBehaviour
         {
             if (!player.entrandoSala)
             {
+
                 StartCoroutine(transicion());
                 StartCoroutine(cambioEscena());
 
