@@ -18,8 +18,8 @@ public class RightHand : MonoBehaviour
    
     private float reloadTimer = 0f;
     private float startedReload;
-    
 
+    bool canChangeWeapon;
     public float timeToPass;
     private bool firstTime = true;
     private bool firstTime1 = true;
@@ -67,18 +67,20 @@ public class RightHand : MonoBehaviour
                     if (firstTime3)
                     {
                         ammoUI.StartCoroutine(ammoUI.ReloadAmmo(weaponInHand.GetReloadTimeInSec()));
+                        canChangeWeapon = false;
                         firstTime3 = false;
                     }
                     reloadTimer += Time.deltaTime;
                     if (reloadTimer > weaponInHand.GetReloadTimeInSec() + 0.5f)
                     {
                         firstTime3 = true;
+                        canChangeWeapon = true;
                         reloadTimer = 0f;
                     }
                 }
 
                 //Debug.Log(weaponInHand.Update());
-                if(WeaponGenerator.Instance.SetWeapon(weaponInHand.Update(), ref weaponInHand, ref firePoint))
+                if(WeaponGenerator.Instance.SetWeapon(weaponInHand.Update(), ref weaponInHand, ref firePoint) && canChangeWeapon)
                 {
                     weaponInHand.SetWeaponHand(ref sr);
                     UpdateUIWeapons();

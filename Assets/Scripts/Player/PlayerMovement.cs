@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Normal, Rolling, Hit
     }
+    public bool OnAir;
     [SerializeField]
     AudioClip backgroundTheme;
     int? backThemeKey;
@@ -80,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
     public float angle;
 
     public AudioClip damageSound;
-
+    bool canChange;
     public bool canDash;
     public float timeBetweenDashes;
     private float lastDash;
@@ -162,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        //yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null));
+        yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null) && !OnAir);
         lastPositionSave = this.transform.position;
 
         StartCoroutine(guardarPosicion());
@@ -262,12 +263,15 @@ public class PlayerMovement : MonoBehaviour
             playerSprite.sortingOrder = 1;
         }
 
-        weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
-
-
-        if (((Time.time - lastDash) >= timeBetweenDashes)&& !disableDash)
-        {
-            canDash = true;
+        weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
+
+
+
+
+
+        if (((Time.time - lastDash) >= timeBetweenDashes) && !disableDash)
+        {            if (!OnAir)
+                canDash = true;
         }
         else
         {
@@ -581,7 +585,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator hurtAnimation()
     {
-        isInvulnerable = true;
+        isInvulnerable = true;        Debug.Log("Hurting");
 
         if (currentHearts % 2 == 0 && healthUI.emptyHeartArray != null)
         {
@@ -620,7 +624,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.20f);
 
 
-        body.DOColor(hurtColor, 0.0f);
+        body.DOColor(hurtColor, 0.0f);        Debug.Log("HUrting");
         body.DOColor(invulnerableColor, 0.15f);
 
         yield return new WaitForSeconds(0.20f);

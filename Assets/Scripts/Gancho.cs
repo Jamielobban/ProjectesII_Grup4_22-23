@@ -39,7 +39,7 @@ public class Gancho : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(lanzarCuerda)
+        if (lanzarCuerda)
         {
             punta.transform.position = Vector3.MoveTowards(punta.transform.position, ganchoMasCercano.transform.position, velocidadCuerda * Time.deltaTime);
 
@@ -118,7 +118,7 @@ public class Gancho : MonoBehaviour
                 {
                     distancia = Vector3.Distance(ganchos[i].transform.position, player.transform.position);
 
-                    if(ganchoMasCercano != null)
+                    if (ganchoMasCercano != null)
                         ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0f);
 
                     ganchoMasCercano = ganchos[i];
@@ -134,8 +134,8 @@ public class Gancho : MonoBehaviour
         {
             for (int i = 0; i < ganchos.Count; i++)
             {
-                
-                if(ganchos[i] == collision.gameObject)
+
+                if (ganchos[i] == collision.gameObject)
                 {
                     ganchos.RemoveAt(i);
                 }

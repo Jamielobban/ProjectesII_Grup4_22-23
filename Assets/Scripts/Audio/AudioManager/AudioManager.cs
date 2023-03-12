@@ -152,7 +152,7 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         RemoveEmptyPositions();
-        Debug.Log(audiosPlaying.Count);
+        //Debug.Log(audiosPlaying.Count);
         //foreach(var pair in audiosPlaying)
         //{
         //    Debug.Log(pair.Value.audioClipName);

@@ -56,11 +56,11 @@ public class WeaponGenerator : MonoBehaviour
             }
         }
 
-        if (weaponIndexOrder.Count != 0)
-        {
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponInHand = new Weapon(GameObject.FindGameObjectWithTag("PlayerFirePoint").transform, weaponsValues[currentWeapon]);
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponEquiped = true;
-        }
+        //if (weaponIndexOrder.Count != 0)
+        //{
+        //    GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponInHand = new Weapon(GameObject.FindGameObjectWithTag("PlayerFirePoint").transform, weaponsValues[currentWeapon]);
+        //    GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponEquiped = true;
+        //}
 
         // weaponIndexOrder.Add(3);
     }

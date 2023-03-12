@@ -38,14 +38,15 @@ public class CheckPoints : MonoBehaviour
 
         if (encendido)
         {
-            GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().restartStates();
             if ((PlayerPrefs.GetInt("isDead") != 0))
             {
+                GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().restartStates();
+
                 PlayerPrefs.SetInt("Hearts", player.maxHearts);
                 player.currentHearts = player.maxHearts;
 
                 playerTtransform.position = spawn.position;
-                PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
+                StartCoroutine(setIsDeadFalse());
             }
 
             string KeyName = "Sala" + 8;
@@ -76,7 +77,12 @@ public class CheckPoints : MonoBehaviour
 
 
     }
+    private IEnumerator setIsDeadFalse()
+    {
+        yield return new WaitForSeconds(0.5f);
 
+        PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
+    }
     void save()
     {
         GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().saveWeaponsState();
@@ -180,7 +186,7 @@ public class CheckPoints : MonoBehaviour
 
     }
 
-        void SetSpawn()
+    void SetSpawn()
     {
 
         PlayerPrefs.SetInt("IDScene", SceneManager.GetActiveScene().buildIndex);

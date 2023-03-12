@@ -21,9 +21,10 @@ public class ExitRoom : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         playerTransform = GameObject.FindGameObjectWithTag("Player");
 
-        if (((PlayerPrefs.GetInt("Lado")+2)%4 == lado) && ((PlayerPrefs.GetInt("isDead") == 0)))
+        if (((PlayerPrefs.GetInt("Lado") + 2) % 4 == lado) && ((PlayerPrefs.GetInt("isDead") == 0)))
         {
             GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().GetWeapons();
+
             if (!vertical)
             {
                 if (sentido == -1)
@@ -52,7 +53,7 @@ public class ExitRoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private IEnumerator cambioEscena()
     {
@@ -68,10 +69,11 @@ public class ExitRoom : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             if (!player.entrandoSala)
             {
+
                 StartCoroutine(transicion());
                 StartCoroutine(cambioEscena());
 
@@ -106,7 +108,7 @@ public class ExitRoom : MonoBehaviour
         {
 
 
-            if(!player.entrandoSala)
+            if (!player.entrandoSala)
             {
                 if (vertical)
                 {
@@ -122,7 +124,7 @@ public class ExitRoom : MonoBehaviour
             {
                 if (vertical)
                 {
-                    collision.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 200 * sentido*-1, 0), ForceMode2D.Force);
+                    collision.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 200 * sentido * -1, 0), ForceMode2D.Force);
                 }
                 else
                 {
@@ -130,7 +132,7 @@ public class ExitRoom : MonoBehaviour
 
                 }
             }
-   
+
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

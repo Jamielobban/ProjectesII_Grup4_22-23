@@ -8,7 +8,7 @@ public class Caida : MonoBehaviour
     SpriteRenderer sr;
     Animator anim;
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,15 +20,15 @@ public class Caida : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private IEnumerator reaparecer(GameObject sombra)
     {
         yield return new WaitForSeconds(0.5f);
 
         player.reaparecerCaida();
-        if(sombra != null)
-        sombra.transform.GetChild(3).gameObject.SetActive(true);
+        if (sombra != null)
+            sombra.transform.GetChild(3).gameObject.SetActive(true);
 
 
     }
@@ -56,9 +56,9 @@ public class Caida : MonoBehaviour
 
 
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player") && (collision.transform.parent.GetComponent<MovingPlatform>() == null))
+        if (collision.CompareTag("Player") && (collision.transform.parent.GetComponent<MovingPlatform>() == null) && !player.isDashing && player.canMove)
         {
             collision.transform.GetChild(3).gameObject.SetActive(false);
             sr.sortingOrder = -51;
@@ -73,6 +73,21 @@ public class Caida : MonoBehaviour
             StartCoroutine(daño(collision.transform.GetChild(3).gameObject));
 
 
+        }
+        else if (collision.CompareTag("Player"))
+        {
+            player.OnAir = true;
+            player.canDash = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            player.OnAir = false;
+
+            player.canDash = true;
         }
     }
 
