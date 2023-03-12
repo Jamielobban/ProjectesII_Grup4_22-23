@@ -130,7 +130,7 @@ public class Weapon
     private bool CheckShooting()
     {
         
-        if (!data.outOfAmmo.RuntimeValue && !data.reloading.RuntimeValue && Time.timeScale != 0)
+        if (!data.outOfAmmo.RuntimeValue && !data.reloading.RuntimeValue)
         {
             if (!data.powerActive.RuntimeValue)
             {                
@@ -222,11 +222,11 @@ public class Weapon
 
     public bool GetIfOutOffAmmo()
     {
-        //if (data.outOfAmmo.RuntimeValue)
-        //    nextWeaponKey = AudioManager.Instance.LoadSound(nextWeapon, player.transform);
+        if (data.outOfAmmo.RuntimeValue)
+            nextWeaponKey = AudioManager.Instance.LoadSound(nextWeapon, player.transform);
         return data.outOfAmmo.RuntimeValue;
-    }
-
+    }   
+   
 
     public float GetFireRate()
     {
