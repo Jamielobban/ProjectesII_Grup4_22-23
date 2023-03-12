@@ -127,7 +127,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] PotionSystem potionsSystem;
 
     private void Awake()
-    {
+    {        currentHearts = PlayerPrefs.GetInt("Hearts", maxHearts);
+
         healthUI = FindObjectOfType<HeartSystem>();
         isFall = false;
         restart = false;

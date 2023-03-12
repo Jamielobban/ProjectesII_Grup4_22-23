@@ -92,6 +92,8 @@ public class AmmoUISystem : MonoBehaviour
             yield return new WaitForSeconds(1f / (rightHand.weaponInHand.GetBulletsPerMagazine()) - 0.05f);
         }
 
+
+
     }
 
 

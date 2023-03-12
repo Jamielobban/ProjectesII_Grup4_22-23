@@ -23,7 +23,6 @@ public class CheckPoints : MonoBehaviour
     CheckpointsList list;
 
     bool descansar;
-    public int id;
     public bool UnlockAtStart;
     string nameSave;
 
@@ -31,65 +30,58 @@ public class CheckPoints : MonoBehaviour
     void Start()
     {
         playerTtransform = GameObject.FindGameObjectWithTag("Player").transform;
-        nameSave = "encendido" + id;
+        nameSave = "encendido" + SceneManager.GetActiveScene().buildIndex;
         encendido = (PlayerPrefs.GetInt(nameSave) != 0);
 
-        if (UnlockAtStart && !encendido)
-        {
-            PlayerPrefs.SetInt("IDScene", SceneManager.GetActiveScene().buildIndex);
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 
-            encendido = true;
-            PlayerPrefs.SetInt(nameSave, (encendido ? 1 : 0));
-            descansar = true;
+
+        if (encendido)
+        {
+            GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().restartStates();
+            if ((PlayerPrefs.GetInt("isDead") != 0))
+            {
+                PlayerPrefs.SetInt("Hearts", player.maxHearts);
+                player.currentHearts = player.maxHearts;
+
+                playerTtransform.position = spawn.position;
+                PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
+            }
+
+            string KeyName = "Sala" + 8;
+            int i = 8;
+            while (PlayerPrefs.HasKey(KeyName))
+            {
+
+                PlayerPrefs.SetInt(KeyName, (false ? 1 : 0));
+                i++;
+                KeyName = "Sala" + i;
+            }
+            descansar = false;
             velasApagadas.SetActive(false);
             velasEncendidas.SetActive(true);
         }
         else
         {
 
-            if (encendido)
-            {
-                GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().GetWeapons();
-                if ((PlayerPrefs.GetInt("isDead") != 0))
-                {
-
-
-                    playerTtransform.position = spawn.position;
-                    PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
-                }
-
-                string KeyName = "Sala" + 0;
-                int i = 0;
-                while (PlayerPrefs.HasKey(KeyName))
-                {
-
-                    PlayerPrefs.SetInt(KeyName, (false ? 1 : 0));
-                    i++;
-                    KeyName = "Sala" + i;
-                }
-                descansar = false;
-                velasApagadas.SetActive(false);
-                velasEncendidas.SetActive(true);
-            }
-            else
-            {
-
-                descansar = false;
-                velasApagadas.SetActive(true);
-                velasEncendidas.SetActive(false);
-            }
-
+            descansar = false;
+            velasApagadas.SetActive(true);
+            velasEncendidas.SetActive(false);
         }
+
         button.SetActive(false);
 
 
 
 
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
 
+    void save()
+    {
+        GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>().saveWeaponsState();
 
+    }
     // Update is called once per frame
     void Update()
     {
@@ -118,6 +110,7 @@ public class CheckPoints : MonoBehaviour
         {
             if (Input.GetButton("Interact") && !descansar)
             {
+                save();
                 descansar = true;
 
                 button.SetActive(false);

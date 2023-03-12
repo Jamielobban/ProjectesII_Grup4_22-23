@@ -35,7 +35,7 @@ public class WeaponValues : ScriptableObject
     public BoolValue outOfAmmo;    
     public BoolValue powerupAvailable;
 
-
+    public bool unLock;
 
     [Header("Firepoint")]
     public Vector3 firePoint;
@@ -45,17 +45,24 @@ public class WeaponValues : ScriptableObject
 
     public void SavePlayerPrefs()
     {
-        PlayerPrefs.SetInt(WeaponName + "balas", bulletsInMagazine.RuntimeValue + (bulletsInMagazine.InitialValue* (magazinesInWeapon.RuntimeValue-1)));
+        PlayerPrefs.SetInt(WeaponName + "Desbloqueada", (unLock ? 1 : 0));
+        PlayerPrefs.SetInt(WeaponName + "balas", bulletsInMagazine.RuntimeValue + (bulletsInMagazine.InitialValue* (magazinesInWeapon.RuntimeValue)));
     }
 
+    public void restartWeapon()
+    {
+        unLock = ((PlayerPrefs.GetInt(WeaponName + "Desbloqueada") == 1));
+        GetPlayerPrefs();
+    }
     private void Awake()
     {
-        GetPlayerPrefs();
+        unLock = false;
+        restartWeapon();
     }
 
     public void GetPlayerPrefs()
     {
-        magazinesInWeapon.RuntimeValue = (int)((PlayerPrefs.GetInt(WeaponName + "balas") / bulletsInMagazine.InitialValue)+1);
+        magazinesInWeapon.RuntimeValue = (int)((PlayerPrefs.GetInt(WeaponName + "balas") / bulletsInMagazine.InitialValue));
         bulletsInMagazine.RuntimeValue = bulletsInMagazine.InitialValue%PlayerPrefs.GetInt(WeaponName + "balas");
 
 
