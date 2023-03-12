@@ -99,8 +99,9 @@ public class WeaponGenerator : MonoBehaviour
             weaponsValues[3].restartWeapon();
 
 
-        currentWeapon = PlayerPrefs.GetInt("CurrentWeapon");
-        GameObject.FindGameObjectWithTag("RightHand").GetComponent<RightHand>().EquipWeapon(weaponsValues[currentWeapon].WeaponName);
+        currentWeapon = PlayerPrefs.GetInt("CurrentWeapon", 0);
+
+        GetWeapons();
 
     }
     public void GetWeapons()
