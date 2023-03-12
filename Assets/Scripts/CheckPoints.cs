@@ -53,8 +53,8 @@ public class CheckPoints : MonoBehaviour
                 StartCoroutine(setIsDeadFalse());
             }
 
-            string KeyName = "Sala" + 8;
-            int i = 8;
+            string KeyName = "Sala" + 1;
+            int i = 1;
             while (PlayerPrefs.HasKey(KeyName))
             {
 
@@ -128,8 +128,8 @@ public class CheckPoints : MonoBehaviour
                 PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
 
 
-                string KeyName = "Sala" + 0;
-                int i = 0;
+                string KeyName = "Sala" + 1;
+                int i = 1;
                 while (PlayerPrefs.HasKey(KeyName))
                 {
 
