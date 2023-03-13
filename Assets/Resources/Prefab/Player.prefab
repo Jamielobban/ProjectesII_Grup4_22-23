@@ -1451,8 +1451,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Percentage: 0
   _Size: 0
+  _Intensity: 0
   isExpanding: 0
   _Mat: {fileID: 2100000, guid: cf61aedc13173e24a86595f30478aa82, type: 2}
+  _HitMaterial: {fileID: 2100000, guid: d6d2759b66c95ba46855b781aa0dd681, type: 2}
+  player: {fileID: 0}
 --- !u!58 &5722270481157721440
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1607,6 +1610,7 @@ MonoBehaviour:
   restart: 0
   lastPositionSave: {x: 0, y: 0, z: 0}
   potionsSystem: {fileID: 0}
+  isHit: 0
 --- !u!96 &6852020774505889635
 TrailRenderer:
   serializedVersion: 2

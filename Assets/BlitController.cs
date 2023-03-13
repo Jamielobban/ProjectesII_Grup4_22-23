@@ -1,6 +1,7 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Rendering;
-
+using DG.Tweening;
 public class BlitController : MonoBehaviour
 {
     //public RenderPipelineAsset exampleAssetA;
@@ -8,13 +9,22 @@ public class BlitController : MonoBehaviour
 
     public float _Percentage;
     public float _Size;
+
+    public float _Intensity;
     public bool isExpanding;
     public Material _Mat;
+    public Material _HitMaterial;
     private CircleCollider2D circle;
+
+    public PlayerMovement player;
     private void Start()
     {
+        player = GetComponentInParent<PlayerMovement>();
         circle = GetComponent<CircleCollider2D>();
         circle.enabled = false;
+        _Intensity = 0f;
+        _HitMaterial.SetFloat("_VignetteIntensity", _Intensity);
+
     }
     void Update()
     {
@@ -58,6 +68,13 @@ public class BlitController : MonoBehaviour
             }
         }
 
+        if (player.isHit)
+        {
+            _HitMaterial.DOFloat(0.952f, "_VignetteIntensity", 0.4f);
+            StartCoroutine(WaitForGoDown());
+
+        }
+
         //_Percentage = 0;
         //_Mat.SetFloat("_Percent", _Percentage);
 
@@ -79,5 +96,11 @@ public class BlitController : MonoBehaviour
             Destroy(collision.gameObject, 0.1f);
 
         }
+    }
+
+    private IEnumerator WaitForGoDown()
+    {
+        yield return new WaitForSeconds(0.41f);
+        _HitMaterial.DOFloat(0f, "_VignetteIntensity", 0.4f);
     }
 }

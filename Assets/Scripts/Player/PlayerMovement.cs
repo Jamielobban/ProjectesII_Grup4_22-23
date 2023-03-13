@@ -129,6 +129,7 @@ public class PlayerMovement : MonoBehaviour
     bool canBlit = true;
     float blitCooldown;
     bool godMode;
+    public bool isHit;
     private void Awake()
     {        currentHearts = PlayerPrefs.GetInt("Hearts", maxHearts);
 
@@ -604,7 +605,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private IEnumerator hurtAnimation()
-    {
+    {        isHit = true;
         isInvulnerable = true;        Debug.Log("Hurting");
 
         if (currentHearts % 2 == 0 && healthUI.emptyHeartArray != null)
@@ -653,6 +654,7 @@ public class PlayerMovement : MonoBehaviour
        
         //Debug.Log("No longer invlunerable");
         isInvulnerable = false;
+        isHit = false;
 
     }
 
