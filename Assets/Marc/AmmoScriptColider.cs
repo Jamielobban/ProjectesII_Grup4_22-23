@@ -20,7 +20,14 @@ public class AmmoScriptColider : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             WeaponValues aux = ammoParent.GetComponent<AmmoScript>().weaponGenerator.GetComponent<WeaponGenerator>().weaponsValues.Where(wv => wv.WeaponName == parentWeaponName).ToArray()[0];
-            aux.magazinesInWeapon.RuntimeValue += 1;
+            if(aux.magazinesInWeapon.RuntimeValue == 0 && aux.bulletsInMagazine.RuntimeValue == 0)
+            {
+                aux.bulletsInMagazine.RuntimeValue = aux.bulletsInMagazine.InitialValue;
+            }
+            else
+            {
+                aux.magazinesInWeapon.RuntimeValue += 1;
+            }
             if (collision.GetComponentInChildren<RightHand>().weaponInHand.GetWeaponName() == parentWeaponName)
             {
                 collision.GetComponentInChildren<RightHand>().UpdateUIWeapons();
