@@ -99,7 +99,7 @@ public class PauseMenu : MonoBehaviour
     {
         MenuContainer.SetActive(false);
         //Time.timeScale = 1;
-        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 0));
+        SceneManager.LoadScene(0);
 
     }
 }
