@@ -23,6 +23,7 @@ public class AmmoScriptColider : MonoBehaviour
             if(aux.magazinesInWeapon.RuntimeValue == 0 && aux.bulletsInMagazine.RuntimeValue == 0)
             {
                 aux.bulletsInMagazine.RuntimeValue = aux.bulletsInMagazine.InitialValue;
+                aux.outOfAmmo.RuntimeValue = false;
             }
             else
             {
