@@ -160,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Reaparecer()
     {
-      SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene"));
+      SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 2));
     }
     private IEnumerator guardarPosicion()
     {

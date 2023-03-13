@@ -13,7 +13,10 @@ public class PotionSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        amountToFill = 0;
+
+        amountToFill = PlayerPrefs.GetInt("Potions", 0);
+        if(GameObject.FindGameObjectWithTag("Player") != null)
+        CheckPotionStatus();
     }
 
     // Update is called once per frame
@@ -33,6 +36,7 @@ public class PotionSystem : MonoBehaviour
         //Debug.Log("Checking");
         if (amountToFill >= 75)
         {
+
             potion.SetPotionImage(PotionStatus.Full);
         }
         else if (amountToFill >= 50)

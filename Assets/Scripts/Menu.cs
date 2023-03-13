@@ -66,6 +66,14 @@ public class Menu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        
+
+        if(PlayerPrefs.GetInt("FirstTime", 0) == 0)
+        {
+            Debug.Log("Borrar");
+            PlayerPrefs.DeleteAll();
+        }
         
         if(musicValue != null)
         {
@@ -99,16 +107,17 @@ public class Menu : MonoBehaviour
         //{
         //    PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
 
-            //    SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 3));
+        //    SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 3));
 
         //}
         //else
         //{
         //    SceneManager.LoadScene(2);
 
-            //}
         //}
-         SceneManager.LoadScene(1);
+        //}
+        PlayerPrefs.SetInt("FirstTime", 1);
+        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 2));
     }
 
     public void ExitGame()

@@ -73,6 +73,8 @@ public class ExitRoom : MonoBehaviour
         {
             if (!player.entrandoSala)
             {
+                if(GameObject.FindGameObjectWithTag("Potion") != null)
+                    PlayerPrefs.SetInt("Potions", GameObject.FindGameObjectWithTag("Potion").GetComponent<PotionSystem>().amountToFill);
 
                 StartCoroutine(transicion());
                 StartCoroutine(cambioEscena());

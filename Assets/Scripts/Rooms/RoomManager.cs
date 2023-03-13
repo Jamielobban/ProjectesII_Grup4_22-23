@@ -35,7 +35,7 @@ public class RoomManager : MonoBehaviour
     {
         nameSave = "Sala" + SceneManager.GetActiveScene().buildIndex;
 
-        alreadyEnter = (PlayerPrefs.GetInt(nameSave) != 0);
+        alreadyEnter = (PlayerPrefs.GetInt(nameSave,0) != 0);
         inRoom = false;
         this.gameObject.tag = "Default";
         roomTriggers.SetActive(true);

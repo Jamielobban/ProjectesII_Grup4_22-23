@@ -97,6 +97,21 @@ public class WeaponGenerator : MonoBehaviour
         weaponsValues[2].restartWeapon();
         weaponsValues[3].restartWeapon();
 
+        for(int e = 0; e <4; e++)
+        {
+            if(weaponsValues[e].unLock == false)
+            {
+                for(int i = 0; i < weaponIndexOrder.Count; i++)
+                {
+                    if(weaponIndexOrder[i] == e)
+                    {
+                        weaponIndexOrder.RemoveAt(i);
+                    }
+                }
+            }
+        }
+   
+
 
         currentWeapon = PlayerPrefs.GetInt("CurrentWeapon", 0);
 

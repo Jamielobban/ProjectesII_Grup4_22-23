@@ -31,9 +31,11 @@ public class CheckPoints : MonoBehaviour
     {
         playerTtransform = GameObject.FindGameObjectWithTag("Player").transform;
         nameSave = "encendido" + SceneManager.GetActiveScene().buildIndex;
-        if (UnlockAtStart)
+        if (UnlockAtStart&&!encendido)
         {
             PlayerPrefs.SetInt(nameSave, (true ? 1 : 0));
+            PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
+
         }
         encendido = (PlayerPrefs.GetInt(nameSave) != 0);
 
@@ -51,17 +53,18 @@ public class CheckPoints : MonoBehaviour
 
                 playerTtransform.position = spawn.position;
                 StartCoroutine(setIsDeadFalse());
+                string KeyName = "Sala" + 2;
+                int i = 2;
+                while (PlayerPrefs.HasKey(KeyName))
+                {
+                    Debug.Log(KeyName);
+                    PlayerPrefs.SetInt(KeyName, (false ? 1 : 0));
+                    i++;
+                    KeyName = "Sala" + i;
+                }
             }
 
-            string KeyName = "Sala" + 1;
-            int i = 1;
-            while (PlayerPrefs.HasKey(KeyName))
-            {
-
-                PlayerPrefs.SetInt(KeyName, (false ? 1 : 0));
-                i++;
-                KeyName = "Sala" + i;
-            }
+        
             descansar = false;
             velasApagadas.SetActive(false);
             velasEncendidas.SetActive(true);
@@ -128,8 +131,8 @@ public class CheckPoints : MonoBehaviour
                 PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
 
 
-                string KeyName = "Sala" + 1;
-                int i = 1;
+                string KeyName = "Sala" + 2;
+                int i = 2;
                 while (PlayerPrefs.HasKey(KeyName))
                 {
 
