@@ -76,6 +76,8 @@ MonoBehaviour:
   agent: {fileID: 0}
   sr: {fileID: 5945361998125100128}
   burnPrefab: {fileID: 3564664467013247471, guid: e4b5b15301115b443bd61b63bdc3487f, type: 3}
+  isAVariant: 0
+  colorChange: 0
   firePoint: {fileID: 5945361997779601342}
   enemyData: {fileID: 11400000, guid: e6fbccf10e1a89e45b89f86c47ea6af8, type: 2}
   blood: {fileID: 5131986925755455784, guid: 11d09c4b86434884c9d334ba4d7fe419, type: 3}
@@ -84,7 +86,7 @@ MonoBehaviour:
   idleStateData: {fileID: 11400000, guid: bfb00c072249a204d97ae2503b86d2ec, type: 2}
   dashStateData: {fileID: 11400000, guid: 69d3d67d494c59046b601514a060770d, type: 2}
   deadStateData: {fileID: 11400000, guid: 7f06bce409c2848439336a9bb5fe4a0b, type: 2}
-  distanceToPassToIdle: 0
+  distanceToPassToIdle: 30
 --- !u!58 &6823037512772952567
 CircleCollider2D:
   m_ObjectHideFlags: 0
