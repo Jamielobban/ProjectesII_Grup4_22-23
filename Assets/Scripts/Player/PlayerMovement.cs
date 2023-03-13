@@ -126,7 +126,9 @@ public class PlayerMovement : MonoBehaviour
     float time = 0;
 
     [SerializeField] PotionSystem potionsSystem;
-
+    bool canBlit = true;
+    float blitCooldown;
+    bool godMode;
     private void Awake()
     {        currentHearts = PlayerPrefs.GetInt("Hearts", maxHearts);
 
@@ -230,7 +232,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.X)){
+            godMode = true;
+        }
         if(disableWeapons && rotatePoint.activeSelf == true)
         {
             rotatePoint.SetActive(false);
@@ -346,6 +350,15 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetBool("isMoving", false);
         }
+        if (!canBlit)
+        {
+            blitCooldown += Time.deltaTime;
+            if (blitCooldown > 30)
+            {
+                blitCooldown = 0f;
+                canBlit = true;
+            }
+        }
 
         switch (state)
         {
@@ -355,7 +368,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (canMove && !isDead)
                 {
-                    if (Input.GetKey(KeyCode.P))
+                    if (Input.GetButton("Heal"))
                     {
                         time += Time.deltaTime;
                         if(potionsSystem.amountToFill > 50)
@@ -378,10 +391,10 @@ public class PlayerMovement : MonoBehaviour
                     movement.y = Input.GetAxisRaw("Vertical");
                     moveDir = new Vector3(movement.x, movement.y).normalized;
                     //
-                    if (Input.GetKeyDown(KeyCode.Q))
+                    if (Input.GetKeyDown(KeyCode.Q) && canBlit)
                     {
                         //Debug.Log("Parry");
-                        myBlit.isExpanding = true;
+                        myBlit.isExpanding = true;                        canBlit = false;
                     }
                     if (moveDir.magnitude == 1)
                     {
@@ -537,15 +550,21 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void GetDamage(int damage)
-    {
-        //Debug.Log(damage);
-        if(!isDead && !isFall)
-        {
-            OnHit(damage);
-            StartCoroutine(hurtAnimation());
+    {
+
+        //Debug.Log(damage);
+        if (!godMode)
+        {
+            if (!isDead && !isFall)
+
+            {
+
+                OnHit(damage);
+
+                StartCoroutine(hurtAnimation());
+
+            }
         }
-
-
     }
 
     public void Health()
@@ -561,12 +580,13 @@ public class PlayerMovement : MonoBehaviour
     }
     public void OnHit(int damage)
     {
-        TakeDamage(damage);
-
+        if(!godMode) TakeDamage(damage);
+        CinemachineShake.Instance.ShakeCamera(5f, .2f);
+
         if (currentHearts <= 0)
         {
             restart = true;
-
+            anim.SetBool("isDead", true);
             isDead = true;
             healthUI.DrawAllEmpty();
             Debug.Log(currentHearts);

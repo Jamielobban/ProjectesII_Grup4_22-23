@@ -165,7 +165,7 @@ public class AudioManager : MonoBehaviour
                 num++;
             }
         }
-        Debug.Log(num);
+        //Debug.Log(num);
 
         //Debug.Log(audiosPlaying.Count);
         //foreach(var pair in audiosPlaying)
