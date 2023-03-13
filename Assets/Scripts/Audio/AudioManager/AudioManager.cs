@@ -6,7 +6,7 @@ using System.Linq;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] GameObject audioSourcePrefab;
-    
+    [SerializeField] FloatValue musicTime;
     public static AudioManager Instance { get; private set; }
     const float maxDifferenceToBePlayed = 0.01f;
     
@@ -249,6 +249,16 @@ public class AudioManager : MonoBehaviour
             return audiosPlaying[key].audioSorcePrefabClone.GetComponent<AudioSource>();
         }
         return null;
+    }
+
+    public float GetMusicTime()
+    {
+        return musicTime.RuntimeValue;
+    }
+
+    public void SetMusicTime(float time)
+    {
+        musicTime.RuntimeValue = time;
     }
 
     public void ChangeDefaultVolumeValueOfAudio(int key, float newDefaultValue)

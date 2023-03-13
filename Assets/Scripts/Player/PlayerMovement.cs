@@ -224,7 +224,7 @@ public class PlayerMovement : MonoBehaviour
         currentHearts = maxHearts;
         rollSpeed = 90f;
         justRolled = false;
-        backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true, false, 0.4f);
+        backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, this.transform, 0, true, false, 0.4f);        AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time = AudioManager.Instance.GetMusicTime();
         //if (backThemeKey.HasValue)
         //{
         //    AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).volume = 0.4f;
@@ -232,7 +232,7 @@ public class PlayerMovement : MonoBehaviour
     }
     // Update is called once per frame
     void Update()
-    {
+    {        AudioManager.Instance.SetMusicTime(AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time);
         if (Input.GetKeyDown(KeyCode.X)){
             godMode = true;
         }
