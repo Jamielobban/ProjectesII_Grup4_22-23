@@ -71,15 +71,19 @@ public class WeaponValues : ScriptableObject
 
             bulletsInMagazine.RuntimeValue = PlayerPrefs.GetInt(WeaponName + "balas", a) % bulletsInMagazine.InitialValue;
         }
-        
 
-        if (bulletsInMagazine.RuntimeValue == 0 && bulletsInMagazine != null)
+        if (PlayerPrefs.GetInt(WeaponName + "balas", a) <= 0)
+            outOfAmmo.RuntimeValue = true;
+        else
+            outOfAmmo.RuntimeValue = false;
+
+        if (bulletsInMagazine.RuntimeValue == 0 && bulletsInMagazine != null && PlayerPrefs.GetInt(WeaponName + "balas", a) > 0)
             bulletsInMagazine.RuntimeValue = bulletsInMagazine.InitialValue;
 
         if(magazinesInWeapon != null && bulletsInMagazine != null)
         magazinesInWeapon.RuntimeValue = (int)((PlayerPrefs.GetInt(WeaponName + "balas", a) / bulletsInMagazine.InitialValue));
 
-        if (bulletsInMagazine.RuntimeValue == bulletsInMagazine.InitialValue && magazinesInWeapon.RuntimeValue != 0 && magazinesInWeapon != null && bulletsInMagazine != null)
+        if (bulletsInMagazine.RuntimeValue == bulletsInMagazine.InitialValue && magazinesInWeapon.RuntimeValue != 0 && magazinesInWeapon != null && bulletsInMagazine != null && PlayerPrefs.GetInt(WeaponName + "balas", a) > 0)
         {
             magazinesInWeapon.RuntimeValue--;
         }

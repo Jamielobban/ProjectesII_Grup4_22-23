@@ -118,7 +118,7 @@ public class Gancho : MonoBehaviour
                     isInside = true;
                 }
             }
-            if(!isInside)
+            if (!isInside)
                 ganchos.Add(collision.gameObject);
 
             float distancia = 5000;

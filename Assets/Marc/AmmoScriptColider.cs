@@ -1,3 +1,5 @@
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,12 +17,14 @@ public class AmmoScriptColider : MonoBehaviour
         parentWeaponName = ammoParent.GetComponent<AmmoScript>().weaponAmmoName;
     }
 
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             WeaponValues aux = ammoParent.GetComponent<AmmoScript>().weaponGenerator.GetComponent<WeaponGenerator>().weaponsValues.Where(wv => wv.WeaponName == parentWeaponName).ToArray()[0];
-            if(aux.magazinesInWeapon.RuntimeValue == 0 && aux.bulletsInMagazine.RuntimeValue == 0)
+            if (aux.magazinesInWeapon.RuntimeValue == 0 && aux.bulletsInMagazine.RuntimeValue == 0)
             {
                 aux.bulletsInMagazine.RuntimeValue = aux.bulletsInMagazine.InitialValue;
                 aux.outOfAmmo.RuntimeValue = false;
@@ -38,3 +42,4 @@ public class AmmoScriptColider : MonoBehaviour
         }
     }
 }
+
