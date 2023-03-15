@@ -46,7 +46,7 @@ public abstract class Bullet : MonoBehaviour
 
     public float GetSpeed()
     {
-        return bulletData.bulletSpeedMetresPerSec;
+        return bulletData.bulletSpeedMetresPerSec.RuntimeValue;
     }
 
     protected virtual void Start()
@@ -67,7 +67,7 @@ public abstract class Bullet : MonoBehaviour
             firstTime = false;
         }
 
-        if (Time.time - timeShooted >= bulletData.bulletRangeInMetres / bulletData.bulletSpeedMetresPerSec)
+        if (Time.time - timeShooted >= bulletData.bulletRangeInMetres / bulletData.bulletSpeedMetresPerSec.RuntimeValue)
         {
             Destroy(this.gameObject);
 
@@ -122,7 +122,7 @@ public abstract class Bullet : MonoBehaviour
         {
             //Debug.Log(originalFirePoint);
             //Debug.Log("in");
-            this.GetComponent<Rigidbody2D>().AddForce(originalFirePoint.up * -bulletData.bulletSpeedMetresPerSec, ForceMode2D.Impulse);
+            this.GetComponent<Rigidbody2D>().AddForce(originalFirePoint.up * -bulletData.bulletSpeedMetresPerSec.InitialValue, ForceMode2D.Impulse);
             //Debug.Log(originalFirePoint.up);
         }
 

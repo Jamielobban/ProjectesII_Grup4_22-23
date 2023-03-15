@@ -5,7 +5,7 @@ using UnityEngine;
 public class DeadState : State
 {
     protected D_DeadState stateData;
-    protected int probabilityOfHearth;
+    //protected int probabilityOfHearth;
     public DeadState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_DeadState stateData) : base(entity, stateMachine, animBoolName)
     {
         this.stateData = stateData;
@@ -15,15 +15,15 @@ public class DeadState : State
     {
         base.Enter();
 
-        probabilityOfHearth = Random.Range(0, 7);
-        
+        //probabilityOfHearth = Random.Range(0, 7);
+
 
         if (GameObject.FindGameObjectWithTag("RoomManager") != null)
         {
             GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>().Dead();
 
         }
-        
+
     }
 
     public override void Exit()

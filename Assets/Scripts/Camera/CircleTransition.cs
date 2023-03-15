@@ -14,15 +14,30 @@ public class CircleTransition : MonoBehaviour
     private Vector2 _playerCanvasPos;
     public PlayerMovement playerSignal;
 
+    public PlayerMovement playerCheckpoints;
+
+    //public static CircleTransition Instance { get; private set; }
+
     private void Awake()
     {
-           _canvas = GetComponent<Canvas>();
+        playerCheckpoints = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        _canvas = GetComponent<Canvas>();
+        //if (Instance != null && Instance != _canvas)
+        //{
+        //    Destroy(_canvas);
+        //}
+        //else
+        //{
+        //    Instance = this;
+        //    DontDestroyOnLoad(_canvas);
+        //}
     }
 
     private void Update()
     {
-        if (playerCheck.isDead)
+        if (playerCheckpoints.restart)
         {
+            playerCheckpoints.restart = false;
             CloseBlackScreen();
         }
         //else if (Input.GetKeyDown((KeyCode.Alpha2)))
@@ -112,6 +127,26 @@ public class CircleTransition : MonoBehaviour
 
     public void ResetCurrentScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            if (!playerCheckpoints.endTutorial)
+            {
+
+                if (GameObject.FindGameObjectWithTag("Potion") != null)
+                    PlayerPrefs.SetInt("Potions", 0);
+
+                PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
+                playerCheckpoints.Reaparecer();
+         
+
+            }
+            else
+            {
+                //Establecer el spawn al salir por primera vez de la sala principal
+                PlayerPrefs.SetInt("IDCheckpoints", 1);
+                PlayerPrefs.SetInt("IDScene", 3);
+                playerCheckpoints.SpawnSalaPrincipal();
+            }
+        
+
     }
 }

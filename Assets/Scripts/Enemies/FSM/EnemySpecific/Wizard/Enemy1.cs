@@ -40,6 +40,8 @@ public class Enemy1 : Entity
         idleState = new E1_IdleState(this, stateMachine, "idle", idleStateData, this);
 
         stateMachine.Initialize(chasingState);
+
+        agent.speed = enemyData.speed;
     }
 
     public override void Update()

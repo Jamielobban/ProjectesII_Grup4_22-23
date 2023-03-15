@@ -22,6 +22,7 @@ public class Enemy2 : Entity
     private D_DeadState deadStateData;
 
     float lastTimeDamaged = 0;
+    public float distanceToPassToIdle;
 
     public override void FixedUpdate()
     {
@@ -51,6 +52,8 @@ public class Enemy2 : Entity
         //canDash = true;
 
         stateMachine.Initialize(idleState);
+
+        agent.speed = enemyData.speed;
     }
 
     public override void Update()
@@ -61,6 +64,11 @@ public class Enemy2 : Entity
         {
             stateMachine.ChangeState(deadState);
         }
+
+        if (!isDead && stateMachine.currentState != idleState && vectorToPlayer.magnitude >= distanceToPassToIdle && vectorToPlayer.magnitude >= enemyData.stopDistanceFromPlayer)
+        {
+            stateMachine.ChangeState(idleState);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -69,11 +77,11 @@ public class Enemy2 : Entity
         {
             if(stateMachine.currentState == dashingState)
             {
-                collision.gameObject.SendMessage("GetDamage", 25);
+                collision.gameObject.SendMessage("GetDamage", 2);
             }
             else
             {
-                collision.gameObject.SendMessage("GetDamage", 8);
+                collision.gameObject.SendMessage("GetDamage", 1);
             }
 
             lastTimeDamaged = Time.time;
@@ -83,7 +91,7 @@ public class Enemy2 : Entity
     {
         if (collision.CompareTag("Player") && Time.time - lastTimeDamaged >= 1)
         {
-            collision.gameObject.SendMessage("GetDamage", 8);
+            collision.gameObject.SendMessage("GetDamage", 2);
             lastTimeDamaged = Time.time;
         }
     }

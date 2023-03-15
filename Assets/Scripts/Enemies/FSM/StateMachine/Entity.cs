@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using UnityEngine.AI;
 
 
 public abstract class Entity : MonoBehaviour
@@ -15,12 +16,17 @@ public abstract class Entity : MonoBehaviour
 	[HideInInspector]
 	public Vector3 vectorToPlayer;	
 	public Vector3 vectorToPlayerFromFirepoint;
-	
+
+	public NavMeshAgent agent;
 
 	[SerializeField]
 	protected SpriteRenderer sr;	
 	[SerializeField]
-	protected GameObject burnPrefab;	
+	protected GameObject burnPrefab;
+	[SerializeField]
+	bool isAVariant = false;
+	[SerializeField]
+	float colorChange = 0;
 	protected GameObject burnFireShader;
 	protected float enemyHealth;
 	public Transform firePoint;
@@ -52,6 +58,9 @@ public abstract class Entity : MonoBehaviour
 
 	private void Awake()
     {
+		agent = GetComponent<NavMeshAgent>();
+		agent.updateRotation = false;
+		agent.updateUpAxis = false;
 		firePoint = GetComponentsInChildren<Transform>().Where(t => t.tag == "FirePoint").ToArray()[0];
 		myHealthState = HealthStateTypes.NORMAL;		
 		timeHealthStateExit = 0;
@@ -66,6 +75,7 @@ public abstract class Entity : MonoBehaviour
 
 	public virtual void Start()
     {
+		//Debug.Log("in");
 		rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
 		originalGlowValue = sr.material.GetFloat("_Glow");
@@ -162,46 +172,7 @@ public abstract class Entity : MonoBehaviour
 			sr.material.DOFloat(0, "_OutlineAlpha", 0.3f);
 		});
 		
-	}
-	//float minimum;
-	//float maximum;
-	//sr.material.SetFloat("_HitEffectGlow", 10);
-
-	//if (!maxHitBlendReached)
-	//{
-	//	minimum = 0;
-	//	maximum = 1;
-
-	//	sr.material.SetFloat("_HitEffectBlend", Mathf.Lerp(minimum, maximum, tHE));
-
-	//	tHE += 5 * Time.deltaTime;
-
-	//	if (sr.material.GetFloat("_HitEffectBlend") >= 1)
-	//	{
-	//		maxHitBlendReached = true;
-	//		tHE = 0;
-	//	}
-	//}
-	//else
-	//{
-	//	minimum = 1;
-	//	maximum = 0;
-
-	//	sr.material.SetFloat("_HitEffectBlend", Mathf.Lerp(minimum, maximum, tHE));
-
-	//	tHE += 5 * Time.deltaTime;
-
-	//	if (sr.material.GetFloat("_HitEffectBlend") <= 0)
-	//	{
-	//		maxHitBlendReached = false;
-	//		applyingHitEffect = false;
-	//		tHE = 0;
-	//	}
-	//}
-	//sr.material.DOFloat(0.6f, "_OutlineAlpha", 0.3f).OnComplete(()=>
-	//{
-	//	sr.material.DOFloat(0.6f, "_OutlineAlpha", 0.3f);
-	//});
+	}	
 
 	public virtual void FixedUpdate()
 	{		
@@ -246,7 +217,7 @@ public abstract class Entity : MonoBehaviour
 	}
 
 	void ImpactBullet(Vector3 bulletPosition, TransformMovementType type)
-    {
+	{
 		if (sequenceImpactShader.IsPlaying())
 		{
 			//Debug.Log("isPlaying");
@@ -264,22 +235,26 @@ public abstract class Entity : MonoBehaviour
 		sr.material.SetFloat("_HitEffectBlend", 0);
 		sr.material.SetColor("_HitEffectColor", new Color(1, 0.99806f, 0.93816f, 1));
 		sr.material.SetFloat("_PinchUvAmount", 0);
+		if (isAVariant)
+		{
+			sr.material.SetFloat("_HsvShift", 0);
+		}
 
 		if ((shaker == null || !shaker.IsPlaying()) && type != TransformMovementType.NOTHING)
 		{
 			Vector3 direction = bulletPosition - transform.position;
 			direction = direction.normalized;
-			
-			if(type == TransformMovementType.PUNCH)
-            {
+
+			if (type == TransformMovementType.PUNCH)
+			{
 				shaker = transform.DOPunchPosition(-direction * 2, 0.2f, 0, 1, false);
 			}
-			else if(type == TransformMovementType.SHAKE)
-            {
+			else if (type == TransformMovementType.SHAKE)
+			{
 				shaker = transform.DOShakePosition(0.2f, 0.5f, 10, 45, false, true, ShakeRandomnessMode.Harmonic);
 			}
-			else if(type == TransformMovementType.JUMP)
-            {
+			else if (type == TransformMovementType.JUMP)
+			{
 				shaker = transform.DOJump(transform.position, 0.5f, 1, 0.2f, false);
 			}
 
@@ -313,8 +288,26 @@ public abstract class Entity : MonoBehaviour
 			sequenceImpactShader.Join(sr.material.DOColor(new Color(1, 1, 0.34434f, 1), "_HitEffectColor", 0.2f));
 			sequenceImpactShader.Join(sr.material.DOFloat(0, "_PinchUvAmount", 0.2f));
 			sequenceImpactShader.Join(sr.material.DOFloat(originalGlowValue, "_Glow", 0.2f));
-		});
-	}
+			FunctionTimer.Create(() =>
+			{
+				if( this != null)
+                {
+					if(sr.transform != null)
+                    {
+						if (isAVariant) 
+						{
+							if (sr.material.GetFloat("_ChromAberrAmount") == 0)
+							{
+								sr.material.SetFloat("_HsvShift", colorChange);
+							}
+						}
+                    }
+                }
+			}, 0.2f);
+		});	
+
+
+	}  
 
 	void UpdateNewHeealthState(HealthStateTypes damageType)
     {

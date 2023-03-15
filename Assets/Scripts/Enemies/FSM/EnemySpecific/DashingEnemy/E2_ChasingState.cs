@@ -16,12 +16,18 @@ public class E2_ChasingState : ChasingState
     public override void Enter()
     {
         base.Enter();
+
+        enemy.agent.enabled = true;
+
         spinSoundKey = AudioManager.Instance.LoadSound(stateData.followSounds, enemy.transform, 0, true);
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        enemy.agent.enabled = false;
+
         if (spinSoundKey.HasValue)
         {
             AudioManager.Instance.RemoveAudio(spinSoundKey.Value);
@@ -50,7 +56,9 @@ public class E2_ChasingState : ChasingState
 
         }
 
-        myCheck = Vector3.MoveTowards(enemy.transform.position, enemy.player.transform.position, 0.1f);
-        enemy.transform.position = myCheck;
+        //myCheck = Vector3.MoveTowards(enemy.transform.position, enemy.player.transform.position, 0.1f);
+        //enemy.transform.position = myCheck;
+        enemy.agent.SetDestination(new Vector3(enemy.player.position.x, enemy.player.position.y, enemy.transform.position.z));
+
     }
 }

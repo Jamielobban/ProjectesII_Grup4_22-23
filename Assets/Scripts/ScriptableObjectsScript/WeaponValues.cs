@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu]
 public class WeaponValues : ScriptableObject
 {
+    public string WeaponName;
+    public MechanismTypes mechanismType;
+
     [Header("Parametrizable variables")]
     public AudioClip shootSound;    
     public AudioClip reloadSound;    
@@ -31,7 +34,68 @@ public class WeaponValues : ScriptableObject
     public BoolValue reloading;    
     public BoolValue outOfAmmo;    
     public BoolValue powerupAvailable;
-    
+
+    public bool unLock;
+
+    [Header("Firepoint")]
+    public Vector3 firePoint;
+
+    [Header("UI")]
+    public Sprite fullAmmo, emptyAmmo, flashAmmo;
+
+    public void SavePlayerPrefs()
+    {
+        PlayerPrefs.SetInt(WeaponName + "Desbloqueada", (unLock ? 1 : 0));
+        PlayerPrefs.SetInt(WeaponName + "balas", bulletsInMagazine.RuntimeValue + (bulletsInMagazine.InitialValue* (magazinesInWeapon.RuntimeValue)));
+    }
+
+    public void restartWeapon()
+    {
+        unLock = ((PlayerPrefs.GetInt(WeaponName + "Desbloqueada",0) == 1));
+        GetPlayerPrefs();       
+
+    }
+    private void Awake()
+    {
+        //unLock = false;
+        //restartWeapon();
+
+    }
+
+    public void GetPlayerPrefs()
+    {
+        int a = 0;
+        int cargadoresIniciales = 3;
+
+        if(WeaponName == "Pistol")
+        {
+            cargadoresIniciales = 9999;
+        }
+
+        if (bulletsInMagazine != null)
+        {
+            a = bulletsInMagazine.InitialValue * cargadoresIniciales;
+
+            bulletsInMagazine.RuntimeValue = PlayerPrefs.GetInt(WeaponName + "balas", a) % bulletsInMagazine.InitialValue;
+        }
+
+        if (PlayerPrefs.GetInt(WeaponName + "balas", a) <= 0)
+            outOfAmmo.RuntimeValue = true;
+        else
+            outOfAmmo.RuntimeValue = false;
+
+        if (bulletsInMagazine.RuntimeValue == 0 && bulletsInMagazine != null && PlayerPrefs.GetInt(WeaponName + "balas", a) > 0)
+            bulletsInMagazine.RuntimeValue = bulletsInMagazine.InitialValue;
+
+        if(magazinesInWeapon != null && bulletsInMagazine != null)
+        magazinesInWeapon.RuntimeValue = (int)((PlayerPrefs.GetInt(WeaponName + "balas", a) / bulletsInMagazine.InitialValue));
+
+        if (bulletsInMagazine.RuntimeValue == bulletsInMagazine.InitialValue && magazinesInWeapon.RuntimeValue != 0 && magazinesInWeapon != null && bulletsInMagazine != null && PlayerPrefs.GetInt(WeaponName + "balas", a) > 0)
+        {
+            magazinesInWeapon.RuntimeValue--;
+        }
+
+    }
     public void RestartValues()
     {
         bulletsInMagazine.RestartValues();

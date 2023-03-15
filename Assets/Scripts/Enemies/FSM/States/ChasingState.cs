@@ -35,10 +35,10 @@ public class ChasingState : State
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        
+
         //entity.rb.rotation = angle;
-         
+
     }
 
-    
+
 }

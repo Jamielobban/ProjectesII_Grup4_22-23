@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6d489befd46abb4e954ae9799a4d0f2, type: 3}
+  m_Name: E5firingData
+  m_EditorClassIdentifier: 
+  angleOfCone: 0
+  numberOfBursts: 1
+  timeBetweenShoots: 1
+  bulletType: {fileID: 2233544513014940247, guid: f30a48d03c021e548bcc2f6b5118ff9d, type: 3}
+  shootShound: {fileID: 8300000, guid: 65cdf6f2b236dbc428a2d7e624ee68e9, type: 3}
+  attackSounds: {fileID: 8300000, guid: fe4d6e58d28b7324ab070b9c8f4dcc06, type: 3}
+  attackSounds2: {fileID: 8300000, guid: 2fc68517c018a7d4f8a062bfe261c36f, type: 3}
+  stateDuration: 0

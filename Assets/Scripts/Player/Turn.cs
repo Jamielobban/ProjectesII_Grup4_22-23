@@ -15,6 +15,8 @@ public class Turn : MonoBehaviour
     {
         //spriteInChild = GetComponentInChildren<SpriteRenderer>();
         childWithSpriteTransform = GetComponentInChildren<Transform>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        playerTurn = GetComponentInParent<PlayerMovement>();
     }
 
     // Update is called once per frame

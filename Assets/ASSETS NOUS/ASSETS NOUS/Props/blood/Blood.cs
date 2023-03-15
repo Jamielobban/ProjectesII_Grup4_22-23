@@ -17,7 +17,7 @@ public class Blood : MonoBehaviour
     private IEnumerator RandomLoopAnimation()
     {
         yield return new WaitForSeconds(Random.RandomRange(3,6));
-        gotaSoundKey = AudioManager.Instance.LoadSound(gotaSound, this.transform, 0, false);
+        //gotaSoundKey = AudioManager.Instance.LoadSound(gotaSound, this.transform, 0, false);
 
         this.GetComponent<Animator>().SetTrigger("Anim");
 

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf8c338b6acc5bf4ebe7b6ceb18b5abb, type: 3}
   m_Name: SniperAutoValues
   m_EditorClassIdentifier: 
+  WeaponName: Metralleta
+  mechanismType: 2
   shootSound: {fileID: 8300000, guid: 7e8322fea3ec8e1438cdf410aabcb396, type: 3}
   reloadSound: {fileID: 8300000, guid: 98e82e93376cee44fa5e659a84aa5179, type: 3}
   weaponSprite: {fileID: 21300000, guid: 80e5bc58198f1694c998b17453ee1cf8, type: 3}
@@ -35,3 +37,7 @@ MonoBehaviour:
   reloading: {fileID: 11400000, guid: 43cdde4a4cc580e4d82cac9889adfe1e, type: 2}
   outOfAmmo: {fileID: 11400000, guid: ab9d2b52a96e9604692bc5cfb915ab5b, type: 2}
   powerupAvailable: {fileID: 11400000, guid: b147facda45c4194298aa460a5bd7d4f, type: 2}
+  firePoint: {x: 0.015, y: -0.895, z: 0}
+  fullAmmo: {fileID: 1247775190, guid: 66dd7a2161bd53949a1db0eacb46fd0f, type: 3}
+  emptyAmmo: {fileID: -806932392, guid: 66dd7a2161bd53949a1db0eacb46fd0f, type: 3}
+  flashAmmo: {fileID: -1474007100, guid: dcf0932d68b0f534d8c6c1f0240fa5bb, type: 3}

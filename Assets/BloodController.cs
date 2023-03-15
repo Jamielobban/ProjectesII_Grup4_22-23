@@ -8,39 +8,51 @@ public class BloodController : MonoBehaviour
 
     private PlayerMovement playerpos;
     private CompositeCollider2D bloodcollider;
+    int damage = 1;
+    float ticRate = 1.5f;
+    List<PlayerMovement> players = new List<PlayerMovement>();
      
     void Start()
     {
-        playerpos = FindObjectOfType<PlayerMovement>();
-        bloodcollider = GetComponent<CompositeCollider2D>();
+        playerpos = GameController.instance.player;
+        InvokeRepeating("DealDamage",ticRate,ticRate);
     }
-
+    void DealDamage() 
+    {
+        foreach (PlayerMovement player in players)
+        {
+           player.TakeDamage(damage);
+           player.healthUI.DrawHearts();
+        }
+    }
     // Update is called once per frame
     void Update()
     {
 
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        
+        PlayerMovement player = collision.GetComponent<PlayerMovement>();
+        if (player != null)
         {
             playerpos.moveSpeed = 5000;
             playerpos.rollSpeed = 65f;
             playerpos.isInBlood = true;
-            bloodcollider.geometryType = CompositeCollider2D.GeometryType.Polygons;
-
+            players.Add(player);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        PlayerMovement player = collision.GetComponent<PlayerMovement>();
+        if (player != null)
         {
             playerpos.moveSpeed = 10000;
             playerpos.rollSpeed = 90f;
             playerpos.isInBlood = false;
-            bloodcollider.geometryType = CompositeCollider2D.GeometryType.Outlines;
+            players.Remove(player);
+
         }
     }
 }

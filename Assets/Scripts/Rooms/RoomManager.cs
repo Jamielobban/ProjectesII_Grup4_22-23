@@ -1,88 +1,206 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoomManager : MonoBehaviour
 {
     //public bool currentRoom = false;
 
-   
-    public int kills = 0;
+    public GameObject roomEnemies;
 
+    public int[] enemiesInEachRound;
 
-    public List<GameObject> objectsToEnable;
-    bool EnterRoom = false;
-    public int enemiesInRoom;
+    public EnemySpawn[] spawns;
 
-    public GameObject wallToSpawn;
+    bool inRoom;
 
+    int currentRound;
+
+    public int kills;
+
+    public GameObject roomTriggers;
+
+    public Palanca[] palancas;
+
+    public GameObject[] doors;
 
     //public GameObject room;
+    bool alreadyEnter;
+    string nameSave;
 
+    //Las puertas tienen que estar en el mismo puesto que su palanca
 
     public void Start()
     {
-        wallToSpawn.SetActive(true);
-        foreach (GameObject gameObject in objectsToEnable)
+        nameSave = "Sala" + SceneManager.GetActiveScene().buildIndex;
+
+        alreadyEnter = (PlayerPrefs.GetInt(nameSave,0) != 0);
+        inRoom = false;
+        this.gameObject.tag = "Default";
+        roomTriggers.SetActive(true);
+
+        for (int i = 0; i < doors.Length; i++)
         {
-            gameObject.SetActive(false);
+            if (doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>() != null)
+                doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = false;
+            else
+                doors[i].SetActive(false);
         }
-        
     }
 
-    private void Update()
+    void closeDoors()
     {
-        //if(lastNumberEnemiesInRoom != enemiesInRoom.Count)
-        //{
-        //    int difference = lastNumberEnemiesInRoom - enemiesInRoom.Count;
-        //    if(difference > 0)
-        //    {
-        //        kills += difference;
-        //    }
-        //    lastNumberEnemiesInRoom = enemiesInRoom.Count;
-        //}
-        //if (!this.gameObject.CompareTag("RoomManager"))
-        //{
-        //    kills = 0;
-        //}
+        for(int i = 0; i < doors.Length; i++)
+        {
+            if(i < palancas.Length)
+            {
+                if (palancas[i].puertaAbierta == true)
+                {
+                  
+                        doors[i].SetActive(true);
+                    if (doors[i].transform.childCount == 1)
+                    {
+                        doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Close");
+
+                    }
+                }
+            }
+            else
+            {
+                if (doors[i].transform.childCount == 1)
+                {
+                    doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Close");
+                    if (doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>() != null)
+                        doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = true;
+                    else
+                        doors[i].SetActive(true);
+                }
+                else
+                {
+                    doors[i].SetActive(true);
+
+                }
+            }
+        }
+    }
+
+    void openDoors()
+    {
+        alreadyEnter = true;
+        PlayerPrefs.SetInt(nameSave, (alreadyEnter ? 1 : 0));
+
+        for (int i = 0; i < doors.Length; i++)
+        {
+            if(doors[i].transform.childCount == 1)
+            {
+                doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
+                if (doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>() != null)
+                    doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = false;
+                else
+                    doors[i].SetActive(false);
+            }
+            else
+            {
+            doors[i].SetActive(false);
+
+            }
+        }
+    }
+    private IEnumerator OpenDoor(float time, int i)
+    {
+        yield return new WaitForSeconds(time);
+
+
+    }
+    public void StartRound()
+    {
+        if (!alreadyEnter)
+        {
+            roomTriggers.SetActive(false);
+
+            this.gameObject.tag = "RoomManager";
+            kills = 0;
+            currentRound = 0;
+            inRoom = true;
+            spawnRound(currentRound);
+            closeDoors();
+        }
     }
     public void Dead()
     {
         kills++;
 
-        if(kills == enemiesInRoom)
+        if(kills == enemiesInEachRound[currentRound])
         {
-            Destroy(wallToSpawn);
-
-            Destroy(this.gameObject);
-        }
-    }
-
-   
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player")&& !EnterRoom)
-        {
-            EnterRoom = true;
-            foreach (GameObject enemy in objectsToEnable)
+            if(currentRound < (enemiesInEachRound.Length-1))
             {
-                enemy.SetActive(true);
+                currentRound++;
+                spawnRound(currentRound);
             }
-            //currentRoom = true;
-            //cameraPos.GetComponent<CameraPos>().x = room;
-            wallToSpawn.SetActive(true);
-            this.gameObject.tag = "RoomManager";
-            Destroy(this.GetComponent<BoxCollider2D>());
+            else
+            {
+                endRoom();
+            }
+        }
+    }
+    void spawnRound(int round)
+    {
+        int enemies = 0;
+        if(round != 0)
+        {
+            enemies = enemiesInEachRound[round - 1];
+        }
+
+        for(int i = enemies; i < enemiesInEachRound[round]; i++)
+        {
+            spawns[i].SpawnAnimation();
+            StartCoroutine(SetEnemy(1.1f,spawns[i]));
+
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private IEnumerator SetEnemy(float time, EnemySpawn spawn)
     {
-        //if (collision.CompareTag("Player"))
-        //{
-        //    currentRoom = false;
-        //    //Destroy(gameObject);
-        //}
+        yield return new WaitForSeconds(time);
+        if(spawn.Enemy != null && spawn.Enemy.transform != null && roomEnemies.transform != null)
+        {
+            spawn.Enemy.transform.SetParent(roomEnemies.transform);
+        }
     }
+    void endRoom()
+    {
+        openDoors();
+        this.gameObject.tag = "Default";
+
+        for(int i = 0; i < palancas.Length; i++)
+        {
+            palancas[i].canOpen = true;
+        }
+    }
+
+    public void restartRoom()
+    {
+        openDoors();
+
+        for (int i = 0; i < palancas.Length; i++)
+        {
+            palancas[i].canOpen = false;
+        }
+
+        roomTriggers.SetActive(true);
+
+        this.gameObject.tag = "Default";
+
+        currentRound = 0;
+        inRoom = false;
+
+        for(int i = 0; i < roomEnemies.transform.childCount; i++)
+        {
+            Destroy(roomEnemies.transform.GetChild(i).gameObject);
+        }
+ 
+
+    }
+
 }

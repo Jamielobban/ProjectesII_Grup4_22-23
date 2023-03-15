@@ -19,15 +19,23 @@ TagManager:
   - FirePoint
   - PlayerContain
   - Blood
+  - PlayerFirePoint
+  - CheckPoints
+  - ParticleCollector
+  - ParticleForce
+  - WeaponGenerator
+  - Gancho
+  - Potion
+  - GanchoRecoger
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PuntaGancho
   - Water
   - UI
   - 
-  - 
+  - NoDash
   - Ground
   - Player
   - Enemy
@@ -40,9 +48,9 @@ TagManager:
   - Blood
   - BulletSponge
   - PlayerWallCollider
-  - 
-  - 
-  - 
+  - FlyingEnemy
+  - EssenceBurst
+  - Suelo
   - 
   - 
   - 
@@ -61,4 +69,10 @@ TagManager:
     locked: 0
   - name: Blood2
     uniqueID: 3783537189
+    locked: 0
+  - name: Floor
+    uniqueID: 3437079731
+    locked: 0
+  - name: Suelo
+    uniqueID: 177264897
     locked: 0

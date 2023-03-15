@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BalasExplosivas : Bullet
 {
@@ -8,23 +9,29 @@ public class BalasExplosivas : Bullet
     public GameObject explos;
     private PlayerMovement playerpos;
     private RecoilScript _recoil;
-    private Turn turningPoint;
     public GameObject bulletShell;
     public Turn will;
     private GameObject rotatePoint;
-    public GameObject muzzleFlash;
+    public GameObject MuzzleFlash;
     protected override void Start()
     {
         base.Start();
 
-        rotatePoint = GameObject.FindGameObjectWithTag("FirePoint");
+        rotatePoint = GameObject.FindGameObjectWithTag("PlayerFirePoint");
         playerpos = FindObjectOfType<PlayerMovement>();
         _recoil = FindObjectOfType<RecoilScript>();
         will = FindObjectOfType<Turn>();
 
         //bulletShell = Resources.Load<GameObject>("Prefab/BulletParticle");
-        Instantiate(muzzleFlash, rotatePoint.transform.position, rotatePoint.transform.rotation);
+        
+
+
+
         Instantiate(bulletShell,will.transform.position,Quaternion.identity);
+        GameObject go = Instantiate(MuzzleFlash);
+        go.transform.position = rotatePoint.transform.position;
+        go.transform.rotation = rotatePoint.transform.rotation;
+        //Instantiate(muzzleFlash, rotatePoint.transform.position, rotatePoint.transform.rotation);
         //bulletDamage = 5 * _damageMultiplier;
         //bulletRangeInMetres = 100;
         //bulletSpeedMetresPerSec = 50;
@@ -39,11 +46,11 @@ public class BalasExplosivas : Bullet
         _recoil.AddRecoil();
 
         playerpos.knockback = true;
-        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 0.5f), (-rb.velocity.y * 0.5f));
+        playerpos.rb.velocity = new Vector2((-rb.velocity.x * 0.15f), (-rb.velocity.y * 0.15f));
         //transform.Rotate(0, 0, transform.rotation.z + Random.Range(-10, 10));
         //Transform originalFirePoint = this.transform;
         //rb.AddForce(-this.transform.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
-        StartCoroutine(explosions(Random.Range(0.15f, 0.25f)));
+        StartCoroutine(explosions(Random.Range(0.45f, 0.55f)));
     }
 
     private IEnumerator explosions(float time)

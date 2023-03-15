@@ -90,7 +90,7 @@ public class SineBullet : Bullet
         }
         else
         {
-            if (Time.time - timeShooted >= bulletData.bulletRangeInMetres / bulletData.bulletSpeedMetresPerSec)
+            if (Time.time - timeShooted >= bulletData.bulletRangeInMetres / bulletData.bulletSpeedMetresPerSec.RuntimeValue)
             {
                 ResetBalls();
             }

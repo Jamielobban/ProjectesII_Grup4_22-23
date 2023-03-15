@@ -1,25 +1,44 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Rendering;
-
+using DG.Tweening;
 public class BlitController : MonoBehaviour
 {
     //public RenderPipelineAsset exampleAssetA;
     //public RenderPipelineAsset exampleAssetB;
 
     public float _Percentage;
-    public bool _Fired = false;
+    public float _Size;
 
+    public float _Intensity;
+    public bool isExpanding;
     public Material _Mat;
+    public Material _HitMaterial;
+    private CircleCollider2D circle;
+
+    public PlayerMovement player;
+
+    static Sequence damageSequence;
+    private void Awake()
+    {
+        damageSequence = DOTween.Sequence();
+    }
     private void Start()
     {
+        player = GetComponentInParent<PlayerMovement>();
+        circle = GetComponent<CircleCollider2D>();
+        circle.enabled = false;
+        _Intensity = 0f;
+        _HitMaterial.SetFloat("_VignetteIntensity", _Intensity);
+
     }
     void Update()
     {
-        if(!_Fired && (_Percentage >= 0))
-        {
-            _Percentage = 0;
-            _Mat.SetFloat("_Percent", _Percentage);
-        }
+        //if(!_Fired && (_Percentage >= 0))
+        //{
+        //    _Percentage = 0;
+        //    _Mat.SetFloat("_Percent", _Percentage);
+        //}
         //if (Input.GetKeyDown(KeyCode.V))
         //{
         //    //GraphicsSettings.renderPipelineAsset = exampleAssetA;
@@ -34,18 +53,86 @@ public class BlitController : MonoBehaviour
         //}
         //if (_Fired)
         //{
-        //    _Percentage += Time.deltaTime * 2;
-        //    _Mat.SetFloat("_Percent", _Percentage);
-        //    if (_Percentage > 1)
+
+        if (isExpanding)
+        {
+            circle.enabled = true;
+            circle.radius += 0.5f;
+            _Size = 0.1f;
+            _Mat.SetFloat("_Size", _Size);
+            _Percentage += Time.deltaTime * 2;
+            _Mat.SetFloat("_Percent", _Percentage);
+            if (_Percentage > 1)
+            {
+                circle.radius = 1;
+                circle.enabled = false;
+                _Percentage = 0;
+                _Mat.SetFloat("_Percent", _Percentage);
+                _Size = 0;
+                _Mat.SetFloat("_Size", _Size);
+                isExpanding = false;
+            }
+        }
+
+        //if (player.isHit)
+        //{
+        //    CancelInvoke("WaitForGoDown");
+
+        //    if (damageSequence.IsPlaying())
         //    {
-        //        _Percentage = 0;
-        //        _Fired = false;
+        //        //Debug.Log("isPlaying");
+        //        damageSequence.Pause();
+        //        damageSequence.Kill();
+        //        damageSequence = null;
         //    }
+
+        //    damageSequence = DOTween.Sequence();
+
+
+        //    _HitMaterial.SetFloat("_VignetteIntensity", 0.952f);
+
+        //    Invoke("WaitForGoDown", 0.5f);
+        //    ////damageSequence.Join(_HitMaterial.DOFloat(0.61f, "_VignetteIntesity", 5f));
+        //    //});
+            
+        //    //StartCoroutine(WaitForGoDown());
+
+        //    player.isHit = false;
+        //    Debug.Log(player.isHit);
+        //    //damageSequence.OnComplete(() =>
+        //    //{
+        //    //});
+
+        //    //StartCoroutine(WaitForGoDown());
+
+        //}
+
+        //_Percentage = 0;
+        //_Mat.SetFloat("_Percent", _Percentage);
+
+
         //}
         //if (Input.GetKeyDown("space"))
         //{
         //    _Percentage = 0;
         //    _Fired = true;
         //}
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            collision.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            collision.GetComponent<CircleCollider2D>().enabled = false;
+            Destroy(collision.gameObject, 0.1f);
+
+        }
+    }
+
+    private void WaitForGoDown()
+    {
+        damageSequence.Join(_HitMaterial.DOFloat(0.61f, "_VignetteIntensity", 5f));
+
     }
 }

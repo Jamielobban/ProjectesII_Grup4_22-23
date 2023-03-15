@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public abstract class Weapon 
+public class Weapon 
 {
     
     private AudioClip nextWeapon;
@@ -28,48 +28,51 @@ public abstract class Weapon
     public float timer;
     bool firstEnter = true;
 
-
+    public bool shotFired = false;
     public Weapon(Transform _firePoint, WeaponValues _data)
     {
         player = GameObject.FindGameObjectWithTag("Player");
         firePoint = _firePoint;
         data = _data;
-        data.RestartValues();
+        //data.RestartValues();
         powerupPressed = Resources.Load<AudioClip>("Sounds/Powerup/powerupPressed");
         powerupEmpty = Resources.Load<AudioClip>("Sounds/Powerup/powerup0");
         powerupMax = Resources.Load<AudioClip>("Sounds/Powerup/powerupMax");
         nextWeapon = Resources.Load<AudioClip>("Sounds/NextWeapon/nextWeapon");
+        switch (_data.mechanismType)
+        {
+        case MechanismTypes.BOLT:
+                weaponMechanism = new Repeticion();
+            break;
+        case MechanismTypes.AUTO:
+                weaponMechanism = new Automatica();
+            break;
+        case MechanismTypes.SEMIAUTO:
+                weaponMechanism = new Seamiautomatica();
+                break;
+        case MechanismTypes.FLOW:
+                weaponMechanism = new Flow();
+            break;
+        default:
+            break;
+        }
     }
 
 
-    public virtual void Update()
-    {        
-        
-        if (!data.powerActive.RuntimeValue)
-        {
-            if(data.powerupAvailable.RuntimeValue && firstEnter)
-            {
-                powerupMaxKey = AudioManager.Instance.LoadSound(powerupMax, player.transform);
-                firstEnter = false;
-            }
-            data.timePassed.RuntimeValue = Time.time - data.timelastPowerupExit.RuntimeValue;
-        }        
+    public string GetWeaponName()
+    {
+        return data.WeaponName;
+    }
+    public virtual int Update()
+    {
+        CheckShooting();
 
-        if (data.powerActive.RuntimeValue)
-        {
-            data.timeLeftPowerup.RuntimeValue = data.maxTimeOnPowerup.RuntimeValue - (Time.time - data.timelastPowerupEnter.RuntimeValue);
-            firstEnter = true;
-        }        
-
-        InputsUpdate();
+        int returnValue = InputsUpdate();
 
         LogicUpdate();
 
-    }
-    public virtual bool FixedUpdate()
-    {
-        return CheckShooting();
-    }
+        return returnValue;
+    }    
     public float GetReloadTimeInSec()
     {
         return data.reloadTimeInSec.RuntimeValue;
@@ -108,71 +111,50 @@ public abstract class Weapon
     {
         //return data.
         return data.knockbackMinimum.InitialValue;
-    }
-    public float SetTimeLeftPowerup()
-    {
-        return data.maxTimeOnPowerup.RuntimeValue;
-    }
-    public float GetTimeLeftPowerup()
-    {
-        if (!data.powerActive.RuntimeValue)
-        {
-            return 0;
-        }
-        return data.timeLeftPowerup.RuntimeValue;
-    }
-    public float GetTime()
-    {
-        if (data.powerActive.RuntimeValue)
-        {
-            return 0;
-        }
-        return data.timePassed.RuntimeValue;
-    }
-    public bool GetState()
-    {
-        return data.powerActive.RuntimeValue;
-    }
+    }    
 
     public bool GetReloadingState()
     {
         return data.reloading.RuntimeValue;
     }
-    public void SetTime(float timePassed)
+
+    public Sprite GetEmptySprite()
     {
-        data.timelastPowerupEnter.RuntimeValue = Time.time;
-        data.timelastPowerupExit.RuntimeValue = Time.time;
-        data.timelastPowerupExit.RuntimeValue -= timePassed;
-        //data.timelastPowerupEnter -= timePassed;
+        return data.emptyAmmo;
     }
-    //
+
+    public Sprite GetFullSprite()
+    {
+        return data.fullAmmo;
+    }
+    public Sprite GetFlashSprite()
+    {
+        return data.flashAmmo;
+    }   
     private bool CheckShooting()
     {
         
-        if (!data.outOfAmmo.RuntimeValue && !data.reloading.RuntimeValue)
+        if (!data.outOfAmmo.RuntimeValue && !data.reloading.RuntimeValue && Time.timeScale != 0)
         {
             if (!data.powerActive.RuntimeValue)
             {                
                 if (weaponMechanism.Shoot(data.bulletTypePrefab, firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue))
                 {
+                    shotFired = true;
                     LoadOrReloadWhenNeedIt();
                     return true;
                 }                
-            }
-            else
-            {        
-                return CheckPowerUpShooting();               
-            }            
+            }                     
             
         }
         return false;
-    }
-
-    protected abstract bool CheckPowerUpShooting();    
+    }        
     public void SetWeaponHand(ref SpriteRenderer _sr)
     {
         _sr.sprite = data.weaponSprite;
         _sr.color = data.weaponColor;
+        firePoint.localPosition = data.firePoint;
+
     }
     //protected abstract float GenerateBaseFireRate();    
 
@@ -191,20 +173,8 @@ public abstract class Weapon
 
     
 
-    private void InputsUpdate()
-    {  
-
-        //if (Input.GetButtonDown("UsePowerup"))
-        //{
-        //    if (!data.powerActive.RuntimeValue && data.powerupAvailable.RuntimeValue)
-        //    {
-        //        data.powerActive.RuntimeValue = true;
-        //        ActionOnEnterPowerup();
-        //        data.timelastPowerupEnter.RuntimeValue = Time.time;
-        //        powerupPressKey = AudioManager.Instance.LoadSound(powerupPressed, player.transform);
-        //    }
-
-        //}
+    private int InputsUpdate()
+    {          
         if (Input.GetButtonDown("Reload") && data.bulletsInMagazine.RuntimeValue < data.bulletsInMagazine.InitialValue && !data.outOfAmmo.RuntimeValue && data.magazinesInWeapon.RuntimeValue > 0)
         {
             if (data.magazinesInWeapon.RuntimeValue > 0 && data.bulletsInMagazine.RuntimeValue > 0)
@@ -217,14 +187,21 @@ public abstract class Weapon
             }
            
         }
-        else if (Input.GetButtonDown("PassWeapon"))
+        else 
         {
-            data.outOfAmmo.RuntimeValue = true;
-            data.timePassed.RuntimeValue = 0;
+            float wheelValue = Input.mouseScrollDelta.y;
+            if(wheelValue > 0)
+            {
+                return 1;
+            }
+            if (wheelValue < 0)
+            {
+                return -1;
+            }
         }
 
-
-    }
+        return 0;
+    }     
 
     protected void LoadOrReloadWhenNeedIt()
     {
@@ -249,13 +226,11 @@ public abstract class Weapon
 
     public bool GetIfOutOffAmmo()
     {
-        if (data.outOfAmmo.RuntimeValue)
-            nextWeaponKey = AudioManager.Instance.LoadSound(nextWeapon, player.transform);
+        //if (data.outOfAmmo.RuntimeValue)
+        //    nextWeaponKey = AudioManager.Instance.LoadSound(nextWeapon, player.transform);
         return data.outOfAmmo.RuntimeValue;
     }
-    
-    protected virtual void ActionOnEnterPowerup(){
-    }
+
 
     public float GetFireRate()
     {

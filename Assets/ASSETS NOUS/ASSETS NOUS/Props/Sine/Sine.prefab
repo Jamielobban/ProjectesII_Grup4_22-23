@@ -168,6 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aae9e771e72475419f14e19a0b35498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directionUp: 0
+  noEmpujar: 0
 --- !u!114 &279932153758723859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e46124d4a7fa642a18c27551a66b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  engineSound: {fileID: 8300000, guid: 5b4555527c435cc43ae1a1a4cda174fe, type: 3}
+  bladesSound: {fileID: 8300000, guid: d7729f90886e18f46ad469d0ca237069, type: 3}
   points: []
   velocity: 0
   loop: 0

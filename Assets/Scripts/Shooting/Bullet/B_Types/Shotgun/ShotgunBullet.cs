@@ -28,14 +28,14 @@ public class ShotgunBullet : Bullet
         rb = this.GetComponent<Rigidbody2D>();
 
         rotationPoint = GameObject.FindGameObjectWithTag("RotatePoint");
-        firePoint = GameObject.FindGameObjectWithTag("FirePoint");
+        firePoint = GameObject.FindGameObjectWithTag("PlayerFirePoint");
         pelletPrefab = Resources.Load<GameObject>("Prefab/Pellet");
         bulletShell = Resources.Load<GameObject>("Prefab/BulletParticle");
         powerupPelletPrefab = Resources.Load<GameObject>("Prefab/BigPelletPowerup");
         muzzleFlash = Resources.Load<GameObject>("Prefab/MuzzleFlash");
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
-        CinemachineShake.Instance.ShakeCamera(10f, .2f);
+        CinemachineShake.Instance.ShakeCamera(10f, .1f);
 
         if (powerUpOn)
         {
