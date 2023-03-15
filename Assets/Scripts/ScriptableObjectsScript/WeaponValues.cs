@@ -65,9 +65,16 @@ public class WeaponValues : ScriptableObject
     public void GetPlayerPrefs()
     {
         int a = 0;
+        int cargadoresIniciales = 3;
+
+        if(WeaponName == "Pistol")
+        {
+            cargadoresIniciales = 9999;
+        }
+
         if (bulletsInMagazine != null)
         {
-            a = bulletsInMagazine.InitialValue * 3;
+            a = bulletsInMagazine.InitialValue * cargadoresIniciales;
 
             bulletsInMagazine.RuntimeValue = PlayerPrefs.GetInt(WeaponName + "balas", a) % bulletsInMagazine.InitialValue;
         }

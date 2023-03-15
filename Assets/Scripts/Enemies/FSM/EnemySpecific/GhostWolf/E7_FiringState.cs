@@ -60,6 +60,7 @@ public class E7_FiringState : FiringState
         bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position, enemy.GetComponent<Entity>().GetFirePointTransform().rotation);
         bullet.transform.localScale = Vector3.zero;
 
+        bullet.transform.SetParent(enemy.transform);
         //fireSoundKey = AudioManager.Instance.LoadSound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);
         bullet.transform.DOScale(1, 0.4f);
               
