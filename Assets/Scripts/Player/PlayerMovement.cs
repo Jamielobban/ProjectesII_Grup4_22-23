@@ -538,7 +538,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnRollingEffects()
     {
-        StartCoroutine(waitForLayerChange(0.25f));
+        StartCoroutine(waitForLayerChange(0.35f));
         gameObject.layer = LayerIgnoreRaycast;
         //transform.DOScale((new Vector3(0.9f, 0.7f, 1f)), 0.0f);
         //transform.DOScale((new Vector3(1.2f, 1.2f, 1f)), 0.35f);
