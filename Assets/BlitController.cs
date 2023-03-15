@@ -17,6 +17,12 @@ public class BlitController : MonoBehaviour
     private CircleCollider2D circle;
 
     public PlayerMovement player;
+
+    static Sequence damageSequence;
+    private void Awake()
+    {
+        damageSequence = DOTween.Sequence();
+    }
     private void Start()
     {
         player = GetComponentInParent<PlayerMovement>();
@@ -68,12 +74,38 @@ public class BlitController : MonoBehaviour
             }
         }
 
-        if (player.isHit)
-        {
-            _HitMaterial.DOFloat(0.952f, "_VignetteIntensity", 0.4f);
-            StartCoroutine(WaitForGoDown());
+        //if (player.isHit)
+        //{
+        //    CancelInvoke("WaitForGoDown");
 
-        }
+        //    if (damageSequence.IsPlaying())
+        //    {
+        //        //Debug.Log("isPlaying");
+        //        damageSequence.Pause();
+        //        damageSequence.Kill();
+        //        damageSequence = null;
+        //    }
+
+        //    damageSequence = DOTween.Sequence();
+
+
+        //    _HitMaterial.SetFloat("_VignetteIntensity", 0.952f);
+
+        //    Invoke("WaitForGoDown", 0.5f);
+        //    ////damageSequence.Join(_HitMaterial.DOFloat(0.61f, "_VignetteIntesity", 5f));
+        //    //});
+            
+        //    //StartCoroutine(WaitForGoDown());
+
+        //    player.isHit = false;
+        //    Debug.Log(player.isHit);
+        //    //damageSequence.OnComplete(() =>
+        //    //{
+        //    //});
+
+        //    //StartCoroutine(WaitForGoDown());
+
+        //}
 
         //_Percentage = 0;
         //_Mat.SetFloat("_Percent", _Percentage);
@@ -98,9 +130,9 @@ public class BlitController : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitForGoDown()
+    private void WaitForGoDown()
     {
-        yield return new WaitForSeconds(0.41f);
-        _HitMaterial.DOFloat(0f, "_VignetteIntensity", 0.4f);
+        damageSequence.Join(_HitMaterial.DOFloat(0.61f, "_VignetteIntensity", 5f));
+
     }
 }

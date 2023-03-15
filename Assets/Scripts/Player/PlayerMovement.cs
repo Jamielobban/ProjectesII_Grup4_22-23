@@ -160,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Reaparecer()
     {
-      SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 2));
+      SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
     }
     private IEnumerator guardarPosicion()
     {
@@ -199,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         isDead = false;
         canMove = true;
         disableDash = false;
-        disableWeapons = false;
+        disableWeapons = false;        canDash = true;
         currentHearts = maxHearts;
         healthUI.DrawHearts();
 
@@ -233,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        AudioManager.Instance.SetMusicTime(AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time);
-        if (Input.GetKeyDown(KeyCode.X)){
+        if (Input.GetKeyDown(KeyCode.L)){
             godMode = true;
         }
         if(disableWeapons && rotatePoint.activeSelf == true)
@@ -379,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
                         }
                         if(time >= 1f && potionsSystem.amountToFill >= 50)
                         {
-                            potionsSystem.amountToFill -= 50;
+                            potionsSystem.amountToFill -= 50;                            PlayerPrefs.SetInt("Hearts", currentHearts);
                             potionsSystem.CheckPotionStatus();
                             Health();
                         }
@@ -592,7 +592,8 @@ public class PlayerMovement : MonoBehaviour
             healthUI.DrawAllEmpty();
             Debug.Log(currentHearts);
             canMove = true;
-            disableDash = false;
+            disableDash = false;            canDash = false;
+
             disableWeapons = false;
 
             //Debug.Log("Dead");
@@ -654,7 +655,7 @@ public class PlayerMovement : MonoBehaviour
        
         //Debug.Log("No longer invlunerable");
         isInvulnerable = false;
-        isHit = false;
+        //isHit = false;
 
     }
 

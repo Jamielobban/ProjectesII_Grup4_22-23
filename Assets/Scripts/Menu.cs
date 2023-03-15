@@ -116,8 +116,8 @@ public class Menu : MonoBehaviour
 
         //}
         //}
-        PlayerPrefs.SetInt("FirstTime", 1);
-        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 2));
+        PlayerPrefs.SetInt("FirstTime", 2);
+        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 3));
     }
 
     public void ExitGame()

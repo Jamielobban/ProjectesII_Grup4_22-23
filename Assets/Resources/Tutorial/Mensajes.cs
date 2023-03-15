@@ -107,7 +107,7 @@ public class Mensajes : MonoBehaviour
                 button.SetActive(false);
                 panel.SetActive(true);
 
-                StartCoroutine(mensages((mesajes[mesajesInConversation[conversation]].Length)*0.1f, mesajesInConversation[conversation]));
+                StartCoroutine(mensages((mesajes[mesajesInConversation[conversation]].Length)*0.05f, mesajesInConversation[conversation]));
             }
    
 
