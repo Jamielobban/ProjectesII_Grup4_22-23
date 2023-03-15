@@ -1007,12 +1007,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ganchos: []
+  enganchado: 0
   fuerza: 20
   fuerzaAbajo: 200
   velocidadCuerda: 150
   cuerda: {fileID: 5040286122034814282}
   puntaGancho: {fileID: 1920228168831922589, guid: e6949c9c37393c04688e04bc79dcf38a, type: 3}
   punta: {fileID: 0}
+  puntaRecoger: {fileID: 2772803749799101321, guid: d4d6e764e82e32146a34007ee4632ba6, type: 3}
+  timePressed: 0
+  startTime: 0
+  pressed: 0
+  volverGancho: 0
 --- !u!1 &4207238822879551039
 GameObject:
   m_ObjectHideFlags: 0

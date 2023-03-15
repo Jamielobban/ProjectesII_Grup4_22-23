@@ -62,7 +62,7 @@ public class ParticleCollector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("GanchoRecoger"))
         {
             // Debug.Log("Hitting the player");
             ps.externalForces.AddInfluence(forceField);

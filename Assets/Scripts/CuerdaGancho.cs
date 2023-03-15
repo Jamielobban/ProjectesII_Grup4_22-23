@@ -17,8 +17,12 @@ public class CuerdaGancho : MonoBehaviour
     {
         if(this.gameObject.activeSelf)
         {
-            this.gameObject.GetComponent<LineRenderer>().SetPosition(0,this.transform.parent.position);
-            this.gameObject.GetComponent<LineRenderer>().SetPosition(1, this.transform.parent.GetComponent<Gancho>().punta.transform.position);
+            if(this.transform.parent.GetComponent<Gancho>().punta != null)
+            {
+                this.gameObject.GetComponent<LineRenderer>().SetPosition(0,this.transform.parent.position);
+                this.gameObject.GetComponent<LineRenderer>().SetPosition(1, this.transform.parent.GetComponent<Gancho>().punta.transform.position);
+            }
+
 
         }
 

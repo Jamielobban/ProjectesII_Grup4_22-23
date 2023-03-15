@@ -11,7 +11,7 @@ public class Gancho : MonoBehaviour
     GameObject ganchoMasCercano;
     GameObject player;
 
-    bool enganchado;
+    public bool enganchado;
     public float fuerza;
     public float fuerzaAbajo;
 
@@ -23,10 +23,20 @@ public class Gancho : MonoBehaviour
 
     public GameObject puntaGancho;
     public GameObject punta;
+    public GameObject puntaRecoger;
 
     bool lanzarCuerda;
+
+    public float timePressed;
+    public float startTime;
+
+    public bool pressed;
+
+    public bool volverGancho;
     void Start()
     {
+        volverGancho = false;
+        pressed = false;
         lanzarCuerda = false;
         cuerda.SetActive(false);
         punta = null;
@@ -36,16 +46,36 @@ public class Gancho : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
+    
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetMouseButtonDown(1))
+        {
+            pressed = true;
+            timePressed = 0;
+        }
+
+        if(Input.GetMouseButton(1))
+        {
+            timePressed += Time.deltaTime;
+
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            pressed = false;
+            StartCoroutine(reiniciarTiempo());
+
+        }
+
+
         if (lanzarCuerda)
         {
             punta.transform.position = Vector3.MoveTowards(punta.transform.position, ganchoMasCercano.transform.position, velocidadCuerda * Time.deltaTime);
 
         }
 
-        if (ganchoMasCercano != null && Input.GetMouseButtonDown(1) && !enganchado)
+        if (ganchoMasCercano != null && Input.GetMouseButtonUp(1) && timePressed < 0.2f && !enganchado)
         {
             enganchado = true;
             lanzarCuerda = true;
@@ -59,12 +89,64 @@ public class Gancho : MonoBehaviour
 
             StartCoroutine(lanzarse());
         }
+        else if(!enganchado && pressed && timePressed >=0.25f)
+        {
+            enganchado = true;
+
+            punta = Instantiate(puntaRecoger, this.transform.GetChild(0).transform.position, this.transform.GetChild(0).transform.rotation);
+            Vector3 vector = (punta.transform.position - (player.transform.position+(punta.transform.up*3))).normalized;
+
+            punta.GetComponent<Rigidbody2D>().velocity = (vector * ((Vector3.Distance(punta.transform.position, (punta.transform.position + (punta.transform.up * 3)))) * -20));
+
+            cuerda.SetActive(true);
+
+            StartCoroutine(volver());
+
+        }
 
         if (addForceDown)
         {
             player.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -1 * fuerzaAbajo), ForceMode2D.Force);
 
         }
+
+
+
+
+
+    }
+    private IEnumerator volver()
+    {
+        yield return new WaitForSeconds(0.25f);
+        punta.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        Vector3 vector = (punta.transform.position - player.transform.position).normalized;
+        punta.GetComponent<Rigidbody2D>().velocity = (vector * ((Vector3.Distance(punta.transform.position, player.transform.position)) * -10));
+        StartCoroutine(acabar());
+    }
+
+    private IEnumerator acabar()
+    {
+        yield return new WaitForSeconds(0.075f);
+
+        if(punta.GetComponentInChildren<AmmoScriptColider>() != null)
+        {
+            punta.GetComponentInChildren<AmmoScriptColider>().recogerAmmo();
+        }
+
+        timePressed = -0.75f;
+        enganchado = false;
+        cuerda.SetActive(false);
+        if(punta != null)
+            Destroy(punta.gameObject);
+
+
+
+    }
+    private IEnumerator reiniciarTiempo()
+    {
+        yield return new WaitForSeconds(0.1f);
+        timePressed = 0;
+
     }
     private IEnumerator lanzarse()
     {
