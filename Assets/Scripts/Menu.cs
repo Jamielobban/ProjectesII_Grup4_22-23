@@ -49,6 +49,12 @@ public class Menu : MonoBehaviour
     GameObject BackMainButton;
     [SerializeField]
     GameObject BackMainClick;
+    [SerializeField]
+    GameObject PlayThings;
+    [SerializeField]
+    GameObject BackClick2;
+    [SerializeField]
+    GameObject BackButton2;
 
 
     [SerializeField]
@@ -116,9 +122,47 @@ public class Menu : MonoBehaviour
 
         //}
         //}
+
+        PlayButton.SetActive(false);
+        CreditsButton.SetActive(false);
+        ExitButton.SetActive(false);
+        PlayClick.SetActive(false);
+        CreditsClick.SetActive(false);
+        ExitClick.SetActive(false);
+        PlayThings.SetActive(true);
+        BackButton2.SetActive(true);
+        BackClick2.SetActive(true);
+
+        //PlayerPrefs.SetInt("FirstTime", 2);
+        //SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 3));
+    }
+
+    public void Continue()
+    {
         PlayerPrefs.SetInt("FirstTime", 2);
         SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 3));
     }
+
+    public void StartNew()
+    {
+        PlayerPrefs.DeleteAll();        
+        SceneManager.LoadScene(3);
+    }
+
+    public void BackToMainStart()
+    {
+        PlayButton.SetActive(true);
+        CreditsButton.SetActive(true);
+        ExitButton.SetActive(true);
+        PlayClick.SetActive(true);
+        CreditsClick.SetActive(true);
+        ExitClick.SetActive(true);
+
+        PlayThings.SetActive(false);
+        BackButton2.SetActive(false);
+        BackClick2.SetActive(false);
+    }
+
 
     public void ExitGame()
     {
