@@ -607,7 +607,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator hurtAnimation()
     {        isHit = true;
-        isInvulnerable = true;        Debug.Log("Hurting");
+        isInvulnerable = true;        //Debug.Log("Hurting");
 
         if (currentHearts % 2 == 0 && healthUI.emptyHeartArray != null)
         {
@@ -646,7 +646,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.20f);
 
 
-        body.DOColor(hurtColor, 0.0f);        Debug.Log("HUrting");
+        body.DOColor(hurtColor, 0.0f);       // Debug.Log("HUrting");
         body.DOColor(invulnerableColor, 0.15f);
 
         yield return new WaitForSeconds(0.20f);

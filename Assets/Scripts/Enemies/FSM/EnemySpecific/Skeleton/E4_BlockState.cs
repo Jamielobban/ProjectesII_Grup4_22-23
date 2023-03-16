@@ -32,7 +32,7 @@ public class E4_BlockState : BlockState
 
     public void BackToChase()
     {
-        Debug.Log("in");
+        //Debug.Log("in");
         stateMachine.ChangeState(enemy.chasingState);
     }
 }

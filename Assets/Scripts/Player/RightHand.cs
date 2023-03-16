@@ -104,7 +104,7 @@ public class RightHand : MonoBehaviour
                     weaponInHand.SetWeaponHand(ref sr);
 
                     //nextWeapon = WeaponGenerator.Instance.ReturnMyNextWeapon(firePoint);---------------------------
-                    Debug.Log("Update in update right hand");
+                    //Debug.Log("Update in update right hand");
                     UpdateUIWeapons();
 
                 }

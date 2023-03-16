@@ -11,10 +11,10 @@ public class Repeticion : Mechanism
         
         if (Input.GetButtonDown("Shoot") )
         {
-            Debug.Log("Pressed " + Time.time);
+            //Debug.Log("Pressed " + Time.time);
             if (Time.time - timeLastShoot >= fireRateinSec)
             {
-                Debug.Log("Enter");
+                //Debug.Log("Enter");
 
                 GameObject bullet = GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
                 bullet.GetComponent<Bullet>().FireProjectile(/*firePoint*/);
