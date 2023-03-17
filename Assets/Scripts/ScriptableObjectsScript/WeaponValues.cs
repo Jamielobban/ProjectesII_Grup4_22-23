@@ -67,10 +67,8 @@ public class WeaponValues : ScriptableObject
         int a = 0;
         int cargadoresIniciales = 3;
 
-        if(WeaponName == "Pistol")
-        {
-            cargadoresIniciales = 9999;
-        }
+        cargadoresIniciales = 9999;
+
 
         if (bulletsInMagazine != null)
         {

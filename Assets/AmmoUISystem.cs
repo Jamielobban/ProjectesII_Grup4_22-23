@@ -83,7 +83,7 @@ public class AmmoUISystem : MonoBehaviour
         {
             rifleAmmoArray[i].SetAmmoImage(AmmoRifleImage.AmmoStatus.Full);
             ammoCounter.text = (i + 1).ToString();
-            yield return new WaitForSeconds(time / (rightHand.weaponInHand.GetBulletsPerMagazine() + 1.25f));
+            yield return new WaitForSeconds(time / (rightHand.weaponInHand.GetBulletsPerMagazine() + 2f/*1.25f*/));
         }
 
         for (int i = rifleAmmoArray.Count - 1; i >= 0; i--)
@@ -96,6 +96,10 @@ public class AmmoUISystem : MonoBehaviour
 
     }
 
+    public void CancelReloadUI()
+    {
+        StopAllCoroutines();
+    }
 
     public void CreateEmptyAmmo()
     {

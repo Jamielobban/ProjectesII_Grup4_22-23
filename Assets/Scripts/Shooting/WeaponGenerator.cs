@@ -16,7 +16,7 @@ public class WeaponGenerator : MonoBehaviour
 
 
 
-    int weaponIndex;
+    public int weaponIndex;
 
     //private int arrayPositionInHand;
     //private int arrayPositionOfNext;
@@ -89,6 +89,10 @@ public class WeaponGenerator : MonoBehaviour
 
 
     }
+
+    public void ChangeWeapon()
+    {
+    }
     public void restartStates()
     {
         weaponsValues[1].restartWeapon();
@@ -142,10 +146,23 @@ public class WeaponGenerator : MonoBehaviour
                 if (weaponIndex <= 0)
                 {
                     weaponIndex = weaponIndexOrder.Count - 1;
+                    firePoint.GetComponentInParent<RightHand>().CancelReloadAmoSystem();
+                    firePoint.GetComponentInParent<RightHand>().firstTime3 = true;
+                    if (weaponInHand.GetReloadingState())
+                    {
+                        weaponInHand.CancelReload();
+                    }
                 }
                 else
                 {
                     weaponIndex--;
+                    firePoint.GetComponentInParent<RightHand>().CancelReloadAmoSystem();
+                    firePoint.GetComponentInParent<RightHand>().firstTime3 = true;
+
+                    if (weaponInHand.GetReloadingState())
+                    {
+                        weaponInHand.CancelReload();
+                    }
                 }
                 break;
             case 0:
@@ -162,10 +179,24 @@ public class WeaponGenerator : MonoBehaviour
                 if (weaponIndex >= weaponIndexOrder.Count - 1)
                 {
                     weaponIndex = 0;
+                    firePoint.GetComponentInParent<RightHand>().CancelReloadAmoSystem();
+                    firePoint.GetComponentInParent<RightHand>().firstTime3 = true;
+
+                    if (weaponInHand.GetReloadingState())
+                    {
+                        weaponInHand.CancelReload();
+                    }
                 }
                 else
                 {
                     weaponIndex++;
+                    firePoint.GetComponentInParent<RightHand>().CancelReloadAmoSystem();
+                    firePoint.GetComponentInParent<RightHand>().firstTime3 = true;
+
+                    if (weaponInHand.GetReloadingState())
+                    {
+                        weaponInHand.CancelReload();
+                    }
                 }
                 break;
             default:
@@ -175,6 +206,7 @@ public class WeaponGenerator : MonoBehaviour
         }
 
         weaponInHand = new Weapon(firePoint, weaponsValues[weaponIndexOrder[weaponIndex]]);
+        firePoint.GetComponentInParent<RightHand>().UpdateUIWeapons();
         currentWeapon = weaponIndexOrder[weaponIndex];
 
 

@@ -40,10 +40,10 @@ public class RightHand : MonoBehaviour
     public Image actualWeaponUI, nextWeaponUI;
 
     public bool stuffSetted = false;
-    [SerializeField] WeaponGenerator weapon;
+    public WeaponGenerator weaponGenerator;
     private void Awake()
     {
-        weapon = GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>();
+        weaponGenerator = GameObject.FindGameObjectWithTag("WeaponGenerator").GetComponent<WeaponGenerator>();
         ammoUI = FindObjectOfType<AmmoUISystem>();
         canChangeWeapon = true;
     }
@@ -52,13 +52,19 @@ public class RightHand : MonoBehaviour
     {
         ammoUI.DrawAmmo();        
     }
+
+    public void CancelReloadAmoSystem()
+    {
+        ammoUI.CancelReloadUI();
+    }
+
     private void Update()
     {
         //Reload Bar        
 
         if (weaponEquiped)
         {
-            if(weapon.weaponIndexOrder.Count != 0)
+            if(weaponGenerator.weaponIndexOrder.Count != 0)
             {
 
                 if (weaponInHand.GetReloadingState())
@@ -66,14 +72,14 @@ public class RightHand : MonoBehaviour
                     if (firstTime3)
                     {
                         ammoUI.StartCoroutine(ammoUI.ReloadAmmo(weaponInHand.GetReloadTimeInSec()));
-                        canChangeWeapon = false;
+                        //canChangeWeapon = false;
                         firstTime3 = false;
                     }
                     reloadTimer += Time.deltaTime;
                     if (reloadTimer > weaponInHand.GetReloadTimeInSec() + 0.5f)
                     {
                         firstTime3 = true;
-                        canChangeWeapon = true;
+                        //canChangeWeapon = true;
                         reloadTimer = 0f;
                     }
                 }
@@ -120,7 +126,7 @@ public class RightHand : MonoBehaviour
     {
         if (weaponEquiped)
         {
-            if (weapon.weaponIndexOrder.Count != 0)
+            if (weaponGenerator.weaponIndexOrder.Count != 0)
             {
                 if (weaponInHand.shotFired)
                 {
