@@ -134,6 +134,7 @@ public class CircleTransition : MonoBehaviour
                 if (GameObject.FindGameObjectWithTag("Potion") != null)
                     PlayerPrefs.SetInt("Potions", 0);
 
+                playerCheck.isDead = true;
                 PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
                 playerCheckpoints.Reaparecer();
          

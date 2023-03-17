@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
         Normal, Rolling, Hit
     }
     public bool OnAir;
+    public bool OnAirPlatform;
+
     [SerializeField]
     AudioClip backgroundTheme;
     int? backThemeKey;
@@ -166,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null) && !OnAir);
+        yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null) && !OnAir&& !OnAirPlatform);
         lastPositionSave = this.transform.position;
 
         StartCoroutine(guardarPosicion());
@@ -179,18 +181,24 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void reaparecerCaida()
-    {
-        isFall = false;
-        body.enabled = true;
-        isDead = false;
-        canMove = true;
-        disableDash = false;
-        disableWeapons = false;
-        body.sortingOrder = 0;
-
-
-        this.transform.position = lastPositionSave;
+    public void reaparecerCaida()
+    {
+        if (!isDead)
+        {
+            OnAirPlatform = false;
+
+            OnAir = false;
+
+            isFall = false;
+            body.enabled = true;
+            isDead = false;
+            canMove = true;
+            disableDash = false;
+            disableWeapons = false;
+            body.sortingOrder = 0;
+            this.transform.position = lastPositionSave;
+        }
+ 
     }
     public void empezar()
     {

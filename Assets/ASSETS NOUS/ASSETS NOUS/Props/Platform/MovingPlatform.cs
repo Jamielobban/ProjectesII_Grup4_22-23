@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    public List<GameObject>  points;
+    public List<GameObject> points;
     public float[] waitsTime;
     public float velocity;
     //Cuando llega al final vuelve al principio
@@ -15,9 +15,21 @@ public class MovingPlatform : MonoBehaviour
 
     public float waitTime;
     bool start;
+
+    GameObject player;
+
+    public bool fall;
+    public bool isFall;
+
+    public Animator fallPlatform;
+
+    public float timeToFall;
+
+    public BoxCollider2D col;
     // Start is called before the first frame update
     void Start()
     {
+        isFall = false;
         start = true;
         currentWaitTime = Time.time;
         transform.position = points[nextPosition].transform.position;
@@ -53,7 +65,7 @@ public class MovingPlatform : MonoBehaviour
             }
         }
 
-        if(start)
+        if (start)
         {
             if (waitsTime.Length == 0)
             {
@@ -70,7 +82,7 @@ public class MovingPlatform : MonoBehaviour
                 else
                     a = 1;
 
-                if (currentWaitTime + waitsTime[nextPosition+a] < Time.time)
+                if (currentWaitTime + waitsTime[nextPosition + a] < Time.time)
                 {
                     start = false;
 
@@ -78,11 +90,11 @@ public class MovingPlatform : MonoBehaviour
             }
         }
 
-        if(waitsTime.Length == 0)
+        if (waitsTime.Length == 0)
         {
             if (currentWaitTime + waitTime < Time.time)
             {
-                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity*Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
 
             }
         }
@@ -93,19 +105,29 @@ public class MovingPlatform : MonoBehaviour
                 a = -1;
             else
                 a = 1;
-            if (currentWaitTime + waitsTime[nextPosition+a] < Time.time)
+            if (currentWaitTime + waitsTime[nextPosition + a] < Time.time)
             {
                 transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
 
             }
         }
-  
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !isFall)
         {
+
             collision.transform.SetParent(this.transform);
+            player = collision.gameObject;
+            if (fall)
+            {
+                isFall = true;
+
+                StartCoroutine(fallPlat(timeToFall));
+                StartCoroutine(a(timeToFall+1.5f));
+
+            }
         }
     }
 
@@ -114,6 +136,27 @@ public class MovingPlatform : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             collision.transform.SetParent(GameObject.FindGameObjectWithTag("PlayerContain").transform);
+            player = null;
         }
     }
+    private IEnumerator a(float time)
+    {
+        yield return new WaitForSeconds(time);
+        isFall = false;
+
+    }
+    private IEnumerator fallPlat(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        fallPlatform.SetTrigger("fall");
+
+        yield return new WaitForSeconds(0.85f);
+
+        player.transform.SetParent(GameObject.FindGameObjectWithTag("PlayerContain").transform);
+        player = null;
+
+
+    }
+
 }

@@ -74,10 +74,17 @@ public class Caida : MonoBehaviour
 
 
         }
+        else if (collision.CompareTag("Player")&&(collision.transform.parent.GetComponent<MovingPlatform>() == null))
+        {
+
+            player.OnAir = true;
+
+            player.canDash = false;
+        }
         else if (collision.CompareTag("Player"))
         {
-            player.OnAir = true;
-            player.canDash = false;
+            player.OnAirPlatform = true;
+
         }
     }
 
@@ -86,6 +93,7 @@ public class Caida : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             player.OnAir = false;
+            player.OnAirPlatform = false;
 
             player.canDash = true;
         }
