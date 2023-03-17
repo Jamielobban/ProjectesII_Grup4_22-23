@@ -73,7 +73,8 @@ public class ExitRoom : MonoBehaviour
         {
             if (!player.entrandoSala)
             {
-                if(GameObject.FindGameObjectWithTag("Potion") != null)
+
+                if (GameObject.FindGameObjectWithTag("Potion") != null)
                     PlayerPrefs.SetInt("Potions", GameObject.FindGameObjectWithTag("Potion").GetComponent<PotionSystem>().amountToFill);
 
                 StartCoroutine(transicion());
@@ -141,6 +142,7 @@ public class ExitRoom : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+
             player.entrandoSala = false;
             player.disableDash = false;
             player.GetComponentInChildren<RightHand>().weaponEquiped = true;

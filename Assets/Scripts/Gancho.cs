@@ -8,7 +8,7 @@ public class Gancho : MonoBehaviour
     public List<GameObject> ganchos;
     // Start is called before the first frame update
 
-    GameObject ganchoMasCercano;
+    public GameObject ganchoMasCercano;
     GameObject player;
 
     public bool enganchado;
@@ -18,6 +18,7 @@ public class Gancho : MonoBehaviour
     public float velocidadCuerda;
 
     bool addForceDown;
+    bool lanzado;
 
     public GameObject cuerda;
 
@@ -35,6 +36,7 @@ public class Gancho : MonoBehaviour
     public bool volverGancho;
     void Start()
     {
+        lanzado = false;
         volverGancho = false;
         pressed = false;
         lanzarCuerda = false;
@@ -50,51 +52,15 @@ public class Gancho : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(1))
-        {
-            pressed = true;
-            timePressed = 0;
-        }
-
-        if(Input.GetMouseButton(1))
-        {
-            timePressed += Time.deltaTime;
-
-        }
-        if (Input.GetMouseButtonUp(1))
-        {
-            pressed = false;
-            StartCoroutine(reiniciarTiempo());
-
-        }
 
 
-        if (lanzarCuerda)
-        {
-            punta.transform.position = Vector3.MoveTowards(punta.transform.position, ganchoMasCercano.transform.position, velocidadCuerda * Time.deltaTime);
-
-        }
-
-        if (ganchoMasCercano != null && Input.GetMouseButtonUp(1) && timePressed < 0.2f && !enganchado)
-        {
-            enganchado = true;
-            lanzarCuerda = true;
-            punta = Instantiate(puntaGancho, this.transform.GetChild(0).transform.position, this.transform.GetChild(0).transform.rotation);
-            cuerda.SetActive(true);
-
-
-            player.GetComponent<PlayerMovement>().canMove = false;
-            player.GetComponent<PlayerMovement>().disableDash = true;
-            player.GetComponent<PlayerMovement>().isDashing = true;
-
-            StartCoroutine(lanzarse());
-        }
-        else if(!enganchado && pressed && timePressed >=0.25f)
+   
+        if(!enganchado && Input.GetMouseButtonDown(1))
         {
             enganchado = true;
 
             punta = Instantiate(puntaRecoger, this.transform.GetChild(0).transform.position, this.transform.GetChild(0).transform.rotation);
-            Vector3 vector = (punta.transform.position - (player.transform.position+(punta.transform.up*3))).normalized;
+            Vector3 vector = (punta.transform.position - (this.transform.GetChild(0).transform.position+(punta.transform.up*3))).normalized;
 
             punta.GetComponent<Rigidbody2D>().velocity = (vector * ((Vector3.Distance(punta.transform.position, (punta.transform.position + (punta.transform.up * 3)))) * -20));
 
@@ -110,7 +76,14 @@ public class Gancho : MonoBehaviour
 
         }
 
-
+        if(punta != null && punta.GetComponent<PuntaGancho>().enganche != null&&punta.transform.childCount == 1 && !lanzado)
+        {
+            player.GetComponent<PlayerMovement>().isDashing = true;
+            player.GetComponent<PlayerMovement>().canMove = false;
+            player.GetComponent<PlayerMovement>().disableDash = true;
+            lanzado = true;
+            StartCoroutine(lanzarse());
+        }
 
 
 
@@ -118,6 +91,13 @@ public class Gancho : MonoBehaviour
     private IEnumerator volver()
     {
         yield return new WaitForSeconds(0.25f);
+        if(lanzado)
+        {
+            lanzado = false;
+            yield break;
+        }
+
+
         punta.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         Vector3 vector = (punta.transform.position - player.transform.position).normalized;
         punta.GetComponent<Rigidbody2D>().velocity = (vector * ((Vector3.Distance(punta.transform.position, player.transform.position)) * -10));
@@ -150,9 +130,9 @@ public class Gancho : MonoBehaviour
     }
     private IEnumerator lanzarse()
     {
-        yield return new WaitForSeconds(0.25f);
-        Vector3 vector = (ganchoMasCercano.transform.position - player.transform.position).normalized;
-        player.GetComponent<Rigidbody2D>().velocity = (vector * ((Vector3.Distance(ganchoMasCercano.transform.position, player.transform.position)) * fuerza));
+        yield return new WaitForSeconds(0f);
+        Vector3 vector = (punta.GetComponent<PuntaGancho>().enganche.transform.position - player.transform.position).normalized;
+        player.GetComponent<Rigidbody2D>().velocity = (vector * ((Vector3.Distance(punta.GetComponent<PuntaGancho>().enganche.transform.position, player.transform.position)) * fuerza));
 
         player.layer = LayerMask.NameToLayer("IgnoreEverything");
 
@@ -172,94 +152,93 @@ public class Gancho : MonoBehaviour
         Destroy(punta.gameObject);
 
 
-
     }
     private IEnumerator delay()
     {
         yield return new WaitForSeconds(0.125f);
         player.layer = LayerMask.NameToLayer("Player");
         addForceDown = false;
-        ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0f);
         ganchoMasCercano = null;
         enganchado = false;
         player.GetComponent<PlayerMovement>().isDashing = false;
         player.GetComponent<PlayerMovement>().canMove = true;
         player.GetComponent<PlayerMovement>().disableDash = false;
 
+
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Gancho") && !enganchado && player.GetComponent<PlayerMovement>().canMove)
-        {
-            bool isInside = false;
-            for (int i = 0; i < ganchos.Count; i++)
-            {
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Gancho") && !enganchado && player.GetComponent<PlayerMovement>().canMove)
+    //    {
+    //        bool isInside = false;
+    //        for (int i = 0; i < ganchos.Count; i++)
+    //        {
 
-                if (ganchos[i] == collision.gameObject)
-                {
-                    isInside = true;
-                }
-            }
-            if (!isInside)
-                ganchos.Add(collision.gameObject);
+    //            if (ganchos[i] == collision.gameObject)
+    //            {
+    //                isInside = true;
+    //            }
+    //        }
+    //        if (!isInside)
+    //            ganchos.Add(collision.gameObject);
 
-            float distancia = 5000;
-            for (int i = 0; i < ganchos.Count; i++)
-            {
-                if (Vector3.Distance(ganchos[i].transform.position, player.transform.position) < distancia)
-                {
-                    distancia = Vector3.Distance(ganchos[i].transform.position, player.transform.position);
+    //        float distancia = 5000;
+    //        for (int i = 0; i < ganchos.Count; i++)
+    //        {
+    //            if (Vector3.Distance(ganchos[i].transform.position, player.transform.position) < distancia)
+    //            {
+    //                distancia = Vector3.Distance(ganchos[i].transform.position, player.transform.position);
 
-                    if (ganchoMasCercano != null)
-                        ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0f);
+    //                if (ganchoMasCercano != null)
+    //                    ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0f);
 
-                    ganchoMasCercano = ganchos[i];
-                    ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0.7f);
+    //                ganchoMasCercano = ganchos[i];
+    //                ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0.7f);
 
-                }
-            }
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Gancho") && !enganchado && player.GetComponent<PlayerMovement>().canMove)
-        {
-            for (int i = 0; i < ganchos.Count; i++)
-            {
+    //            }
+    //        }
+    //    }
+    //}
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Gancho") && !enganchado && player.GetComponent<PlayerMovement>().canMove)
+    //    {
+    //        for (int i = 0; i < ganchos.Count; i++)
+    //        {
 
-                if (ganchos[i] == collision.gameObject)
-                {
-                    ganchos.RemoveAt(i);
-                }
-            }
+    //            if (ganchos[i] == collision.gameObject)
+    //            {
+    //                ganchos.RemoveAt(i);
+    //            }
+    //        }
 
-            float distancia = 5000;
-            if (ganchos.Count == 0)
-            {
-                if (ganchoMasCercano != null)
-                    ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0f);
+    //        float distancia = 5000;
+    //        if (ganchos.Count == 0)
+    //        {
+    //            if (ganchoMasCercano != null)
+    //                ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0f);
 
-                ganchoMasCercano = null;
-            }
-            else
-            {
-                for (int i = 0; i < ganchos.Count; i++)
-                {
-                    float a = Vector3.Distance(ganchos[i].transform.position, player.transform.position);
-                    if (Vector3.Distance(ganchos[i].transform.position, player.transform.position) < distancia)
-                    {
-                        distancia = Vector3.Distance(ganchos[i].transform.position, player.transform.position);
+    //            ganchoMasCercano = null;
+    //        }
+    //        else
+    //        {
+    //            for (int i = 0; i < ganchos.Count; i++)
+    //            {
+    //                float a = Vector3.Distance(ganchos[i].transform.position, player.transform.position);
+    //                if (Vector3.Distance(ganchos[i].transform.position, player.transform.position) < distancia)
+    //                {
+    //                    distancia = Vector3.Distance(ganchos[i].transform.position, player.transform.position);
 
-                        if (ganchoMasCercano != null)
-                            ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0f);
+    //                    if (ganchoMasCercano != null)
+    //                        ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0f);
 
-                        ganchoMasCercano = ganchos[i];
-                        ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0.7f);
+    //                    ganchoMasCercano = ganchos[i];
+    //                    ganchoMasCercano.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineAlpha", 0.7f);
 
-                    }
-                }
-            }
-        }
-    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
 }
