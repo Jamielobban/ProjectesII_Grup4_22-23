@@ -9,11 +9,12 @@ public class EffectBlood : MonoBehaviour
     Material material;
 
     ParticleSystemRenderer ps;
+    bool end;
     // Start is called before the first frame update
     void Start()
     {
-
-        ps = GetComponent<ParticleSystemRenderer>();
+        end = false;
+        ps = this.GetComponent<ParticleSystemRenderer>();
         material = ps.material;
 
         currentWaitTime = Time.time;
@@ -23,8 +24,9 @@ public class EffectBlood : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if((Time.time - currentWaitTime) > lifetime)
+        if((Time.time - currentWaitTime) > lifetime&&!end)
         {
+            end = true;
             material.DOFloat(1, "_FadeAmount", 3);
         }
     }

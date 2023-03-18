@@ -74,7 +74,7 @@ public class Caida : MonoBehaviour
 
 
         }
-        else if (collision.CompareTag("Player")&&(collision.transform.parent.GetComponent<MovingPlatform>() == null))
+        else if (collision.CompareTag("Player")&&(collision.transform.parent.GetComponent<MovingPlatform>() == null) && !player.isDashing)
         {
 
             player.OnAir = true;

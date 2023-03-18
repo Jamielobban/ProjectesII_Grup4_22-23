@@ -52,10 +52,20 @@ public class Gancho : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(punta != null&&player.GetComponent<PlayerMovement>().isDead)
+        {
+            punta = null;
+            cuerda.SetActive(false);
+            player.layer = LayerMask.NameToLayer("Player");
+            addForceDown = false;
+            ganchoMasCercano = null;
+            enganchado = false;
+            player.GetComponent<PlayerMovement>().isDashing = false;
+            player.GetComponent<PlayerMovement>().canMove = true;
+            player.GetComponent<PlayerMovement>().disableDash = false;
+        }
 
-
-   
-        if(!enganchado && Input.GetMouseButtonDown(1))
+        if (!enganchado && Input.GetMouseButtonDown(1))
         {
             enganchado = true;
 
@@ -91,34 +101,38 @@ public class Gancho : MonoBehaviour
     private IEnumerator volver()
     {
         yield return new WaitForSeconds(0.25f);
-        if(lanzado)
+        if (punta != null)
         {
-            lanzado = false;
-            yield break;
+            if (lanzado)
+            {
+                lanzado = false;
+                yield break;
+            }
+
+
+            punta.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            Vector3 vector = (punta.transform.position - player.transform.position).normalized;
+            punta.GetComponent<Rigidbody2D>().velocity = (vector * ((Vector3.Distance(punta.transform.position, player.transform.position)) * -10));
+            StartCoroutine(acabar());
         }
-
-
-        punta.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        Vector3 vector = (punta.transform.position - player.transform.position).normalized;
-        punta.GetComponent<Rigidbody2D>().velocity = (vector * ((Vector3.Distance(punta.transform.position, player.transform.position)) * -10));
-        StartCoroutine(acabar());
     }
 
     private IEnumerator acabar()
     {
         yield return new WaitForSeconds(0.075f);
-
-        if(punta.GetComponentInChildren<AmmoScriptColider>() != null)
+        if (punta != null)
         {
-            punta.GetComponentInChildren<AmmoScriptColider>().recogerAmmo();
+            if (punta.GetComponentInChildren<AmmoScriptColider>() != null)
+            {
+                punta.GetComponentInChildren<AmmoScriptColider>().recogerAmmo();
+            }
+
+            timePressed = -0.75f;
+            enganchado = false;
+            cuerda.SetActive(false);
+            if (punta != null)
+                Destroy(punta.gameObject);
         }
-
-        timePressed = -0.75f;
-        enganchado = false;
-        cuerda.SetActive(false);
-        if(punta != null)
-            Destroy(punta.gameObject);
-
 
 
     }
@@ -131,39 +145,47 @@ public class Gancho : MonoBehaviour
     private IEnumerator lanzarse()
     {
         yield return new WaitForSeconds(0f);
-        Vector3 vector = (punta.GetComponent<PuntaGancho>().enganche.transform.position - player.transform.position).normalized;
-        player.GetComponent<Rigidbody2D>().velocity = (vector * ((Vector3.Distance(punta.GetComponent<PuntaGancho>().enganche.transform.position, player.transform.position)) * fuerza));
+        if(punta != null)
+        {
+            Vector3 vector = (punta.GetComponent<PuntaGancho>().enganche.transform.position - player.transform.position).normalized;
+            player.GetComponent<Rigidbody2D>().velocity = (vector * ((Vector3.Distance(punta.GetComponent<PuntaGancho>().enganche.transform.position, player.transform.position)) * fuerza));
 
-        player.layer = LayerMask.NameToLayer("IgnoreEverything");
+            player.layer = LayerMask.NameToLayer("IgnoreEverything");
 
-        addForceDown = true;
+            addForceDown = true;
 
-        StartCoroutine(delay());
-        StartCoroutine(quitarCuerda());
+            StartCoroutine(delay());
+            StartCoroutine(quitarCuerda());
+        }
+
 
     }
 
     private IEnumerator quitarCuerda()
     {
         yield return new WaitForSeconds(0.025f);
-        lanzarCuerda = false;
-        cuerda.SetActive(false);
+        if (punta != null)
+        {
+            lanzarCuerda = false;
+            cuerda.SetActive(false);
 
-        Destroy(punta.gameObject);
-
+            Destroy(punta.gameObject);
+        }
 
     }
     private IEnumerator delay()
     {
         yield return new WaitForSeconds(0.125f);
-        player.layer = LayerMask.NameToLayer("Player");
-        addForceDown = false;
-        ganchoMasCercano = null;
-        enganchado = false;
-        player.GetComponent<PlayerMovement>().isDashing = false;
-        player.GetComponent<PlayerMovement>().canMove = true;
-        player.GetComponent<PlayerMovement>().disableDash = false;
-
+        if (punta != null)
+        {
+            player.layer = LayerMask.NameToLayer("Player");
+            addForceDown = false;
+            ganchoMasCercano = null;
+            enganchado = false;
+            player.GetComponent<PlayerMovement>().isDashing = false;
+            player.GetComponent<PlayerMovement>().canMove = true;
+            player.GetComponent<PlayerMovement>().disableDash = false;
+        }
 
     }
     //private void OnTriggerEnter2D(Collider2D collision)

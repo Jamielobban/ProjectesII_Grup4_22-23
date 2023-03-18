@@ -32,46 +32,78 @@ public class MovingPlatform : MonoBehaviour
         isFall = false;
         start = true;
         currentWaitTime = Time.time;
-        transform.position = points[nextPosition].transform.position;
+
+        if (points.Count > 0)
+        {
+            transform.position = points[nextPosition].transform.position;
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(points[nextPosition].transform.position, transform.position) < 0.01f && !start)
+        if (points.Count > 0)
         {
-            if (loop)
-            {
-                nextPosition = (nextPosition + 1) % points.Count;
-                currentWaitTime = Time.time;
-            }
-            else
-            {
-                if (direction && nextPosition + 1 == points.Count)
-                {
-                    direction = false;
-                }
-                else if (!direction && nextPosition - 1 == -1)
-                {
-                    direction = true;
-                }
 
-                if (direction)
-                    nextPosition++;
+            if (Vector3.Distance(points[nextPosition].transform.position, transform.position) < 0.01f && !start)
+            {
+                if (loop)
+                {
+                    nextPosition = (nextPosition + 1) % points.Count;
+                    currentWaitTime = Time.time;
+                }
                 else
-                    nextPosition--;
-                currentWaitTime = Time.time;
+                {
+                    if (direction && nextPosition + 1 == points.Count)
+                    {
+                        direction = false;
+                    }
+                    else if (!direction && nextPosition - 1 == -1)
+                    {
+                        direction = true;
+                    }
 
+                    if (direction)
+                        nextPosition++;
+                    else
+                        nextPosition--;
+                    currentWaitTime = Time.time;
+
+                }
             }
-        }
 
-        if (start)
-        {
+            if (start)
+            {
+                if (waitsTime.Length == 0)
+                {
+                    if (currentWaitTime + waitTime < Time.time)
+                    {
+                        start = false;
+                    }
+                }
+                else
+                {
+                    int a;
+                    if (direction)
+                        a = -1;
+                    else
+                        a = 1;
+
+                    if (currentWaitTime + waitsTime[nextPosition + a] < Time.time)
+                    {
+                        start = false;
+
+                    }
+                }
+            }
+
             if (waitsTime.Length == 0)
             {
                 if (currentWaitTime + waitTime < Time.time)
                 {
-                    start = false;
+                    transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
+
                 }
             }
             else
@@ -81,37 +113,13 @@ public class MovingPlatform : MonoBehaviour
                     a = -1;
                 else
                     a = 1;
-
                 if (currentWaitTime + waitsTime[nextPosition + a] < Time.time)
                 {
-                    start = false;
+                    transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
 
                 }
             }
         }
-
-        if (waitsTime.Length == 0)
-        {
-            if (currentWaitTime + waitTime < Time.time)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
-
-            }
-        }
-        else
-        {
-            int a;
-            if (direction)
-                a = -1;
-            else
-                a = 1;
-            if (currentWaitTime + waitsTime[nextPosition + a] < Time.time)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
-
-            }
-        }
-
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

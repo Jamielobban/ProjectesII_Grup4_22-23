@@ -950,7 +950,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &165468806705144518
 Transform:
   m_ObjectHideFlags: 0
@@ -1007,6 +1007,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ganchos: []
+  ganchoMasCercano: {fileID: 0}
   enganchado: 0
   fuerza: 20
   fuerzaAbajo: 200
@@ -1556,6 +1557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnAir: 0
+  OnAirPlatform: 0
   backgroundTheme: {fileID: 8300000, guid: fc95799cc57b89144b507fbffec8bd35, type: 3}
   anim: {fileID: 903690195358625675}
   fxAnim: {fileID: 966548694349639234}
