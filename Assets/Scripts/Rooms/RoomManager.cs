@@ -29,11 +29,15 @@ public class RoomManager : MonoBehaviour
     bool alreadyEnter;
     string nameSave;
 
+    public bool porTriggers;
+
+    public TriggersRound[] triggers;
     //Las puertas tienen que estar en el mismo puesto que su palanca
 
     public void Start()
     {
         nameSave = "Sala" + SceneManager.GetActiveScene().buildIndex;
+        kills = 0;
 
         alreadyEnter = (PlayerPrefs.GetInt(nameSave,0) != 0);
         inRoom = false;
@@ -47,6 +51,22 @@ public class RoomManager : MonoBehaviour
             else
                 doors[i].SetActive(false);
         }
+
+
+        if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 3) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 0)))
+        {
+            currentRound = 0;
+        }
+        else if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 2) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 1)))
+        {
+            currentRound = enemiesInEachRound.Length-1;
+
+        }
+
+
+
+
+
     }
 
     void closeDoors()
@@ -117,6 +137,7 @@ public class RoomManager : MonoBehaviour
     {
         if (!alreadyEnter)
         {
+
             roomTriggers.SetActive(false);
 
             this.gameObject.tag = "RoomManager";
@@ -127,22 +148,61 @@ public class RoomManager : MonoBehaviour
             closeDoors();
         }
     }
+
+    private void FixedUpdate()
+    {
+        if(triggers.Length != 0 && currentRound != -1 && currentRound !=3)
+        {
+            
+            if (triggers[currentRound].enter)
+            {
+                if(!inRoom)
+                    closeDoors();
+
+                spawnRound(currentRound);
+                inRoom = true;
+
+                if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 3) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 0)))
+                {
+                    currentRound++;
+                }
+                else if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 2) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 1)))
+                {
+                    currentRound--;
+                }
+            }
+        }
+  
+    }
+
     public void Dead()
     {
         kills++;
 
-        if(kills == enemiesInEachRound[currentRound])
+        if(!porTriggers)
         {
-            if(currentRound < (enemiesInEachRound.Length-1))
+            if(kills == enemiesInEachRound[currentRound])
             {
-                currentRound++;
-                spawnRound(currentRound);
-            }
-            else
-            {
-                endRoom();
+                if(currentRound < (enemiesInEachRound.Length-1))
+                {
+                    currentRound++;
+                    spawnRound(currentRound);
+                }
+                else
+                {
+                    endRoom();
+                }
             }
         }
+        else
+        {
+            if (kills >= (spawns.Length))
+            {
+                endRoom();
+
+            }
+        }
+
     }
     void spawnRound(int round)
     {

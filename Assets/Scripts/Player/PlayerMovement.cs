@@ -166,9 +166,9 @@ public class PlayerMovement : MonoBehaviour
     }
     private IEnumerator guardarPosicion()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
-        yield return new WaitUntil(() => (!isDashing&&canMove&&this.transform.parent.GetComponent<MovingPlatform>() == null) && !OnAir&& !OnAirPlatform);
+        yield return new WaitUntil(() => (!isDashing && canMove && (((this.transform.parent.GetComponent<MovingPlatform>() == null) && !OnAir&& !OnAirPlatform)|| this.transform.parent.GetComponent<MovingPlatform>().OnPlayerStay)));
         lastPositionSave = this.transform.position;
 
         StartCoroutine(guardarPosicion());

@@ -71,8 +71,14 @@ public class Menu : MonoBehaviour
 
         if(PlayerPrefs.GetInt("FirstTime", 0) == 0)
         {
-            Debug.Log("Borrar");
             PlayerPrefs.DeleteAll();
+
+            for(int i = 0; i < 12; i++)
+            {
+                string nameSave = "Sala" + i;
+                PlayerPrefs.SetInt(nameSave, (false ? 1 : 0));
+
+            }
         }
         
         if(musicValue != null)
@@ -119,7 +125,7 @@ public class Menu : MonoBehaviour
         PlayerPrefs.SetInt("isDead", 1);
 
         PlayerPrefs.SetInt("FirstTime", 2);
-        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 2));
+        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 16));
     }
 
     public void ExitGame()

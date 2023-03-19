@@ -25,17 +25,39 @@ public class MovingPlatform : MonoBehaviour
 
     public float timeToFall;
 
+    public bool OnPlayerStay;
     public BoxCollider2D col;
+
+    bool end;
     // Start is called before the first frame update
     void Start()
     {
+        end = false;
         isFall = false;
         start = true;
         currentWaitTime = Time.time;
 
         if (points.Count > 0)
         {
-            transform.position = points[nextPosition].transform.position;
+            if(!OnPlayerStay)
+                transform.position = points[nextPosition].transform.position;
+            else
+            {
+                if((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 3)|| ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 0)))
+                {
+
+                    transform.position = points[points.Count - 1].transform.position;
+                    direction = false;
+                    nextPosition = points.Count - 1;
+                }
+                else if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 2) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 1)))
+                {
+                    transform.position = points[0].transform.position;
+                    direction = true;
+                    nextPosition = 0;
+                }
+
+            }
         }
 
     }
@@ -48,6 +70,7 @@ public class MovingPlatform : MonoBehaviour
 
             if (Vector3.Distance(points[nextPosition].transform.position, transform.position) < 0.01f && !start)
             {
+     
                 if (loop)
                 {
                     nextPosition = (nextPosition + 1) % points.Count;
@@ -57,10 +80,13 @@ public class MovingPlatform : MonoBehaviour
                 {
                     if (direction && nextPosition + 1 == points.Count)
                     {
+                        end = true;
                         direction = false;
                     }
                     else if (!direction && nextPosition - 1 == -1)
                     {
+                        end = true;
+
                         direction = true;
                     }
 
@@ -71,6 +97,8 @@ public class MovingPlatform : MonoBehaviour
                     currentWaitTime = Time.time;
 
                 }
+
+
             }
 
             if (start)
@@ -102,7 +130,15 @@ public class MovingPlatform : MonoBehaviour
             {
                 if (currentWaitTime + waitTime < Time.time)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
+
+                        if(!OnPlayerStay)
+                            transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
+                        else
+                        {
+                            if (this.transform.GetComponentInChildren<PlayerMovement>() != null && !end)
+                                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
+
+                        }
 
                 }
             }
@@ -115,7 +151,14 @@ public class MovingPlatform : MonoBehaviour
                     a = 1;
                 if (currentWaitTime + waitsTime[nextPosition + a] < Time.time)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
+
+                    if (!OnPlayerStay)
+                        transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
+                    else
+                    {
+                        if (this.transform.GetComponentInChildren<PlayerMovement>() != null && !end)
+                            transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
+                    }
 
                 }
             }

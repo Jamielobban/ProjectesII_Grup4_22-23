@@ -7,7 +7,7 @@ public class E7_FiringState : FiringState
 {
     Enemy7 enemy;
     float enterTime;
-    GameObject bullet;
+    public GameObject bullet;
     bool spawningBall;
     int? wolfHowlSound;
 

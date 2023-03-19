@@ -73,6 +73,8 @@ public class Enemy7 : Entity
     {
         base.Update();
 
+
+
         if(stateMachine.currentState == idleState && agent.enabled)
         {
             agent.speed = enemyData.speed;
@@ -146,7 +148,15 @@ public class Enemy7 : Entity
 
     protected override void GetDamage(float damageHit)
     {
+        if (enemyHealth - damageHit <= 0)
+        {
+            if (firingState.bullet != null)
+            {
+                Destroy(firingState.bullet);
+            }
+        }
         base.GetDamage(damageHit);
+
     }
 
     public void SearchFunction(string funcName)
