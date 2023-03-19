@@ -578,7 +578,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Health()
     {
-        currentHearts +=2;
+        currentHearts +=1;
 
         if (currentHearts > maxHearts)
         {
