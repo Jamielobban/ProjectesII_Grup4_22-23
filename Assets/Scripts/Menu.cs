@@ -122,6 +122,12 @@ public class Menu : MonoBehaviour
 
         //}
         //}
+        for (int i = 0; i < 12; i++)
+        {
+            string nameSave = "Sala" + i;
+            PlayerPrefs.SetInt(nameSave, (false ? 1 : 0));
+
+        }
         PlayerPrefs.SetInt("isDead", 1);
 
         PlayerPrefs.SetInt("FirstTime", 2);
