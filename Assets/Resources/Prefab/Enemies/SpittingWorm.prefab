@@ -55,6 +55,8 @@ MonoBehaviour:
   agent: {fileID: 0}
   sr: {fileID: 7299583595192548345}
   burnPrefab: {fileID: 3564664467013247471, guid: e4b5b15301115b443bd61b63bdc3487f, type: 3}
+  isAVariant: 0
+  colorChange: 0
   firePoint: {fileID: 7299583594730947533}
   enemyData: {fileID: 11400000, guid: 1de239b50a4e8f34698f8e2f70f0e41d, type: 2}
   blood: {fileID: 5131986925755455784, guid: 11d09c4b86434884c9d334ba4d7fe419, type: 3}
@@ -134,7 +136,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 1.47
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &7299583594730947538
