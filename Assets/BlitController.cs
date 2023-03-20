@@ -74,49 +74,24 @@ public class BlitController : MonoBehaviour
             }
         }
 
-        //if (player.isHit)
-        //{
-        //    CancelInvoke("WaitForGoDown");
+        if (player.isHit)
+        {           
 
-        //    if (damageSequence.IsPlaying())
-        //    {
-        //        //Debug.Log("isPlaying");
-        //        damageSequence.Pause();
-        //        damageSequence.Kill();
-        //        damageSequence = null;
-        //    }
+            if (damageSequence != null)
+            {
+                damageSequence.Kill();
+            }
 
-        //    damageSequence = DOTween.Sequence();
-
-
-        //    _HitMaterial.SetFloat("_VignetteIntensity", 0.952f);
-
-        //    Invoke("WaitForGoDown", 0.5f);
-        //    ////damageSequence.Join(_HitMaterial.DOFloat(0.61f, "_VignetteIntesity", 5f));
-        //    //});
+            _HitMaterial.SetFloat("_VignetteIntensity", 0.952f); 
             
-        //    //StartCoroutine(WaitForGoDown());
+            damageSequence = DOTween.Sequence();
+            damageSequence.Append(_HitMaterial.DOFloat(0.61f, "_VignetteIntensity", 5f).SetDelay(0.5f));
+           
 
-        //    player.isHit = false;
-        //    Debug.Log(player.isHit);
-        //    //damageSequence.OnComplete(() =>
-        //    //{
-        //    //});
+            player.isHit = false;
 
-        //    //StartCoroutine(WaitForGoDown());
-
-        //}
-
-        //_Percentage = 0;
-        //_Mat.SetFloat("_Percent", _Percentage);
-
-
-        //}
-        //if (Input.GetKeyDown("space"))
-        //{
-        //    _Percentage = 0;
-        //    _Fired = true;
-        //}
+        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -128,11 +103,7 @@ public class BlitController : MonoBehaviour
             Destroy(collision.gameObject, 0.1f);
 
         }
-    }
+    }    
 
-    private void WaitForGoDown()
-    {
-        damageSequence.Join(_HitMaterial.DOFloat(0.61f, "_VignetteIntensity", 5f));
 
-    }
 }

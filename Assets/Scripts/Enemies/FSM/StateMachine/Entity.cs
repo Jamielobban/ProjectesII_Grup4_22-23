@@ -225,9 +225,28 @@ public abstract class Entity : MonoBehaviour
 			sequenceImpactShader.Kill();
 			sequenceImpactShader = null;
 		}
+
+		if (sr.material == null)
+		{
+			Debug.LogError("Material is null!");
+			return;
+		}
+
 		sr.material.SetFloat("_Glow", 0);
 
+		
+
+
 		sequenceImpactShader = DOTween.Sequence();
+
+		sequenceImpactShader.OnKill(() =>
+		{
+			Debug.LogWarning("Impact shader sequence was killed!");
+			sr.material.SetFloat("_ChromAberrAmount", 0);
+			sr.material.SetFloat("_FishEyeUvAmount", 0);
+			sr.material.SetFloat("_HitEffectBlend", 0);			
+			sr.material.SetFloat("_PinchUvAmount", 0);
+		});
 
 
 		sr.material.SetFloat("_ChromAberrAmount", 0);
