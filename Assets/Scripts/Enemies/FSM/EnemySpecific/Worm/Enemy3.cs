@@ -91,6 +91,8 @@ public class Enemy3 : Entity
         {
             bc.enabled = true;
         }
+
+        Debug.Log(stateMachine.currentState);
     }
 
     protected override void GetDamage(float damageHit)
