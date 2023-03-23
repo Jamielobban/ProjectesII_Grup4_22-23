@@ -9,4 +9,34 @@ public class E12_DeadState : DeadState
     {
         this.enemy = enemy;
     }
+
+    public override void Enter()
+    {
+        base.Enter();        
+
+
+        Object.Instantiate(stateData.bullets, enemy.transform.position, Quaternion.identity);
+
+        Object.Instantiate(stateData.orbes, enemy.transform.position, Quaternion.identity);
+
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        GameObject deadParticles = GameObject.Instantiate(stateData.deadParticles, entity.transform.position, entity.transform.rotation);
+        GameObject.Destroy(enemy.gameObject);
+       
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+    }
 }

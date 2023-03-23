@@ -52,15 +52,20 @@ public abstract class Entity : MonoBehaviour
 
 	public GameObject blood;
 	public GameObject deadBlood;
+	public bool hasNavemesh = true;
 
 	public int? hitSoundKey;
 	float originalGlowValue;
 
 	private void Awake()
     {
-		agent = GetComponent<NavMeshAgent>();
-		agent.updateRotation = false;
-		agent.updateUpAxis = false;
+        if (hasNavemesh)
+        {
+			agent = GetComponent<NavMeshAgent>();
+			agent.updateRotation = false;
+			agent.updateUpAxis = false;
+		}
+		
 		firePoint = GetComponentsInChildren<Transform>().Where(t => t.tag == "FirePoint").ToArray()[0];
 		myHealthState = HealthStateTypes.NORMAL;		
 		timeHealthStateExit = 0;
