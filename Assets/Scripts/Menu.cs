@@ -79,10 +79,13 @@ public class Menu : MonoBehaviour
         {
             PlayerPrefs.DeleteAll();
 
-            for(int i = 0; i < 12; i++)
+            for(int i = 0; i < 70; i++)
             {
                 string nameSave = "Sala" + i;
                 PlayerPrefs.SetInt(nameSave, (false ? 1 : 0));
+
+                if(i == 1)
+                    PlayerPrefs.SetInt(nameSave, (true ? 1 : 0));
 
             }
         }
@@ -128,12 +131,7 @@ public class Menu : MonoBehaviour
 
         //}
         //}
-        for (int i = 0; i < 12; i++)
-        {
-            string nameSave = "Sala" + i;
-            PlayerPrefs.SetInt(nameSave, (false ? 1 : 0));
 
-        }
         PlayerPrefs.SetInt("isDead", 1);
 
 
@@ -154,7 +152,7 @@ public class Menu : MonoBehaviour
     public void Continue()
     {
         PlayerPrefs.SetInt("FirstTime", 2);
-        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 16));
+        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
     }
 
     public void StartNew()

@@ -54,7 +54,7 @@ public class CheckPoints : MonoBehaviour
                 playerTtransform.position = spawn.position;
                 StartCoroutine(setIsDeadFalse());
 
-                int i = 7;
+                int i = 0;
                 string KeyName = "Sala" + i;
                 while (PlayerPrefs.HasKey(KeyName))
                 {
@@ -131,7 +131,7 @@ public class CheckPoints : MonoBehaviour
 
                 PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
 
-                int i = 7;
+                int i = 0;
                 string KeyName = "Sala" + i;
                 while (PlayerPrefs.HasKey(KeyName))
                 {

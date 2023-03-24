@@ -15,6 +15,8 @@ public class ExitRoom : MonoBehaviour
     PlayerMovement player;
     public GameObject playerTransform;
     public Transform spawn;
+
+    public string levelName;
     void Start()
     {
 
@@ -59,7 +61,7 @@ public class ExitRoom : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        SceneManager.LoadScene(siguienteEscena);
+        SceneManager.LoadScene(levelName);
     }
     private IEnumerator transicion()
     {

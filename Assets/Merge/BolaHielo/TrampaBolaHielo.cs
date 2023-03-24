@@ -31,7 +31,7 @@ public class TrampaBolaHielo : Trampas
     // Start is called before the first frame update
     void Start()
     {
-        spawn = false;
+        spawn = true;
         StartCoroutine(shoot(startTime));
 
 
