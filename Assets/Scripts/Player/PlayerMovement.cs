@@ -154,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
         LayerIgnoreRaycast = LayerMask.NameToLayer("IgnoreEverything");
         PlayerMask = LayerMask.NameToLayer("Player");
 
-        playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
+        playerDash = Resources.Load<AudioClip>("Sounds/Dash/PlayerDash");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
 
         potionsSystem = FindObjectOfType<PotionSystem>();

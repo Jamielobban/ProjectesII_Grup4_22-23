@@ -158,7 +158,7 @@ public class Menu : MonoBehaviour
     public void StartNew()
     {
         PlayerPrefs.DeleteAll();        
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(1);
     }
 
     public void BackToMainStart()

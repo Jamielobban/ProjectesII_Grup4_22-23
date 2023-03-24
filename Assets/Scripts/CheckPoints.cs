@@ -18,7 +18,8 @@ public class CheckPoints : MonoBehaviour
 
 
     PlayerMovement player;
-
+    CircleTransition restAnimation;
+    BlitController blit;
     Transform playerTtransform;
     CheckpointsList list;
 
@@ -30,6 +31,8 @@ public class CheckPoints : MonoBehaviour
     void Start()
     {
         playerTtransform = GameObject.FindGameObjectWithTag("Player").transform;
+        restAnimation = FindObjectOfType<CircleTransition>();
+        blit = FindObjectOfType<BlitController>();
         nameSave = "encendido" + SceneManager.GetActiveScene().buildIndex;
         if (UnlockAtStart&&!encendido)
         {
@@ -58,7 +61,7 @@ public class CheckPoints : MonoBehaviour
                 string KeyName = "Sala" + i;
                 while (PlayerPrefs.HasKey(KeyName))
                 {
-                    Debug.Log(KeyName);
+                    //Debug.Log(KeyName);
                     PlayerPrefs.SetInt(KeyName, (false ? 1 : 0));
                     i++;
                     KeyName = "Sala" + i;
@@ -105,6 +108,9 @@ public class CheckPoints : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         player.canMove = true;
+        yield return new WaitForSeconds(0.5f);
+        blit.isResting = false;
+        //restAnimation.OpenBlackScreen();
         descansar = false;
 
     }
@@ -127,6 +133,8 @@ public class CheckPoints : MonoBehaviour
                 save();
                 descansar = true;
 
+                //restAnimation.CloseBlackScreen();
+                blit.isResting = true;
                 button.SetActive(false);
 
                 PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
