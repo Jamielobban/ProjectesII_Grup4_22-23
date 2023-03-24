@@ -157,7 +157,11 @@ public class RoomManager : MonoBehaviour
             if (triggers[currentRound].enter)
             {
                 if(!inRoom)
+                {
+                    this.gameObject.tag = "RoomManager";
                     closeDoors();
+
+                }
 
                 spawnRound(currentRound);
                 inRoom = true;

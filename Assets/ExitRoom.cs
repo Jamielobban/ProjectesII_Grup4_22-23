@@ -113,6 +113,7 @@ public class ExitRoom : MonoBehaviour
         {
 
 
+
             if (!player.entrandoSala)
             {
                 if (vertical)

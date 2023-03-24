@@ -65,7 +65,7 @@ public class CheckPoints : MonoBehaviour
                 }
             }
 
-        
+            player.entrandoSala = false;
             descansar = false;
             velasApagadas.SetActive(false);
             velasEncendidas.SetActive(true);

@@ -224,7 +224,10 @@ public class PlayerMovement : MonoBehaviour
     public void Start()
     {
         canDash = true;
-        entrandoSala = true;
+
+        if((PlayerPrefs.GetInt("isDead") == 0))
+            entrandoSala = true;        else
+            entrandoSala = false;
         isDead = false;
 
         state = State.Rolling;
