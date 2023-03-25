@@ -61,6 +61,7 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 1de239b50a4e8f34698f8e2f70f0e41d, type: 2}
   blood: {fileID: 5131986925755455784, guid: 11d09c4b86434884c9d334ba4d7fe419, type: 3}
   deadBlood: {fileID: 3578897204085140966, guid: 4fea703dcdeb5fa478ed5ad8e58fe837, type: 3}
+  hasNavemesh: 1
   hole: {fileID: 6511469451659272107, guid: d592a81974738a446a021c5d2f77cd61, type: 3}
   holesPositions: []
   holes: []
@@ -82,10 +83,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 10000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

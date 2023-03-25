@@ -29,4 +29,21 @@ public class E13_IdleState : IdleState
     {
         base.PhysicsUpdate();
     }
+
+    public void FlipLeft()
+    {
+        Vector3 aux = enemy.transform.localScale;
+        aux.x = -1 * Mathf.Abs(aux.x);
+        enemy.transform.localScale = aux;
+
+    }
+    public void FlipRight()
+    {
+        
+        Vector3 aux = enemy.transform.localScale;
+        aux.x = Mathf.Abs(aux.x);
+        enemy.transform.localScale = aux;
+        
+
+    }
 }
