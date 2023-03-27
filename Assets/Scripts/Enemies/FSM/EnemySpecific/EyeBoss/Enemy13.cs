@@ -23,7 +23,9 @@ public class Enemy13 : Entity
     protected float angle;
     public int direction;
     public float lastTimeExitState = 0;
-
+   
+    public LayerMask laserAffectsLayer;
+    public GameObject laserChargeParticles;
 
     public bool flip = true;
 
@@ -117,7 +119,7 @@ public class Enemy13 : Entity
                 aux.x = -1 * Mathf.Abs(aux.x);
             }
         }
-        else
+        else if(flip)
         {
             aux.x = Mathf.Abs(aux.x);
         }
@@ -125,6 +127,8 @@ public class Enemy13 : Entity
         transform.localScale = aux;
 
         anim.SetInteger("direction", direction);
+
+       // Debug.Log(stateMachine.currentState);
     }
 
     protected override void GetDamage(float damageHit)

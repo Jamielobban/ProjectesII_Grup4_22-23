@@ -42,8 +42,7 @@ public class E13_BlockState : BlockState
         
         Vector3 aux = enemy.transform.localScale;
         aux.x = Mathf.Abs(aux.x);
-        enemy.transform.localScale = aux;
-        
+        enemy.transform.localScale = aux;        
 
     }
 }

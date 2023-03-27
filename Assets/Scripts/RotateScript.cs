@@ -6,7 +6,7 @@ public class RotateScript : MonoBehaviour
 {
    
     [SerializeField]
-    float velocity;
+    public float velocity;
     float lastEnter;
     float counter;
 

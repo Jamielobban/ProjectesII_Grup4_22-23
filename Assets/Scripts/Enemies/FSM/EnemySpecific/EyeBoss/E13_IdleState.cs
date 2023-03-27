@@ -46,4 +46,17 @@ public class E13_IdleState : IdleState
         
 
     }
+
+    public void EndUp()
+    {
+        
+    }
+    public void EndDown()
+    {
+        
+    }
+    public void EndEyesThrow()
+    {
+    }
+
 }
