@@ -8,7 +8,7 @@ public class RotateScript : MonoBehaviour
     [SerializeField]
     public float velocity;
     float lastEnter;
-    float counter;
+    public float counter;
 
     
 
@@ -23,7 +23,7 @@ public class RotateScript : MonoBehaviour
         if (Time.time - lastEnter >= 0.01f)
         {
             counter += velocity * 360 * 0.01f;
-            transform.rotation = Quaternion.Euler(0, 0, counter);
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 0, counter);
             lastEnter = Time.time;
             //Debug.Log(counter);
         }

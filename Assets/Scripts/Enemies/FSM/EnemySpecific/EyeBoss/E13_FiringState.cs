@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
+
 public class E13_FiringState : FiringState
 {
     Enemy13 enemy;
@@ -37,6 +39,7 @@ public class E13_FiringState : FiringState
     float lastTimeLaserHit = 0;
 
     private float defaultRotation;
+    GameObject FPC;
 
     public E13_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy13 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -47,8 +50,8 @@ public class E13_FiringState : FiringState
     {
         base.Enter();
         m_lineRenderer = enemy.GetComponentInChildren<LineRenderer>();
-        m_lineRenderer.widthMultiplier = widthX;
-
+        //m_lineRenderer.widthMultiplier = widthX;
+       
     }
 
     public override void Exit()
@@ -67,8 +70,8 @@ public class E13_FiringState : FiringState
 
                 if(!doingBF && !doingLaserSpin && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
                 {
-                    if(Time.time - lastTimeEnterLaserSpinNormal >= (Time.time - lastTimeEnterBigFatman) * 2)
-                    {
+                    //if(Time.time - lastTimeEnterLaserSpinNormal >= (Time.time - lastTimeEnterBigFatman) * 2)
+                    //{
                         enemy.firePoint.localPosition = new Vector3(-0.05f, -0.46f, 0);
                         enemy.flip = false;
                         doingLaserSpin = true;
@@ -76,17 +79,17 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("fire", true);
                         enemy.anim.SetBool("laserSpin", true);
                         lastTimeEnterLaserSpinNormal = Time.time;
-                    }
-                    else
-                    {
-                        enemy.firePoint.localPosition = new Vector3(-0.15f, 0.79f, 0);
-                        doingBF = true;
-                        enemy.anim.SetBool("idle", false);
-                        enemy.anim.SetBool("fire", true);
-                        enemy.anim.SetBool("animiationLoop", true);
-                        enemy.anim.SetBool("bigFatman", true);
-                        lastTimeEnterBigFatman = Time.time;
-                    }
+                    //}
+                    //else
+                    //{
+                    //    enemy.firePoint.localPosition = new Vector3(-0.15f, 0.79f, 0);
+                    //    doingBF = true;
+                    //    enemy.anim.SetBool("idle", false);
+                    //    enemy.anim.SetBool("fire", true);
+                    //    enemy.anim.SetBool("animiationLoop", true);
+                    //    enemy.anim.SetBool("bigFatman", true);
+                    //    lastTimeEnterBigFatman = Time.time;
+                    //}
                 }
 
                 //Control when deactivate attack
@@ -107,18 +110,18 @@ public class E13_FiringState : FiringState
                 }
 
                 if (doingLaserSpin && canApplyDamge)
-                {
+                {                    
                     ShootLaser();
                 }
 
                 if(!doingLaserSpin)
                     enemy.firePoint.localRotation = Quaternion.Euler(0, 0, angleFirePoint * Mathf.Sign(enemy.transform.localScale.x));
 
-                if (m_lineRenderer.enabled)
-                {
-                    Quaternion aux = enemy.firePoint.rotation;
-                    enemy.firePoint.rotation = Quaternion.Euler(0, 0, Time.deltaTime * 100f + aux.eulerAngles.z);
-                }
+                //if (m_lineRenderer.enabled)
+                //{
+                //    Quaternion aux = enemy.firePoint.rotation;
+                //    enemy.firePoint.rotation = Quaternion.Euler(0, 0, Time.deltaTime * 100f + aux.eulerAngles.z);
+                //}
 
                 break;
             case 2:
@@ -159,6 +162,7 @@ public class E13_FiringState : FiringState
     {
         startUp = true;
         enemy.firePoint.localRotation = Quaternion.Euler(0, 0, 90);
+        //myVr.GetComponent<RotateScript>().counter += 180;
 
         defaultRotation = 90;
     }
@@ -166,6 +170,7 @@ public class E13_FiringState : FiringState
     {
         startDown = true;
         enemy.firePoint.localRotation = Quaternion.Euler(0, 0, -90);
+        //myVr.GetComponent<RotateScript>().counter += -180;
 
         defaultRotation = -90;
 
@@ -223,32 +228,35 @@ public class E13_FiringState : FiringState
     }
     public void StartLaser()
     {
+        
         m_lineRenderer.enabled = true;
         canApplyDamge = true;
-        //FunctionTimer.Create(() =>
-        //{
-        //    if(enemy != null && m_lineRenderer != null)
-        //    {
-        //        enemy.firePoint.gameObject.AddComponent<RotateScript>();
-        //        enemy.firePoint.GetComponent<RotateScript>().velocity = 1.2f;
-        //    }
-        //},0.1f);
         
+        
+
     }
 
     public void EndLaser()
     {
-        m_lineRenderer.enabled = false;
-        canApplyDamge = false;
-        enemy.firePoint.gameObject.GetComponent<RotateScript>().velocity = 0;
-        GameObject.Destroy(enemy.firePoint.gameObject.GetComponent<RotateScript>());
+        FunctionTimer.Create(() =>
+        {
+            if(enemy != null && m_lineRenderer != null)
+            {
+                
+                m_lineRenderer.enabled = false;
+                canApplyDamge = false;
+                
+            }
+           
+        }, 0.15f);
+        
     }
 
     void ShootLaser()
     {
-        if (Physics2D.Raycast(enemy.firePoint.position, enemy.firePoint.right, defDistanceRay, enemy.laserAffectsLayer))
+        if (Physics2D.Raycast(m_lineRenderer.transform.position, -m_lineRenderer.transform.up, defDistanceRay, enemy.laserAffectsLayer))
         {
-            RaycastHit2D _hit = Physics2D.Raycast(enemy.firePoint.position, enemy.firePoint.right, defDistanceRay, enemy.laserAffectsLayer);            
+            RaycastHit2D _hit = Physics2D.Raycast(m_lineRenderer.transform.position, -m_lineRenderer.transform.up, defDistanceRay, enemy.laserAffectsLayer);            
 
             if (_hit.transform.gameObject.CompareTag("Player"))
             {
@@ -263,11 +271,11 @@ public class E13_FiringState : FiringState
             {
                 
             }
-            Draw2DRay(enemy.firePoint.position, _hit.point);
+            Draw2DRay(m_lineRenderer.transform.position, _hit.point);
         }
         else
         {
-            Draw2DRay(enemy.firePoint.position, enemy.firePoint.transform.right * defDistanceRay);
+            Draw2DRay(m_lineRenderer.transform.position, -m_lineRenderer.transform.up * defDistanceRay);
         }
     }
 
@@ -281,5 +289,15 @@ public class E13_FiringState : FiringState
     {
         GameObject.Instantiate(enemy.laserChargeParticles, enemy.firePoint.transform.position + new Vector3(0.1f,0.5f,0), Quaternion.identity);
         //Debug.Log("siiiiiiiiiii");
+    }
+
+    public void LaserDebajo()
+    {
+        m_lineRenderer.sortingOrder = -1;
+    }
+
+    public void LaserArriba()
+    {
+        m_lineRenderer.sortingOrder = 5;
     }
 }

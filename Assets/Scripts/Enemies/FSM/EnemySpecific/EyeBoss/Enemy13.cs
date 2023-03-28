@@ -26,6 +26,7 @@ public class Enemy13 : Entity
    
     public LayerMask laserAffectsLayer;
     public GameObject laserChargeParticles;
+    public GameObject centerVr;
 
     public bool flip = true;
 
