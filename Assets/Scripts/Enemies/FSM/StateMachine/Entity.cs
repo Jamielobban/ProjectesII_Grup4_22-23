@@ -251,9 +251,10 @@ public abstract class Entity : MonoBehaviour
 			sr.material.SetFloat("_FishEyeUvAmount", 0);
 			sr.material.SetFloat("_HitEffectBlend", 0);			
 			sr.material.SetFloat("_PinchUvAmount", 0);
+			sr.material.SetFloat("_OutlineAlpha", 1);
 		});
 
-
+		sr.material.SetFloat("_OutlineAlpha", 0);
 		sr.material.SetFloat("_ChromAberrAmount", 0);
 		sr.material.SetFloat("_FishEyeUvAmount", 0);
 		sr.material.SetFloat("_HitEffectBlend", 0);
@@ -312,6 +313,7 @@ public abstract class Entity : MonoBehaviour
 			sequenceImpactShader.Join(sr.material.DOColor(new Color(1, 1, 0.34434f, 1), "_HitEffectColor", 0.2f));
 			sequenceImpactShader.Join(sr.material.DOFloat(0, "_PinchUvAmount", 0.2f));
 			sequenceImpactShader.Join(sr.material.DOFloat(originalGlowValue, "_Glow", 0.2f));
+			sequenceImpactShader.Join(sr.material.DOFloat(1, "_OutlineAlpha", 0.2f));
 			FunctionTimer.Create(() =>
 			{
 				if( this != null)

@@ -18,8 +18,8 @@ public class Enemy13 : Entity
     [SerializeField]
     private D_BlockState blockStateData;
 
-    public int mode = 1;
-    public float waitBetweenAttacks = 3;
+    public int mode = 2;
+    public float waitBetweenAttacks = 2;
     protected float angle;
     public int direction;
     public float lastTimeExitState = 0;
@@ -29,6 +29,10 @@ public class Enemy13 : Entity
     public GameObject centerVr;
 
     public bool flip = true;
+
+    public Color colorMode1;
+    public Color colorMode2;
+    public Color colorMode3;
 
     public override void FixedUpdate()
     {
@@ -57,32 +61,44 @@ public class Enemy13 : Entity
 
         stateMachine.Initialize(firingState);
 
-        mode = 1;
-        waitBetweenAttacks = 3;
+        mode = 2;
+        waitBetweenAttacks = 2;
     }
 
     public override void Update()
     {
         base.Update();
 
+        switch (mode)
+        {
+            case 1:
+                sr.material.SetColor("_OutlineColor", colorMode1);
+                waitBetweenAttacks = 3;
+                break;
+            case 2:
+                sr.material.SetColor("_OutlineColor", colorMode2);
+                waitBetweenAttacks = 2;
+                break;
+            case 3:
+                sr.material.SetColor("_OutlineColor", colorMode3);
+                waitBetweenAttacks = 1.35f;
+                break;
+        }
+
         angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
 
-        if (enemyHealth >= enemyData.health - enemyData.health / 3)
-        {
-            mode = 1;
-            waitBetweenAttacks = 3;
-        }
-        else if (enemyHealth >= enemyData.health - enemyData.health / 2)
-        {
-            mode = 2;
-            waitBetweenAttacks = 2.3f;
-
-        }
-        else
-        {
-            mode = 3;
-            waitBetweenAttacks = 1.5f;
-        }
+        //if (enemyHealth >= enemyData.health - enemyData.health / 3)
+        //{
+        //    mode = 1;            
+        //}
+        //else if (enemyHealth >= enemyData.health - enemyData.health / 2)
+        //{
+        //    mode = 2;        
+        //}
+        //else
+        //{
+        //    mode = 3;            
+        //}
 
         if (isDead && stateMachine.currentState != deadState)
         {
