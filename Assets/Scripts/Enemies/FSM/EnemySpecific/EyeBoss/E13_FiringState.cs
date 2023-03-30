@@ -27,6 +27,10 @@ public class E13_FiringState : FiringState
     const float timeInQLS = 4.5f;
     bool doingQLS = false;
 
+    float lastTimenterEyesBall = 0;
+    const float timeEyesBall = 1.2f;
+    bool doingEyesBall = false;
+
     private bool startUp = false;
     private bool startDown = false;
 
@@ -43,6 +47,10 @@ public class E13_FiringState : FiringState
     private float defaultRotation;
     GameObject FPC;
     SpriteRenderer sr;
+
+    GameObject bullet;
+
+    int eyeThorwStartDirection;
 
     public E13_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy13 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -63,6 +71,24 @@ public class E13_FiringState : FiringState
     public override void Exit()
     {
         base.Exit();
+        if(doingQLS || doingLaserSpin)
+        {
+            foreach (LineRenderer lr in lineRenderers)
+            {
+                lr.enabled = false;
+            }
+            canApplyDamge = false;
+
+            RotateScript rs;
+            if (enemy.firePoint.TryGetComponent(out rs))
+            {                
+                GameObject.Destroy(rs); // Destruye el componente RotateScript
+            }
+        }
+        if(bullet != null && bullet.activeSelf)
+        {
+            GameObject.Destroy(bullet);
+        }
     }
 
     public override void LogicUpdate()
@@ -133,10 +159,10 @@ public class E13_FiringState : FiringState
                 break;
             case 2:
 
-                if (!doingSpread && !doingQLS && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
+                if (!doingSpread && !doingQLS &&!doingEyesBall && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
                 {
                     int aux = Random.Range(1, 11);
-                    if (aux <= 4)
+                    if (aux <= 3)
                     {
                         enemy.firePoint.localPosition = new Vector3(0.1f, -0.5f, 0);
                         enemy.flip = false;
@@ -147,7 +173,7 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("laserQls", true);
                         lastTimenterQuadruleLaserSpin = Time.time;
                     }
-                    else
+                    else if(aux <= 7)
                     {
                         enemy.firePoint.localPosition = new Vector3(-0.15f, 0.79f, 0);
                         doingSpread = true;
@@ -157,12 +183,27 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("bigFatman", true);
                         lastTimeEnterBulletSpread = Time.time;
                     }
+                    else
+                    {
+                        enemy.firePoint.localPosition = new Vector3(-0.15f, 0.79f, 0);
+                        doingEyesBall = true;
+                        enemy.anim.SetBool("idle", false);
+                        enemy.anim.SetBool("fire", true);
+                        enemy.anim.SetBool("animiationLoop", true);
+                        enemy.anim.SetBool("bigFatman", true);
+                        lastTimenterEyesBall = Time.time;                        
+                    }
                 }
 
                 //Control when deactivate attack
 
 
                 if (doingSpread && enemy.anim.GetBool("animiationLoop") && Time.time - lastTimeEnterBulletSpread >= timeInSpread)
+                {
+                    enemy.anim.SetBool("animiationLoop", false);
+                }
+
+                if(doingEyesBall && enemy.anim.GetBool("animiationLoop") && Time.time - lastTimenterEyesBall >= timeEyesBall)
                 {
                     enemy.anim.SetBool("animiationLoop", false);
                 }
@@ -286,6 +327,14 @@ public class E13_FiringState : FiringState
             enemy.anim.SetBool("bigFatman", false);
             enemy.lastTimeExitState = Time.time;
             //Debug.Log("si");
+        }
+        else if (doingEyesBall)
+        {
+            doingEyesBall = false;
+            enemy.anim.SetBool("idle", true);
+            enemy.anim.SetBool("fire", false);
+            enemy.anim.SetBool("bigFatman", false);
+            enemy.lastTimeExitState = Time.time;
         }
 
     }
@@ -489,6 +538,72 @@ public class E13_FiringState : FiringState
     public void LaserDebajo()
     {
         lineRenderers[0].sortingOrder = -1;
+    }
+
+    public void EyeBallIfNeededUp()
+    {
+        if (!doingEyesBall)
+        {
+            return;
+        }
+
+        bullet = GameObject.Instantiate(enemy.eyesBall, enemy.firePoint.position, enemy.firePoint.rotation);
+        bullet.transform.localScale = new Vector3(0.1f, 0.1f, 1);
+        bullet.transform.DOScale(1, 1);
+
+        SpriteRenderer[] eyesSprites = bullet.GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer eyeSprite in eyesSprites)
+        {
+            if (eyeSprite.sortingOrder == -1)
+            {
+                eyeSprite.sortingOrder = -2;
+            }
+            else
+            {
+                eyeSprite.sortingOrder = -1;
+            }
+        }
+        FunctionTimer.Create(() =>
+        {
+            if (enemy != null && enemy.firePoint != null && !enemy.GetIfIsDead() && stateMachine.currentState != enemy.deadState)
+            {
+                bullet.GetComponent<Rigidbody2D>().AddForce(enemy.firePoint.right * bullet.GetComponentInChildren<EnemyProjectile>().bulletData.speed * 2, ForceMode2D.Impulse);
+                bullet.GetComponent<RotateScript>().velocity = 3;
+            }
+        }, 1);      
+    }
+
+    public void EyeBallIfNeededDown()
+    {
+        if (!doingEyesBall)
+        {
+            return;
+        }
+
+        bullet = GameObject.Instantiate(enemy.eyesBall, enemy.firePoint.position, enemy.firePoint.rotation);
+        bullet.transform.localScale = new Vector3(0.1f, 0.1f, 1);
+        bullet.transform.DOScale(1, 1);
+
+        SpriteRenderer[] eyesSprites = bullet.GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer eyeSprite in eyesSprites)
+        {
+            if (eyeSprite.sortingOrder == -1)
+            {
+                eyeSprite.sortingOrder = 1;
+            }
+            else
+            {
+                eyeSprite.sortingOrder = 2;
+            }
+        }
+        FunctionTimer.Create(() =>
+        {
+            if (enemy != null && enemy.firePoint != null && !enemy.GetIfIsDead() && stateMachine.currentState != enemy.deadState)
+            {
+                bullet.GetComponent<Rigidbody2D>().AddForce(enemy.firePoint.right * bullet.GetComponentInChildren<EnemyProjectile>().bulletData.speed * 2, ForceMode2D.Impulse);
+                bullet.GetComponent<RotateScript>().velocity = 3;
+            }            
+        }, 1);
     }
 
     public void LaserArriba()
