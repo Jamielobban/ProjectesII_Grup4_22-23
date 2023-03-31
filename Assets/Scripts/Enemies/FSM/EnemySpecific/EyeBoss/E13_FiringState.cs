@@ -246,7 +246,7 @@ public class E13_FiringState : FiringState
 
                 if (!doingyesFormsAndSingleLaserSpin && !doingShieldSpin && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
                 {                    
-                    if (Time.time - lastTimenterEyesFormsAndSingleLaserSpin >= (Time.time - lastTimenterShieldSpin))
+                    if (Time.time - lastTimenterEyesFormsAndSingleLaserSpin >= (Time.time - lastTimenterShieldSpin)/*false*/)
                     {
                         enemy.firePoint.gameObject.AddComponent<RotateScript>();
                         enemy.firePoint.gameObject.GetComponent<RotateScript>().velocity = 0.5f;
@@ -275,7 +275,7 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("fire", true);
                         enemy.anim.SetBool("animiationLoop", true);
                         enemy.anim.SetBool("shieldSpin", true);
-                        actualDestination = enemy.pathScript.GetNextPoint();
+                        actualDestination = enemy.pathScript.GetNextPoint(enemy);
                         lastTimenterShieldSpin = Time.time;
                     }                    
 
@@ -289,7 +289,7 @@ public class E13_FiringState : FiringState
                     aux.z = 0;
                     if (aux.x <= error.x && aux.y <= error.y)
                     {
-                        actualDestination = enemy.pathScript.GetNextPoint();
+                        actualDestination = enemy.pathScript.GetNextPoint(enemy);
                     }
                 }
 
@@ -301,8 +301,10 @@ public class E13_FiringState : FiringState
                     enemy.anim.SetBool("animiationLoop", false);
                     enemy.anim.SetBool("shieldSpin", false);
                     
-                    enemy.lastTimeExitState = Time.time;
+                    enemy.lastTimeExitState = Time.time;                    
                 }
+
+                
 
                 if (doingyesFormsAndSingleLaserSpin && Time.time - lastTimenterEyesFormsAndSingleLaserSpin >= 7)
                 {
@@ -354,6 +356,11 @@ public class E13_FiringState : FiringState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        if (doingShieldSpin)
+        {
+            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, actualDestination, enemy.velocity);
+        }
 
     }
 
