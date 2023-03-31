@@ -18,8 +18,8 @@ public class Enemy13 : Entity
     [SerializeField]
     private D_BlockState blockStateData;
 
-    public int mode = 2;
-    public float waitBetweenAttacks = 2;
+    public int mode = 3;
+    public float waitBetweenAttacks = 1.35f;
     protected float angle;
     public int direction;
     public float lastTimeExitState = 0;
@@ -62,8 +62,8 @@ public class Enemy13 : Entity
 
         stateMachine.Initialize(firingState);
 
-        mode = 2;
-        waitBetweenAttacks = 2;
+        mode = 3;
+        waitBetweenAttacks = 1.35f;
     }
 
     public override void Update()

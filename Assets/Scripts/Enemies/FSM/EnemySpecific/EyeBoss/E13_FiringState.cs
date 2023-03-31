@@ -31,6 +31,15 @@ public class E13_FiringState : FiringState
     const float timeEyesBall = 1.2f;
     bool doingEyesBall = false;
 
+    float lastTimenterEyesFormsAndSingleLaserSpin = 0;
+    const float timeyesFormsAndSingleLaserSpin = 8f;
+    bool doingyesFormsAndSingleLaserSpin = false;
+
+    float lastTimenterShieldSpin = 0;
+    const float timeShieldSpin = 8f;
+    bool doingShieldSpin = false;
+    
+
     private bool startUp = false;
     private bool startDown = false;
 
@@ -232,6 +241,46 @@ public class E13_FiringState : FiringState
 
                 break;
             case 3:
+
+                if (!doingyesFormsAndSingleLaserSpin && !doingShieldSpin && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
+                {                    
+                    if (Time.time - lastTimeEnterLaserSpinNormal >= (Time.time - lastTimeEnterBigFatman))
+                    {
+                        enemy.firePoint.localPosition = new Vector3(-0.15f, 0.79f, 0);
+                        enemy.flip = false;
+                        doingyesFormsAndSingleLaserSpin = true;
+                        enemy.anim.SetBool("idle", false);
+                        enemy.anim.SetBool("fire", true);
+                        enemy.anim.SetBool("animiationLoop", false);
+                        enemy.anim.SetBool("laserSpinEyeForms", true);
+                        lastTimenterEyesFormsAndSingleLaserSpin = Time.time;
+                        FunctionTimer.Create(() =>
+                        {
+                            if (enemy != null)
+                            {
+                                enemy.anim.SetBool("animiationLoop", true);
+                            }
+
+                        }, 1);
+                    }
+                    else //shield
+                    {
+                        enemy.firePoint.localPosition = new Vector3(-0.15f, 0.79f, 0);
+                        doingBF = true;
+                        enemy.anim.SetBool("idle", false);
+                        enemy.anim.SetBool("fire", true);
+                        enemy.anim.SetBool("animiationLoop", true);
+                        enemy.anim.SetBool("bigFatman", true);
+                        lastTimeEnterBigFatman = Time.time;
+                    }                    
+
+                }
+
+                if (doingyesFormsAndSingleLaserSpin && enemy.anim.GetBool("animiationLoop") && Time.time - lastTimenterEyesFormsAndSingleLaserSpin >= timeyesFormsAndSingleLaserSpin)
+                {
+                    enemy.anim.SetBool("animiationLoop", false);
+                }
+
                 break;
             default:
                 break;
