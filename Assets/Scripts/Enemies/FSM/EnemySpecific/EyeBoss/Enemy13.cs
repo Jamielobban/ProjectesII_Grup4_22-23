@@ -34,7 +34,7 @@ public class Enemy13 : Entity
     public Color colorMode2;
     public Color colorMode3;
     public GameObject eyesBall;
-
+    public EyeBossPathScript pathScript;
     public override void FixedUpdate()
     {
         base.FixedUpdate();

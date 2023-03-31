@@ -32,7 +32,7 @@ public class E13_FiringState : FiringState
     bool doingEyesBall = false;
 
     float lastTimenterEyesFormsAndSingleLaserSpin = 0;
-    const float timeyesFormsAndSingleLaserSpin = 8f;
+    const float timeyesFormsAndSingleLaserSpin = 15f;
     bool doingyesFormsAndSingleLaserSpin = false;
 
     float lastTimenterShieldSpin = 0;
@@ -60,6 +60,8 @@ public class E13_FiringState : FiringState
     GameObject bullet;
 
     int eyeThorwStartDirection;
+    Vector2 actualDestination;
+    Vector3 error = new Vector3(0.5f, 0.5f, 1);
 
     public E13_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy13 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -244,8 +246,10 @@ public class E13_FiringState : FiringState
 
                 if (!doingyesFormsAndSingleLaserSpin && !doingShieldSpin && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
                 {                    
-                    if (Time.time - lastTimeEnterLaserSpinNormal >= (Time.time - lastTimeEnterBigFatman))
+                    if (Time.time - lastTimenterEyesFormsAndSingleLaserSpin >= (Time.time - lastTimenterShieldSpin))
                     {
+                        enemy.firePoint.gameObject.AddComponent<RotateScript>();
+                        enemy.firePoint.gameObject.GetComponent<RotateScript>().velocity = 0.5f;
                         enemy.firePoint.localPosition = new Vector3(-0.15f, 0.79f, 0);
                         enemy.flip = false;
                         doingyesFormsAndSingleLaserSpin = true;
@@ -265,20 +269,78 @@ public class E13_FiringState : FiringState
                     }
                     else //shield
                     {
-                        enemy.firePoint.localPosition = new Vector3(-0.15f, 0.79f, 0);
-                        doingBF = true;
+                        enemy.flip = true;
+                        doingShieldSpin = true;
                         enemy.anim.SetBool("idle", false);
                         enemy.anim.SetBool("fire", true);
                         enemy.anim.SetBool("animiationLoop", true);
-                        enemy.anim.SetBool("bigFatman", true);
-                        lastTimeEnterBigFatman = Time.time;
+                        enemy.anim.SetBool("shieldSpin", true);
+                        actualDestination = enemy.pathScript.GetNextPoint();
+                        lastTimenterShieldSpin = Time.time;
                     }                    
 
+                }
+
+                if (doingShieldSpin)
+                {
+                    Vector3 aux;
+                    aux.x = Mathf.Abs(enemy.transform.position.x - actualDestination.x);
+                    aux.y = Mathf.Abs(enemy.transform.position.y - actualDestination.y);
+                    aux.z = 0;
+                    if (aux.x <= error.x && aux.y <= error.y)
+                    {
+                        actualDestination = enemy.pathScript.GetNextPoint();
+                    }
+                }
+
+                if (doingShieldSpin && Time.time - lastTimenterShieldSpin >= timeShieldSpin)
+                {
+                    doingShieldSpin = false;
+                    enemy.anim.SetBool("idle", true);
+                    enemy.anim.SetBool("fire", false);
+                    enemy.anim.SetBool("animiationLoop", false);
+                    enemy.anim.SetBool("shieldSpin", false);
+                    
+                    enemy.lastTimeExitState = Time.time;
+                }
+
+                if (doingyesFormsAndSingleLaserSpin && Time.time - lastTimenterEyesFormsAndSingleLaserSpin >= 7)
+                {
+                    RotateScript rs;
+                    if(enemy.firePoint.TryGetComponent<RotateScript>(out rs))
+                    {
+                        if(rs.velocity > 0)
+                            rs.velocity *= -1;
+                    }
+                }
+
+                if (doingyesFormsAndSingleLaserSpin)
+                {
+                    nextShootReady = Time.time - lastShootTime >= 0.11f;
+                    if (nextShootReady)
+                        SpinGun();
+                }
+
+                if (doingyesFormsAndSingleLaserSpin && canApplyDamge)
+                {
+                    ShootLaser();
                 }
 
                 if (doingyesFormsAndSingleLaserSpin && enemy.anim.GetBool("animiationLoop") && Time.time - lastTimenterEyesFormsAndSingleLaserSpin >= timeyesFormsAndSingleLaserSpin)
                 {
                     enemy.anim.SetBool("animiationLoop", false);
+                    doingyesFormsAndSingleLaserSpin = false;
+                    enemy.anim.SetBool("idle", true);
+                    enemy.anim.SetBool("fire", false);
+                    enemy.anim.SetBool("laserSpinEyeForms", false);
+                    enemy.lastTimeExitState = Time.time;
+                    lineRenderers[0].enabled = false;
+                    enemy.flip = true;
+                    RotateScript rs;
+                    if (enemy.firePoint.TryGetComponent<RotateScript>(out rs))
+                    {
+                        GameObject.Destroy(rs);
+                    }
                 }
 
                 break;
@@ -401,6 +463,22 @@ public class E13_FiringState : FiringState
         //fireSoundKey = AudioManager.Instance.LoadSound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);       
         //bullet.transform.Rotate(0, 0, bullet.transform.rotation.z + UnityEngine.Random.Range(-25, 25));
         bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponent<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
+        lastShootTime = Time.time;
+    }
+    void SpinGun()
+    {
+        GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position + enemy.GetComponent<Entity>().GetFirePointTransform().right, Quaternion.identity/*enemy.GetComponent<Entity>().GetFirePointTransform().rotation*/);        
+        bullet.GetComponent<Rigidbody2D>().AddForce(enemy.GetComponent<Entity>().GetFirePointTransform().right * bullet.GetComponent<EnemyProjectile>().bulletData.speed * 0.5f, ForceMode2D.Impulse);
+
+        GameObject bullet2 = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position - enemy.GetComponent<Entity>().GetFirePointTransform().right, Quaternion.identity/*enemy.GetComponent<Entity>().GetFirePointTransform().rotation*/);
+        bullet2.GetComponent<Rigidbody2D>().AddForce(-enemy.GetComponent<Entity>().GetFirePointTransform().right * bullet2.GetComponent<EnemyProjectile>().bulletData.speed * 0.5f, ForceMode2D.Impulse);
+
+        GameObject bullet3 = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position + enemy.GetComponent<Entity>().GetFirePointTransform().up, Quaternion.identity/*enemy.GetComponent<Entity>().GetFirePointTransform().rotation*/);
+        bullet3.GetComponent<Rigidbody2D>().AddForce(enemy.GetComponent<Entity>().GetFirePointTransform().up * bullet3.GetComponent<EnemyProjectile>().bulletData.speed * 0.5f, ForceMode2D.Impulse);
+
+        GameObject bullet4 = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position - enemy.GetComponent<Entity>().GetFirePointTransform().up, Quaternion.identity/*enemy.GetComponent<Entity>().GetFirePointTransform().rotation*/);
+        bullet4.GetComponent<Rigidbody2D>().AddForce(-enemy.GetComponent<Entity>().GetFirePointTransform().up * bullet4.GetComponent<EnemyProjectile>().bulletData.speed * 0.5f, ForceMode2D.Impulse);
+
         lastShootTime = Time.time;
     }
     public void StartLaser()
