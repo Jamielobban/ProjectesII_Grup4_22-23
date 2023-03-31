@@ -168,10 +168,14 @@ public class AudioManager : MonoBehaviour
         //Debug.Log(num);
 
         //Debug.Log(audiosPlaying.Count);
-        //foreach(var pair in audiosPlaying)
-        //{
-        //    Debug.Log(pair.Value.audioClipName);
-        //}
+        foreach (var pair in audiosPlaying)
+        {
+            if(pair.Value.audioClipName == "DoorOpening") { 
+            
+                Debug.Log(pair.Value.audioClipName);
+            }
+            
+        }
     }
 
     public int? LoadSound(AudioClip clip, Vector3 position, float delay = 0f, bool loop = false, bool isSFX = true, float volume = 1)

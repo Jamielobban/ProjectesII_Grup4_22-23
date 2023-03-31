@@ -11,6 +11,7 @@ public class Weapon
 
     protected AudioClip powerupEmpty;
     protected AudioClip powerupMax;
+    protected AudioClip outOfAmmo;
     protected AudioClip powerupPressed;
 
     protected WeaponValues data;
@@ -24,7 +25,8 @@ public class Weapon
     protected int? powerupMaxKey;
     protected int? powerupPressKey;
     protected int? nextWeaponKey;
-    
+    protected int? outOfAmmoKey;
+
     public float timer;
     bool firstEnter = true;
 
@@ -39,6 +41,7 @@ public class Weapon
         powerupEmpty = Resources.Load<AudioClip>("Sounds/Powerup/powerup0");
         powerupMax = Resources.Load<AudioClip>("Sounds/Powerup/powerupMax");
         nextWeapon = Resources.Load<AudioClip>("Sounds/NextWeapon/nextWeapon");
+        outOfAmmo = Resources.Load<AudioClip>("Sounds/Weapons/OutOfAmmo");
         switch (_data.mechanismType)
         {
         case MechanismTypes.BOLT:
@@ -211,10 +214,12 @@ public class Weapon
         {
             if(data.magazinesInWeapon.RuntimeValue == 0)
             {
+                outOfAmmoKey = AudioManager.Instance.LoadSound(outOfAmmo, player.transform);
                 data.outOfAmmo.RuntimeValue = true;
             }
             else
             {
+                outOfAmmoKey = AudioManager.Instance.LoadSound(outOfAmmo, player.transform);
                 reloadKeySound = AudioManager.Instance.LoadSound(data.reloadSound, player.transform, 0.5f, false);
                 data.bulletsInMagazine.RuntimeValue = data.bulletsInMagazine.InitialValue;
                 data.magazinesInWeapon.RuntimeValue--;

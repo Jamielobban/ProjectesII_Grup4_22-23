@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class RoomManager : MonoBehaviour
 {
     //public bool currentRoom = false;
+    private PlayerMovement playerAudio;
 
     public GameObject roomEnemies;
 
@@ -32,12 +33,27 @@ public class RoomManager : MonoBehaviour
     public bool porTriggers;
 
     public TriggersRound[] triggers;
+
+    int? roomCompleteKey;
+    AudioClip roomCompleteAudio;
+
+    int? doorOpenAudioKey;
+    int? doorCloseAudioKey;
+
+    AudioClip doorOpenAudio;
+    AudioClip doorCloseAudio;
     //Las puertas tienen que estar en el mismo puesto que su palanca
 
     public void Start()
     {
         nameSave = "Sala" + SceneManager.GetActiveScene().buildIndex;
         kills = 0;
+
+        playerAudio = FindObjectOfType<PlayerMovement>();
+        roomCompleteAudio = Resources.Load<AudioClip>("Sounds/Room/RoomComplete");
+        doorOpenAudio = Resources.Load<AudioClip>("Sounds/Door/DoorOpening");
+        //Assets / Resources / Sounds / Door / DoorClosing.wav
+        doorCloseAudio = Resources.Load<AudioClip>("Sounds/Door/DoorClosing");
 
         alreadyEnter = (PlayerPrefs.GetInt(nameSave,0) != 0);
         inRoom = false;
@@ -71,6 +87,7 @@ public class RoomManager : MonoBehaviour
 
     void closeDoors()
     {
+        doorCloseAudioKey = AudioManager.Instance.LoadSound(doorCloseAudio,playerAudio.transform.position);
         for(int i = 0; i < doors.Length; i++)
         {
             if(i < palancas.Length)
@@ -108,6 +125,7 @@ public class RoomManager : MonoBehaviour
     void openDoors()
     {
         alreadyEnter = true;
+        doorOpenAudioKey = AudioManager.Instance.LoadSound(doorOpenAudio, playerAudio.transform.position);
         PlayerPrefs.SetInt(nameSave, (alreadyEnter ? 1 : 0));
 
         for (int i = 0; i < doors.Length; i++)
@@ -231,6 +249,7 @@ public class RoomManager : MonoBehaviour
     void endRoom()
     {
         openDoors();
+        roomCompleteKey = AudioManager.Instance.LoadSound(roomCompleteAudio, playerAudio.transform.position, 0,true,true,2);
         this.gameObject.tag = "Default";
 
         for(int i = 0; i < palancas.Length; i++)

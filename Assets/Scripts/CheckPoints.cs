@@ -26,11 +26,13 @@ public class CheckPoints : MonoBehaviour
     bool descansar;
     public bool UnlockAtStart;
     string nameSave;
-
+    int? restAudioKey;
+    AudioClip restAudio;
     // Start is called before the first frame update
     void Start()
     {
         playerTtransform = GameObject.FindGameObjectWithTag("Player").transform;
+        restAudio = Resources.Load<AudioClip>("Sounds/Sewer/RestAudio");
         restAnimation = FindObjectOfType<CircleTransition>();
         blit = FindObjectOfType<BlitController>();
         nameSave = "encendido" + SceneManager.GetActiveScene().buildIndex;
@@ -106,12 +108,13 @@ public class CheckPoints : MonoBehaviour
     }
     private IEnumerator move()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         player.canMove = true;
-        yield return new WaitForSeconds(0.5f);
         blit.isResting = false;
-        //restAnimation.OpenBlackScreen();
+        yield return new WaitForSeconds(1.5f);
         descansar = false;
+        Debug.Log("asda");
+        //restAnimation.OpenBlackScreen();
 
     }
 
@@ -135,6 +138,7 @@ public class CheckPoints : MonoBehaviour
 
                 //restAnimation.CloseBlackScreen();
                 blit.isResting = true;
+                restAudioKey = AudioManager.Instance.LoadSound(restAudio, playerTtransform.transform.position, 0, false, transform, 1);
                 button.SetActive(false);
 
                 PlayerPrefs.SetInt("isDead", (false ? 1 : 0));

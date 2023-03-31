@@ -74,7 +74,7 @@ public class CircleTransition : MonoBehaviour
         var screenWidth = Screen.width*2;
         var screenHeight = Screen.height*2;
         var playerScreenPos = Camera.main.WorldToScreenPoint(player.position);
-        Debug.Log(playerScreenPos);
+        //Debug.Log(playerScreenPos);
 
         var canvasRect = _canvas.GetComponent<RectTransform>().rect;
         var canvasWidth = canvasRect.width;

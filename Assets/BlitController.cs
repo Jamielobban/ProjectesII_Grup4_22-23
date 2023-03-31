@@ -95,17 +95,17 @@ public class BlitController : MonoBehaviour
         if (isResting)
         {
             _HitMaterial.SetColor("_Color", new Color(175, 153, 153));
-            _HitMaterial.DOFloat(0.974f, "_Fullscreenintensity", 0.5f);
-            _HitMaterial.DOFloat(0.889f, "_VignetteIntensity", 0.5f);
-            Invoke("BonfireReset", 0.75f);
+            _HitMaterial.DOFloat(0.974f, "_Fullscreenintensity", 0.95f);
+            _HitMaterial.DOFloat(0.889f, "_VignetteIntensity", 0.55f);
+            Invoke("BonfireReset", 1.25f);
         }
         
     }
 
     void BonfireReset()
     {
-        _HitMaterial.DOFloat(0.312f, "_Fullscreenintensity", 0.5f);
-        _HitMaterial.DOFloat(0, "_VignetteIntensity", 0.5f);
+        _HitMaterial.DOFloat(0.312f, "_Fullscreenintensity", 0.75f);
+        _HitMaterial.DOFloat(0, "_VignetteIntensity", 0.35f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
