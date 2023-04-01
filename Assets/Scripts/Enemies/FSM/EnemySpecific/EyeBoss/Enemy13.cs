@@ -35,7 +35,7 @@ public class Enemy13 : Entity
     public Color colorMode3;
     public GameObject eyesBall;
     public EyeBossPathScript pathScript;
-    public float velocity = 2;
+    public Vector3 restingPoint;
 
     public override void FixedUpdate()
     {
@@ -49,7 +49,10 @@ public class Enemy13 : Entity
 
     public override void GetDamage(float damageHit, HealthStateTypes damageType, float knockBackForce, Vector3 bulletPosition, TransformMovementType type)
     {
-        base.GetDamage(damageHit, damageType, knockBackForce, bulletPosition, type);
+        if (stateMachine.currentState != firingState || (mode != 3 || (!firingState.doingShieldSpin && !firingState.returningRest)))
+        {
+            base.GetDamage(damageHit, damageType, knockBackForce, bulletPosition, type);
+        }
     }
 
     public override void Start()
@@ -153,7 +156,9 @@ public class Enemy13 : Entity
 
     protected override void GetDamage(float damageHit)
     {
-        base.GetDamage(damageHit);
+        
+            base.GetDamage(damageHit);
+        
     }
 
     public void SearchFunction(string funcName)
@@ -166,6 +171,14 @@ public class Enemy13 : Entity
         if (this.gameObject == null)
         {
             CancelInvoke();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(stateMachine.currentState == firingState && mode == 3 && (firingState.doingShieldSpin || firingState.returningRest) && collision.CompareTag("Player"))
+        {
+            collision.GetComponent<PlayerMovement>().GetDamage(2);
         }
     }
 

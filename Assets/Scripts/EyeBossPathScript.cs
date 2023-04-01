@@ -5,7 +5,7 @@ using UnityEngine;
 public class EyeBossPathScript : MonoBehaviour
 {
     CircleCollider2D circleCollider2;
-    
+    public LayerMask bossPathMask;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,36 +19,19 @@ public class EyeBossPathScript : MonoBehaviour
     }
 
     public Vector2 GetNextPoint(Enemy13 finalBoss)
-    {       
+    {
+        Vector2 raycastOrigin = finalBoss.transform.position + finalBoss.vectorToPlayer.normalized * 1000;
 
-        float rpow2 = Mathf.Pow(circleCollider2.radius,2);
-        float bx = finalBoss.transform.position.x;// valor de bx
-        float by = finalBoss.transform.position.y;
-        float vpx = finalBoss.vectorToPlayer.normalized.x;// valor de vpx
-        float vpy = finalBoss.vectorToPlayer.normalized.y; // valor de vpy
-        float a = vpx * vpx + vpy * vpy;
-        float b = 2 * (bx * vpx + by * vpy);
-        float c = bx * bx + by * by - rpow2;
-        float discriminante = b * b - 4 * a * c;
-        float Z;
+        RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, -finalBoss.vectorToPlayer.normalized, 1000, bossPathMask);
 
-        if (discriminante < 0)
+        // Comprueba si el Raycast golpea el objeto de destino
+        if (hit.collider != null)
         {
-            return Vector2.zero;
-        }
-        else if (discriminante == 0)
-        {
-            // Solo hay una solución real
-            Z = -b / (2 * a);
-            // Usar Z para encontrar Xxy
-        }
-        else
-        {  
-            Z = (-b + Mathf.Sqrt(discriminante)) / (2 * a);            
-            // Usar Z para encontrar Xxy
+            return hit.point;
         }
 
-        return finalBoss.transform.position + finalBoss.vectorToPlayer.normalized * Z;
+        return finalBoss.transform.position;
+
     }
 
 

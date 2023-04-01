@@ -15,6 +15,7 @@ public abstract class Entity : MonoBehaviour
 	public Transform player;
 	[HideInInspector]
 	public Vector3 vectorToPlayer;	
+	[HideInInspector]
 	public Vector3 vectorToPlayerFromFirepoint;
 
 	public NavMeshAgent agent;
@@ -272,19 +273,19 @@ public abstract class Entity : MonoBehaviour
 
 			if (type == TransformMovementType.PUNCH)
 			{
-				shaker = transform.DOPunchPosition(-direction * 2, 0.2f, 0, 1, false);
+				shaker = GetComponentInChildren<SpriteRenderer>().transform.DOPunchPosition(-direction * 2, 0.2f, 0, 1, false);
 			}
 			else if (type == TransformMovementType.SHAKE)
 			{
-				shaker = transform.DOShakePosition(0.2f, 0.5f, 10, 45, false, true, ShakeRandomnessMode.Harmonic);
+				shaker = GetComponentInChildren<SpriteRenderer>().transform.DOShakePosition(0.2f, 0.5f, 10, 45, false, true, ShakeRandomnessMode.Harmonic);
 			}
 			else if (type == TransformMovementType.JUMP)
 			{
-				shaker = transform.DOJump(transform.position, 0.5f, 1, 0.2f, false);
+				shaker = GetComponentInChildren<SpriteRenderer>().transform.DOJump(transform.position, 0.5f, 1, 0.2f, false);
 			}
 
-			shaker = transform.DOShakeRotation(0.2f, 0.7f);
-			shaker = transform.DOShakeScale(0.2f, 0.2f, 10, 45, true, ShakeRandomnessMode.Harmonic);
+			shaker = GetComponentInChildren<SpriteRenderer>().transform.DOShakeRotation(0.2f, 0.7f);
+			shaker = GetComponentInChildren<SpriteRenderer>().transform.DOShakeScale(0.2f, 0.2f, 10, 45, true, ShakeRandomnessMode.Harmonic);
 			//shaker = transform.DOJump(this.transform.position, 1.5f, 1, 0.2f);
 			//shaker = transform.DOShakeRotation(0.2f, 0.7f);
 		}
