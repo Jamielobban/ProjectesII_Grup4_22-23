@@ -9,6 +9,8 @@ public class TakeWeapon : MonoBehaviour
 
     bool took = false;
 
+    int? weaponPickupKey;
+    [SerializeField] AudioClip weaponPickup;
     private void Start()
     {
 
@@ -28,7 +30,9 @@ public class TakeWeapon : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && !took)
-        {            
+        {
+            weaponPickupKey = AudioManager.Instance.LoadSound(weaponPickup, this.gameObject.transform.position);
+            Debug.Log("sound now");
             collision.GetComponentInChildren<RightHand>().EquipWeapon(weapoName);
             Destroy(this.transform.parent.gameObject);
             took = true;
