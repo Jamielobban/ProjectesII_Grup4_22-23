@@ -113,7 +113,7 @@ public class CheckPoints : MonoBehaviour
         blit.isResting = false;
         yield return new WaitForSeconds(1.5f);
         descansar = false;
-        Debug.Log("asda");
+        //Debug.Log("asda");
         //restAnimation.OpenBlackScreen();
 
     }

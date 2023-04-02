@@ -233,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
         currentHearts = maxHearts;
         rollSpeed = 90f;
         justRolled = false;
-        backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, cam.transform, 0, true, false, 0.4f);        AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time = AudioManager.Instance.GetMusicTime();
+        //backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, cam.transform, 0, true, false, 0.4f);        //AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time = AudioManager.Instance.GetMusicTime();
         //if (backThemeKey.HasValue)
         //{
         //    AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).volume = 0.4f;
@@ -241,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
     }
     // Update is called once per frame 
     void Update()
-    {        AudioManager.Instance.SetMusicTime(AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time);
+    {        //AudioManager.Instance.SetMusicTime(AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time);
         if (Input.GetKeyDown(KeyCode.L)){
             godMode = true;
         }
@@ -398,8 +398,8 @@ public class PlayerMovement : MonoBehaviour
                         time = 0;
                     }
                     movement.x = Input.GetAxisRaw("Horizontal");
-                    movement.y = Input.GetAxisRaw("Vertical");
-                    moveDir = new Vector3(movement.x, movement.y).normalized;
+                    movement.y = Input.GetAxisRaw("Vertical");                    movement = Vector3.ClampMagnitude(movement, 1f);                    Debug.Log(movement.magnitude);                    moveDir = new Vector3(movement.x, movement.y).normalized;
+
                     //
                     if (Input.GetKeyDown(KeyCode.Q) && canBlit)
                     {
@@ -486,7 +486,7 @@ public class PlayerMovement : MonoBehaviour
             case State.Normal:
                 if (!knockback)
                 {
-                    rb.AddForce(movement * moveSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
+                    rb.AddForce(movement.normalized * moveSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
                 }
                 else
                 {

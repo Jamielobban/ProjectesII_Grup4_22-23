@@ -32,7 +32,7 @@ public class TakeWeapon : MonoBehaviour
         if (collision.CompareTag("Player") && !took)
         {
             weaponPickupKey = AudioManager.Instance.LoadSound(weaponPickup, this.gameObject.transform.position);
-            Debug.Log("sound now");
+            //Debug.Log("sound now");
             collision.GetComponentInChildren<RightHand>().EquipWeapon(weapoName);
             Destroy(this.transform.parent.gameObject);
             took = true;

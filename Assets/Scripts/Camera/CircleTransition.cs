@@ -127,7 +127,7 @@ public class CircleTransition : MonoBehaviour
     private IEnumerator SetPlayerMovement()
     {
         yield return new WaitForSeconds(1f);
-        Debug.Log("Im moving");
+        //Debug.Log("Im moving");
         playerSignal.canMove = true;
     }
 
