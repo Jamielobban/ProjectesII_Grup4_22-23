@@ -43,9 +43,13 @@ public class RoomManager : MonoBehaviour
     AudioClip doorOpenAudio;
     AudioClip doorCloseAudio;
     //Las puertas tienen que estar en el mismo puesto que su palanca
-
+    public bool boss;
+    public int bossNumber;
     public void Start()
     {
+        if (!boss)
+            bossNumber = 0;
+
         nameSave = "Sala" + SceneManager.GetActiveScene().buildIndex;
         kills = 0;
 
@@ -130,18 +134,21 @@ public class RoomManager : MonoBehaviour
 
         for (int i = 0; i < doors.Length; i++)
         {
-            if(doors[i].transform.childCount == 1)
+            if (i != 1 || !boss)
             {
-                doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
-                if (doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>() != null)
-                    doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = false;
+                if (doors[i].transform.childCount == 1)
+                {
+                    doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
+                    if (doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>() != null)
+                        doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = false;
+                    else
+                        doors[i].SetActive(false);
+                }
                 else
+                {
                     doors[i].SetActive(false);
-            }
-            else
-            {
-            doors[i].SetActive(false);
 
+                }
             }
         }
     }
@@ -155,15 +162,33 @@ public class RoomManager : MonoBehaviour
     {
         if (!alreadyEnter)
         {
+            if(boss)
+            {
+                if(PlayerPrefs.GetInt("Final"+bossNumber) == 0)
+                {
+                    roomTriggers.SetActive(false);
 
-            roomTriggers.SetActive(false);
+                    this.gameObject.tag = "RoomManager";
+                    kills = 0;
+                    currentRound = 0;
+                    inRoom = true;
+                    spawnRound(currentRound);
+                    closeDoors();
+                }
 
-            this.gameObject.tag = "RoomManager";
-            kills = 0;
-            currentRound = 0;
-            inRoom = true;
-            spawnRound(currentRound);
-            closeDoors();
+            }
+            else
+            {
+                roomTriggers.SetActive(false);
+
+                this.gameObject.tag = "RoomManager";
+                kills = 0;
+                currentRound = 0;
+                inRoom = true;
+                spawnRound(currentRound);
+                closeDoors();
+            }
+
         }
     }
 
