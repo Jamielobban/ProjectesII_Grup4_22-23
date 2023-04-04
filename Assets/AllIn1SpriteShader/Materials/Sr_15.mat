@@ -11,6 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 79ee6cefbc672a44e97359d4d14ea301, type: 3}
   m_ValidKeywords:
   - CHROMABERR_ON
+  - CLIPPING_ON
   - FISHEYE_ON
   - GLOWTEX_ON
   - GLOW_ON
@@ -183,7 +184,7 @@ Material:
     - _OffsetUvY: 0
     - _OnlyInnerOutline: 0
     - _OnlyOutline: 0
-    - _OutlineAlpha: 1
+    - _OutlineAlpha: 0
     - _OutlineDistortAmount: 0.038
     - _OutlineDistortTexXSpeed: 5
     - _OutlineDistortTexYSpeed: 5

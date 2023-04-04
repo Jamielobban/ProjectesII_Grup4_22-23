@@ -18,8 +18,8 @@ public class Enemy13 : Entity
     [SerializeField]
     private D_BlockState blockStateData;
 
-    public int mode = 3;
-    public float waitBetweenAttacks = 1.35f;
+    public int mode = 1;
+    public float waitBetweenAttacks = 3f;
     protected float angle;
     public int direction;
     public float lastTimeExitState = 0;
@@ -27,6 +27,11 @@ public class Enemy13 : Entity
     public LayerMask laserAffectsLayer;
     public GameObject laserChargeParticles;
     public GameObject centerVr;
+    public GameObject shield;
+    public GameObject sparks;
+    public GameObject sombra;
+    public GameObject spinFx;
+    public SpriteMask spriteMask;
 
     public bool flip = true;
 
@@ -36,6 +41,10 @@ public class Enemy13 : Entity
     public GameObject eyesBall;
     public EyeBossPathScript pathScript;
     public Vector3 restingPoint;
+
+    public GameObject eyeMonsterPrefab;
+    public float laserMaxSize;
+   
 
     public override void FixedUpdate()
     {
@@ -49,10 +58,14 @@ public class Enemy13 : Entity
 
     public override void GetDamage(float damageHit, HealthStateTypes damageType, float knockBackForce, Vector3 bulletPosition, TransformMovementType type)
     {
-        if (stateMachine.currentState != firingState || (mode != 3 || (!firingState.doingShieldSpin && !firingState.returningRest)))
+        if(stateMachine.currentState != idleState)
         {
-            base.GetDamage(damageHit, damageType, knockBackForce, bulletPosition, type);
+            if (stateMachine.currentState != firingState || (mode != 3 || (!firingState.doingShieldSpin && !firingState.returningRest)))
+            {
+                base.GetDamage(damageHit, damageType, knockBackForce, bulletPosition, type);
+            }
         }
+        
     }
 
     public override void Start()
@@ -65,46 +78,63 @@ public class Enemy13 : Entity
         idleState = new E13_IdleState(this, stateMachine, "idle", idleStateData, this);
         blockState = new E13_BlockState(this, stateMachine, "block", blockStateData, this);
 
-        stateMachine.Initialize(firingState);
+        stateMachine.Initialize(idleState);
 
-        mode = 3;
-        waitBetweenAttacks = 1.35f;
+        mode = 1;
+        waitBetweenAttacks = 3f;        
+
+        laserMaxSize = GetComponentInChildren<LineRenderer>().widthMultiplier;
+        foreach(LineRenderer lr in GetComponentsInChildren<LineRenderer>()) {
+            lr.material.SetFloat("_ClipUvUp", 0.5f);
+            lr.material.SetFloat("_ClipUvDown", 0.5f);
+        }
     }
 
     public override void Update()
     {
         base.Update();
 
-        switch (mode)
+        if (enemyHealth >= 1666.67f * 2)
         {
-            case 1:
-                sr.material.SetColor("_OutlineColor", colorMode1);
-                waitBetweenAttacks = 3;
-                break;
-            case 2:
-                sr.material.SetColor("_OutlineColor", colorMode2);
-                waitBetweenAttacks = 2;
-                break;
-            case 3:
-                sr.material.SetColor("_OutlineColor", colorMode3);
-                waitBetweenAttacks = 1.35f;
-                break;
+            mode = 1;
+            sr.material.SetColor("_OutlineColor", colorMode1);
+            waitBetweenAttacks = 3;
+        }
+        else if (enemyHealth >= 1666.67f)
+        {
+            if(mode != 2 && !firingState.doingAttack)
+                mode = 2;
+
+            sr.material.SetColor("_OutlineColor", colorMode2);
+            waitBetweenAttacks = 2;
+        }
+        else
+        {
+            if (mode != 3 && !firingState.doingAttack)
+                mode = 3;
+
+            sr.material.SetColor("_OutlineColor", colorMode3);
+            waitBetweenAttacks = 1.35f;
         }
 
-        angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
+        //switch (mode)
+        //{
+        //    case 1:
+        //        sr.material.SetColor("_OutlineColor", colorMode1);
+        //        waitBetweenAttacks = 3;
+        //        break;
+        //    case 2:
+        //        sr.material.SetColor("_OutlineColor", colorMode2);
+        //        waitBetweenAttacks = 2;
+        //        break;
+        //    case 3:
+        //        sr.material.SetColor("_OutlineColor", colorMode3);
+        //        waitBetweenAttacks = 1.35f;
+        //        break;
+        //}
 
-        //if (enemyHealth >= enemyData.health - enemyData.health / 3)
-        //{
-        //    mode = 1;            
-        //}
-        //else if (enemyHealth >= enemyData.health - enemyData.health / 2)
-        //{
-        //    mode = 2;        
-        //}
-        //else
-        //{
-        //    mode = 3;            
-        //}
+        angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
+        
 
         if (isDead && stateMachine.currentState != deadState)
         {

@@ -58,11 +58,22 @@ public class E13_FiringState : FiringState
     SpriteRenderer sr;
 
     GameObject bullet;
+    public bool doingAttack = false;
 
     int eyeThorwStartDirection;
     Vector2 actualDestination;
     Vector3 error = new Vector3(0.5f, 0.5f, 1);
     public bool returningRest = false;
+
+    float lastTimenterEyeSpawn = 0;
+    float timeEyeSpawn = 8f;
+    public bool doingEyeSpawn = false;
+    int eyesToSpawn;
+    bool[] eyesSpawned = new bool[5];
+
+    GameObject spinFxInstance;
+
+    bool eyeThrowUp = false;
 
     public E13_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy13 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -73,11 +84,11 @@ public class E13_FiringState : FiringState
     {
         base.Enter();
 
+
         lineRenderers = enemy.GetComponentsInChildren<LineRenderer>();
         
         //m_lineRenderer.widthMultiplier = widthX;
-        sr = enemy.GetComponent<SpriteRenderer>();
-
+        sr = enemy.GetComponentInChildren<SpriteRenderer>();
     }
 
     public override void Exit()
@@ -85,7 +96,13 @@ public class E13_FiringState : FiringState
         base.Exit();
         enemy.agent.enabled = false;
 
-        if(doingQLS || doingLaserSpin)
+        if (enemy.spriteMask.enabled)
+        {
+            enemy.spriteMask.enabled = false;
+            enemy.shield.SetActive(false);
+        }
+
+        if (doingQLS || doingLaserSpin || doingyesFormsAndSingleLaserSpin)
         {
             foreach (LineRenderer lr in lineRenderers)
             {
@@ -109,7 +126,9 @@ public class E13_FiringState : FiringState
     {
         base.LogicUpdate();
 
-        if(!doingQLS && !doingyesFormsAndSingleLaserSpin && !doingQLS)
+        Debug.Log(enemy.anim.GetBool("animiationLoop"));
+
+        if(!doingQLS && !doingyesFormsAndSingleLaserSpin && !doingLaserSpin)
         {
             enemy.GetComponentInChildren<ChangeTexture>().SetTexture(20);
         }
@@ -121,10 +140,20 @@ public class E13_FiringState : FiringState
                 //sr.material.SetColor("", enemy.colorMode1);
                 enemy.agent.enabled = false;
 
-                if (!doingBF && !doingLaserSpin && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
+                if (enemy.spriteMask.enabled)
                 {
-                    if (Time.time - lastTimeEnterLaserSpinNormal >= (Time.time - lastTimeEnterBigFatman) * 2)
+                    enemy.spriteMask.enabled = false;
+                    enemy.shield.SetActive(false);
+                }
+
+                if (!doingEyeSpawn && !doingBF && !doingLaserSpin && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
+                {
+                    int random = Random.Range(1, 11);
+
+                    if (random <= 3)
                     {
+                        doingAttack = true;
+
                         enemy.firePoint.localPosition = new Vector3(-0.05f, -0.46f, 0);
                         enemy.flip = false;
                         doingLaserSpin = true;
@@ -133,8 +162,10 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("laserSpin", true);
                         lastTimeEnterLaserSpinNormal = Time.time;
                     }
-                    else
+                    else if (random <= 7)
                     {
+                        doingAttack = true;
+
                         enemy.firePoint.localPosition = new Vector3(-0.15f, 0.79f, 0);
                         doingBF = true;
                         enemy.anim.SetBool("idle", false);
@@ -143,10 +174,57 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("bigFatman", true);
                         lastTimeEnterBigFatman = Time.time;
                     }
+                    else
+                    {
+                        doingAttack = true;
+
+                        eyesToSpawn = Random.Range(3, 6);
+                        timeEyeSpawn = eyesToSpawn + 0.5f;
+                        for (int i = 0; i < eyesSpawned.Count(); i++)
+                        {
+                            eyesSpawned[i] = false;
+                        }
+                        enemy.firePoint.localPosition = new Vector3(-0.15f, 0.79f, 0);
+                        doingEyeSpawn = true;
+                        enemy.anim.SetBool("idle", false);
+                        enemy.anim.SetBool("fire", true);
+                        enemy.anim.SetBool("animiationLoop", true);
+                        enemy.anim.SetBool("bigFatman", true);
+                        lastTimenterEyeSpawn = Time.time;
+                    }
                 }
 
                 //Control when deactivate attack
+                if (doingEyeSpawn)
+                {
+                    int eyeToSpawn = (int)(Time.time - lastTimenterEyeSpawn)-1;
+                    if(eyeToSpawn >= 0)
+                    {
+                        //Debug.Log(eyeToSpawn);
+                        if (!eyesSpawned[eyeToSpawn])
+                        {
+                            GameObject eyeMonsterr = GameObject.Instantiate(enemy.eyeMonsterPrefab, enemy.transform.position + (Vector3)Random.insideUnitCircle.normalized * Random.Range(5f, 8f), Quaternion.identity);
+                            eyeMonsterr.GetComponent<EnemySpawn>().spawnEnemyAtStart = true;
+                            eyesSpawned[eyeToSpawn] = true;
+                        }
+                       
+                    }
 
+                    if(Time.time - lastTimenterEyeSpawn >= timeEyeSpawn)
+                    {
+                        doingEyeSpawn = false;
+                        enemy.anim.SetBool("idle", true);
+                        enemy.anim.SetBool("fire", false);
+                        enemy.anim.SetBool("animiationLoop", false);
+                        enemy.anim.SetBool("bigFatman", false);
+                        enemy.lastTimeExitState = Time.time;
+                        doingAttack = false;
+                        for (int i = 0; i < eyesSpawned.Count(); i++)
+                        {
+                            eyesSpawned[i] = false;
+                        }
+                    }
+                }
 
                 if (doingBF && enemy.anim.GetBool("animiationLoop") && Time.time - lastTimeEnterBigFatman >= timeInBF)
                 {
@@ -167,6 +245,8 @@ public class E13_FiringState : FiringState
                     ShootLaser();
                 }
 
+                
+
                 if(!doingLaserSpin)
                     enemy.firePoint.localRotation = Quaternion.Euler(0, 0, angleFirePoint * Mathf.Sign(enemy.transform.localScale.x));
 
@@ -181,6 +261,12 @@ public class E13_FiringState : FiringState
 
                 enemy.agent.enabled = false;
 
+                if (enemy.spriteMask.enabled)
+                {
+                    enemy.spriteMask.enabled = false;
+                    enemy.shield.SetActive(false);
+                }
+
                 if (!doingSpread && !doingQLS &&!doingEyesBall && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
                 {
                     int aux = Random.Range(1, 11);
@@ -194,6 +280,8 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("animiationLoop", true);
                         enemy.anim.SetBool("laserQls", true);
                         lastTimenterQuadruleLaserSpin = Time.time;
+                        doingAttack = true;
+
                     }
                     else if(aux <= 7)
                     {
@@ -204,6 +292,8 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("animiationLoop", true);
                         enemy.anim.SetBool("bigFatman", true);
                         lastTimeEnterBulletSpread = Time.time;
+                        doingAttack = true;
+
                     }
                     else
                     {
@@ -213,7 +303,9 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("fire", true);
                         enemy.anim.SetBool("animiationLoop", true);
                         enemy.anim.SetBool("bigFatman", true);
-                        lastTimenterEyesBall = Time.time;                        
+                        lastTimenterEyesBall = Time.time;            
+                        doingAttack = true;
+
                     }
                 }
 
@@ -269,6 +361,7 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("animiationLoop", false);
                         enemy.anim.SetBool("laserSpinEyeForms", true);
                         lastTimenterEyesFormsAndSingleLaserSpin = Time.time;
+                        doingAttack = true;
                         FunctionTimer.Create(() =>
                         {
                             if (enemy != null)
@@ -277,6 +370,7 @@ public class E13_FiringState : FiringState
                             }
 
                         }, 1);
+
                     }
                     else //shield
                     {
@@ -287,14 +381,40 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("fire", true);
                         enemy.anim.SetBool("animiationLoop", true);
                         enemy.anim.SetBool("shieldSpin", true);
+                        enemy.sombra.transform.DOScale(1.5f, 0.7f);
+                        enemy.sombra.transform.DOLocalMoveY(-1.02f, 0.7f);
+                        enemy.transform.DOLocalMoveY(enemy.transform.position.y - 1, 0.7f);
                         actualDestination = enemy.pathScript.GetNextPoint(enemy);
-
-                        enemy.agent.enabled = true;
-                        enemy.agent.destination = actualDestination;
-
+                        enemy.sparks.SetActive(true);
+                        FunctionTimer.Create(() =>
+                        {
+                            if(enemy != null && enemy.shield != null && enemy.sparks != null)
+                            {
+                                enemy.agent.enabled = true;
+                                enemy.agent.destination = actualDestination;
+                                enemy.spriteMask.enabled = true;
+                                enemy.shield.SetActive(true);
+                                enemy.spriteMask.sprite = sr.sprite;
+                                enemy.sparks.SetActive(false);
+                                if(spinFxInstance == null || !spinFxInstance.activeInHierarchy)
+                                {
+                                    spinFxInstance = GameObject.Instantiate(enemy.spinFx, sr.transform);
+                                }
+                            }
+                        }, 0.8f);
                         lastTimenterShieldSpin = Time.time;
-                    }                    
+                        doingAttack = true;
 
+                    }
+
+                }
+                if (!doingShieldSpin)                
+                {
+                    if (enemy.spriteMask.enabled)
+                    {
+                        enemy.spriteMask.enabled = false;
+                        enemy.shield.SetActive(false);
+                    }
                 }
 
                 if (doingShieldSpin && !returningRest)
@@ -335,9 +455,23 @@ public class E13_FiringState : FiringState
                         returningRest = false;
                         enemy.agent.enabled = false;
                         enemy.lastTimeExitState = Time.time;
-                        enemy.transform.DOMove(enemy.restingPoint, 0.1f);
+                        enemy.transform.DOMove(enemy.restingPoint - new Vector3(0,1,0), 0.1f);
+                        doingAttack = false;
+                        GameObject.Destroy(spinFxInstance);
+                        
+                        FunctionTimer.Create(() =>
+                        {
+                            if(enemy != null && enemy.sombra != null && !enemy.GetIfIsDead())
+                            {
+                                enemy.sombra.transform.DOScale(1, 0.7f);
+                                enemy.sombra.transform.DOLocalMoveY(-2.73f, 0.7f);
+                                enemy.transform.DOLocalMoveY(enemy.restingPoint.y, 0.7f);
+                            }
+                        }, 0.1f);                        
+                       
+
                     }
-                    
+
                 }
 
                 //if (doingyesFormsAndSingleLaserSpin && Time.time - lastTimenterEyesFormsAndSingleLaserSpin >= 7)
@@ -370,13 +504,15 @@ public class E13_FiringState : FiringState
                     enemy.anim.SetBool("fire", false);
                     enemy.anim.SetBool("laserSpinEyeForms", false);
                     enemy.lastTimeExitState = Time.time;
-                    lineRenderers[0].enabled = false;
+                    //lineRenderers[0].enabled = false;
                     enemy.flip = true;
+                    doingAttack = false;
                     RotateScript rs;
                     if (enemy.firePoint.TryGetComponent<RotateScript>(out rs))
                     {
                         GameObject.Destroy(rs);
                     }
+                    EndLaser();
                 }
 
                 break;
@@ -391,15 +527,19 @@ public class E13_FiringState : FiringState
     {
         base.PhysicsUpdate();
 
-        if (doingShieldSpin)
-        {
-            enemy.agent.enabled = true;
-            enemy.agent.destination = actualDestination;
-        }
-        else
+        if (!doingShieldSpin)  
         {
             enemy.agent.enabled = false;
         }
+        else
+        {
+            if (enemy.shield.activeInHierarchy && enemy.agent.enabled)
+            {
+                enemy.shield.GetComponent<SpriteRenderer>().material.SetFloat("_TextureScrollXSpeed", enemy.agent.velocity.normalized.x * 5);
+                enemy.shield.GetComponent<SpriteRenderer>().material.SetFloat("_TextureScrollYSpeed", enemy.agent.velocity.normalized.y * 5);
+            }
+        }
+
 
     }
 
@@ -437,6 +577,7 @@ public class E13_FiringState : FiringState
         defaultRotation = -90;
 
     }
+    
     public void EndUp()
     {
         if (startUp)
@@ -448,6 +589,8 @@ public class E13_FiringState : FiringState
             doingLaserSpin = false;
             enemy.anim.SetBool("laserSpin", false);
             enemy.lastTimeExitState = Time.time;
+            doingAttack = false;
+
         }
     }
     public void EndDown()
@@ -458,11 +601,13 @@ public class E13_FiringState : FiringState
             enemy.flip = true;
             enemy.anim.SetBool("idle", true);
             enemy.anim.SetBool("fire", false);
-            doingLaserSpin = false;
+            //doingLaserSpin = false;
             enemy.anim.SetBool("laserSpin", false);
             doingQLS = false;
             enemy.anim.SetBool("laserQls", false);
             enemy.lastTimeExitState = Time.time;
+            doingLaserSpin = false;
+            doingAttack = false;
         }
     }
     public void EndEyesThrow()
@@ -474,6 +619,8 @@ public class E13_FiringState : FiringState
             enemy.anim.SetBool("fire", false);
             enemy.anim.SetBool("bigFatman", false);
             enemy.lastTimeExitState = Time.time;
+            doingAttack = false;
+
             //Debug.Log("si");
         }
         else if (doingSpread)
@@ -483,6 +630,8 @@ public class E13_FiringState : FiringState
             enemy.anim.SetBool("fire", false);
             enemy.anim.SetBool("bigFatman", false);
             enemy.lastTimeExitState = Time.time;
+            doingAttack = false;
+
             //Debug.Log("si");
         }
         else if (doingEyesBall)
@@ -492,12 +641,18 @@ public class E13_FiringState : FiringState
             enemy.anim.SetBool("fire", false);
             enemy.anim.SetBool("bigFatman", false);
             enemy.lastTimeExitState = Time.time;
+            doingAttack = false;
+
         }
 
     }
     void Machinegun()
     {
         GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position, enemy.GetComponent<Entity>().GetFirePointTransform().rotation);
+        if (eyeThrowUp)
+        {
+            bullet.GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
+        }
         //fireSoundKey = AudioManager.Instance.LoadSound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);       
         bullet.transform.Rotate(0, 0, bullet.transform.rotation.z + UnityEngine.Random.Range(-25, 25));
         bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponent<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
@@ -506,6 +661,10 @@ public class E13_FiringState : FiringState
     void Spreadgun()
     {
         GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position, Quaternion.Euler(0,0,Random.Range(-180f,180f)));
+        if (eyeThrowUp)
+        {
+            bullet.GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
+        }
         //fireSoundKey = AudioManager.Instance.LoadSound(stateData.shootShound, enemy.GetComponent<Entity>().GetFirePointTransform().position);       
         //bullet.transform.Rotate(0, 0, bullet.transform.rotation.z + UnityEngine.Random.Range(-25, 25));
         bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * bullet.GetComponent<EnemyProjectile>().bulletData.speed, ForceMode2D.Impulse);
@@ -513,16 +672,32 @@ public class E13_FiringState : FiringState
     }
     void SpinGun()
     {
-        GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position + enemy.GetComponent<Entity>().GetFirePointTransform().right, Quaternion.identity/*enemy.GetComponent<Entity>().GetFirePointTransform().rotation*/);        
+        GameObject bullet = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position + enemy.GetComponent<Entity>().GetFirePointTransform().right, Quaternion.identity/*enemy.GetComponent<Entity>().GetFirePointTransform().rotation*/);
+        if (eyeThrowUp)
+        {
+            bullet.GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
+        }
         bullet.GetComponent<Rigidbody2D>().AddForce(enemy.GetComponent<Entity>().GetFirePointTransform().right * bullet.GetComponent<EnemyProjectile>().bulletData.speed * 0.5f, ForceMode2D.Impulse);
 
         GameObject bullet2 = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position - enemy.GetComponent<Entity>().GetFirePointTransform().right, Quaternion.identity/*enemy.GetComponent<Entity>().GetFirePointTransform().rotation*/);
+        if (eyeThrowUp)
+        {
+            bullet2.GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
+        }
         bullet2.GetComponent<Rigidbody2D>().AddForce(-enemy.GetComponent<Entity>().GetFirePointTransform().right * bullet2.GetComponent<EnemyProjectile>().bulletData.speed * 0.5f, ForceMode2D.Impulse);
 
         GameObject bullet3 = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position + enemy.GetComponent<Entity>().GetFirePointTransform().up, Quaternion.identity/*enemy.GetComponent<Entity>().GetFirePointTransform().rotation*/);
+        if (eyeThrowUp)
+        {
+            bullet3.GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
+        }
         bullet3.GetComponent<Rigidbody2D>().AddForce(enemy.GetComponent<Entity>().GetFirePointTransform().up * bullet3.GetComponent<EnemyProjectile>().bulletData.speed * 0.5f, ForceMode2D.Impulse);
 
         GameObject bullet4 = GameObject.Instantiate(stateData.bulletType, enemy.GetComponent<Entity>().GetFirePointTransform().position - enemy.GetComponent<Entity>().GetFirePointTransform().up, Quaternion.identity/*enemy.GetComponent<Entity>().GetFirePointTransform().rotation*/);
+        if (eyeThrowUp)
+        {
+            bullet4.GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
+        }
         bullet4.GetComponent<Rigidbody2D>().AddForce(-enemy.GetComponent<Entity>().GetFirePointTransform().up * bullet4.GetComponent<EnemyProjectile>().bulletData.speed * 0.5f, ForceMode2D.Impulse);
 
         lastShootTime = Time.time;
@@ -530,11 +705,22 @@ public class E13_FiringState : FiringState
     public void StartLaser()
     {        
         lineRenderers[0].enabled = true;
+        lineRenderers[0].material.DOFloat(0, "_ClipUvUp", 0.15f);
+        lineRenderers[0].material.DOFloat(0, "_ClipUvDown", 0.15f);
         if (doingQLS)
         {
             lineRenderers[1].enabled = true;
+            lineRenderers[1].material.DOFloat(0, "_ClipUvUp", 0.15f);
+            lineRenderers[1].material.DOFloat(0, "_ClipUvDown", 0.15f);
+
             lineRenderers[2].enabled = true;
+            lineRenderers[2].material.DOFloat(0, "_ClipUvUp", 0.15f);
+            lineRenderers[2].material.DOFloat(0, "_ClipUvDown", 0.15f);
+
             lineRenderers[3].enabled = true;
+            lineRenderers[3].material.DOFloat(0, "_ClipUvUp", 0.15f);
+            lineRenderers[3].material.DOFloat(0, "_ClipUvDown", 0.15f);
+
             enemy.firePoint.gameObject.AddComponent<RotateScript>();
             enemy.firePoint.GetComponent<RotateScript>().velocity = 0.5f;
         }
@@ -543,6 +729,12 @@ public class E13_FiringState : FiringState
 
     public void EndLaser()
     {
+        foreach (LineRenderer lr in lineRenderers)
+        {            
+            lr.material.DOFloat(0.5f, "_ClipUvDown", 0.35f);
+            lr.material.DOFloat(0.5f, "_ClipUvUp", 0.35f);
+        }
+
         FunctionTimer.Create(() =>
         {
             if(enemy != null && lineRenderers[0] != null && lineRenderers[1] != null && lineRenderers[2] != null && lineRenderers[3] != null && enemy.firePoint != null)
@@ -551,13 +743,15 @@ public class E13_FiringState : FiringState
                 foreach(LineRenderer lr in lineRenderers)
                 {
                     lr.enabled = false;
+                    lr.material.DOFloat(0.5f, "_ClipUvDown", 0.35f);
+                    lr.material.DOFloat(0.5f, "_ClipUvUp", 0.35f);
                 }
                 canApplyDamge = false;
 
                 GameObject.Destroy(enemy.firePoint.GetComponent<RotateScript>());
             }
            
-        }, 0.15f);
+        }, 0.35f);
         
     }
 
@@ -783,5 +977,15 @@ public class E13_FiringState : FiringState
     {
         lineRenderers[0].sortingOrder = 5;
     }
-    
+
+    public void EyeUpAnim()
+    {
+        eyeThrowUp = true;
+    }
+
+    public void EyeDownAnim()
+    {
+        eyeThrowUp = false;
+    }
+
 }
