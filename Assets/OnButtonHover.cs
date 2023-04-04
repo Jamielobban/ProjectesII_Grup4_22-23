@@ -11,10 +11,20 @@ public class OnButtonHover : MonoBehaviour
     float startTime;
     bool done;
     // Start is called before the first frame update
+    int? hoverAudioKey;
+    AudioClip hoverAudio;
+    Camera cam;
+
+    private void Start()
+    {
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        hoverAudio = Resources.Load<AudioClip>("Sounds/Menu/HoverSound");
+    }
 
     public void OnMouseOver()
     {
         Debug.Log("Mouse over");
+        hoverAudioKey = AudioManager.Instance.LoadSound(hoverAudio, cam.transform);
         mat = GetComponent<Image>().material;
         shineSequence = DOTween.Sequence();
         startTime = Time.time;
