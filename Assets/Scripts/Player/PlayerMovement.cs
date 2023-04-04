@@ -110,7 +110,8 @@ public class PlayerMovement : MonoBehaviour
 
     int? cantPressSoundKey;
     int? dashSoundKey;
-    int? damageSoundKey;
+    int? damageSoundKey;    int? parrySoundKey;
+    [SerializeField] AudioClip parrySound;
 
     bool justRolled;
 
@@ -154,9 +155,9 @@ public class PlayerMovement : MonoBehaviour
         LayerIgnoreRaycast = LayerMask.NameToLayer("IgnoreEverything");
         PlayerMask = LayerMask.NameToLayer("Player");
 
-        playerDash = Resources.Load<AudioClip>("Sounds/Dash/dashEffect2");
+        playerDash = Resources.Load<AudioClip>("Sounds/Dash/PlayerDash");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
-
+        parrySound = Resources.Load<AudioClip>("Sounds/PlayerParry/Parry");
         potionsSystem = FindObjectOfType<PotionSystem>();
     }
 
@@ -232,15 +233,15 @@ public class PlayerMovement : MonoBehaviour
         currentHearts = maxHearts;
         rollSpeed = 90f;
         justRolled = false;
-        backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, cam.transform, 0, true, false, 0.4f);        AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time = AudioManager.Instance.GetMusicTime();
+        //backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, cam.transform, 0, true, false, 0.4f);        //AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time = AudioManager.Instance.GetMusicTime();
         //if (backThemeKey.HasValue)
         //{
         //    AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).volume = 0.4f;
         //}
     }
-    // Update is called once per frame
+    // Update is called once per frame 
     void Update()
-    {        AudioManager.Instance.SetMusicTime(AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time);
+    {        //AudioManager.Instance.SetMusicTime(AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time);
         if (Input.GetKeyDown(KeyCode.L)){
             godMode = true;
         }
@@ -253,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
             rotatePoint.SetActive(true);
 
         }
-
+        
         dir = rotatePoint.transform.position - firePoint.transform.position;
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         //Debug.Log(angle);
@@ -397,12 +398,15 @@ public class PlayerMovement : MonoBehaviour
                         time = 0;
                     }
                     movement.x = Input.GetAxisRaw("Horizontal");
-                    movement.y = Input.GetAxisRaw("Vertical");
-                    moveDir = new Vector3(movement.x, movement.y).normalized;
+                    movement.y = Input.GetAxisRaw("Vertical");                    movement = Vector3.ClampMagnitude(movement, 1f);                    Debug.Log(movement.magnitude);                    moveDir = new Vector3(movement.x, movement.y).normalized;
+
                     //
                     if (Input.GetKeyDown(KeyCode.Q) && canBlit)
-                    {
-                        //Debug.Log("Parry");
+                    {
+
+                        //Debug.Log("Parry");
+                        parrySoundKey = AudioManager.Instance.LoadSound(parrySound, this.transform.position);
+
                         myBlit.isExpanding = true;                        canBlit = false;
                     }
                     if (moveDir.magnitude == 1)
@@ -482,7 +486,7 @@ public class PlayerMovement : MonoBehaviour
             case State.Normal:
                 if (!knockback)
                 {
-                    rb.AddForce(movement * moveSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
+                    rb.AddForce(movement.normalized * moveSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
                 }
                 else
                 {

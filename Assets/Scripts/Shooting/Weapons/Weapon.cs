@@ -11,7 +11,10 @@ public class Weapon
 
     protected AudioClip powerupEmpty;
     protected AudioClip powerupMax;
+    protected AudioClip outOfAmmo;
     protected AudioClip powerupPressed;
+    protected AudioClip lowAmmo;
+    protected AudioClip lowAmmo2;
 
     protected WeaponValues data;
 
@@ -24,11 +27,15 @@ public class Weapon
     protected int? powerupMaxKey;
     protected int? powerupPressKey;
     protected int? nextWeaponKey;
-    
+    protected int? outOfAmmoKey;
+    protected int? lowAmmoKey;
+    protected int? lowAmmo2Key;
+
     public float timer;
     bool firstEnter = true;
 
     public bool shotFired = false;
+    float bulletPercentage;
     public Weapon(Transform _firePoint, WeaponValues _data)
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -39,6 +46,9 @@ public class Weapon
         powerupEmpty = Resources.Load<AudioClip>("Sounds/Powerup/powerup0");
         powerupMax = Resources.Load<AudioClip>("Sounds/Powerup/powerupMax");
         nextWeapon = Resources.Load<AudioClip>("Sounds/NextWeapon/nextWeapon");
+        outOfAmmo = Resources.Load<AudioClip>("Sounds/Weapons/OutOfAmmo");
+        lowAmmo = Resources.Load<AudioClip>("Sounds/Weapons/LowAmmo");
+        lowAmmo2 = Resources.Load<AudioClip>("Sounds/Weapons/LowAmmo2");
         switch (_data.mechanismType)
         {
         case MechanismTypes.BOLT:
@@ -140,7 +150,21 @@ public class Weapon
             {                
                 if (weaponMechanism.Shoot(data.bulletTypePrefab, firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue))
                 {
+                    bulletPercentage = (float)GetBulletsInMagazine() / (float)GetBulletsPerMagazine();
+                    if (bulletPercentage < 0.4f)
+                    {
+                        lowAmmoKey = AudioManager.Instance.LoadSound(lowAmmo, player.transform);
+                        
+                        Debug.Log("this is low ammo2");
+                    }
+                    if (bulletPercentage < 0.5f && bulletPercentage >= 0.4f)
+                    {
+                        lowAmmoKey = AudioManager.Instance.LoadSound(lowAmmo2, player.transform,0f,false,false,0.25f);
+
+                        Debug.Log("this is low ammoi");
+                    }
                     shotFired = true;
+                    //Debug.Log("I shot");
                     LoadOrReloadWhenNeedIt();
                     return true;
                 }                
@@ -211,10 +235,12 @@ public class Weapon
         {
             if(data.magazinesInWeapon.RuntimeValue == 0)
             {
+                outOfAmmoKey = AudioManager.Instance.LoadSound(outOfAmmo, player.transform);
                 data.outOfAmmo.RuntimeValue = true;
             }
             else
             {
+                outOfAmmoKey = AudioManager.Instance.LoadSound(outOfAmmo, player.transform);
                 reloadKeySound = AudioManager.Instance.LoadSound(data.reloadSound, player.transform, 0.5f, false);
                 data.bulletsInMagazine.RuntimeValue = data.bulletsInMagazine.InitialValue;
                 data.magazinesInWeapon.RuntimeValue--;

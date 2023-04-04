@@ -47,7 +47,7 @@ public class EnemySpawn : MonoBehaviour
         spawn.SetTrigger("Spawn");
 
         spawnSoundKey = AudioManager.Instance.LoadSound(enemySpawnSound, this.transform.position);
-        Invoke("SpawnEnemy", 0.4f);
+        Invoke("SpawnEnemy", 0.8f);
     }
 
 

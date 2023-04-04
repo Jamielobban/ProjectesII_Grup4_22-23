@@ -38,6 +38,7 @@ public class CircleTransition : MonoBehaviour
         if (playerCheckpoints.restart)
         {
             playerCheckpoints.restart = false;
+
             CloseBlackScreen();
         }
         //else if (Input.GetKeyDown((KeyCode.Alpha2)))
@@ -49,19 +50,22 @@ public class CircleTransition : MonoBehaviour
     private void Start()
     {
         DrawBlackScreen();
-        Invoke("OpenBlackScreen", 0.5f);
+        _image.material.SetFloat("_Radius", 1);
+        //Invoke("OpenBlackScreen", 0.5f);
+        StartCoroutine(SetPlayerMovement());
     }
 
     public void OpenBlackScreen()
     {
-        StartCoroutine(Transition(2, 0, 1));
-        StartCoroutine(setPlayerMovement());
+        StartCoroutine(Transition(0.4f, 0.062f, 1));
+        //StartCoroutine(setPlayerMovement());
     }
 
     public void CloseBlackScreen()
     {
-        StartCoroutine(Transition(2, 1, 0));
-        Invoke("ResetCurrentScene", 3f);
+        StartCoroutine(Transition(0.5f, 1, 0.062f));
+        Invoke("OpenBlackScreen", 0.75f);
+        //Invoke("ResetCurrentScene", 3f);
     }
 
     private void DrawBlackScreen()
@@ -70,6 +74,7 @@ public class CircleTransition : MonoBehaviour
         var screenWidth = Screen.width*2;
         var screenHeight = Screen.height*2;
         var playerScreenPos = Camera.main.WorldToScreenPoint(player.position);
+        //Debug.Log(playerScreenPos);
 
         var canvasRect = _canvas.GetComponent<RectTransform>().rect;
         var canvasWidth = canvasRect.width;
@@ -98,8 +103,8 @@ public class CircleTransition : MonoBehaviour
         _playerCanvasPos /= squareValue;
 
         var mat = _image.material;
-        mat.SetFloat("_CenterX", _playerCanvasPos.x);
-        mat.SetFloat("_CenterY", _playerCanvasPos.y);
+        mat.SetFloat("_CenterX", 0.5f);
+        mat.SetFloat("_CenterY", 0.5f);
 
         _image.rectTransform.sizeDelta = new Vector2(squareValue, squareValue);
     }
@@ -119,9 +124,10 @@ public class CircleTransition : MonoBehaviour
         }
     }
 
-    private IEnumerator setPlayerMovement()
+    private IEnumerator SetPlayerMovement()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
+        //Debug.Log("Im moving");
         playerSignal.canMove = true;
     }
 

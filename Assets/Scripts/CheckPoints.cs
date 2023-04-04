@@ -18,18 +18,23 @@ public class CheckPoints : MonoBehaviour
 
 
     PlayerMovement player;
-
+    CircleTransition restAnimation;
+    BlitController blit;
     Transform playerTtransform;
     CheckpointsList list;
 
     bool descansar;
     public bool UnlockAtStart;
     string nameSave;
-
+    int? restAudioKey;
+    AudioClip restAudio;
     // Start is called before the first frame update
     void Start()
     {
         playerTtransform = GameObject.FindGameObjectWithTag("Player").transform;
+        restAudio = Resources.Load<AudioClip>("Sounds/Sewer/RestAudio");
+        restAnimation = FindObjectOfType<CircleTransition>();
+        blit = FindObjectOfType<BlitController>();
         nameSave = "encendido" + SceneManager.GetActiveScene().buildIndex;
         if (UnlockAtStart&&!encendido)
         {
@@ -54,11 +59,11 @@ public class CheckPoints : MonoBehaviour
                 playerTtransform.position = spawn.position;
                 StartCoroutine(setIsDeadFalse());
 
-                int i = 7;
+                int i = 0;
                 string KeyName = "Sala" + i;
                 while (PlayerPrefs.HasKey(KeyName))
                 {
-                    Debug.Log(KeyName);
+                    //Debug.Log(KeyName);
                     PlayerPrefs.SetInt(KeyName, (false ? 1 : 0));
                     i++;
                     KeyName = "Sala" + i;
@@ -103,9 +108,13 @@ public class CheckPoints : MonoBehaviour
     }
     private IEnumerator move()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         player.canMove = true;
+        blit.isResting = false;
+        yield return new WaitForSeconds(1.5f);
         descansar = false;
+        //Debug.Log("asda");
+        //restAnimation.OpenBlackScreen();
 
     }
 
@@ -127,11 +136,14 @@ public class CheckPoints : MonoBehaviour
                 save();
                 descansar = true;
 
+                //restAnimation.CloseBlackScreen();
+                blit.isResting = true;
+                restAudioKey = AudioManager.Instance.LoadSound(restAudio, playerTtransform.transform.position, 0, false, transform, 1);
                 button.SetActive(false);
 
                 PlayerPrefs.SetInt("isDead", (false ? 1 : 0));
 
-                int i = 7;
+                int i = 0;
                 string KeyName = "Sala" + i;
                 while (PlayerPrefs.HasKey(KeyName))
                 {

@@ -12,6 +12,7 @@ public class BlitController : MonoBehaviour
 
     public float _Intensity;
     public bool isExpanding;
+    public bool isResting;
     public Material _Mat;
     public Material _HitMaterial;
     private CircleCollider2D circle;
@@ -81,7 +82,7 @@ public class BlitController : MonoBehaviour
             {
                 damageSequence.Kill();
             }
-
+            _HitMaterial.SetColor("_Color", Color.red);
             _HitMaterial.SetFloat("_VignetteIntensity", 0.952f); 
             
             damageSequence = DOTween.Sequence();
@@ -91,7 +92,20 @@ public class BlitController : MonoBehaviour
             player.isHit = false;
 
         }
+        if (isResting)
+        {
+            _HitMaterial.SetColor("_Color", new Color(175, 153, 153));
+            _HitMaterial.DOFloat(0.974f, "_Fullscreenintensity", 0.95f);
+            _HitMaterial.DOFloat(0.889f, "_VignetteIntensity", 0.55f);
+            Invoke("BonfireReset", 1.25f);
+        }
         
+    }
+
+    void BonfireReset()
+    {
+        _HitMaterial.DOFloat(0.312f, "_Fullscreenintensity", 0.75f);
+        _HitMaterial.DOFloat(0, "_VignetteIntensity", 0.35f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
