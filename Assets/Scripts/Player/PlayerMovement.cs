@@ -225,12 +225,20 @@ public class PlayerMovement : MonoBehaviour
     public void Start()
     {
         canDash = true;
-        entrandoSala = true;
+        if(((PlayerPrefs.GetInt("isDead") == 1)))
+        {
+            entrandoSala = false;
+        }
+        else
+        {
+            entrandoSala = true;
+        }
+
         isDead = false;
 
         state = State.Rolling;
         //currentHealth = maxHealth;
-        currentHearts = maxHearts;
+
         rollSpeed = 90f;
         justRolled = false;
         //backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, cam.transform, 0, true, false, 0.4f);        //AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time = AudioManager.Instance.GetMusicTime();

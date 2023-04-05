@@ -157,8 +157,12 @@ public class Menu : MonoBehaviour
 
     public void StartNew()
     {
-        PlayerPrefs.DeleteAll();        
-        SceneManager.LoadScene(1);
+        PlayerPrefs.SetInt("FirstTime", 2);
+        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
+        PlayerPrefs.SetInt("isDead", 1);
+
+        //PlayerPrefs.DeleteAll();        
+        //SceneManager.LoadScene(1);
     }
 
     public void BackToMainStart()
