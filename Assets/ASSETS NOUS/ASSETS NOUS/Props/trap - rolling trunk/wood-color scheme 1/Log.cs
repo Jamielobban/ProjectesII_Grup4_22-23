@@ -19,7 +19,7 @@ public class Log : Trampas
     // Start is called before the first frame update
     void Start()
     {
-        a = false;
+        a = true;
         logsNum = 0;
         StartCoroutine(animation(0f));
 

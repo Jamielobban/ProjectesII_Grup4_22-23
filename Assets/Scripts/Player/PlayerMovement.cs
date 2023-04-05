@@ -396,7 +396,7 @@ public class PlayerMovement : MonoBehaviour
                         }
                         if(time >= 1f && potionsSystem.amountToFill >= 50)
                         {
-                            potionsSystem.amountToFill -= 50;                            PlayerPrefs.SetInt("Hearts", currentHearts);
+                            potionsSystem.amountToFill -= 50;                            PlayerPrefs.SetInt("Hearts", currentHearts);
                             potionsSystem.CheckPotionStatus();
                             Health();
                         }
