@@ -1,22 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
-public class SpawnFire : MonoBehaviour
+public class SpawnObjectsInCircle : MonoBehaviour
 {
     [HideInInspector]
     public Transform player;
     [HideInInspector]
     public int id;
     float speed;
-    public GameObject firePrefab;   // El prefab de fuego a instanciar
-    public int firePerQuadrant;     // El número de instancias de fuego por cuadrante    
+    public GameObject objectPrefab;   // El prefab de fuego a instanciar
+    public int objectPerQuadrant;     // El número de instancias de fuego por cuadrante    
     CircleCollider2D circleCollider;
     List<GameObject> instances = new List<GameObject>();
     float counter = 0.0001f;
     public float spawnDelay = 1/50f;
     int iterations;
     bool damageAplied = false;
+    public int objectsBetweenWaits;
+    public bool increaseRadius;
+    public bool doScaleOnSpawn;
+    public bool spawnsDone;
 
     void Start()
     {
@@ -33,7 +38,7 @@ public class SpawnFire : MonoBehaviour
         Vector2 position = transform.position;
 
         // Obtener el ángulo de separación para cada instancia
-        float angleStep = 90f / firePerQuadrant;
+        float angleStep = 90f / objectPerQuadrant;
 
         StartCoroutine(SpawnFireInstances(center, radius, position, angleStep));
     }
@@ -47,7 +52,7 @@ public class SpawnFire : MonoBehaviour
             float startAngle = i * 90f;
 
             // Iterar sobre el número de instancias por cuadrante
-            for (int j = 0; j < firePerQuadrant; j++)
+            for (int j = 0; j < objectPerQuadrant; j++)
             {
                 // Calcular el ángulo de la instancia actual
                 float angle = startAngle + j * angleStep;
@@ -56,7 +61,7 @@ public class SpawnFire : MonoBehaviour
                 Vector2 spawnPosition = position + new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)) * radius;
 
                 // Crear la instancia de fuego en la posición calculada
-                GameObject instance = Instantiate(firePrefab, spawnPosition, Quaternion.identity, this.transform);
+                GameObject instance = Instantiate(objectPrefab, spawnPosition, Quaternion.identity, this.transform);
 
                 // Calcular la rotación de la instancia actual
                 float rotationZ = angle - 90f;
@@ -67,7 +72,13 @@ public class SpawnFire : MonoBehaviour
                 // Añadir la instancia a la lista
                 instances.Add(instance);
 
-                if (j % 6 == 0)
+                if (doScaleOnSpawn)
+                {
+                    instance.transform.localScale = Vector3.zero;
+                    instance.transform.DOScale(1, 0.35f);
+                }
+
+                if (j % objectsBetweenWaits == 0)
                 {
                     // Esperar un tiempo antes de crear la siguiente instancia
                     yield return new WaitForSeconds(spawnDelay);
@@ -81,6 +92,11 @@ public class SpawnFire : MonoBehaviour
 
     void Update()
     {
+        if (!increaseRadius && spawnsDone)
+            return;
+
+        spawnsDone = iterations >= objectPerQuadrant * 4;
+
         if(id == 1)
         {
             speed = 28;
@@ -90,6 +106,7 @@ public class SpawnFire : MonoBehaviour
             speed = 17;
         }
 
+        if(increaseRadius)
         circleCollider.radius = counter;
 
         // Obtener el radio del Collider2D
@@ -99,7 +116,7 @@ public class SpawnFire : MonoBehaviour
         Vector2 position = transform.position;
 
         // Obtener el ángulo de separación para cada instancia
-        float angleStep = 90f / firePerQuadrant;
+        float angleStep = 90f / objectPerQuadrant;
 
         // Iterar sobre todas las instancias creadas
         for (int i = 0; i < instances.Count; i++)
@@ -111,7 +128,7 @@ public class SpawnFire : MonoBehaviour
             float startAngle = quadrant * 90f;
 
             // Calcular el ángulo de la instancia actual
-            float angle = startAngle + (i % firePerQuadrant) * angleStep;
+            float angle = startAngle + (i % objectPerQuadrant) * angleStep;
 
             // Calcular la posición de la instancia actual
             Vector2 spawnPosition = position + new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)) * radius;
@@ -120,12 +137,12 @@ public class SpawnFire : MonoBehaviour
             instances[i].transform.position = spawnPosition;            
         }
 
-        if(iterations >= firePerQuadrant*4)
+        if(iterations >= objectPerQuadrant*4)
             counter += Time.deltaTime * speed;
 
         Vector3 vectorRadiusPlayer = (player.transform.position - circleCollider.bounds.center).normalized;
 
-        if(!damageAplied && (player.position - (circleCollider.bounds.center + vectorRadiusPlayer * circleCollider.radius)).magnitude <= 1.75f)
+        if(increaseRadius && !damageAplied && (player.position - (circleCollider.bounds.center + vectorRadiusPlayer * circleCollider.radius)).magnitude <= 1.75f)
         {
             if (!player.GetComponent<PlayerMovement>().isDashing)
             {
@@ -133,58 +150,7 @@ public class SpawnFire : MonoBehaviour
                 damageAplied = true;
             }
         }
-    }
-
-
-    //void Start()
-    //{
-    //    // Obtener el Collider2D circular del objeto
-    //    circleCollider = GetComponent<CircleCollider2D>();
-
-    //    // Obtener el centro del Collider2D
-    //    Vector2 center = circleCollider.offset;
-
-    //    // Obtener el radio del Collider2D
-    //    float radius = circleCollider.radius * transform.localScale.x;
-
-    //    // Obtener la posición del objeto en la escena
-    //    Vector2 position = transform.position;
-
-    //    // Obtener el ángulo de separación para cada instancia
-    //    float angleStep = 90f / firePerQuadrant;
-
-    //    // Lista para almacenar las instancias creadas
-    //    List<GameObject> instances = new List<GameObject>();
-
-    //    // Iterar sobre los cuadrantes
-    //    for (int i = 0; i < 4; i++)
-    //    {
-    //        // Calcular el ángulo inicial del cuadrante actual
-    //        float startAngle = i * 90f;
-
-    //        // Iterar sobre el número de instancias por cuadrante
-    //        for (int j = 0; j < firePerQuadrant; j++)
-    //        {
-    //            // Calcular el ángulo de la instancia actual
-    //            float angle = startAngle + j * angleStep;
-
-    //            // Calcular la posición de la instancia actual
-    //            Vector2 spawnPosition = position + new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)) * radius;
-
-    //            // Crear la instancia de fuego en la posición calculada
-    //            GameObject instance = Instantiate(firePrefab, spawnPosition, Quaternion.identity, this.transform);
-
-    //            // Calcular la rotación de la instancia actual
-    //            float rotationZ = angle - 90f;
-
-    //            // Aplicar la rotación a la instancia actual
-    //            instance.transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
-
-    //            // Añadir la instancia a la lista
-    //            instances.Add(instance);
-    //        }
-    //    }
-    //}
+    }   
 
 
 

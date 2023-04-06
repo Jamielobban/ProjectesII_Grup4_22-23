@@ -61,6 +61,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b518fb2cbd965c04dab7f9c12ae5b98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firePrefab: {fileID: 215573941870743097, guid: b792871f5df6b8a4eaa7cc0fa81ec9be, type: 3}
-  firePerQuadrant: 65
+  player: {fileID: 0}
+  id: 0
+  objectPrefab: {fileID: 215573941870743097, guid: b792871f5df6b8a4eaa7cc0fa81ec9be, type: 3}
+  objectPerQuadrant: 65
   spawnDelay: 0.01
+  objectsBetweenWaits: 6
+  increaseRadius: 1

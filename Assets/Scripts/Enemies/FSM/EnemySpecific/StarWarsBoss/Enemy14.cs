@@ -15,13 +15,17 @@ public class Enemy14 : Entity
     [SerializeField]
     private D_IdleState idleStateData;
 
+    public GameObject flameWave;
+    public GameObject multiSwords;
+
     public int mode = 1;
     public float waitBetweenAttacks = 3f;
     public float lastTimeExitState = 0;
 
-    public GameObject flameWave;    
     public Color colorMode1;
     public Color colorMode2;
+
+    public GameObject sword4waves;
 
     public override void Start()
     {
