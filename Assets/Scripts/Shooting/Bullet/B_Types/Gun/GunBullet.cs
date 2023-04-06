@@ -21,6 +21,7 @@ public class GunBullet : Bullet
         will = FindObjectOfType<Turn>();
 
         Instantiate(muzzleFlash, rotatePoint.transform.position, rotatePoint.transform.rotation);
+        Debug.Log(muzzleFlash);
         Instantiate(bulletShell, will.transform.position, Quaternion.identity);
 
 

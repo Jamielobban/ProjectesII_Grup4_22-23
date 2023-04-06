@@ -32,7 +32,7 @@ public class ShotgunBullet : Bullet
         pelletPrefab = Resources.Load<GameObject>("Prefab/Pellet");
         bulletShell = Resources.Load<GameObject>("Prefab/BulletParticle");
         powerupPelletPrefab = Resources.Load<GameObject>("Prefab/BigPelletPowerup");
-        muzzleFlash = Resources.Load<GameObject>("Prefab/MuzzleFlash");
+        muzzleFlash = Resources.Load<GameObject>("Prefab/ShotgunMuzzleFlash");
 
         bulletData.bulletDamage *= bulletData._damageMultiplier;
         CinemachineShake.Instance.ShakeCamera(10f, .1f);

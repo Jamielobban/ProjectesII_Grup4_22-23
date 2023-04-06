@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2017815753381914020}
   - component: {fileID: 8980375148241351026}
   - component: {fileID: 6614969846202790682}
+  - component: {fileID: 1576435813596961687}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -53,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: ff9b51bf0fd6d6241ac4ba30ce17bcf8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,6 +106,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1576435813596961687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3260158160027328214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaderTypes: 0
+  normalStrength: 5
+  normalSmoothing: 1
+  computingNormal: 0
 --- !u!1 &8152819366165555573
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,9 +131,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3592690956939338295}
-  - component: {fileID: 2025203107597609600}
   - component: {fileID: 2342637671788317161}
   - component: {fileID: 1207653315007249732}
+  - component: {fileID: 2988552205061143415}
   m_Layer: 12
   m_Name: BalasExplosivas
   m_TagString: Bullet
@@ -140,22 +157,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &2025203107597609600
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8152819366165555573}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.11071861}
-  serializedVersion: 2
-  m_Radius: 0.20810544
 --- !u!50 &2342637671788317161
 Rigidbody2D:
   serializedVersion: 4
@@ -203,4 +204,30 @@ MonoBehaviour:
   explos: {fileID: 39681216997924214, guid: 178ff1d9c6945034e9f3b65f37499c52, type: 3}
   bulletShell: {fileID: 1920896335013489960, guid: b0a43ff5dd387224fb552c2ae62ee735, type: 3}
   will: {fileID: 0}
-  MuzzleFlash: {fileID: 5688211391314532309, guid: 798b55cd91047074fa54f02639656df0, type: 3}
+  MuzzleFlash: {fileID: 4985914374840170120, guid: 0be3a25b489e9bf4580c9463d5fef5e9, type: 3}
+--- !u!61 &2988552205061143415
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8152819366165555573}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.02197361, y: -0.21973848}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.39938164, y: 0.99999905}
+  m_EdgeRadius: 0

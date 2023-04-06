@@ -80,7 +80,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   bulletData: {fileID: 11400000, guid: ecc45ce58ae3ff042ae1b58c04ae4266, type: 2}
   will: {fileID: 0}
-  muzzleFlash: {fileID: 5688211391314532309, guid: 798b55cd91047074fa54f02639656df0, type: 3}
+  muzzleFlash: {fileID: 8065863588196313088, guid: 4fe24a20894ebf44ba9edc0aa7edad27, type: 3}
   bulletShell: {fileID: 1920896335013489960, guid: b0a43ff5dd387224fb552c2ae62ee735, type: 3}
 --- !u!61 &7613588009698197928
 BoxCollider2D:
@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 9187930356756740835}
   - component: {fileID: 5367138874683563202}
   - component: {fileID: 147139030054145913}
+  - component: {fileID: 8840536292239535839}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -161,7 +162,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 282ee6fae47231d4a910c7e794cf21cc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -213,3 +214,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8840536292239535839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4902219578595855726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaderTypes: 0
+  normalStrength: 5
+  normalSmoothing: 1
+  computingNormal: 0

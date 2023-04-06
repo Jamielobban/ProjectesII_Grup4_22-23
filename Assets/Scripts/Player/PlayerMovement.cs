@@ -61,15 +61,13 @@ public class PlayerMovement : MonoBehaviour
     private TrailRenderer trail;
     public float rollSpeed;
     public bool knockback;
-    public Color dashColor;
+
     public Color OriginalColor;
     public Color hurtColor;
     public Color invulnerableColor;
     //public Color midwayRoll;
 
     public SpriteRenderer body;
-    public SpriteRenderer[] weaponSprites;
-    //public LayerMask layerMask;
 
     public GameObject rotatePoint;
 
@@ -275,14 +273,7 @@ public class PlayerMovement : MonoBehaviour
         else if(canMove)
         {
             playerSprite.sortingOrder = 1;
-        }
-
-        weaponSprites = rotatePoint.GetComponentsInChildren<SpriteRenderer>();
-
-
-
-
-
+        }
         if (((Time.time - lastDash) >= timeBetweenDashes) && !disableDash)
         {            if (!OnAir)
                 canDash = true;
@@ -398,7 +389,7 @@ public class PlayerMovement : MonoBehaviour
                         time = 0;
                     }
                     movement.x = Input.GetAxisRaw("Horizontal");
-                    movement.y = Input.GetAxisRaw("Vertical");                    movement = Vector3.ClampMagnitude(movement, 1f);                    Debug.Log(movement.magnitude);                    moveDir = new Vector3(movement.x, movement.y).normalized;
+                    movement.y = Input.GetAxisRaw("Vertical");                    movement = Vector3.ClampMagnitude(movement, 1f);                    //Debug.Log(movement.magnitude);                    moveDir = new Vector3(movement.x, movement.y).normalized;
 
                     //
                     if (Input.GetKeyDown(KeyCode.Q) && canBlit)
@@ -619,56 +610,29 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator hurtAnimation()
     {        isHit = true;
-        isInvulnerable = true;        //Debug.Log("Hurting");
-
-        if (currentHearts % 2 == 0 && healthUI.emptyHeartArray != null)
-        {
-                healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = true;
-                //Debug.Log("Flashed right heart");
-        }
+        isInvulnerable = true;
+
+        if (currentHearts % 2 == 0 && healthUI.emptyHeartArray != null)
+        {
+             healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = true;
+        }
+        else
+        {
+            healthUI.heartToChange.GetComponent<Animator>().enabled = true;
+            //Debug.Log("Flashed half heart");
+        }
+        yield return new WaitForSeconds(0.20f);
+        if (currentHearts % 2 == 0)
+        {
+            healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = false;
+            healthUI.emptyHeartToFlash.SetHeartImage(healthUI.emptyHeartToFlash._emptyStatus);
+        }
         else
-        {
-            healthUI.heartToChange.GetComponent<Animator>().enabled = true;
-            //Debug.Log("Flashed half heart");
+        {
+            healthUI.heartToChange.GetComponent<Animator>().enabled = false;
+            healthUI.heartToChange.SetHeartImage(healthUI.heartToChange._status);
         }
-
-        //Debug.Log("Now invulnerable");
-        body.DOColor(hurtColor, 0.0f);
-        body.DOColor(invulnerableColor, 0.15f);
-
-        yield return new WaitForSeconds(0.20f);
-
-        if (currentHearts % 2 == 0)
-        {
-            healthUI.emptyHeartToFlash.GetComponent<Animator>().enabled = false;
-            healthUI.emptyHeartToFlash.SetHeartImage(healthUI.emptyHeartToFlash._emptyStatus);
-        }
-        else
-        {
-            healthUI.heartToChange.GetComponent<Animator>().enabled = false;
-            healthUI.heartToChange.SetHeartImage(healthUI.heartToChange._status);
-        }
-
-
-
-        body.DOColor(hurtColor, 0.0f);
-        body.DOColor(invulnerableColor, 0.15f);
-
-
-        yield return new WaitForSeconds(0.20f);
-
-
-        body.DOColor(hurtColor, 0.0f);       // Debug.Log("HUrting");
-        body.DOColor(invulnerableColor, 0.15f);
-
-        yield return new WaitForSeconds(0.20f);
-        body.DOColor(OriginalColor, 0.0f);
-
-       
-        //Debug.Log("No longer invlunerable");
-        isInvulnerable = false;
-        //isHit = false;
-
+        yield return new WaitForSeconds(0.40f);        isInvulnerable = false;
     }
 
     private IEnumerator waitForUpdateDash(float time)

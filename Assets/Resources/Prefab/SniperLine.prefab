@@ -178,7 +178,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 3b3738b1ca059e04abcb784f62cfb838, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -231,18 +231,18 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0, a: 1}
-      key1: {r: 1, g: 0, b: 0, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
-      key3: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0.14320946, g: 1, b: 0, a: 0}
+      key3: {r: 0.14320946, g: 1, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 0
-      ctime3: 0
+      ctime2: 65535
+      ctime3: 65535
       ctime4: 0
       ctime5: 0
       ctime6: 0
@@ -296,6 +296,7 @@ MonoBehaviour:
   shootPowerUpBullet: {fileID: 1821172425303555735, guid: 4985581433c27ad49a2b5e343537a951, type: 3}
   muzzleShoot: {fileID: 7550277348818941248}
   shootSound: {fileID: 8300000, guid: 065002934b725464f881097ab699330a, type: 3}
+  muzzleFlash: {fileID: 4330706166746568815, guid: 2da1fa3eee18dab4f8bbce0629f39e09, type: 3}
 --- !u!114 &2264640267482803376
 MonoBehaviour:
   m_ObjectHideFlags: 0

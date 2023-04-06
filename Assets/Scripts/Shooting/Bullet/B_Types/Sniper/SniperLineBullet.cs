@@ -11,7 +11,8 @@ public class SniperLineBullet : Bullet
     [SerializeField]
     public LayerMask mapLimit;
 
- 
+    private RecoilScript _recoil;
+
     private GameObject player;
 
     bool charge;
@@ -22,10 +23,13 @@ public class SniperLineBullet : Bullet
     public Animator muzzleShoot;
 
     public AudioClip shootSound;
+    public GameObject muzzleFlash;
+    private GameObject rotatePoint;
     int? shootSoundKey;
     void Start()
     {
-
+        _recoil = FindObjectOfType<RecoilScript>();
+        rotatePoint = GameObject.FindGameObjectWithTag("PlayerFirePoint");
 
         if (powerUpOn)
         {
@@ -80,6 +84,8 @@ public class SniperLineBullet : Bullet
 
 
         GameObject shoot = GameObject.Instantiate(shootBullet, transform.position, transform.rotation);
+        _recoil.AddRecoil();
+        Instantiate(muzzleFlash, rotatePoint.transform.position, rotatePoint.transform.rotation);
 
         shoot.GetComponent<Bullet>().ApplyMultiplierToDamage(GetDamageMultiplier());
         shoot.GetComponent<Bullet>().FireProjectile(/*this.transform*/);

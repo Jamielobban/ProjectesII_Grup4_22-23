@@ -12,15 +12,9 @@ public class Menu : MonoBehaviour
     [SerializeField]
     GameObject ExitButton;
     [SerializeField]
-    GameObject BackButton;
+    GameObject BackButtonCredits;
     [SerializeField]
-    GameObject PlayClick;
-    [SerializeField]
-    GameObject CreditsClick;
-    [SerializeField]
-    GameObject ExitClick;
-    [SerializeField]
-    GameObject BackClick;
+    GameObject BackButtonSettings;
     [SerializeField]
     GameObject GameName;
     [SerializeField]
@@ -52,9 +46,7 @@ public class Menu : MonoBehaviour
     [SerializeField]
     GameObject PlayThings;
     [SerializeField]
-    GameObject BackClick2;
-    [SerializeField]
-    GameObject BackButton2;
+    GameObject SettingsButton;
 
 
     [SerializeField]
@@ -67,7 +59,14 @@ public class Menu : MonoBehaviour
     FloatValue sfxValue;
 
 
-
+    [SerializeField]
+    GameObject GreenOnMusic;
+    [SerializeField]
+    GameObject RedOnMusic;
+    [SerializeField]
+    GameObject GreenOnSFX;
+    [SerializeField]
+    GameObject RedOnSFX;
 
     // Start is called before the first frame update
     void Start()
@@ -138,12 +137,9 @@ public class Menu : MonoBehaviour
         PlayButton.SetActive(false);
         CreditsButton.SetActive(false);
         ExitButton.SetActive(false);
-        PlayClick.SetActive(false);
-        CreditsClick.SetActive(false);
-        ExitClick.SetActive(false);
+     
         PlayThings.SetActive(true);
-        BackButton2.SetActive(true);
-        BackClick2.SetActive(true);
+     
 
         //PlayerPrefs.SetInt("FirstTime", 2);
         //SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 3));
@@ -166,13 +162,10 @@ public class Menu : MonoBehaviour
         PlayButton.SetActive(true);
         CreditsButton.SetActive(true);
         ExitButton.SetActive(true);
-        PlayClick.SetActive(true);
-        CreditsClick.SetActive(true);
-        ExitClick.SetActive(true);
+        Debug.Log("When dooes this happen");
 
         PlayThings.SetActive(false);
-        BackButton2.SetActive(false);
-        BackClick2.SetActive(false);
+      
     }
 
 
@@ -189,37 +182,86 @@ public class Menu : MonoBehaviour
         PlayButton.SetActive(false);
         CreditsButton.SetActive(false);
         ExitButton.SetActive(false);
-        PlayClick.SetActive(false);
-        CreditsClick.SetActive(false);
-        ExitClick.SetActive(false);
-        BackButton.SetActive(true);
-        BackClick.SetActive(true);
+      
+        SettingsButton.SetActive(false);
+       
+        BackButtonCredits.SetActive(true);
         CreditThings.SetActive(true);        
     }
 
-    public void BackToStartingMenu()
+    public void BackToStartingMenuFromCredits()
     {
         PlayButton.SetActive(true);
         CreditsButton.SetActive(true);
         ExitButton.SetActive(true);
-        PlayClick.SetActive(true);
-        CreditsClick.SetActive(true);
-        ExitClick.SetActive(true);
-        BackButton.SetActive(false);
-        BackClick.SetActive(false);
+        SettingsButton.SetActive(true);
+
+        BackButtonCredits.SetActive(false);
         CreditThings.SetActive(false);
     }
 
-    public void MusicEnabledChange(bool newValue)
+    public void BackToStartingMenuFromSettings()
     {
-        PlayerPrefs.SetInt("MusicEnabled", (newValue ? 1 : 0));
-        musicEnabled.RuntimeValue = newValue;        
-    }
-    public void SFXEnabledChange(bool newValue)
-    {
-        PlayerPrefs.SetInt("SFXEnabled", (newValue ? 1 : 0));
+        PlayButton.SetActive(true);
+        CreditsButton.SetActive(true);
+        ExitButton.SetActive(true);
+        SettingsButton.SetActive(true);
 
-        sfxEnabled.RuntimeValue = newValue;        
+        BackButtonSettings.SetActive(false);
+        SettingsThings.SetActive(false);
+    }
+
+    public void MusicEnabledChangeOn()
+    {
+        PlayerPrefs.SetInt("MusicEnabled", (1));
+        musicEnabled.RuntimeValue = true;        
+    }
+
+    public void MuteButtonOn()
+    {
+        MusicEnabledChangeOff();
+        GreenOnMusic.SetActive(true);
+        RedOnMusic.SetActive(false);
+    }
+
+    public void MuteButtonOff()
+    {
+        MusicEnabledChangeOn();
+        RedOnMusic.SetActive(true);
+        GreenOnMusic.SetActive(false);
+    }
+
+    public void SFXButtonOn()
+    {
+        SFXEnabledChangeOff();
+        GreenOnSFX.SetActive(true);
+        RedOnSFX.SetActive(false);
+    }
+
+    public void SFXButtonOff()
+    {
+        SFXEnabledChangeOn();
+        GreenOnSFX.SetActive(false);
+        RedOnSFX.SetActive(true);
+    }
+
+    public void MusicEnabledChangeOff()
+    {
+        PlayerPrefs.SetInt("MusicEnabled", (0));
+        musicEnabled.RuntimeValue = false;
+    }
+    public void SFXEnabledChangeOff()
+    {
+        PlayerPrefs.SetInt("SFXEnabled", (0));
+
+        sfxEnabled.RuntimeValue = false;        
+    }
+
+    public void SFXEnabledChangeOn()
+    {
+        PlayerPrefs.SetInt("SFXEnabled", (1));
+
+        sfxEnabled.RuntimeValue = true;
     }
     public void ResumeGame()
     {
@@ -272,5 +314,15 @@ public class Menu : MonoBehaviour
         PlayerPrefs.SetFloat("musicValue", value);
 
         musicValue.RuntimeValue = value;
+    }
+
+    public void OpenSettingsFromMainMenu()
+    {
+        PlayButton.SetActive(false);
+        CreditsButton.SetActive(false);
+        ExitButton.SetActive(false);
+        SettingsButton.SetActive(false);
+        BackButtonSettings.SetActive(true);
+        SettingsThings.SetActive(true);
     }
 }

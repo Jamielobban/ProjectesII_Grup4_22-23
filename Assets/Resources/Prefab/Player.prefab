@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3457127029708116261}
   - component: {fileID: 5447420777206079197}
-  - component: {fileID: 3531488491597959022}
   - component: {fileID: 903690195358625675}
   m_Layer: 9
   m_Name: SR
@@ -86,7 +85,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,22 +117,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3531488491597959022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962084294417783154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shaderTypes: 0
-  normalStrength: 5
-  normalSmoothing: 1
-  computingNormal: 0
 --- !u!95 &903690195358625675
 Animator:
   serializedVersion: 4
@@ -1588,8 +1571,8 @@ MonoBehaviour:
   rollSpeed: 0
   knockback: 0
   dashColor: {r: 1, g: 1, b: 1, a: 1}
-  OriginalColor: {r: 0.003921569, g: 0.78431374, b: 0.03137255, a: 1}
-  hurtColor: {r: 0.6792453, g: 0.11854753, b: 0.11854753, a: 1}
+  OriginalColor: {r: 1, g: 1, b: 1, a: 1}
+  hurtColor: {r: 1, g: 1, b: 1, a: 0}
   invulnerableColor: {r: 0, g: 0, b: 0, a: 0}
   body: {fileID: 5447420777206079197}
   weaponSprites: []
@@ -1598,7 +1581,7 @@ MonoBehaviour:
   angle: 0
   damageSound: {fileID: 8300000, guid: c1603fa995318a547ad50c439336a821, type: 3}
   canDash: 0
-  timeBetweenDashes: 0.2
+  timeBetweenDashes: 0.4
   canMove: 0
   isMoving: 0
   isFall: 0
