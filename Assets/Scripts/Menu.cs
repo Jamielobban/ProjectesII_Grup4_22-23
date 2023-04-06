@@ -23,8 +23,7 @@ public class Menu : MonoBehaviour
     GameObject SettingsThings;
     [SerializeField]
     GameObject BackToPauseButton;
-    [SerializeField]
-    GameObject BackToPauseClick;
+
     [SerializeField]
     GameObject GamePausedText;
     [SerializeField]
@@ -33,16 +32,13 @@ public class Menu : MonoBehaviour
     GameObject MenuTopParent;
     [SerializeField]
     GameObject ResumeButton;
-    [SerializeField]
-    GameObject ResumeClick;
+
     [SerializeField]
     GameObject OpenSettingsButton;
-    [SerializeField]
-    GameObject OpenSettingsClick;
+
     [SerializeField]
     GameObject BackMainButton;
-    [SerializeField]
-    GameObject BackMainClick;
+
     [SerializeField]
     GameObject PlayThings;
     [SerializeField]
@@ -276,30 +272,30 @@ public class Menu : MonoBehaviour
     public void Settings()
     {
         ResumeButton.SetActive(false);
-        ResumeClick.SetActive(false);
+
         BackMainButton.SetActive(false);
-        BackMainClick.SetActive(false);
+
         OpenSettingsButton.SetActive(false);
-        OpenSettingsClick.SetActive(false);
+
         GamePausedText.SetActive(false);
         SettingsThings.SetActive(true);
         BackToPauseButton.SetActive(true);
-        BackToPauseClick.SetActive(true);
+
 
     }
 
     public void BackToPauseMenu()
     {
         ResumeButton.SetActive(true);
-        ResumeClick.SetActive(true);
+
         BackMainButton.SetActive(true);
-        BackMainClick.SetActive(true);
+
         OpenSettingsButton.SetActive(true);
-        OpenSettingsClick.SetActive(true);
+
         GamePausedText.SetActive(true);
         SettingsThings.SetActive(false);
         BackToPauseButton.SetActive(false);
-        BackToPauseClick.SetActive(false);
+
     }
 
     public void SFXValueChanged(float value)

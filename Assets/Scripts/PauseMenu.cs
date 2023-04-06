@@ -11,29 +11,29 @@ public class PauseMenu : MonoBehaviour
     GameObject SettingThings;
     [SerializeField]
     GameObject BackPausedButton;
-    [SerializeField]
-    GameObject BackPausedClick;
+
     [SerializeField]
     GameObject ResumeButton;
-    [SerializeField]
-    GameObject ResumeClick;
+
     [SerializeField]
     GameObject OpenSettingsButton;
-    [SerializeField]
-    GameObject OpenSettingsClick;
+
     [SerializeField]
     GameObject BackMainButton;
-    [SerializeField]
-    GameObject BackMainClick;
+
     [SerializeField]
     GameObject GamePausedText;
 
     [SerializeField]
     BoolValue gamePaused;
+    [SerializeField]
+    GameObject playerBlur;
 
-    void Start()
+    void Awake()
     {
-        
+        playerBlur = GameObject.FindGameObjectWithTag("PlayerBlur");
+        playerBlur.transform.localScale = new Vector3(4, 3, 1);
+        playerBlur.SetActive(false);
     }
 
     // Update is called once per frame
@@ -45,36 +45,34 @@ public class PauseMenu : MonoBehaviour
             {
                 if (SettingThings.activeInHierarchy)
                 {
+                    Debug.Log("Now paused in if");
                     ResumeButton.SetActive(true);
-                    ResumeClick.SetActive(true);
                     BackMainButton.SetActive(true);
-                    BackMainClick.SetActive(true);
                     OpenSettingsButton.SetActive(true);
-                    OpenSettingsClick.SetActive(true);
                     GamePausedText.SetActive(true);
                     SettingThings.SetActive(false);
                     BackPausedButton.SetActive(false);
-                    BackPausedClick.SetActive(false);
                 }
                 else
                 {
                     MenuContainer.SetActive(false);
+                    playerBlur.SetActive(false);
+                    Debug.Log("Now unpaused");
                     Time.timeScale = 1;
                 }                
             }
             else
             {
+                Debug.Log("Now paused in else");
                 MenuContainer.SetActive(true);
                 SettingThings.SetActive(false);
                 BackPausedButton.SetActive(false);
-                BackPausedClick.SetActive(false);
                 ResumeButton.SetActive(true);
-                ResumeClick.SetActive(true);
                 BackMainButton.SetActive(true);
-                BackMainClick.SetActive(true);
                 OpenSettingsButton.SetActive(true);
                 OpenSettingsButton.SetActive(true);
                 GamePausedText.SetActive(true);
+                playerBlur.SetActive(true);
                 Time.timeScale = 0;
             }
         }
@@ -92,6 +90,7 @@ public class PauseMenu : MonoBehaviour
     public void ClosePauseMenu()
     {
         MenuContainer.SetActive(false);
+        playerBlur.SetActive(false);
         Time.timeScale = 1;
     }
 
