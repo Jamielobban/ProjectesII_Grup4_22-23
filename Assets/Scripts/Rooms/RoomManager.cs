@@ -45,10 +45,16 @@ public class RoomManager : MonoBehaviour
     //Las puertas tienen que estar en el mismo puesto que su palanca
     public bool boss;
     public int bossNumber;
+    public Entity enemyBoss;
+
+
     public void Start()
     {
         if (!boss)
+        {
             bossNumber = 0;
+            enemyBoss = null;
+        }
 
         nameSave = "Sala" + SceneManager.GetActiveScene().buildIndex;
         kills = 0;
@@ -61,7 +67,7 @@ public class RoomManager : MonoBehaviour
 
         alreadyEnter = (PlayerPrefs.GetInt(nameSave,0) != 0);
         inRoom = false;
-        this.gameObject.tag = "Default";
+        this.gameObject.tag = "RoomManager";
         roomTriggers.SetActive(true);
 
         for (int i = 0; i < doors.Length; i++)
@@ -73,15 +79,24 @@ public class RoomManager : MonoBehaviour
         }
 
 
-        if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 3) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 0)))
+        if (porTriggers)
+        {
+           if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 3) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 0)))
+            {
+                currentRound = 0;
+            }
+            else if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 2) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 1)))
+            {
+                currentRound = enemiesInEachRound.Length-1;
+
+            }
+        }
+        else
         {
             currentRound = 0;
-        }
-        else if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 2) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 1)))
-        {
-            currentRound = enemiesInEachRound.Length-1;
 
         }
+
 
 
 
@@ -164,17 +179,18 @@ public class RoomManager : MonoBehaviour
         {
             if(boss)
             {
-                if(PlayerPrefs.GetInt("Final"+bossNumber) == 0)
-                {
+       
                     roomTriggers.SetActive(false);
 
                     this.gameObject.tag = "RoomManager";
                     kills = 0;
                     currentRound = 0;
                     inRoom = true;
-                    spawnRound(currentRound);
+                    enemyBoss.enabled = true;
+                       
+                        
                     closeDoors();
-                }
+                
 
             }
             else

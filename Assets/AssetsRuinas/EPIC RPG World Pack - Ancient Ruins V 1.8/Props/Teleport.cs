@@ -18,9 +18,9 @@ public class Teleport : MonoBehaviour
     {
        if(enter)
         {
-            if(PlayerPrefs.GetInt("Teleport", 0) == 1 || PlayerPrefs.GetInt("LLave2", 0) == 1)
+            if(PlayerPrefs.GetInt("Teleport", 0) == 1)
             {
-                if(PlayerPrefs.GetInt("LLave1", 0) == 1)
+                if(PlayerPrefs.GetInt("LLave1", 0) == 1 || PlayerPrefs.GetInt("LLave2", 0) == 1)
                 {
                     square.SetActive(true);
 

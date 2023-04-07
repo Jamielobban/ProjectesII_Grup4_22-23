@@ -39,6 +39,7 @@ public class WeaponGenerator : MonoBehaviour
             GetWeapons();
         }
     }    
+
     private void Start()
     {
         restartStates();

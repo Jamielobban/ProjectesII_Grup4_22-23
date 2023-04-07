@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public int maxHearts;
     public int currentHearts;
     public float currentHealth;
-
+    public bool infinito;
 
     public bool isDead;
     private HealthBar healthBar;
@@ -167,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private IEnumerator guardarPosicion()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.25f);
 
         yield return new WaitUntil(() => (!isDashing && canMove && (((this.transform.parent.GetComponent<MovingPlatform>() == null) && !OnAir&& !OnAirPlatform)|| this.transform.parent.GetComponent<MovingPlatform>().OnPlayerStay)));
         lastPositionSave = this.transform.position;

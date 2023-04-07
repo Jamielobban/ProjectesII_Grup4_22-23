@@ -17,6 +17,8 @@ public class ExitRoom : MonoBehaviour
     public Transform spawn;
 
     public string levelName;
+
+    public bool portal;
     void Start()
     {
 
@@ -75,35 +77,36 @@ public class ExitRoom : MonoBehaviour
         {
             if (!player.entrandoSala)
             {
-
-                if (GameObject.FindGameObjectWithTag("Potion") != null)
-                    PlayerPrefs.SetInt("Potions", GameObject.FindGameObjectWithTag("Potion").GetComponent<PotionSystem>().amountToFill);
-
-                StartCoroutine(transicion());
-                StartCoroutine(cambioEscena());
-
-                PlayerPrefs.SetInt("Hearts", player.currentHearts);
-
-                if (!vertical)
+                if ((portal && PlayerPrefs.GetInt("Final1", 0) == 1 && PlayerPrefs.GetInt("Final2", 0) == 1) || !portal)
                 {
-                    if (sentido == 1)
-                    {
-                        collision.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = false;
-                    }
-                    else
-                    {
-                        collision.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = true;
+                    if (GameObject.FindGameObjectWithTag("Potion") != null)
+                        PlayerPrefs.SetInt("Potions", GameObject.FindGameObjectWithTag("Potion").GetComponent<PotionSystem>().amountToFill);
 
+                    StartCoroutine(transicion());
+                    StartCoroutine(cambioEscena());
+
+                    PlayerPrefs.SetInt("Hearts", player.currentHearts);
+
+                    if (!vertical)
+                    {
+                        if (sentido == 1)
+                        {
+                            collision.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = false;
+                        }
+                        else
+                        {
+                            collision.transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = true;
+
+                        }
                     }
+                    PlayerPrefs.SetInt("Lado", lado);
+
+                    player.disableDash = true;
+                    player.GetComponentInChildren<RightHand>().weaponEquiped = false;
+                    player.canMove = false;
+
+                    collision.transform.GetChild(1).GetComponent<Animator>().SetTrigger("ExitRoom");
                 }
-                PlayerPrefs.SetInt("Lado", lado);
-
-                player.disableDash = true;
-                player.GetComponentInChildren<RightHand>().weaponEquiped = false;
-                player.canMove = false;
-
-                collision.transform.GetChild(1).GetComponent<Animator>().SetTrigger("ExitRoom");
-
             }
         }
     }
@@ -115,15 +118,20 @@ public class ExitRoom : MonoBehaviour
 
             if (!player.entrandoSala)
             {
-                if (vertical)
+                if((portal&& PlayerPrefs.GetInt("Final1", 0) == 1 && PlayerPrefs.GetInt("Final2", 0) == 1)||!portal)
                 {
-                    collision.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 200 * sentido, 0), ForceMode2D.Force);
-                }
-                else
-                {
-                    collision.GetComponent<Rigidbody2D>().AddForce(new Vector3(200 * sentido, 0, 0), ForceMode2D.Force);
+                    if (vertical)
+                    {
+                        collision.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, 200 * sentido, 0), ForceMode2D.Force);
+                    }
+                    else
+                    {
+                        collision.GetComponent<Rigidbody2D>().AddForce(new Vector3(200 * sentido, 0, 0), ForceMode2D.Force);
 
+                    }
                 }
+  
+
             }
             else
             {
@@ -142,9 +150,8 @@ public class ExitRoom : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && player.entrandoSala)
         {
-
             player.entrandoSala = false;
             player.disableDash = false;
             player.GetComponentInChildren<RightHand>().weaponEquiped = true;

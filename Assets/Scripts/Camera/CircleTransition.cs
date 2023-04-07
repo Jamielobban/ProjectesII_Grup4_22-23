@@ -133,8 +133,9 @@ public class CircleTransition : MonoBehaviour
 
     public void ResetCurrentScene()
     {
-
-            if (!playerCheckpoints.endTutorial)
+        if (!playerCheck.infinito)
+        {
+          if (!playerCheckpoints.endTutorial)
             {
 
                 if (GameObject.FindGameObjectWithTag("Potion") != null)
@@ -153,7 +154,14 @@ public class CircleTransition : MonoBehaviour
                 PlayerPrefs.SetInt("IDScene", 3);
                 playerCheckpoints.SpawnSalaPrincipal();
             }
-        
+        }
+        else
+        {
+            SceneManager.LoadScene(0);
+
+        }
+
+
 
     }
 }
