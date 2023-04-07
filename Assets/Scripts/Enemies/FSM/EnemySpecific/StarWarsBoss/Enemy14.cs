@@ -18,7 +18,7 @@ public class Enemy14 : Entity
     public GameObject flameWave;
     public GameObject multiSwords;
 
-    public int mode = 2;
+    public int mode = 1;
     public float waitBetweenAttacks = 2f;
     public float lastTimeExitState = 0;
 
@@ -28,6 +28,7 @@ public class Enemy14 : Entity
     public GameObject sword4waves;
     public GameObject idleSwords;
     public GameObject attack2Swords;
+    public GameObject missileSwords;
 
     public Vector3[] posibleSpawnPoints = new Vector3[5];
 
@@ -44,7 +45,7 @@ public class Enemy14 : Entity
 
         stateMachine.Initialize(idleState);
 
-        mode = 2;
+        mode = 1;
         waitBetweenAttacks = 2f;
     }
 
@@ -52,24 +53,24 @@ public class Enemy14 : Entity
     {
         base.Update();
 
-        //if (enemyHealth >= 2000 * 2)
-        //{
-        //    mode = 1;
-        //    sr.material.SetColor("_OutlineColor", colorMode1);
-        //    waitBetweenAttacks = 2.5f;
-        //}
-        //else if (enemyHealth >= 2000)
-        //{
-        //    if (mode != 2 && !firingState.doingAttack)
-        //        mode = 2;
+        if (enemyHealth >= 2000)
+        {
+            mode = 1;
+            sr.material.SetColor("_OutlineColor", colorMode1);
+            waitBetweenAttacks = 2f;
+        }
+        else
+        {
+            if (mode != 2 && !firingState.doingAttack)
+                mode = 2;
 
-        //    sr.material.SetColor("_OutlineColor", colorMode2);
-        //    waitBetweenAttacks = 2;
-        //}
+            sr.material.SetColor("_OutlineColor", colorMode2);
+            waitBetweenAttacks = 1.5f;
+        }
 
         if (isDead && stateMachine.currentState != deadState)
         {
-            stateMachine.ChangeState(idleState);
+            stateMachine.ChangeState(deadState);
         }
     }
 
