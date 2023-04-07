@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class DestrouFunc : MonoBehaviour
 {
+    public bool fadeOnDisappear = false;
+    public float fadeTime = 0.3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +21,14 @@ public class DestrouFunc : MonoBehaviour
 
     public void DestroyFunction()
     {
-        Destroy(this.transform.parent.gameObject);
+        if (fadeOnDisappear)
+        {
+            GetComponent<SpriteRenderer>().material.DOFade(0, fadeTime);
+            Destroy(this.gameObject, fadeTime);
+        }
+        else
+        {
+            Destroy(this.transform.parent.gameObject);
+        }
     }
 }

@@ -9,6 +9,9 @@ public class E14_IdleState : IdleState
     float startTime;
     SpriteRenderer sr;
     bool changeStarted = false;
+
+    
+
     public E14_IdleState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_IdleState stateData, Enemy14 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
         this.enemy = enemy;
@@ -22,6 +25,8 @@ public class E14_IdleState : IdleState
         sr.material.SetFloat("_OutlineAlpha", 0);
 
         startTime = Time.time;
+
+        enemy.idleSwordsInstance = GameObject.Instantiate(enemy.idleSwords, sr.transform);
     }
 
     public override void Exit()

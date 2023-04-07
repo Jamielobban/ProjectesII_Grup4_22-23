@@ -1,22 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class E14_FiringState : FiringState
 {
     Enemy14 enemy;
 
     float lastTime4Waves = 0;
-    const float timeIn4Waves = 8;
+    float timeIn4Waves = 8;
     bool doing4Waves = false;
 
     float lastTimeMultiSword = 0;
-    const float timeInMultiSword = 8;
+    float timeInMultiSword = 8;
     bool doingMultiSword = false;
 
+    float lastTimeSpawnNear = 0;
+    float timeInSpawnNear = 8;
+    bool doingSpawnNear = false;
+
     public bool doingAttack;
-    GameObject swords;
-    
+    GameObject multipleSwords;
+
+    GameObject idleSwords;
+    GameObject a2Swords;
 
     public E14_FiringState(Entity entity, FiniteStateMachine stateMachine, string animBoolName, D_FiringState stateData, Enemy14 enemy) : base(entity, stateMachine, animBoolName, stateData)
     {
@@ -26,6 +33,8 @@ public class E14_FiringState : FiringState
     public override void Enter()
     {
         base.Enter();
+
+        idleSwords = enemy.idleSwordsInstance;
     }
 
     public override void Exit()
@@ -40,22 +49,37 @@ public class E14_FiringState : FiringState
         switch (enemy.mode)
         {
             case 1:
-                if (!doingMultiSword && !doing4Waves && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
+               
+                
+                break;
+            case 2:
+                if (!doingMultiSword && !doing4Waves && !doingSpawnNear && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
                 {
                     int random = Random.Range(1, 11);
 
-                    if (random <= -1)
+                    if (random <= 2)
                     {
                         doingAttack = true;
                         doing4Waves = true;
                         //enemy.firePoint.localPosition = new Vector3(-0.05f, -0.46f, 0);
-                        
+
                         enemy.anim.SetBool("idle", false);
                         enemy.anim.SetBool("fire", true);
                         enemy.anim.SetBool("4waves", true);
+                        enemy.anim.SetBool("animationLoop", true);
+
+                        timeIn4Waves = Random.Range(1.5f, 4f);
+
+                        enemy.GetComponent<BoxCollider2D>().enabled = false;
+
+                        enemy.GetComponentInChildren<SpriteRenderer>().material.SetFloat("_ClipUvDown", 0.09f);
+
                         lastTime4Waves = Time.time;
+
+                        idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(0, 0.3f);
+                        //idleSwords.SetActive(false);
                     }
-                    else
+                    else if (random <= 5)
                     {
                         doingAttack = true;
                         doingMultiSword = true;
@@ -64,22 +88,83 @@ public class E14_FiringState : FiringState
                         enemy.anim.SetBool("idle", false);
                         enemy.anim.SetBool("fire", true);
                         enemy.anim.SetBool("multiSword", true);
+                        enemy.anim.SetBool("animationLoop", true);
+
                         lastTimeMultiSword = Time.time;
+                        timeInMultiSword = Random.Range(1.5f, 3.5f);
+
+                        enemy.GetComponent<BoxCollider2D>().enabled = false;
+
+                        idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(0, 0.3f);
+                        //idleSwords.SetActive(false);
+                    }
+                    else
+                    {
+                        doingAttack = true;
+                        doingSpawnNear = true;
+                        enemy.firePoint.localPosition = new Vector3(0, -2.56f, 0);
+
+                        enemy.anim.SetBool("idle", false);
+                        enemy.anim.SetBool("fire", true);
+                        enemy.anim.SetBool("spawnNear", true);
+                        enemy.anim.SetBool("animationLoop", true);
+                        lastTimeSpawnNear = Time.time;
+
+                        enemy.GetComponent<BoxCollider2D>().enabled = false;
+
+                        timeInSpawnNear = Random.Range(2f, 5f);
+                        idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(0, 0.3f);
                     }
                 }
 
-                if(doingMultiSword && swords != null && swords.GetComponent<SpawnObjectsInCircle>().spawnsDone)
+                if (doingMultiSword && Time.time - lastTimeMultiSword >= timeInMultiSword && enemy.anim.GetBool("animationLoop") && !enemy.GetComponent<BoxCollider2D>().enabled)
+                {
+                    enemy.transform.position = enemy.posibleSpawnPoints[Random.Range(0, enemy.posibleSpawnPoints.Length)];
+                    enemy.GetComponent<BoxCollider2D>().enabled = true;
+                    enemy.anim.SetBool("animationLoop", false);
+                }
+
+                if (doing4Waves && Time.time - lastTime4Waves >= timeIn4Waves && enemy.anim.GetBool("animationLoop"))
+                {
+                    enemy.transform.position = enemy.posibleSpawnPoints[Random.Range(0, enemy.posibleSpawnPoints.Length)];
+                    enemy.GetComponent<BoxCollider2D>().enabled = true;
+                    enemy.anim.SetBool("animationLoop", false);
+                }
+
+                if (doingSpawnNear && enemy.agent.enabled)
+                {
+                    enemy.agent.destination = enemy.player.transform.position + new Vector3(0,2,0);
+                }
+
+                if (doingSpawnNear && Time.time - lastTimeSpawnNear >= timeInSpawnNear && enemy.anim.GetBool("animationLoop"))
+                {
+                    //Debug.Log("aaaaaaa");
+                    enemy.transform.position = enemy.player.transform.position + new Vector3(0, 2, 0);
+                    enemy.anim.SetBool("animationLoop", false);
+                    enemy.GetComponent<BoxCollider2D>().enabled = true;
+                }
+
+                if (doingSpawnNear && !enemy.anim.GetBool("animationLoop"))
+                {
+                    if (((angle < 90 && angle > -90) && enemy.transform.localScale.x < 0) || ((angle > 90 || angle < -90) && enemy.transform.localScale.x > 0))
+                    {
+                        enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
+
+                    }
+                }
+
+                if (doingMultiSword && multipleSwords != null && multipleSwords.GetComponent<SpawnObjectsInCircle>().spawnsDone)
                 {
                     RotateScript rs;
-                    if (!swords.TryGetComponent(out rs))
+                    if (!multipleSwords.TryGetComponent(out rs))
                     {
-                        swords.AddComponent<RotateScript>();
-                        swords.GetComponent<RotateScript>().velocity = 2;
-                        swords.AddComponent<SwordThrower>();
-                        swords.GetComponent<SwordThrower>().player = enemy.player;
+                        multipleSwords.AddComponent<RotateScript>();
+                        multipleSwords.GetComponent<RotateScript>().velocity = 2;
+                        multipleSwords.AddComponent<SwordThrower>();
+                        multipleSwords.GetComponent<SwordThrower>().player = enemy.player;
                     }
 
-                    if (swords.GetComponent<SwordThrower>().finished)
+                    if (multipleSwords.GetComponent<SwordThrower>().finished)
                     {
                         doingAttack = false;
                         doingMultiSword = false;
@@ -89,15 +174,14 @@ public class E14_FiringState : FiringState
                         enemy.anim.SetBool("fire", false);
                         enemy.anim.SetBool("multiSword", false);
                         enemy.anim.SetBool("animationLoop", false);
-                        GameObject.Destroy(swords.gameObject);
+                        GameObject.Destroy(multipleSwords.gameObject);
 
                         enemy.lastTimeExitState = Time.time;
+
+                        idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(1, 0.3f);
+
                     }
                 }
-                
-                break;
-            case 2:
-
                 break;
         }
     }
@@ -132,6 +216,15 @@ public class E14_FiringState : FiringState
 
     }
 
+    public void ClippingBug()
+    {
+        enemy.GetComponentInChildren<SpriteRenderer>().material.SetFloat("_ClipUvDown", 0);
+        enemy.GetComponentInChildren<SpriteRenderer>().material.SetFloat("_ClipUvUp", 0.09f);
+
+        enemy.GetComponent<BoxCollider2D>().offset = new Vector2(enemy.GetComponent<BoxCollider2D>().offset.x, -2.537f);
+
+    }
+
     public void ExitState()
     {
         if (doing4Waves)
@@ -141,6 +234,25 @@ public class E14_FiringState : FiringState
             enemy.anim.SetBool("idle", true);
             enemy.anim.SetBool("fire", false);
             enemy.anim.SetBool("4waves", false);
+
+            enemy.GetComponentInChildren<SpriteRenderer>().material.SetFloat("_ClipUvUp", 0);
+
+            idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(1, 0.3f);
+
+        }
+
+        if (doingSpawnNear)
+        {
+            doingSpawnNear = false;
+            //enemy.firePoint.localPosition = new Vector3(-0.05f, -0.46f, 0);
+            enemy.anim.SetBool("idle", true);
+            enemy.anim.SetBool("fire", false);
+            enemy.anim.SetBool("spawnNear", false);
+
+            enemy.agent.enabled = false;
+
+            a2Swords = null;
+            idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(1, 0.3f);
         }
 
         doingAttack = false;
@@ -155,6 +267,11 @@ public class E14_FiringState : FiringState
     public void ChangeY2()
     {
         enemy.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y - 3.7f, enemy.transform.position.z);
+
+        if (doing4Waves)
+        {
+            enemy.GetComponent<BoxCollider2D>().offset = new Vector2(enemy.GetComponent<BoxCollider2D>().offset.x, 2.22f);
+        }
     }
 
     public void LoopTrue()
@@ -165,8 +282,8 @@ public class E14_FiringState : FiringState
             enemy.anim.SetBool("animationLoop", true);
 
 
-            swords = GameObject.Instantiate(enemy.multiSwords, enemy.firePoint.position, Quaternion.identity);            
-            swords.GetComponent<SpawnObjectsInCircle>().player = enemy.player;
+            multipleSwords = GameObject.Instantiate(enemy.multiSwords, enemy.firePoint.position, Quaternion.identity);            
+            multipleSwords.GetComponent<SpawnObjectsInCircle>().player = enemy.player;
             //swords.AddComponent<RotateScript>();
             //swords.GetComponent<RotateScript>().velocity = 2;
 
@@ -186,5 +303,11 @@ public class E14_FiringState : FiringState
             ChangeY();
             GameObject.Instantiate(enemy.sword4waves, enemy.GetComponentInChildren<SpriteRenderer>().transform);
         }
+    }
+
+    public void StartAttack2()
+    {
+        a2Swords = GameObject.Instantiate(enemy.attack2Swords, enemy.GetComponentInChildren<SpriteRenderer>().transform);
+        enemy.agent.enabled = true;
     }
 }
