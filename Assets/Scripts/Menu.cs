@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
@@ -63,6 +64,8 @@ public class Menu : MonoBehaviour
     GameObject GreenOnSFX;
     [SerializeField]
     GameObject RedOnSFX;
+
+    //[SerializeField] Animator doorAnimation;
 
     // Start is called before the first frame update
     void Start()
@@ -147,10 +150,21 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
     }
 
+    public void OpenDoorAnimation()
+    {
+        //Debug.Log("Hellooooo");
+        //doorAnimation.SetBool("hasPressedPlay",true);
+
+    }
     public void StartNew()
     {
-        PlayerPrefs.DeleteAll();        
-        SceneManager.LoadScene(1);
+        PlayButton.GetComponent<Button>().interactable = false;
+        SettingsButton.GetComponent<Button>().interactable = false;
+        CreditsButton.GetComponent<Button>().interactable = false;
+        ExitButton.GetComponent<Button>().interactable = false;
+        StartCoroutine(WaitForLoad());
+        //PlayerPrefs.DeleteAll();        
+       // SceneManager.LoadScene(1);
     }
 
     public void BackToMainStart()
@@ -172,7 +186,13 @@ public class Menu : MonoBehaviour
         Application.Quit();
 
     }
-
+    private IEnumerator WaitForLoad()
+    {
+        yield return new WaitForSeconds(3.0f);
+        Debug.Log("Load now");
+        PlayerPrefs.DeleteAll();        
+        SceneManager.LoadScene(1);
+    }
     public void Credits()
     {
         PlayButton.SetActive(false);
@@ -187,13 +207,31 @@ public class Menu : MonoBehaviour
 
     public void BackToStartingMenuFromCredits()
     {
+        //PlayButton.SetActive(true);
+        //CreditsButton.SetActive(true);
+        //ExitButton.SetActive(true);
+        //SettingsButton.SetActive(true);
+
+        //BackButtonCredits.SetActive(false);
+        StartCoroutine(WaitForCreditsToMenu());
+        StartCoroutine(SetObjectInactive(CreditThings));
+        //CreditThings.SetActive(false);
+    }
+
+    private IEnumerator WaitForCreditsToMenu()
+    {
+        yield return new WaitForSeconds(0.4f);
         PlayButton.SetActive(true);
         CreditsButton.SetActive(true);
         ExitButton.SetActive(true);
         SettingsButton.SetActive(true);
 
         BackButtonCredits.SetActive(false);
-        CreditThings.SetActive(false);
+    }
+    private IEnumerator SetObjectInactive(GameObject gameObject)
+    {
+        yield return new WaitForSeconds(0.6f);
+        gameObject.SetActive(false);
     }
 
     public void BackToStartingMenuFromSettings()
