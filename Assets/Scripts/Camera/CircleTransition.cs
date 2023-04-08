@@ -15,12 +15,15 @@ public class CircleTransition : MonoBehaviour
     public PlayerMovement playerSignal;
 
     public PlayerMovement playerCheckpoints;
-
+    public ModoInfinito infinito;
     //public static CircleTransition Instance { get; private set; }
 
     private void Awake()
     {
         playerCheckpoints = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+
+        if (!playerCheckpoints.infinito)
+            infinito = null;
         _canvas = GetComponent<Canvas>();
         //if (Instance != null && Instance != _canvas)
         //{
@@ -38,7 +41,9 @@ public class CircleTransition : MonoBehaviour
         if (playerCheckpoints.restart)
         {
             playerCheckpoints.restart = false;
-
+            playerCheckpoints.disableDash = true;
+            playerCheckpoints.GetComponentInChildren<RightHand>().weaponEquiped = false;
+            playerCheckpoints.canMove = false;
             CloseBlackScreen();
         }
         //else if (Input.GetKeyDown((KeyCode.Alpha2)))
@@ -64,8 +69,8 @@ public class CircleTransition : MonoBehaviour
     public void CloseBlackScreen()
     {
         StartCoroutine(Transition(0.5f, 1, 0.062f));
-        Invoke("OpenBlackScreen", 0.75f);
-        //Invoke("ResetCurrentScene", 3f);
+        //Invoke("OpenBlackScreen", 0.75f);
+        Invoke("ResetCurrentScene", 2f);
     }
 
     private void DrawBlackScreen()
@@ -111,6 +116,7 @@ public class CircleTransition : MonoBehaviour
 
     private IEnumerator Transition(float duration, float beginRadius, float endRadius)
     {
+        yield return new WaitForSeconds(1f);
         var time = 0f;
         while (time <= duration)
         {
@@ -133,8 +139,9 @@ public class CircleTransition : MonoBehaviour
 
     public void ResetCurrentScene()
     {
-
-            if (!playerCheckpoints.endTutorial)
+        if (!playerCheck.infinito)
+        {
+          if (!playerCheckpoints.endTutorial)
             {
 
                 if (GameObject.FindGameObjectWithTag("Potion") != null)
@@ -153,7 +160,15 @@ public class CircleTransition : MonoBehaviour
                 PlayerPrefs.SetInt("IDScene", 3);
                 playerCheckpoints.SpawnSalaPrincipal();
             }
-        
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Infinito", infinito.tiempoAguantado);
+            SceneManager.LoadScene(0);
+
+        }
+
+
 
     }
 }

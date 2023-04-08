@@ -271,11 +271,12 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 470dd2c9c6f55534ba061f25d8adc2b1, type: 2}
   blood: {fileID: 5131986925755455784, guid: 11d09c4b86434884c9d334ba4d7fe419, type: 3}
   deadBlood: {fileID: 3578897204085140966, guid: 4fea703dcdeb5fa478ed5ad8e58fe837, type: 3}
+  hasNavemesh: 1
   chasingStateData: {fileID: 11400000, guid: 8818a722886ea884eac2674eed35daa5, type: 2}
   deadStateData: {fileID: 11400000, guid: ac6f2a06f009df6449f74fd55071770c, type: 2}
   idleStateData: {fileID: 11400000, guid: 1599d6dc44507f849b8b44f58c9f6ecd, type: 2}
   firingStateData: {fileID: 11400000, guid: 2544734dd994aeb4e9d3b5bd198afc17, type: 2}
-  distanceToPassToIdle: 25
+  distanceToPassToIdle: 400
   venomSummon: {fileID: 3377162421469130535, guid: d83ee7c0348bec3498a62a67b4fca6f6, type: 3}
 --- !u!195 &7841238149927361388
 NavMeshAgent:

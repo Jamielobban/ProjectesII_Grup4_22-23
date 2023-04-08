@@ -28,7 +28,7 @@ public class ArrowTrap : Trampas
     // Start is called before the first frame update
     void Start()
     {
-        a = false;
+        a = true;
             StartCoroutine(shoot(startTime));
 
 

@@ -43,9 +43,19 @@ public class RoomManager : MonoBehaviour
     AudioClip doorOpenAudio;
     AudioClip doorCloseAudio;
     //Las puertas tienen que estar en el mismo puesto que su palanca
+    public bool boss;
+    public int bossNumber;
+    public Entity enemyBoss;
+
 
     public void Start()
     {
+        if (!boss)
+        {
+            bossNumber = 0;
+            enemyBoss = null;
+        }
+
         nameSave = "Sala" + SceneManager.GetActiveScene().buildIndex;
         kills = 0;
 
@@ -57,7 +67,7 @@ public class RoomManager : MonoBehaviour
 
         alreadyEnter = (PlayerPrefs.GetInt(nameSave,0) != 0);
         inRoom = false;
-        this.gameObject.tag = "Default";
+        this.gameObject.tag = "RoomManager";
         roomTriggers.SetActive(true);
 
         for (int i = 0; i < doors.Length; i++)
@@ -69,15 +79,24 @@ public class RoomManager : MonoBehaviour
         }
 
 
-        if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 3) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 0)))
+        if (porTriggers)
+        {
+           if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 3) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 0)))
+            {
+                currentRound = 0;
+            }
+            else if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 2) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 1)))
+            {
+                currentRound = enemiesInEachRound.Length-1;
+
+            }
+        }
+        else
         {
             currentRound = 0;
-        }
-        else if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 2) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 1)))
-        {
-            currentRound = enemiesInEachRound.Length-1;
 
         }
+
 
 
 
@@ -130,18 +149,21 @@ public class RoomManager : MonoBehaviour
 
         for (int i = 0; i < doors.Length; i++)
         {
-            if(doors[i].transform.childCount == 1)
+            if (i != 1 || !boss)
             {
-                doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
-                if (doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>() != null)
-                    doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = false;
+                if (doors[i].transform.childCount == 1)
+                {
+                    doors[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
+                    if (doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>() != null)
+                        doors[i].transform.GetChild(0).GetComponent<BoxCollider2D>().enabled = false;
+                    else
+                        doors[i].SetActive(false);
+                }
                 else
+                {
                     doors[i].SetActive(false);
-            }
-            else
-            {
-            doors[i].SetActive(false);
 
+                }
             }
         }
     }
@@ -155,15 +177,34 @@ public class RoomManager : MonoBehaviour
     {
         if (!alreadyEnter)
         {
+            if(boss)
+            {
+       
+                    roomTriggers.SetActive(false);
 
-            roomTriggers.SetActive(false);
+                    this.gameObject.tag = "RoomManager";
+                    kills = 0;
+                    currentRound = 0;
+                    inRoom = true;
+                    enemyBoss.enabled = true;
+                       
+                        
+                    closeDoors();
+                
 
-            this.gameObject.tag = "RoomManager";
-            kills = 0;
-            currentRound = 0;
-            inRoom = true;
-            spawnRound(currentRound);
-            closeDoors();
+            }
+            else
+            {
+                roomTriggers.SetActive(false);
+
+                this.gameObject.tag = "RoomManager";
+                kills = 0;
+                currentRound = 0;
+                inRoom = true;
+                spawnRound(currentRound);
+                closeDoors();
+            }
+
         }
     }
 

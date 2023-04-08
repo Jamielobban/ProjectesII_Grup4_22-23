@@ -149,4 +149,13 @@ public class RightHand : MonoBehaviour
         weaponInHand.SetWeaponHand(ref sr);
         weaponEquiped = true;
     }
+
+    public void EquipWeaponModoInfinito(string weaponName)
+    {
+        WeaponGenerator.Instance.EquipWeapon(weaponName, ref weaponInHand, ref firePoint);
+        UpdateUIWeapons();
+        weaponInHand.SetWeaponHand(ref sr);
+        weaponEquiped = true;
+        WeaponGenerator.Instance.setAmmo(weaponName);
+    }
 }

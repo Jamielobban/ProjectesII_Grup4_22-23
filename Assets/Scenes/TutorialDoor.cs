@@ -41,7 +41,12 @@ public class TutorialDoor : MonoBehaviour
 
         }
 
-        if(checkpoint && save == 0)
+        if(checkpoint && save == 0 && !weapon)
+        {
+            door.GetComponent<Animator>().SetTrigger("Close");
+            door.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        if (!checkpoint && save == 0 && weapon)
         {
             door.GetComponent<Animator>().SetTrigger("Close");
             door.GetComponent<BoxCollider2D>().enabled = true;

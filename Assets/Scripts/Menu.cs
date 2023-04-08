@@ -82,7 +82,7 @@ public class Menu : MonoBehaviour
                 string nameSave = "Sala" + i;
                 PlayerPrefs.SetInt(nameSave, (false ? 1 : 0));
 
-                if(i == 1)
+                if(i == 1|| i == 2)
                     PlayerPrefs.SetInt(nameSave, (true ? 1 : 0));
 
             }

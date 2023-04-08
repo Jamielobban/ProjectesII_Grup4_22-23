@@ -28,6 +28,8 @@ public class CheckPoints : MonoBehaviour
     string nameSave;
     int? restAudioKey;
     AudioClip restAudio;
+
+    public bool bosque;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +44,14 @@ public class CheckPoints : MonoBehaviour
             PlayerPrefs.SetInt("isDead", (true ? 1 : 0));
 
         }
+
+        if (bosque)
+        {
+            PlayerPrefs.SetInt(nameSave, (true ? 1 : 0));
+            PlayerPrefs.SetInt("IDScene", SceneManager.GetActiveScene().buildIndex);
+
+        }
+
         encendido = (PlayerPrefs.GetInt(nameSave) != 0);
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();

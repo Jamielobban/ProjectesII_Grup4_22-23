@@ -207,13 +207,14 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: aeed161afc586c94999b4d8b35f8dc9c, type: 2}
   blood: {fileID: 5131986925755455784, guid: 11d09c4b86434884c9d334ba4d7fe419, type: 3}
   deadBlood: {fileID: 3578897204085140966, guid: 4fea703dcdeb5fa478ed5ad8e58fe837, type: 3}
+  hasNavemesh: 1
   chasingStateData: {fileID: 11400000, guid: 57bccf270b4e9f4479fbe08627b52ab7, type: 2}
   firingStateData: {fileID: 11400000, guid: 47e82641a260cfe49ab82ddc1ed9f67b, type: 2}
   deadStateData: {fileID: 11400000, guid: c1a63cf6a29a1c040879ed320781c775, type: 2}
   idleStateData: {fileID: 11400000, guid: c11b2a9e8e79ddc40823f47c716963b7, type: 2}
   slashStateData: {fileID: 11400000, guid: b6a6875cf81ed4b47bb82f8848dc933e, type: 2}
   idleTravelPoints: []
-  distanceToPassToIdle: 35
+  distanceToPassToIdle: 400
   doingAttack: 0
   lastTimeShoot: 0
   timeBetweenShoots: 0

@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public int maxHearts;
     public int currentHearts;
     public float currentHealth;
-
+    public bool infinito;
 
     public bool isDead;
     private HealthBar healthBar;
@@ -132,8 +132,9 @@ public class PlayerMovement : MonoBehaviour
     bool godMode;
     public bool isHit;
     private void Awake()
-    {        currentHearts = PlayerPrefs.GetInt("Hearts", maxHearts);
-
+    {        if (!infinito)            currentHearts = PlayerPrefs.GetInt("Hearts", maxHearts);
+        else
+            currentHearts = maxHearts;
         healthUI = FindObjectOfType<HeartSystem>();
         isFall = false;
         restart = false;
@@ -165,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private IEnumerator guardarPosicion()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.25f);
 
         yield return new WaitUntil(() => (!isDashing && canMove && (((this.transform.parent.GetComponent<MovingPlatform>() == null) && !OnAir&& !OnAirPlatform)|| this.transform.parent.GetComponent<MovingPlatform>().OnPlayerStay)));
         lastPositionSave = this.transform.position;
@@ -223,12 +224,20 @@ public class PlayerMovement : MonoBehaviour
     public void Start()
     {
         canDash = true;
-        entrandoSala = true;
+        if(((PlayerPrefs.GetInt("isDead") == 1)))
+        {
+            entrandoSala = false;
+        }
+        else
+        {
+            entrandoSala = true;
+        }
+
         isDead = false;
 
         state = State.Rolling;
         //currentHealth = maxHealth;
-        currentHearts = maxHearts;
+
         rollSpeed = 90f;
         justRolled = false;
         //backThemeKey = AudioManager.Instance.LoadSound(backgroundTheme, cam.transform, 0, true, false, 0.4f);        //AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time = AudioManager.Instance.GetMusicTime();
@@ -379,7 +388,7 @@ public class PlayerMovement : MonoBehaviour
                         }
                         if(time >= 1f && potionsSystem.amountToFill >= 50)
                         {
-                            potionsSystem.amountToFill -= 50;                            PlayerPrefs.SetInt("Hearts", currentHearts);
+                            potionsSystem.amountToFill -= 50;                            PlayerPrefs.SetInt("Hearts", currentHearts);
                             potionsSystem.CheckPotionStatus();
                             Health();
                         }
