@@ -132,7 +132,7 @@ public class E14_FiringState : FiringState
                 {
                     int random = Random.Range(1, 11);
 
-                    if (random <= 10)//2
+                    if (random <= 2)//2
                     {
                         doingAttack = true;
                         doing4Waves = true;
