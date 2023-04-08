@@ -23,6 +23,9 @@ public class Enemy15 : Entity
     public Color colorMode1;
     public Color colorMode2;
 
+    public GameObject gas;
+    public GameObject boomerang;
+
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -46,7 +49,7 @@ public class Enemy15 : Entity
         deadState = new E15_DeadState(this, stateMachine, "dead", deadStateData, this);
         idleState = new E15_IdleState(this, stateMachine, "idle", idleStateData, this);
 
-        stateMachine.Initialize(idleState);
+        stateMachine.Initialize(firingState);
 
         mode = 1; //1
         waitBetweenAttacks = 2; //2
@@ -73,12 +76,27 @@ public class Enemy15 : Entity
 
         if (isDead && stateMachine.currentState != deadState)
         {
-            stateMachine.ChangeState(deadState);
+            stateMachine.ChangeState(firingState);
         }
     }
 
     protected override void GetDamage(float damageHit)
     {
         base.GetDamage(damageHit);
+    }
+
+    public void SearchFunction(string funcName)
+    {
+        Debug.Log("aquisiiiiiiiiiiiiiiiiiii");
+
+        if (this.gameObject == null || stateMachine.currentState == null || stateMachine.currentState == deadState)
+            return;
+        var exampleType = stateMachine.currentState.GetType();
+        var exampleMethod = exampleType.GetMethod(funcName);
+        try { exampleMethod.Invoke(stateMachine.currentState, null); } catch { /*Debug.Log(funcName); Debug.Log(stateMachine.currentState);*/ };
+        if (this.gameObject == null)
+        {
+            CancelInvoke();
+        }
     }
 }
