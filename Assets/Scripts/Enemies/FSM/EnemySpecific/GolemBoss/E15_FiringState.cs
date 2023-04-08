@@ -62,93 +62,93 @@ public class E15_FiringState : FiringState
         {
             case 1:
 
-                if(!doingBoomerang && !doingGas && !doingPunch && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
-                {
+                //if(!doingBoomerang && !doingGas && !doingPunch && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
+                //{
                     
-                    if (playerInsidepunchArea)
-                    {
-                        doingAttack = true;
+                //    if (playerInsidepunchArea)
+                //    {
+                //        doingAttack = true;
 
 
-                        doingBoomerang = false;
-                        enemy.anim.SetBool("boomerang", false);
+                //        doingBoomerang = false;
+                //        enemy.anim.SetBool("boomerang", false);
 
 
-                        enemy.anim.SetBool("idle", false);
-                        enemy.anim.SetBool("fire", true);
-                        enemy.anim.SetBool("punch", true);
-                        enemy.anim.SetBool("animationLoop", false);
+                //        enemy.anim.SetBool("idle", false);
+                //        enemy.anim.SetBool("fire", true);
+                //        enemy.anim.SetBool("punch", true);
+                //        enemy.anim.SetBool("animationLoop", false);
 
-                        doingPunch = true;
-
-
-                        lastTimePunch = Time.time;
-                    }
-                    else if (playerInsideGasArea)
-                    {
-                        doingAttack = true;
-                        doingBoomerang = false;
-
-                        enemy.anim.SetBool("idle", false);
-                        enemy.anim.SetBool("fire", true);
-                        enemy.anim.SetBool("boomerang", false);
-                        enemy.anim.SetBool("gas", true);
-                        enemy.anim.SetBool("animationLoop", false);
-
-                        doingGas = true;
-
-                        lastTimeGas = Time.time;
-                    }
-                    else
-                    {
-                        doingAttack = true;
-                        doingBoomerang = true;
-
-                        enemy.anim.SetBool("idle", false);
-                        enemy.anim.SetBool("fire", true);
-                        enemy.anim.SetBool("boomerang", true);
-                        enemy.anim.SetBool("gas", false);
-                        enemy.anim.SetBool("animationLoop", true);                        
-
-                        lastTimeBoomerang = Time.time;
-
-                        StartBoomerang();
-                    }
-                }                        
-
-                if(doingGas && Time.time - lastTimeGas >= timeInGas)
-                {
-                    doingAttack = false;
-                    doingBoomerang = false;
-
-                    enemy.anim.SetBool("idle", true);
-                    enemy.anim.SetBool("fire", false);
-                    enemy.anim.SetBool("boomerang", false);
-                    enemy.anim.SetBool("gas", false);
-                    enemy.anim.SetBool("animationLoop", false);
-
-                    doingGas = false;
+                //        doingPunch = true;
 
 
-                    enemy.lastTimeExitState = Time.time;
-                }
+                //        lastTimePunch = Time.time;
+                //    }
+                //    else if (playerInsideGasArea)
+                //    {
+                //        doingAttack = true;
+                //        doingBoomerang = false;
 
-                if (doingPunch && Time.time - lastTimePunch >= timeInPunch)
-                {
-                    doingAttack = false;
-                    doingBoomerang = false;
+                //        enemy.anim.SetBool("idle", false);
+                //        enemy.anim.SetBool("fire", true);
+                //        enemy.anim.SetBool("boomerang", false);
+                //        enemy.anim.SetBool("gas", true);
+                //        enemy.anim.SetBool("animationLoop", false);
 
-                    enemy.anim.SetBool("idle", true);
-                    enemy.anim.SetBool("fire", false);
-                    enemy.anim.SetBool("boomerang", false);
-                    enemy.anim.SetBool("punch", false);
-                    enemy.anim.SetBool("animationLoop", false);
+                //        doingGas = true;
 
-                    doingPunch = false;
+                //        lastTimeGas = Time.time;
+                //    }
+                //    else
+                //    {
+                //        doingAttack = true;
+                //        doingBoomerang = true;
+
+                //        enemy.anim.SetBool("idle", false);
+                //        enemy.anim.SetBool("fire", true);
+                //        enemy.anim.SetBool("boomerang", true);
+                //        enemy.anim.SetBool("gas", false);
+                //        enemy.anim.SetBool("animationLoop", true);                        
+
+                //        lastTimeBoomerang = Time.time;
+
+                //        StartBoomerang();
+                //    }
+                //}                        
+
+                //if(doingGas && Time.time - lastTimeGas >= timeInGas)
+                //{
+                //    doingAttack = false;
+                //    doingBoomerang = false;
+
+                //    enemy.anim.SetBool("idle", true);
+                //    enemy.anim.SetBool("fire", false);
+                //    enemy.anim.SetBool("boomerang", false);
+                //    enemy.anim.SetBool("gas", false);
+                //    enemy.anim.SetBool("animationLoop", false);
+
+                //    doingGas = false;
 
 
-                    enemy.lastTimeExitState = Time.time;
-                }               
+                //    enemy.lastTimeExitState = Time.time;
+                //}
+
+                //if (doingPunch && Time.time - lastTimePunch >= timeInPunch)
+                //{
+                //    doingAttack = false;
+                //    doingBoomerang = false;
+
+                //    enemy.anim.SetBool("idle", true);
+                //    enemy.anim.SetBool("fire", false);
+                //    enemy.anim.SetBool("boomerang", false);
+                //    enemy.anim.SetBool("punch", false);
+                //    enemy.anim.SetBool("animationLoop", false);
+
+                //    doingPunch = false;
+
+
+                //    enemy.lastTimeExitState = Time.time;
+                //}               
 
                 break;
             case 2:
