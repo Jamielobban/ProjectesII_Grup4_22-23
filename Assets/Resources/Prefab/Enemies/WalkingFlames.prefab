@@ -62,10 +62,11 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: b38238a30ec9b874aaef61c62eaa166f, type: 2}
   blood: {fileID: 5131986925755455784, guid: 11d09c4b86434884c9d334ba4d7fe419, type: 3}
   deadBlood: {fileID: 3578897204085140966, guid: 4fea703dcdeb5fa478ed5ad8e58fe837, type: 3}
+  hasNavemesh: 1
   chasingStateData: {fileID: 11400000, guid: 76fdeb62398f0344e856ee264d0b5e2c, type: 2}
   deadStateData: {fileID: 11400000, guid: 66b7b696710b28741a2b859f6040df9a, type: 2}
   idleStateData: {fileID: 11400000, guid: 7a23d9ca3a8ebc1408c919632715c8eb, type: 2}
-  distanceToPassToIdle: 30
+  distanceToPassToIdle: 400
   burningCircle: {fileID: 8935165144304818150}
   explosion: {fileID: 7645875530183408234, guid: e442d1b1a6e75724ca8772fd459c5942, type: 3}
   burningCircleSound: {fileID: 8300000, guid: da25b244129683b468de9935c565aa59, type: 3}

@@ -134,8 +134,9 @@ public class PlayerMovement : MonoBehaviour
     bool godMode;
     public bool isHit;
     private void Awake()
-    {        currentHearts = PlayerPrefs.GetInt("Hearts", maxHearts-2);
-
+    {        if (!infinito)            currentHearts = PlayerPrefs.GetInt("Hearts", maxHearts);
+        else
+            currentHearts = maxHearts;
         healthUI = FindObjectOfType<HeartSystem>();
         isFall = false;
         restart = false;

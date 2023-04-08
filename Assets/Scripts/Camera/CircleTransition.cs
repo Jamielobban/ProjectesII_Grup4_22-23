@@ -15,7 +15,7 @@ public class CircleTransition : MonoBehaviour
     public PlayerMovement playerSignal;
 
     public PlayerMovement playerCheckpoints;
-
+    public ModoInfinito infinito;
     //public static CircleTransition Instance { get; private set; }
 
     private void Awake()
@@ -157,6 +157,7 @@ public class CircleTransition : MonoBehaviour
         }
         else
         {
+            PlayerPrefs.SetInt("Infinito", infinito.tiempoAguantado);
             SceneManager.LoadScene(0);
 
         }

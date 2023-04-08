@@ -45,6 +45,7 @@ public class WeaponValues : ScriptableObject
 
     public void SavePlayerPrefs()
     {
+        
         PlayerPrefs.SetInt(WeaponName + "Desbloqueada", (unLock ? 1 : 0));
         PlayerPrefs.SetInt(WeaponName + "balas", bulletsInMagazine.RuntimeValue + (bulletsInMagazine.InitialValue* (magazinesInWeapon.RuntimeValue)));
     }
@@ -65,9 +66,15 @@ public class WeaponValues : ScriptableObject
     public void GetPlayerPrefs()
     {
         int a = 0;
-        int cargadoresIniciales = 3;
+        PlayerMovement player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        int cargadoresIniciales;
 
-        if(WeaponName == "Pistol")
+        if (!player.infinito)
+            cargadoresIniciales = 5;
+        else
+            cargadoresIniciales = 200;
+
+        if (WeaponName == "Pistol")
         {
             cargadoresIniciales = 9999;
         }

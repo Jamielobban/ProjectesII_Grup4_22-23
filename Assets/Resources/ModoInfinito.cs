@@ -8,9 +8,13 @@ public class ModoInfinito : MonoBehaviour
     public Transform[] spawnPoints;
     public GameObject[] spawns;
     float time;
+    public int tiempoAguantado;
+    float tiempoInicial;
+
     // Start is called before the first frame update
     void Start()
     {
+        tiempoInicial = Time.time;
         time = Time.time;
         generator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>();
         Invoke("unlock", 0.2f);
@@ -27,6 +31,7 @@ public class ModoInfinito : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        tiempoAguantado = (int)(Time.time -tiempoInicial);       
         if (time + 0.5f < Time.time)
         {
             time = Time.time;
