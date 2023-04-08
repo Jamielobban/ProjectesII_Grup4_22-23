@@ -11,9 +11,16 @@ public class ModoInfinito : MonoBehaviour
     public int tiempoAguantado;
     float tiempoInicial;
 
+    bool dificultad1;
+    bool dificultad2;
+    float spawnTime;
     // Start is called before the first frame update
     void Start()
     {
+        spawnTime = 1.5f;
+        dificultad1 = false;
+        dificultad2 = false;
+
         tiempoInicial = Time.time;
         time = Time.time;
         generator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>();
@@ -31,18 +38,31 @@ public class ModoInfinito : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        tiempoAguantado = (int)(Time.time -tiempoInicial);       
-        if (time + 0.5f < Time.time)
+
+
+        tiempoAguantado = (int)(Time.time -tiempoInicial);   
+        if(!dificultad1&& tiempoAguantado > 60)
+        {
+            dificultad1 = true;
+            spawnTime = 1;
+        }
+        if (!dificultad2 && tiempoAguantado > 120)
+        {
+            dificultad2 = true;
+            spawnTime = 0.5f;
+        }
+
+        if (time + spawnTime < Time.time)
         {
             time = Time.time;
 
             int enemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-            if (enemies < 15)
+            if (enemies < 10)
             {
 
 
                 int random1 = (int)Random.Range(0, spawnPoints.Length - 0.01f);
-                int random2 = (int)Random.Range(0, 75);
+                int random2 = (int)Random.Range(0, 60);
 
                 if (random2 < 20)
                 {

@@ -41,7 +41,9 @@ public class CircleTransition : MonoBehaviour
         if (playerCheckpoints.restart)
         {
             playerCheckpoints.restart = false;
-
+            playerCheckpoints.disableDash = true;
+            playerCheckpoints.GetComponentInChildren<RightHand>().weaponEquiped = false;
+            playerCheckpoints.canMove = false;
             CloseBlackScreen();
         }
         //else if (Input.GetKeyDown((KeyCode.Alpha2)))
