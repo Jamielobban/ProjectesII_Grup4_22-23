@@ -27,11 +27,13 @@ public class Cinematica : MonoBehaviour
             llave2.SetActive(false);
         }
 
-        if (PlayerPrefs.GetInt("LLave"+llave, 0) == 1)
+        if (PlayerPrefs.GetInt("LLave"+llave, 0) == 1&& PlayerPrefs.GetInt("Final" + llave, 0) == 0)
         {
             Invoke("setFalse", 0.1f);
             camera.Follow = cinematica;
             Invoke("startAnim", 3f);
+            Invoke("setTrue", 2f);
+
             Invoke("volverPlayer", 6f);
 
         }
@@ -40,6 +42,10 @@ public class Cinematica : MonoBehaviour
     void setFalse()
     {
         PlayerPrefs.SetInt("LLave" + llave, 0);
+
+    }
+    void setTrue()
+    {
         PlayerPrefs.SetInt("Final" + llave, 1);
 
     }
