@@ -158,10 +158,10 @@ public class Menu : MonoBehaviour
     }
     public void StartNew()
     {
-        PlayButton.GetComponent<Button>().interactable = false;
-        SettingsButton.GetComponent<Button>().interactable = false;
-        CreditsButton.GetComponent<Button>().interactable = false;
-        ExitButton.GetComponent<Button>().interactable = false;
+        PlayButton.GetComponentInChildren<Button>().interactable = false;
+        SettingsButton.GetComponentInChildren<Button>().interactable = false;
+        CreditsButton.GetComponentInChildren<Button>().interactable = false;
+        ExitButton.GetComponentInChildren<Button>().interactable = false;
         StartCoroutine(WaitForLoad());
         //PlayerPrefs.DeleteAll();        
        // SceneManager.LoadScene(1);

@@ -13,7 +13,7 @@ public class OnButtonClick : MonoBehaviour
     [SerializeField] Animator prisonDoorOpen;
     bool zoomOut;
     bool isDoneOpening;
-    public float velocity = 0.01f;
+    public float velocity = 0.005f;
     public float acceleration = 0.00025f;
     public float velocityZoomOut = 0.0025f;
     public float accelerationZoomOut = 0.01f;
@@ -38,7 +38,7 @@ public class OnButtonClick : MonoBehaviour
         if(thisCam.m_Lens.OrthographicSize <= 5.5f && zoomOut)
         {
             //Debug.Log("what");
-            thisCam.m_Lens.OrthographicSize += 0.0035f;
+            thisCam.m_Lens.OrthographicSize += 0.0025f;
             if (thisCam.m_Lens.OrthographicSize > 5.3f)
             {
                 prisonDoorOpen.SetBool("hasPressedPlay", true);
