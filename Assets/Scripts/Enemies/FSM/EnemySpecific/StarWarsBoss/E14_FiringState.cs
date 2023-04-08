@@ -45,6 +45,11 @@ public class E14_FiringState : FiringState
     public override void Exit()
     {
         base.Exit();
+
+        if(multipleSwords != null && multipleSwords.activeInHierarchy && multipleSwords.transform.parent != enemy.GetComponent<SpriteRenderer>().transform)
+        {
+            GameObject.Destroy(multipleSwords);
+        }
     }
 
     public override void LogicUpdate()
@@ -124,6 +129,10 @@ public class E14_FiringState : FiringState
 
                     }
 
+                }
+                else
+                {
+                    enemy.transform.localScale = new Vector3(Mathf.Abs(enemy.transform.localScale.x), Mathf.Abs(enemy.transform.localScale.y), Mathf.Abs(enemy.transform.localScale.z));
                 }
 
                 break;
@@ -226,6 +235,10 @@ public class E14_FiringState : FiringState
                         enemy.transform.localScale = new Vector3(enemy.transform.localScale.x * -1, enemy.transform.localScale.y, enemy.transform.localScale.z);
 
                     }
+                }
+                else
+                {
+                    enemy.transform.localScale = new Vector3(Mathf.Abs(enemy.transform.localScale.x), Mathf.Abs(enemy.transform.localScale.y), Mathf.Abs(enemy.transform.localScale.z));
                 }
 
                 if (doingMultiSword && multipleSwords != null && multipleSwords.GetComponent<SpawnObjectsInCircle>().spawnsDone)
