@@ -76,6 +76,18 @@ public class WeaponGenerator : MonoBehaviour
 
     }
 
+    public void setAmmo(string name)
+    {
+        for (int i = 0; i < weaponsValues.Length; i++)
+        {
+            if (weaponsValues[i].WeaponName == name)
+            {
+                weaponsValues[i].magazinesInWeapon.RuntimeValue = 999;
+                weaponsValues[i].bulletsInMagazine.RuntimeValue = weaponsValues[i].bulletsInMagazine.InitialValue;
+
+            }
+        }
+    }
     public bool getWeaponUnlock(string name)
     {
         bool a = false;

@@ -21,6 +21,9 @@ public class CircleTransition : MonoBehaviour
     private void Awake()
     {
         playerCheckpoints = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+
+        if (!playerCheckpoints.infinito)
+            infinito = null;
         _canvas = GetComponent<Canvas>();
         //if (Instance != null && Instance != _canvas)
         //{
@@ -64,8 +67,8 @@ public class CircleTransition : MonoBehaviour
     public void CloseBlackScreen()
     {
         StartCoroutine(Transition(0.5f, 1, 0.062f));
-        Invoke("OpenBlackScreen", 0.75f);
-        //Invoke("ResetCurrentScene", 3f);
+        //Invoke("OpenBlackScreen", 0.75f);
+        Invoke("ResetCurrentScene", 2f);
     }
 
     private void DrawBlackScreen()
@@ -111,6 +114,7 @@ public class CircleTransition : MonoBehaviour
 
     private IEnumerator Transition(float duration, float beginRadius, float endRadius)
     {
+        yield return new WaitForSeconds(1f);
         var time = 0f;
         while (time <= duration)
         {

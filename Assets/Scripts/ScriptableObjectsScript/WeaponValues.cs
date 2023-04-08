@@ -66,13 +66,8 @@ public class WeaponValues : ScriptableObject
     public void GetPlayerPrefs()
     {
         int a = 0;
-        PlayerMovement player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-        int cargadoresIniciales;
-
-        if (!player.infinito)
-            cargadoresIniciales = 5;
-        else
-            cargadoresIniciales = 200;
+         
+        int cargadoresIniciales = 5;
 
         if (WeaponName == "Pistol")
         {

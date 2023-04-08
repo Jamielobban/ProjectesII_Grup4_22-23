@@ -21,10 +21,10 @@ public class ModoInfinito : MonoBehaviour
     }
     void unlock()
     {
-        generator.EquipWeapon("Sniper");
-        generator.EquipWeapon("metralleta");
-        generator.EquipWeapon("Shotgun");
-        generator.EquipWeapon("Pistol");
+        generator.EquipWeaponModoInfinito("Sniper");
+        generator.EquipWeaponModoInfinito("Metralleta");
+        generator.EquipWeaponModoInfinito("Shotgun");
+        generator.EquipWeaponModoInfinito("Pistol");
 
     }
 
@@ -53,15 +53,15 @@ public class ModoInfinito : MonoBehaviour
 
 
                 }
-                else if (random2 >= 20 && random2 < 30)
+                else if (random2 >= 20 && random2 < 25)
                 {
                     //escopeta
-                    int variantes = 2 + (int)Random.Range(0, 2);
+                    int variantes = 2 + (int)Random.Range(0, 1);
                     Instantiate(spawns[variantes], spawnPoints[random1].position, spawnPoints[random1].rotation);
 
 
                 }
-                else if (random2 >= 30 && random2 < 40)
+                else if (random2 >= 25 && random2 < 35)
                 {
                     //snipers
                     int variantes = 5 + (int)Random.Range(0, 1);
@@ -69,15 +69,15 @@ public class ModoInfinito : MonoBehaviour
 
 
                 }
-                else if (random2 >= 40 && random2 < 50)
+                else if (random2 >= 35 && random2 < 40)
                 {
                     //torretas
-                    int variantes = 7 + (int)Random.Range(0, 1);
+                    int variantes = 7 + (int)Random.Range(0, 2);
                     Instantiate(spawns[variantes], spawnPoints[random1].position, spawnPoints[random1].rotation);
 
 
                 }
-                else if (random2 >= 50 && random2 < 55)
+                else if (random2 >= 40 && random2 < 45)
                 {
                     //assasin
                     int variantes = 9 + (int)Random.Range(0, 1);
@@ -85,7 +85,7 @@ public class ModoInfinito : MonoBehaviour
 
 
                 }
-                else if (random2 >= 55 && random2 < 60)
+                else if (random2 >= 45 && random2 < 50)
                 {
                     //fuego
                     int variantes = 11 + (int)Random.Range(0, 2);
@@ -93,7 +93,7 @@ public class ModoInfinito : MonoBehaviour
 
 
                 }
-                else if (random2 >= 60 && random2 < 65)
+                else if (random2 >= 50 && random2 < 55)
                 {
                     //acido
                     int variantes = 14 + (int)Random.Range(0, 1);
@@ -101,7 +101,7 @@ public class ModoInfinito : MonoBehaviour
 
 
                 }
-                else if (random2 >= 65 && random2 <= 75)
+                else if (random2 >= 55 && random2 <= 60)
                 {
                     //otros
                     int variantes = 16 + (int)Random.Range(0, 1);
