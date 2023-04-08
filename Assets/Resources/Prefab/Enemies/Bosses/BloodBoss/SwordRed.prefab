@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5434960633000461650}
   - component: {fileID: 6499344891738974685}
   - component: {fileID: 2392666042115377686}
-  m_Layer: 0
+  - component: {fileID: -5865785086753507796}
+  m_Layer: 10
   m_Name: SwordRed
-  m_TagString: Untagged
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,6 +82,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-5865785086753507796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434960633000461651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c878f6c42337a4488cbb679e4cdffae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletData: {fileID: 11400000, guid: b01f2adb2dd981746801d04b15a61862, type: 2}
+  destroyOnTourchPlayer: 0
+  movePlayer: 0
+  hangPlayer: {fileID: 0}
 --- !u!1 &5434960633359121767
 GameObject:
   m_ObjectHideFlags: 0

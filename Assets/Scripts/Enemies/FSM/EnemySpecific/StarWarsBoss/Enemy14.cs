@@ -18,8 +18,8 @@ public class Enemy14 : Entity
     public GameObject flameWave;
     public GameObject multiSwords;
 
-    public int mode = 1;
-    public float waitBetweenAttacks = 2f;
+    public int mode = 2; //1
+    public float waitBetweenAttacks = 1.5f; //2
     public float lastTimeExitState = 0;
 
     public Color colorMode1;
@@ -45,28 +45,28 @@ public class Enemy14 : Entity
 
         stateMachine.Initialize(idleState);
 
-        mode = 1;
-        waitBetweenAttacks = 2f;
+        mode = 2; //1
+        waitBetweenAttacks = 1.5f; //2
     }
 
     public override void Update()
     {
         base.Update();
 
-        if (enemyHealth >= 2000)
-        {
-            mode = 1;
-            sr.material.SetColor("_OutlineColor", colorMode1);
-            waitBetweenAttacks = 2f;
-        }
-        else
-        {
-            if (mode != 2 && !firingState.doingAttack)
-                mode = 2;
+        //if (enemyHealth >= 2000)
+        //{
+        //    mode = 1;
+        //    sr.material.SetColor("_OutlineColor", colorMode1);
+        //    waitBetweenAttacks = 2f;
+        //}
+        //else
+        //{
+        //    if (mode != 2 && !firingState.doingAttack)
+        //        mode = 2;
 
-            sr.material.SetColor("_OutlineColor", colorMode2);
-            waitBetweenAttacks = 1.5f;
-        }
+        //    sr.material.SetColor("_OutlineColor", colorMode2);
+        //    waitBetweenAttacks = 1.5f;
+        //}
 
         if (isDead && stateMachine.currentState != deadState)
         {

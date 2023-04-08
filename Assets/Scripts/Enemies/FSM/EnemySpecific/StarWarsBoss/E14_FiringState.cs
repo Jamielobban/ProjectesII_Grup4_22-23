@@ -132,7 +132,7 @@ public class E14_FiringState : FiringState
                 {
                     int random = Random.Range(1, 11);
 
-                    if (random <= 2)
+                    if (random <= 10)//2
                     {
                         doingAttack = true;
                         doing4Waves = true;
@@ -408,6 +408,7 @@ public class E14_FiringState : FiringState
 
         enemy.GetComponentInChildren<SpriteRenderer>().material.SetFloat("_ClipUvUp", 0.09f);
         a1Swords = GameObject.Instantiate(enemy.missileSwords, enemy.GetComponentInChildren<SpriteRenderer>().transform);
+        a1Swords.transform.rotation = Quaternion.identity;
         enemy.agent.enabled = true;        
     }
 
