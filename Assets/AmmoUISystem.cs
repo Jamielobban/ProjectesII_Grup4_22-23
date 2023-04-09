@@ -46,7 +46,7 @@ public class AmmoUISystem : MonoBehaviour
         ammoPrefab.GetComponent<AmmoRifleImage>().emptyAmmo = rightHand.weaponInHand.GetEmptySprite();
         ammoPrefab.GetComponent<AmmoRifleImage>().flashAmmo = rightHand.weaponInHand.GetFlashSprite();
         ammoCounter.text = rightHand.weaponInHand.GetBulletsInMagazine().ToString();
-        if (rightHand.weaponInHand.GetCurrentMagazines() <= 250)
+        if (rightHand.weaponInHand.GetCurrentMagazines() >= 250)
         {
             //Symbol Infinite.setActive
             Debug.Log("fULL AMMO");
@@ -54,6 +54,7 @@ public class AmmoUISystem : MonoBehaviour
         }
         else
         {
+            magazineCounter.gameObject.SetActive(true);
             magazineCounter.text = rightHand.weaponInHand.GetCurrentMagazines().ToString();
         }
         //magazineCounter.text = rightHand.weaponInHand.GetCurrentMagazines().ToString();

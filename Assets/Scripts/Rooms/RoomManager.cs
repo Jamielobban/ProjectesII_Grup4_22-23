@@ -39,9 +39,11 @@ public class RoomManager : MonoBehaviour
 
     int? doorOpenAudioKey;
     int? doorCloseAudioKey;
+    int? generalCombatKey;
 
     AudioClip doorOpenAudio;
     AudioClip doorCloseAudio;
+    public AudioClip generalCombatAudio;
     //Las puertas tienen que estar en el mismo puesto que su palanca
     public bool boss;
     public int bossNumber;
@@ -61,6 +63,7 @@ public class RoomManager : MonoBehaviour
 
         playerAudio = FindObjectOfType<PlayerMovement>();
         roomCompleteAudio = Resources.Load<AudioClip>("Sounds/Room/RoomComplete");
+        //generalCombatAudio = Resources.Load<AudioClip>("Sounds/GeneralCombat");
         doorOpenAudio = Resources.Load<AudioClip>("Sounds/Door/DoorOpening");
         //Assets / Resources / Sounds / Door / DoorClosing.wav
         doorCloseAudio = Resources.Load<AudioClip>("Sounds/Door/DoorClosing");
@@ -107,7 +110,9 @@ public class RoomManager : MonoBehaviour
     void closeDoors()
     {
         doorCloseAudioKey = AudioManager.Instance.LoadSound(doorCloseAudio,playerAudio.transform.position);
-        for(int i = 0; i < doors.Length; i++)
+        generalCombatKey = AudioManager.Instance.LoadSound(generalCombatAudio, playerAudio.transform);
+        //Start music
+        for (int i = 0; i < doors.Length; i++)
         {
             if(i < palancas.Length)
             {
@@ -145,6 +150,15 @@ public class RoomManager : MonoBehaviour
     {
         alreadyEnter = true;
         doorOpenAudioKey = AudioManager.Instance.LoadSound(doorOpenAudio, playerAudio.transform.position);
+
+        //Stop music
+        if(generalCombatKey.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(generalCombatKey.Value);
+        }
+        
+        //AudioManager.Instance.Get
+
         PlayerPrefs.SetInt(nameSave, (alreadyEnter ? 1 : 0));
 
         for (int i = 0; i < doors.Length; i++)
@@ -177,6 +191,7 @@ public class RoomManager : MonoBehaviour
     {
         if (!alreadyEnter)
         {
+
             if(boss)
             {
        
