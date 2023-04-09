@@ -33,6 +33,7 @@ public class SwordMissileManager : MonoBehaviour
             swordThrowed[i] = false;
             swordEnded[i] = false;
             swordsChilds[i].transform.parent = null;
+            this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x), Mathf.Abs(this.transform.localScale.y), Mathf.Abs(this.transform.localScale.z));
             swordsChilds[i].localScale = new Vector3(Mathf.Abs(swordsChilds[i].localScale.x), Mathf.Abs(swordsChilds[i].localScale.y), Mathf.Abs(swordsChilds[i].localScale.z));
             swordsChilds[i].GetComponent<Rigidbody2D>().AddForce(swordsChilds[i].transform.right * initialSpeed, ForceMode2D.Impulse);
         }
