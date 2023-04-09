@@ -36,11 +36,28 @@ public class AmmoUISystem : MonoBehaviour
 
     public void DrawAmmo()
     {
+        //if (rightHand.weaponInHand.GetCurrentMagazines()<= 250){
+        //    //Symbol Infinite.setActive
+        //}
+        //else {
+        //    magazineCounter.text = rightHand.weaponInHand.GetCurrentMagazines().ToString();
+        //}
         ammoPrefab.GetComponent<AmmoRifleImage>().fullAmmo = rightHand.weaponInHand.GetFullSprite();
         ammoPrefab.GetComponent<AmmoRifleImage>().emptyAmmo = rightHand.weaponInHand.GetEmptySprite();
         ammoPrefab.GetComponent<AmmoRifleImage>().flashAmmo = rightHand.weaponInHand.GetFlashSprite();
         ammoCounter.text = rightHand.weaponInHand.GetBulletsInMagazine().ToString();
-        magazineCounter.text = rightHand.weaponInHand.GetCurrentMagazines().ToString();
+        if (rightHand.weaponInHand.GetCurrentMagazines() <= 250)
+        {
+            //Symbol Infinite.setActive
+            Debug.Log("fULL AMMO");
+            magazineCounter.gameObject.SetActive(false);
+        }
+        else
+        {
+            magazineCounter.text = rightHand.weaponInHand.GetCurrentMagazines().ToString();
+        }
+        //magazineCounter.text = rightHand.weaponInHand.GetCurrentMagazines().ToString();
+
         ClearAmmo();
 
         //Debug.Log("Update");
@@ -83,7 +100,7 @@ public class AmmoUISystem : MonoBehaviour
         {
             rifleAmmoArray[i].SetAmmoImage(AmmoRifleImage.AmmoStatus.Full);
             ammoCounter.text = (i + 1).ToString();
-            yield return new WaitForSeconds(time / (rightHand.weaponInHand.GetBulletsPerMagazine() + 1.25f));
+            yield return new WaitForSeconds(time / (rightHand.weaponInHand.GetBulletsPerMagazine() + 1.5f));
         }
 
         for (int i = rifleAmmoArray.Count - 1; i >= 0; i--)

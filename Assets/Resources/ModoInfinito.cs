@@ -131,7 +131,8 @@ public class ModoInfinito : MonoBehaviour
                 }
             }
 
-
+            //PlayerPrefs.GetInt("Infinito",0);
+            //tiempoAguantado
         }
     }
 }

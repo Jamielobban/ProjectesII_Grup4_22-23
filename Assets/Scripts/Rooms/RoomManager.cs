@@ -238,11 +238,11 @@ public class RoomManager : MonoBehaviour
     {
         kills++;
 
-        if(!porTriggers)
+        if (!porTriggers)
         {
-            if(kills == enemiesInEachRound[currentRound])
+            if (kills == enemiesInEachRound[currentRound])
             {
-                if(currentRound < (enemiesInEachRound.Length-1))
+                if (currentRound < (enemiesInEachRound.Length - 1))
                 {
                     currentRound++;
                     spawnRound(currentRound);
@@ -255,11 +255,23 @@ public class RoomManager : MonoBehaviour
         }
         else
         {
-            if (kills >= (spawns.Length))
+            if (!boss)
             {
-                endRoom();
+                if (kills >= (spawns.Length))
+                {
+                    endRoom();
 
+                }
             }
+            else
+            {
+                if (GameObject.FindGameObjectWithTag("Boss") == null)
+                {
+                    endRoom();
+
+                }
+            }
+
         }
 
     }

@@ -12442,6 +12442,7 @@ MonoBehaviour:
   triggers: []
   boss: 0
   bossNumber: 0
+  enemyBoss: {fileID: 0}
 --- !u!4 &524440104
 Transform:
   m_ObjectHideFlags: 0
@@ -134401,6 +134402,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3485313066518713451, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: start
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: startTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: startMesage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajes.Array.data[0]
+      value: Dont worry traveler
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajes.Array.data[1]
+      value: I have already cleared this room
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajes.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajes.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajesInConversation.Array.data[2]
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6107110160039755038, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}

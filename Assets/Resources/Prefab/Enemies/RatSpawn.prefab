@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1235611314251350298, guid: d56cc1be7bd33b649972bbd3be78b837, type: 3}
+      propertyPath: m_Name
+      value: RatSpawn
+      objectReference: {fileID: 0}
     - target: {fileID: 1841167237806891294, guid: d56cc1be7bd33b649972bbd3be78b837, type: 3}
       propertyPath: m_Name
       value: FatSpawn
@@ -15,6 +19,14 @@ PrefabInstance:
       propertyPath: EnemyPrefab
       value: 
       objectReference: {fileID: 7841238149927361384, guid: ae4eaad55ce484a4b9836be469a0fa30, type: 3}
+    - target: {fileID: 4078320517313605048, guid: d56cc1be7bd33b649972bbd3be78b837, type: 3}
+      propertyPath: EnemyPrefab
+      value: 
+      objectReference: {fileID: 7841238149927361384, guid: ae4eaad55ce484a4b9836be469a0fa30, type: 3}
+    - target: {fileID: 4078320517313605048, guid: d56cc1be7bd33b649972bbd3be78b837, type: 3}
+      propertyPath: spawnEnemyAtStart
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6543357121509611466, guid: d56cc1be7bd33b649972bbd3be78b837, type: 3}
       propertyPath: m_RootOrder
       value: 0

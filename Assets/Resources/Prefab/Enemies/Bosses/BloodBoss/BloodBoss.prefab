@@ -90,7 +90,7 @@ MonoBehaviour:
   colorChange: 0
   firePoint: {fileID: 3050839690508741405}
   enemyData: {fileID: 11400000, guid: 5e66b9a0564a2534f89b3c5f9c7210ff, type: 2}
-  blood: {fileID: 5131986925755455784, guid: 11d09c4b86434884c9d334ba4d7fe419, type: 3}
+  blood: {fileID: 941383085251923548, guid: 18e5a394279ac16409f95858a6fd685c, type: 3}
   deadBlood: {fileID: 3578897204085140966, guid: 4fea703dcdeb5fa478ed5ad8e58fe837, type: 3}
   hasNavemesh: 1
   firingStateData: {fileID: 11400000, guid: 5bbba2f55c0204746b0ac8b44c018142, type: 2}
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 3050839690256513519}
   m_Layer: 0
   m_Name: Sr
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -239,7 +239,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ea250c8a7ddad514c8e72e42a067837f, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shaderTypes: 3
+  shaderTypes: 0
   normalStrength: 5
   normalSmoothing: 1
   computingNormal: 0

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
+    [Header("Normal Menu")]
     [SerializeField]
     GameObject PlayButton;
     [SerializeField]
@@ -44,7 +45,8 @@ public class Menu : MonoBehaviour
     GameObject PlayThings;
     [SerializeField]
     GameObject SettingsButton;
-
+    [SerializeField]
+    GameObject InfiniteModeButton;
 
     [SerializeField]
     BoolValue musicEnabled;
@@ -65,7 +67,36 @@ public class Menu : MonoBehaviour
     [SerializeField]
     GameObject RedOnSFX;
 
+
+    [SerializeField]
+    GameObject NewGameMenu;
+
+    [SerializeField]
+    GameObject PlayedBeforeMenu;
     //[SerializeField] Animator doorAnimation;
+
+
+
+    [SerializeField]
+    GameObject NewButton2;
+    [SerializeField]
+    GameObject LoadButton2;
+    [SerializeField]
+    GameObject CreditsButton2;
+    [SerializeField]
+    GameObject SettingsButton2;
+    [SerializeField]
+    GameObject ExitButton2;
+    [SerializeField]
+    GameObject BackFromCredits2;
+    [SerializeField]
+    GameObject BackFromSettings2;
+    [SerializeField]
+    GameObject Credits2;
+    [SerializeField]
+    GameObject Settings2;
+    [SerializeField]
+    GameObject Infinity2;
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +106,7 @@ public class Menu : MonoBehaviour
 
         if(PlayerPrefs.GetInt("FirstTime", 0) == 0)
         {
+            NewGameMenu.SetActive(true);
             PlayerPrefs.DeleteAll();
 
             for(int i = 0; i < 70; i++)
@@ -85,6 +117,17 @@ public class Menu : MonoBehaviour
                 if(i == 1|| i == 2)
                     PlayerPrefs.SetInt(nameSave, (true ? 1 : 0));
 
+            }
+        }
+        else
+        {
+            if(PlayedBeforeMenu != null)
+            {
+                PlayedBeforeMenu.SetActive(true);
+            }
+            else
+            {
+                return;
             }
         }
         
@@ -140,14 +183,22 @@ public class Menu : MonoBehaviour
         PlayThings.SetActive(true);
      
 
-        //PlayerPrefs.SetInt("FirstTime", 2);
+        
         //SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 3));
     }
 
     public void Continue()
     {
-        PlayerPrefs.SetInt("FirstTime", 2);
-        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
+        NewButton2.GetComponentInChildren<Button>().interactable = false;
+        LoadButton2.GetComponentInChildren<Button>().interactable = false;
+        CreditsButton2.GetComponentInChildren<Button>().interactable = false;
+        SettingsButton2.GetComponentInChildren<Button>().interactable = false;
+        Infinity2.GetComponentInChildren<Button>().interactable = false;
+        ExitButton2.GetComponentInChildren<Button>().interactable = false;
+        GameName.SetActive(false);
+
+
+        StartCoroutine(WaitForLoad());
     }
 
     public void OpenDoorAnimation()
@@ -156,17 +207,87 @@ public class Menu : MonoBehaviour
         //doorAnimation.SetBool("hasPressedPlay",true);
 
     }
-    public void StartNew()
+
+    public void InfiniteMode()
     {
         PlayButton.GetComponentInChildren<Button>().interactable = false;
         SettingsButton.GetComponentInChildren<Button>().interactable = false;
         CreditsButton.GetComponentInChildren<Button>().interactable = false;
         ExitButton.GetComponentInChildren<Button>().interactable = false;
-        StartCoroutine(WaitForLoad());
-        //PlayerPrefs.DeleteAll();        
-       // SceneManager.LoadScene(1);
+        GameName.SetActive(false);
+        InfiniteModeButton.GetComponentInChildren<Button>().interactable = false;
+        StartCoroutine(WaitForInfiniteMode());
     }
 
+    public void InfiniteMode2()
+    {
+        LoadButton2.GetComponentInChildren<Button>().interactable = false;
+        NewButton2.GetComponentInChildren<Button>().interactable = false;
+        SettingsButton2.GetComponentInChildren<Button>().interactable = false;
+        CreditsButton2.GetComponentInChildren<Button>().interactable = false;
+        ExitButton2.GetComponentInChildren<Button>().interactable = false;
+        Infinity2.GetComponentInChildren<Button>().interactable = false;
+        GameName.SetActive(false);
+        StartCoroutine(WaitForInfiniteMode());
+    }
+
+    public void StartNew()
+    {
+        PlayButton.GetComponentInChildren<Button>().interactable = false;
+        SettingsButton.GetComponentInChildren<Button>().interactable = false;
+        CreditsButton.GetComponentInChildren<Button>().interactable = false;
+        InfiniteModeButton.GetComponentInChildren<Button>().interactable = false;
+        ExitButton.GetComponentInChildren<Button>().interactable = false;
+        GameName.SetActive(false);
+        StartCoroutine(WaitForLoadNewGame());
+        
+        //PlayerPrefs.DeleteAll();        
+        // SceneManager.LoadScene(1);
+    }
+
+    public void StartNewGame()
+    {
+        NewButton2.GetComponentInChildren<Button>().interactable = false;
+        LoadButton2.GetComponentInChildren<Button>().interactable = false;
+        CreditsButton2.GetComponentInChildren<Button>().interactable = false;
+        SettingsButton2.GetComponentInChildren<Button>().interactable = false;
+        Infinity2.GetComponentInChildren<Button>().interactable = false;
+        ExitButton2.GetComponentInChildren<Button>().interactable = false;
+        GameName.SetActive(false);
+
+        StartCoroutine(WaitForLoadNewGame());
+
+        //PlayerPrefs.DeleteAll();        
+        // SceneManager.LoadScene(1);
+    }
+
+    public void CreditsFromLoadGame()
+    {
+        LoadButton2.SetActive(false);
+        NewButton2.SetActive(false);
+        CreditsButton2.SetActive(false);
+        SettingsButton2.SetActive(false);
+        InfiniteModeButton.SetActive(false);
+        GameName.SetActive(false);
+        ExitButton2.SetActive(false);
+
+        CreditThings.SetActive(true);
+        BackButtonCredits.SetActive(true);
+    }
+
+    public void SeetingsFromLoadGame()
+    {
+        LoadButton2.SetActive(false);
+        NewButton2.SetActive(false);
+        GameName.SetActive(false);
+        InfiniteModeButton.SetActive(false);
+        CreditsButton2.SetActive(false);
+        SettingsButton2.SetActive(false);
+        ExitButton2.SetActive(false);
+
+        SettingsThings.SetActive(true);
+        BackButtonCredits.SetActive(true);
+    }
     public void BackToMainStart()
     {
         PlayButton.SetActive(true);
@@ -179,6 +300,11 @@ public class Menu : MonoBehaviour
     }
 
 
+    public void BackButtonCreditsLoad()
+    {
+
+    }
+
     public void ExitGame()
     {
         Debug.Log("Exit");
@@ -186,23 +312,72 @@ public class Menu : MonoBehaviour
         Application.Quit();
 
     }
+    private IEnumerator WaitForLoadNewGame()
+    {
+        yield return new WaitForSeconds(3.0f);
+        Debug.Log("Load now");
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("FirstTime", 2);
+        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
+    }
+
     private IEnumerator WaitForLoad()
     {
         yield return new WaitForSeconds(3.0f);
         Debug.Log("Load now");
-        PlayerPrefs.DeleteAll();        
-        SceneManager.LoadScene(1);
+        PlayerPrefs.SetInt("isDead", 1);
+        PlayerPrefs.SetInt("FirstTime", 2);
+        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
+    }
+
+    private IEnumerator WaitForInfiniteMode()
+    {
+        yield return new WaitForSeconds(3.0f);
+        Debug.Log("Load now");
+        SceneManager.LoadScene(12);
     }
     public void Credits()
     {
         PlayButton.SetActive(false);
         CreditsButton.SetActive(false);
         ExitButton.SetActive(false);
-      
+        GameName.SetActive(false);
+        InfiniteModeButton.SetActive(false);
+
         SettingsButton.SetActive(false);
        
         BackButtonCredits.SetActive(true);
         CreditThings.SetActive(true);        
+    }
+
+    public void Credits2Load()
+    {
+        NewButton2.SetActive(false);
+        LoadButton2.SetActive(false);
+        CreditsButton2.SetActive(false);
+        ExitButton2.SetActive(false);
+        GameName.SetActive(false);
+        Infinity2.SetActive(false);
+
+        SettingsButton2.SetActive(false);
+
+        BackFromCredits2.SetActive(true);
+        Credits2.SetActive(true);
+    }
+
+    public void Settings2Load()
+    {
+        NewButton2.SetActive(false);
+        LoadButton2.SetActive(false);
+        CreditsButton2.SetActive(false);
+        ExitButton2.SetActive(false);
+        GameName.SetActive(false);
+        Infinity2.SetActive(false);
+
+        SettingsButton2.SetActive(false);
+
+        BackFromSettings2.SetActive(true);
+        Settings2.SetActive(true);
     }
 
     public void BackToStartingMenuFromCredits()
@@ -218,15 +393,44 @@ public class Menu : MonoBehaviour
         //CreditThings.SetActive(false);
     }
 
+    public void BackToStartingMenuFromCredits2()
+    {
+        //PlayButton.SetActive(true);
+        //CreditsButton.SetActive(true);
+        //ExitButton.SetActive(true);
+        //SettingsButton.SetActive(true);
+
+        //BackButtonCredits.SetActive(false);
+        StartCoroutine(WaitForCreditsToMenu2());
+        StartCoroutine(SetObjectInactive(Credits2));
+        //CreditThings.SetActive(false);
+    }
+
     private IEnumerator WaitForCreditsToMenu()
     {
         yield return new WaitForSeconds(0.4f);
         PlayButton.SetActive(true);
         CreditsButton.SetActive(true);
+        GameName.SetActive(true);
         ExitButton.SetActive(true);
         SettingsButton.SetActive(true);
+        InfiniteModeButton.SetActive(true);
 
         BackButtonCredits.SetActive(false);
+    }
+
+    private IEnumerator WaitForCreditsToMenu2()
+    {
+        yield return new WaitForSeconds(0.4f);
+        NewButton2.SetActive(true);
+        LoadButton2.SetActive(true);
+        CreditsButton2.SetActive(true);
+        ExitButton2.SetActive(true);
+        SettingsButton2.SetActive(true);
+        GameName.SetActive(true);
+        Infinity2.SetActive(true);
+
+        BackFromCredits2.SetActive(false);
     }
     private IEnumerator SetObjectInactive(GameObject gameObject)
     {
@@ -239,10 +443,26 @@ public class Menu : MonoBehaviour
         PlayButton.SetActive(true);
         CreditsButton.SetActive(true);
         ExitButton.SetActive(true);
+        GameName.SetActive(true);
         SettingsButton.SetActive(true);
+        InfiniteModeButton.SetActive(true);
 
         BackButtonSettings.SetActive(false);
         SettingsThings.SetActive(false);
+    }
+
+    public void BackToStartingMenuFromSettings2()
+    {
+        NewButton2.SetActive(true);
+        LoadButton2.SetActive(true);
+        CreditsButton2.SetActive(true);
+        ExitButton2.SetActive(true);
+        SettingsButton2.SetActive(true);
+        GameName.SetActive(true);    
+        Infinity2.SetActive(true);
+
+        BackFromSettings2.SetActive(false);
+        Settings2.SetActive(false);
     }
 
     public void MusicEnabledChangeOn()
@@ -310,16 +530,29 @@ public class Menu : MonoBehaviour
     public void Settings()
     {
         ResumeButton.SetActive(false);
-
+        GameName.SetActive(false);
         BackMainButton.SetActive(false);
 
         OpenSettingsButton.SetActive(false);
+        InfiniteModeButton.SetActive(false);
 
         GamePausedText.SetActive(false);
         SettingsThings.SetActive(true);
         BackToPauseButton.SetActive(true);
+    }
 
+    public void SettingsFromIngame()
+    {
+        ResumeButton.SetActive(false);
 
+        BackMainButton.SetActive(false);
+
+        OpenSettingsButton.SetActive(false);
+        //InfiniteModeButton.SetActive(false);
+
+        GamePausedText.SetActive(false);
+        SettingsThings.SetActive(true);
+        BackToPauseButton.SetActive(true);
     }
 
     public void BackToPauseMenu()
@@ -354,6 +587,8 @@ public class Menu : MonoBehaviour
     {
         PlayButton.SetActive(false);
         CreditsButton.SetActive(false);
+        InfiniteModeButton.SetActive(false);
+        GameName.SetActive(false);
         ExitButton.SetActive(false);
         SettingsButton.SetActive(false);
         BackButtonSettings.SetActive(true);

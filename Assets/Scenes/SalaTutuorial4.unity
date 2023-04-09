@@ -796,7 +796,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7861646622749562132, guid: 25bb79042d8ffd7429a5a3353e59a8d2, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7861646622749562132, guid: 25bb79042d8ffd7429a5a3353e59a8d2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1081,7 +1081,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 191910473689874831, guid: 050ba85659785c94ea30e48232a34fa1, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 191910473689874831, guid: 050ba85659785c94ea30e48232a34fa1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10633,7 +10633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1207258175821073523, guid: 836c2f3b78181de4881835065b3d5c47, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1207258175821073523, guid: 836c2f3b78181de4881835065b3d5c47, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11922,7 +11922,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 191910473689874831, guid: 050ba85659785c94ea30e48232a34fa1, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 191910473689874831, guid: 050ba85659785c94ea30e48232a34fa1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11983,7 +11983,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8665473732631221581, guid: 0f3f268438b40274c8ff3a733d6fd178, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8665473732631221581, guid: 0f3f268438b40274c8ff3a733d6fd178, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12072,7 +12072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3909817924606884614, guid: 360d83ce848c60749a5c2ec825bdc386, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3909817924606884614, guid: 360d83ce848c60749a5c2ec825bdc386, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18028,7 +18028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3909817924606884614, guid: 360d83ce848c60749a5c2ec825bdc386, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3909817924606884614, guid: 360d83ce848c60749a5c2ec825bdc386, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18371,7 +18371,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 735811502404543572, guid: 1ababd0494a96724dbf3d71aa3db2903, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 735811502404543572, guid: 1ababd0494a96724dbf3d71aa3db2903, type: 3}
       propertyPath: m_LocalPosition.x
@@ -119464,17 +119464,53 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: start
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: startMesage
+      value: 'You can press Q once per room to clear away bullets '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajes.Array.data[0]
+      value: Make sure you use it wisely!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajes.Array.data[1]
+      value: It will keep you out of trouble
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajes.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajes.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajesInConversation.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajesInConversation.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6107110160039755038, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6107110160039755038, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.581382
+      value: 19.8
       objectReference: {fileID: 0}
     - target: {fileID: 6107110160039755038, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.001482
+      value: -19.56
       objectReference: {fileID: 0}
     - target: {fileID: 6107110160039755038, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: m_LocalPosition.z

@@ -163,12 +163,16 @@ public class CircleTransition : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetInt("Infinito", infinito.tiempoAguantado);
+            //PlayerPrefs.SetInt("Infinito", infinito.tiempoAguantado);
+            if(infinito.tiempoAguantado > PlayerPrefs.GetInt("Infinito",0))
+            {
+                PlayerPrefs.SetInt("Infinito", infinito.tiempoAguantado);
+            }
             SceneManager.LoadScene(0);
 
         }
 
-
+        
 
     }
 }
