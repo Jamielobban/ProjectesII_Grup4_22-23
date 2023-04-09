@@ -24,6 +24,7 @@ public class AmmoUISystem : MonoBehaviour
     //public HealthHeart emptyHeartToFlash;
 
     // Start is called before the first frame update
+    public GameObject infiniteAmmo;
     void Start()
     {        
         if(rightHand.weaponInHand != null)
@@ -50,10 +51,12 @@ public class AmmoUISystem : MonoBehaviour
         {
             //Symbol Infinite.setActive
             Debug.Log("fULL AMMO");
+            infiniteAmmo.SetActive(true);
             magazineCounter.gameObject.SetActive(false);
         }
         else
         {
+            infiniteAmmo.SetActive(false);
             magazineCounter.gameObject.SetActive(true);
             magazineCounter.text = rightHand.weaponInHand.GetCurrentMagazines().ToString();
         }

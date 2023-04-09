@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ModoInfinito : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class ModoInfinito : MonoBehaviour
     bool dificultad1;
     bool dificultad2;
     float spawnTime;
+
+    [SerializeField]
+    TMP_Text RecordTimer;
+
+    [SerializeField]
+    TMP_Text CurrentTimer;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +32,10 @@ public class ModoInfinito : MonoBehaviour
         time = Time.time;
         generator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>();
         Invoke("unlock", 0.2f);
+
+        RecordTimer.SetText(PlayerPrefs.GetInt("Infinito", 0).ToString());
+        CurrentTimer.SetText(0.ToString());
+
     }
     void unlock()
     {
@@ -39,8 +50,13 @@ public class ModoInfinito : MonoBehaviour
     void Update()
     {
 
-
         tiempoAguantado = (int)(Time.time -tiempoInicial);   
+        CurrentTimer.SetText(tiempoAguantado.ToString());
+
+        if(PlayerPrefs.GetInt("Infinito", 0) < tiempoAguantado)
+        {
+            //
+        }
         if(!dificultad1&& tiempoAguantado > 60)
         {
             dificultad1 = true;

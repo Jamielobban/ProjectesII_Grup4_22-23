@@ -378,7 +378,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (canMove && !isDead)
                 {
-                    if (Input.GetButton("Heal"))
+                    if (Input.GetKey(KeyCode.Q))
                     {
                         time += Time.deltaTime;
                         if(potionsSystem.amountToFill > 50)
@@ -401,7 +401,7 @@ public class PlayerMovement : MonoBehaviour
                     movement.y = Input.GetAxisRaw("Vertical");                    movement = Vector3.ClampMagnitude(movement, 1f);                    //Debug.Log(movement.magnitude);                    moveDir = new Vector3(movement.x, movement.y).normalized;
 
                     //
-                    if (Input.GetKeyDown(KeyCode.Q) && canBlit)
+                    if (Input.GetKeyDown(KeyCode.Mouse1) && canBlit)
                     {
 
                         //Debug.Log("Parry");
