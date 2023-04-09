@@ -44,7 +44,29 @@ public class Enemy13 : Entity
 
     public GameObject eyeMonsterPrefab;
     public float laserMaxSize;
-   
+
+    public AudioClip laserChargeSound;
+    public int? laserChargeSoundKey;
+
+    public AudioClip laserSound;
+    public int? laserSoundKey;
+
+    public AudioClip dashSound;
+    public int? dashSoundKey;
+    
+    public AudioClip dashSound2;
+    public int? dashSoundKey2;
+
+    public AudioClip bulletThrowSound;
+    public int? bulletThrowSoundKey;
+
+    public AudioClip squelchingSound;
+    public int? squelchingSoundKey;
+
+    public AudioClip backThemeSound;
+    public int? backThemeSoundKey;
+
+
 
     public override void FixedUpdate()
     {
@@ -80,7 +102,7 @@ public class Enemy13 : Entity
 
         stateMachine.Initialize(idleState);
 
-        mode = 1;
+        mode = 1;//1
         waitBetweenAttacks = 3f;        
 
         laserMaxSize = GetComponentInChildren<LineRenderer>().widthMultiplier;
@@ -102,7 +124,7 @@ public class Enemy13 : Entity
         }
         else if (enemyHealth >= 1666.67f)
         {
-            if(mode != 2 && !firingState.doingAttack)
+            if (mode != 2 && !firingState.doingAttack)
                 mode = 2;
 
             sr.material.SetColor("_OutlineColor", colorMode2);

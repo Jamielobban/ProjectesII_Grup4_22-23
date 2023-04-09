@@ -84,6 +84,7 @@ public class E13_FiringState : FiringState
     {
         base.Enter();
 
+        enemy.backThemeSoundKey = AudioManager.Instance.LoadSound(enemy.backThemeSound, enemy.player, 0, true, false);
 
         lineRenderers = enemy.GetComponentsInChildren<LineRenderer>();
         
@@ -116,6 +117,12 @@ public class E13_FiringState : FiringState
                 GameObject.Destroy(rs); // Destruye el componente RotateScript
             }
         }
+
+        if (enemy.backThemeSoundKey.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(enemy.backThemeSoundKey.Value);
+        }
+
         if(bullet != null && bullet.activeSelf)
         {
             GameObject.Destroy(bullet);
@@ -161,6 +168,12 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("fire", true);
                         enemy.anim.SetBool("laserSpin", true);
                         lastTimeEnterLaserSpinNormal = Time.time;
+
+                        enemy.laserChargeSoundKey = AudioManager.Instance.LoadSound(enemy.laserChargeSound, enemy.transform);
+                        if (enemy.laserChargeSoundKey.HasValue)
+                        {
+                            AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.laserChargeSoundKey.Value).pitch = 2;
+                        }
                     }
                     else if (random <= 7)
                     {
@@ -173,6 +186,9 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("animiationLoop", true);
                         enemy.anim.SetBool("bigFatman", true);
                         lastTimeEnterBigFatman = Time.time;
+
+                        enemy.bulletThrowSoundKey = AudioManager.Instance.LoadSound(enemy.bulletThrowSound, enemy.transform);
+
                     }
                     else
                     {
@@ -191,6 +207,8 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("animiationLoop", true);
                         enemy.anim.SetBool("bigFatman", true);
                         lastTimenterEyeSpawn = Time.time;
+
+                        enemy.squelchingSoundKey = AudioManager.Instance.LoadSound(enemy.squelchingSound, enemy.transform);
                     }
                 }
 
@@ -204,7 +222,7 @@ public class E13_FiringState : FiringState
                         if (!eyesSpawned[eyeToSpawn])
                         {
                             GameObject eyeMonsterr = GameObject.Instantiate(enemy.eyeMonsterPrefab, enemy.transform.position + (Vector3)Random.insideUnitCircle.normalized * Random.Range(5f, 8f), Quaternion.identity);
-                            eyeMonsterr.GetComponent<EnemySpawn>().spawnEnemyAtStart = true;
+                            //eyeMonsterr.GetComponent<EnemySpawn>().spawnEnemyAtStart = true;
                             eyesSpawned[eyeToSpawn] = true;
                         }
                        
@@ -228,7 +246,11 @@ public class E13_FiringState : FiringState
 
                 if (doingBF && enemy.anim.GetBool("animiationLoop") && Time.time - lastTimeEnterBigFatman >= timeInBF)
                 {
-                    enemy.anim.SetBool("animiationLoop", false);                    
+                    enemy.anim.SetBool("animiationLoop", false);
+                    if (enemy.bulletThrowSoundKey.HasValue)
+                    {
+                        AudioManager.Instance.RemoveAudio(enemy.bulletThrowSoundKey.Value);
+                    }
                 }
 
                 //Update
@@ -282,6 +304,13 @@ public class E13_FiringState : FiringState
                         lastTimenterQuadruleLaserSpin = Time.time;
                         doingAttack = true;
 
+                        enemy.laserChargeSoundKey = AudioManager.Instance.LoadSound(enemy.laserChargeSound, enemy.transform);
+                        if (enemy.laserChargeSoundKey.HasValue)
+                        {
+                            AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.laserChargeSoundKey.Value).pitch = 2;
+                        }
+
+
                     }
                     else if(aux <= 7)
                     {
@@ -293,6 +322,9 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("bigFatman", true);
                         lastTimeEnterBulletSpread = Time.time;
                         doingAttack = true;
+
+                        enemy.bulletThrowSoundKey = AudioManager.Instance.LoadSound(enemy.bulletThrowSound, enemy.transform);
+
 
                     }
                     else
@@ -306,6 +338,8 @@ public class E13_FiringState : FiringState
                         lastTimenterEyesBall = Time.time;            
                         doingAttack = true;
 
+                        enemy.squelchingSoundKey = AudioManager.Instance.LoadSound(enemy.squelchingSound, enemy.transform);
+
                     }
                 }
 
@@ -315,11 +349,19 @@ public class E13_FiringState : FiringState
                 if (doingSpread && enemy.anim.GetBool("animiationLoop") && Time.time - lastTimeEnterBulletSpread >= timeInSpread)
                 {
                     enemy.anim.SetBool("animiationLoop", false);
+                    if (enemy.bulletThrowSoundKey.HasValue)
+                    {
+                        AudioManager.Instance.RemoveAudio(enemy.bulletThrowSoundKey.Value);
+                    }
                 }
 
                 if(doingEyesBall && enemy.anim.GetBool("animiationLoop") && Time.time - lastTimenterEyesBall >= timeEyesBall)
                 {
                     enemy.anim.SetBool("animiationLoop", false);
+                    if (enemy.bulletThrowSoundKey.HasValue)
+                    {
+                        AudioManager.Instance.RemoveAudio(enemy.bulletThrowSoundKey.Value);
+                    }
                 }
 
                 //Update
@@ -362,11 +404,20 @@ public class E13_FiringState : FiringState
                         enemy.anim.SetBool("laserSpinEyeForms", true);
                         lastTimenterEyesFormsAndSingleLaserSpin = Time.time;
                         doingAttack = true;
+
+                        enemy.bulletThrowSoundKey = AudioManager.Instance.LoadSound(enemy.bulletThrowSound, enemy.transform);
+
                         FunctionTimer.Create(() =>
                         {
                             if (enemy != null)
                             {
                                 enemy.anim.SetBool("animiationLoop", true);
+                                enemy.laserChargeSoundKey = AudioManager.Instance.LoadSound(enemy.laserChargeSound, enemy.transform);
+                                if (enemy.laserChargeSoundKey.HasValue)
+                                {
+                                    AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.laserChargeSoundKey.Value).pitch = 2;
+                                }
+
                             }
 
                         }, 1);
@@ -386,6 +437,11 @@ public class E13_FiringState : FiringState
                         enemy.transform.DOLocalMoveY(enemy.transform.position.y - 1, 0.7f);
                         actualDestination = enemy.pathScript.GetNextPoint(enemy);
                         enemy.sparks.SetActive(true);
+                        enemy.dashSoundKey2 = AudioManager.Instance.LoadSound(enemy.dashSound2, enemy.transform, 0, true);
+                        if (enemy.dashSoundKey2.HasValue)
+                        {
+                            AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.dashSoundKey2.Value).pitch = 2;
+                        }
                         FunctionTimer.Create(() =>
                         {
                             if(enemy != null && enemy.shield != null && enemy.sparks != null)
@@ -428,6 +484,9 @@ public class E13_FiringState : FiringState
                         actualDestination = enemy.pathScript.GetNextPoint(enemy);
                         enemy.agent.destination = actualDestination;
 
+                        enemy.dashSoundKey = AudioManager.Instance.LoadSound(enemy.dashSound, enemy.transform);
+
+
                     }
                 }
 
@@ -467,9 +526,12 @@ public class E13_FiringState : FiringState
                                 enemy.sombra.transform.DOLocalMoveY(-2.73f, 0.7f);
                                 enemy.transform.DOLocalMoveY(enemy.restingPoint.y, 0.7f);
                             }
-                        }, 0.1f);                        
-                       
+                        }, 0.1f);
 
+                        if (enemy.dashSoundKey2.HasValue)
+                        {
+                            AudioManager.Instance.RemoveAudio(enemy.dashSoundKey2.Value);
+                        }
                     }
 
                 }
@@ -498,6 +560,11 @@ public class E13_FiringState : FiringState
 
                 if (doingyesFormsAndSingleLaserSpin && enemy.anim.GetBool("animiationLoop") && Time.time - lastTimenterEyesFormsAndSingleLaserSpin >= timeyesFormsAndSingleLaserSpin)
                 {
+                    if (enemy.bulletThrowSoundKey.HasValue)
+                    {
+                        AudioManager.Instance.RemoveAudio(enemy.bulletThrowSoundKey.Value);
+                    }
+
                     enemy.anim.SetBool("animiationLoop", false);
                     doingyesFormsAndSingleLaserSpin = false;
                     enemy.anim.SetBool("idle", true);
@@ -703,7 +770,9 @@ public class E13_FiringState : FiringState
         lastShootTime = Time.time;
     }
     public void StartLaser()
-    {        
+    {
+        enemy.laserSoundKey = AudioManager.Instance.LoadSound(enemy.laserSound, enemy.transform, 0, true);
+
         lineRenderers[0].enabled = true;
         lineRenderers[0].material.DOFloat(0, "_ClipUvUp", 0.15f);
         lineRenderers[0].material.DOFloat(0, "_ClipUvDown", 0.15f);
@@ -729,6 +798,11 @@ public class E13_FiringState : FiringState
 
     public void EndLaser()
     {
+        if (enemy.laserSoundKey.HasValue)
+        {
+            AudioManager.Instance.RemoveAudio(enemy.laserSoundKey.Value);
+        }
+
         foreach (LineRenderer lr in lineRenderers)
         {            
             lr.material.DOFloat(0.5f, "_ClipUvDown", 0.35f);

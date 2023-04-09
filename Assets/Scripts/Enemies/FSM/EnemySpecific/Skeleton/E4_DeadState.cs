@@ -16,10 +16,10 @@ public class E4_DeadState : DeadState
     public override void Enter()
     {
         base.Enter();
-        //if (probabilityOfHearth == 0)
-        //{
+
+        if (!enemy.player.GetComponent<PlayerMovement>().infinito)
             Object.Instantiate(stateData.bullets, enemy.transform.position, Quaternion.identity);
-        //}
+
         Object.Instantiate(stateData.orbes, enemy.transform.position, Quaternion.identity);
     }
 

@@ -35,6 +35,10 @@ public class Enemy14 : Entity
     [HideInInspector]
     public GameObject idleSwordsInstance;
 
+    public AudioClip laserCharge;
+    public AudioClip dash;
+    public AudioClip laser;
+
     public override void Start()
     {
         base.Start();

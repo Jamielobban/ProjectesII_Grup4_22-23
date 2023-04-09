@@ -14,8 +14,9 @@ public class E15_DeadState : DeadState
     {
         base.Enter();
 
-        Object.Instantiate(stateData.bullets, enemy.transform.position, Quaternion.identity);
-        //}
+        if (!enemy.player.GetComponent<PlayerMovement>().infinito)
+            Object.Instantiate(stateData.bullets, enemy.transform.position, Quaternion.identity);
+
         Object.Instantiate(stateData.orbes, enemy.transform.position, Quaternion.identity);
     }
 
