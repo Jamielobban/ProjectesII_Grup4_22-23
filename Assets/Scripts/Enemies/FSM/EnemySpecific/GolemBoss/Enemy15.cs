@@ -25,6 +25,7 @@ public class Enemy15 : Entity
 
     public GameObject gas;
     public GameObject boomerang;
+    public GameObject rippleDamage;
 
     public override void FixedUpdate()
     {
@@ -59,7 +60,7 @@ public class Enemy15 : Entity
     {
         base.Update();
 
-        if (enemyHealth >= 2000)
+        if (enemyHealth >= 2500)
         {
             mode = 1;
             sr.material.SetColor("_OutlineColor", colorMode1);
@@ -76,7 +77,7 @@ public class Enemy15 : Entity
 
         if (isDead && stateMachine.currentState != deadState)
         {
-            stateMachine.ChangeState(firingState);
+            stateMachine.ChangeState(deadState);
         }
     }
 
