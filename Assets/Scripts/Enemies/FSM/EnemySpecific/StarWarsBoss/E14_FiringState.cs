@@ -76,16 +76,22 @@ public class E14_FiringState : FiringState
 
                         timeInSwordMissiles = Random.Range(1f, 2.5f);
 
-                        enemy.GetComponent<BoxCollider2D>().enabled = false;                        
+                        enemy.GetComponent<BoxCollider2D>().enabled = false;        
+                        enemy.disappearSoundKey = AudioManager.Instance.LoadSound(enemy.disappearSound, enemy.transform);
+
 
                         lastTimeSwordMissiles = Time.time;
 
                         idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(0, 0.3f);
+
+                        enemy.RemoveIdleSwords();
                     }
                     else{
                         doingAttack = true;
                         doingSpawnNear = true;
                         enemy.firePoint.localPosition = new Vector3(0, -2.56f, 0);
+
+                        enemy.disappearSoundKey = AudioManager.Instance.LoadSound(enemy.disappearSound, enemy.transform);
 
                         enemy.anim.SetBool("idle", false);
                         enemy.anim.SetBool("fire", true);
@@ -97,6 +103,9 @@ public class E14_FiringState : FiringState
 
                         timeInSpawnNear = Random.Range(1f, 4f);
                         idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(0, 0.3f);
+
+                        enemy.RemoveIdleSwords();
+
                     }
 
                 }
@@ -105,6 +114,7 @@ public class E14_FiringState : FiringState
                 {
                     enemy.transform.position = enemy.posibleSpawnPoints[0];
                     enemy.GetComponent<BoxCollider2D>().enabled = true;
+                    enemy.appearSoundKey = AudioManager.Instance.LoadSound(enemy.appearSound, enemy.transform);
                     enemy.anim.SetBool("animationLoop", false);
                 }
 
@@ -119,7 +129,11 @@ public class E14_FiringState : FiringState
                     enemy.transform.position = enemy.player.transform.position + new Vector3(0, 2, 0);
                     enemy.anim.SetBool("animationLoop", false);
                     enemy.GetComponent<BoxCollider2D>().enabled = true;
+                    
+                    enemy.appearSoundKey = AudioManager.Instance.LoadSound(enemy.appearSound, enemy.transform);
+
                 }
+
 
                 if (doingSpawnNear && !enemy.anim.GetBool("animationLoop"))
                 {
@@ -139,7 +153,7 @@ public class E14_FiringState : FiringState
             case 2:
                 if (!doingMultiSword && !doing4Waves && !doingSpawnNear && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
                 {
-                    int random = Random.Range(1, 11);
+                    int random = Random.Range(1, 3);//11
 
                     if (random <= 2)//2
                     {
@@ -155,12 +169,17 @@ public class E14_FiringState : FiringState
                         timeIn4Waves = Random.Range(1.5f, 4f);
 
                         enemy.GetComponent<BoxCollider2D>().enabled = false;
+                        enemy.disappearSoundKey = AudioManager.Instance.LoadSound(enemy.disappearSound, enemy.transform);
+
 
                         enemy.GetComponentInChildren<SpriteRenderer>().material.SetFloat("_ClipUvDown", 0.09f);
 
                         lastTime4Waves = Time.time;
 
                         idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(0, 0.3f);
+
+                        enemy.RemoveIdleSwords();
+
                         //idleSwords.SetActive(false);
                     }
                     else if (random <= 5)
@@ -178,8 +197,13 @@ public class E14_FiringState : FiringState
                         timeInMultiSword = Random.Range(1.5f, 3.5f);
 
                         enemy.GetComponent<BoxCollider2D>().enabled = false;
+                        enemy.disappearSoundKey = AudioManager.Instance.LoadSound(enemy.disappearSound, enemy.transform);
+
 
                         idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(0, 0.3f);
+
+                        enemy.RemoveIdleSwords();
+
                         //idleSwords.SetActive(false);
                     }
                     else
@@ -194,10 +218,15 @@ public class E14_FiringState : FiringState
                         enemy.anim.SetBool("animationLoop", true);
                         lastTimeSpawnNear = Time.time;
 
+                        enemy.disappearSoundKey = AudioManager.Instance.LoadSound(enemy.disappearSound, enemy.transform);
+
                         enemy.GetComponent<BoxCollider2D>().enabled = false;
 
                         timeInSpawnNear = Random.Range(1f, 4f);
                         idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(0, 0.3f);
+
+                        enemy.RemoveIdleSwords();
+
                     }
                 }
 
@@ -205,14 +234,17 @@ public class E14_FiringState : FiringState
                 {
                     enemy.transform.position = enemy.posibleSpawnPoints[Random.Range(0, enemy.posibleSpawnPoints.Length)];
                     enemy.GetComponent<BoxCollider2D>().enabled = true;
+                    enemy.appearSoundKey = AudioManager.Instance.LoadSound(enemy.appearSound, enemy.transform);
                     enemy.anim.SetBool("animationLoop", false);
                 }
 
                 if (doing4Waves && Time.time - lastTime4Waves >= timeIn4Waves && enemy.anim.GetBool("animationLoop"))
                 {
                     enemy.transform.position = enemy.posibleSpawnPoints[Random.Range(0, enemy.posibleSpawnPoints.Length)];
+                    enemy.appearSoundKey = AudioManager.Instance.LoadSound(enemy.appearSound, enemy.transform);
                     enemy.GetComponent<BoxCollider2D>().enabled = true;
                     enemy.anim.SetBool("animationLoop", false);
+                    
                 }
 
                 if (doingSpawnNear && enemy.agent.enabled)
@@ -226,6 +258,9 @@ public class E14_FiringState : FiringState
                     enemy.transform.position = enemy.player.transform.position + new Vector3(0, 2, 0);
                     enemy.anim.SetBool("animationLoop", false);
                     enemy.GetComponent<BoxCollider2D>().enabled = true;
+                    //enemy.slashBurningSoundKey = AudioManager.Instance.LoadSound(enemy.swordSound, enemy.transform, 0, true, true, 0.3f);
+                    enemy.appearSoundKey = AudioManager.Instance.LoadSound(enemy.appearSound, enemy.transform);
+
                 }
 
                 if (doingSpawnNear && !enemy.anim.GetBool("animationLoop"))
@@ -268,6 +303,8 @@ public class E14_FiringState : FiringState
 
                         idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(1, 0.3f);
 
+                        enemy.CreateIdleSwordsSounds();
+
                     }
                 }
                 break;
@@ -282,9 +319,13 @@ public class E14_FiringState : FiringState
     public void GenerateFireWave()
     {
         GameObject waveSword1Left = GameObject.Instantiate(enemy.flameWave, new Vector3(-6.7f - 0.65f + enemy.transform.position.x, -4.756f + enemy.transform.position.y, 0), Quaternion.identity);
+        AudioManager.Instance.LoadSound(enemy.explosionSound, waveSword1Left.transform);
+
         waveSword1Left.GetComponent<SpawnObjectsInCircle>().id = 1;
         waveSword1Left.GetComponent<SpawnObjectsInCircle>().player = enemy.player;
         GameObject waveSword1Right = GameObject.Instantiate(enemy.flameWave, new Vector3(6.7f + 0.65f + enemy.transform.position.x, -4.756f + enemy.transform.position.y, 0), Quaternion.identity);
+        AudioManager.Instance.LoadSound(enemy.explosionSound, waveSword1Right.transform);
+
         waveSword1Right.GetComponent<SpawnObjectsInCircle>().id = 1;
         waveSword1Right.GetComponent<SpawnObjectsInCircle>().player = enemy.player;
 
@@ -294,11 +335,13 @@ public class E14_FiringState : FiringState
     public void GenerateFireWaveFar()
     {
         GameObject waveSword2Left = GameObject.Instantiate(enemy.flameWave, new Vector3(-7.789f - 0.85f + enemy.transform.position.x, -4.756f + enemy.transform.position.y, 0), Quaternion.identity);
+        AudioManager.Instance.LoadSound(enemy.explosionSound, waveSword2Left.transform);
+
         waveSword2Left.GetComponent<SpawnObjectsInCircle>().id = 2;
         waveSword2Left.GetComponent<SpawnObjectsInCircle>().player = enemy.player;
-
-
         GameObject waveSword2Right = GameObject.Instantiate(enemy.flameWave, new Vector3(7.789f + 0.85f + enemy.transform.position.x, -4.756f + enemy.transform.position.y, 0), Quaternion.identity);
+        AudioManager.Instance.LoadSound(enemy.explosionSound, waveSword2Right.transform);
+
         waveSword2Right.GetComponent<SpawnObjectsInCircle>().id = 2;
         waveSword2Right.GetComponent<SpawnObjectsInCircle>().player = enemy.player;
 
@@ -311,6 +354,14 @@ public class E14_FiringState : FiringState
 
         enemy.GetComponent<BoxCollider2D>().offset = new Vector2(enemy.GetComponent<BoxCollider2D>().offset.x, -2.537f);
 
+        if (doing4Waves)
+        {
+            enemy.energyexplosionSoundKey = AudioManager.Instance.LoadSound(enemy.energyexplosionSound, enemy.transform, 0.4f);
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.energyexplosionSoundKey.Value).transform.localPosition = new Vector3(2, -4, 0);
+            enemy.energyexplosionSoundKey = AudioManager.Instance.LoadSound(enemy.energyexplosionSound, enemy.transform, 0.4f);
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.energyexplosionSoundKey.Value).transform.localPosition = new Vector3(-2, -4, 0);
+
+        }
     }
 
     public void ExitState()
@@ -327,6 +378,7 @@ public class E14_FiringState : FiringState
 
             idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(1, 0.3f);
 
+            enemy.CreateIdleSwordsSounds();
         }
 
         if (doingSpawnNear)
@@ -341,6 +393,15 @@ public class E14_FiringState : FiringState
 
             a2Swords = null;
             idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(1, 0.3f);
+
+            enemy.CreateIdleSwordsSounds();
+
+            //if(enemy.slashBurningSoundKey.HasValue)
+            //    AudioManager.Instance.RemoveAudio(enemy.slashBurningSoundKey.Value);
+
+
+            //if (enemy.swordSoundKey.HasValue)
+            //    AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.swordSoundKey.Value).volume = 1;
         }
 
         if (doingSwordMissiles)
@@ -356,6 +417,8 @@ public class E14_FiringState : FiringState
             enemy.GetComponentInChildren<SpriteRenderer>().material.SetFloat("_ClipUvUp", 0);
             a1Swords = null;
             idleSwords.GetComponentInChildren<SpriteRenderer>().material.DOFade(1, 0.3f);
+
+            enemy.CreateIdleSwordsSounds();
         }
 
         doingAttack = false;
@@ -412,6 +475,9 @@ public class E14_FiringState : FiringState
     {
         a2Swords = GameObject.Instantiate(enemy.attack2Swords, enemy.GetComponentInChildren<SpriteRenderer>().transform);
         enemy.agent.enabled = true;
+
+        enemy.slashSoundKey = AudioManager.Instance.LoadSound(enemy.slashSound, a2Swords.transform, 0, false, true, 0.7f);
+        enemy.slashSoundKey = AudioManager.Instance.LoadSound(enemy.slashSound, a2Swords.transform, 0.5f, false, true, 0.7f);
     }
 
     public void StartAttackMissiles()
@@ -422,6 +488,10 @@ public class E14_FiringState : FiringState
         enemy.GetComponentInChildren<SpriteRenderer>().material.SetFloat("_ClipUvUp", 0.09f);
         a1Swords = GameObject.Instantiate(enemy.missileSwords, enemy.GetComponentInChildren<SpriteRenderer>().transform);
         a1Swords.transform.rotation = Quaternion.identity;
+        foreach(Transform childT in a1Swords.transform)
+        {
+            AudioManager.Instance.LoadSound(enemy.swordSound, childT, 0, true);
+        }
         enemy.agent.enabled = true;        
     }
 

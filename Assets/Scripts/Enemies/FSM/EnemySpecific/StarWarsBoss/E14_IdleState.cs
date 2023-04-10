@@ -27,6 +27,8 @@ public class E14_IdleState : IdleState
         startTime = Time.time;
 
         enemy.idleSwordsInstance = GameObject.Instantiate(enemy.idleSwords, sr.transform);
+
+        enemy.CreateIdleSwordsSounds();
     }
 
     public override void Exit()

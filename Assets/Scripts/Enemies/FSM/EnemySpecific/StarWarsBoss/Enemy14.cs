@@ -35,9 +35,29 @@ public class Enemy14 : Entity
     [HideInInspector]
     public GameObject idleSwordsInstance;
 
-    public AudioClip laserCharge;
-    public AudioClip dash;
-    public AudioClip laser;
+    public AudioClip swordSound;
+    public int? swordSoundKey;
+    public AudioClip energyexplosionSound;
+    public int? energyexplosionSoundKey;
+    public AudioClip explosionSound;
+    public int? explosionSoundKey;
+    public AudioClip slashSound;
+    public int? slashSoundKey;
+    public AudioClip appearSound;
+    public int? appearSoundKey;
+    public AudioClip disappearSound;
+    public int? disappearSoundKey;
+    public AudioClip swordAppearSound;
+    public int? swordAppearSoundKey;
+    public AudioClip deadSound;
+    public int? deadSoundKey;
+
+    public int? idelSwordSoundKey1;
+    public int? idelSwordSoundKey2;
+    public int? idelSwordSoundKey3;
+    public int? idelSwordSoundKey4;
+
+    //public int? slashBurningSoundKey;
 
     public override void Start()
     {
@@ -49,7 +69,7 @@ public class Enemy14 : Entity
 
         stateMachine.Initialize(idleState);
 
-        mode = 1; //1
+        mode = 2; //1
         waitBetweenAttacks = 2; //2
     }
 
@@ -57,20 +77,20 @@ public class Enemy14 : Entity
     {
         base.Update();
 
-        if (enemyHealth >= 2000)
-        {
-            mode = 1;
-            sr.material.SetColor("_OutlineColor", colorMode1);
-            waitBetweenAttacks = 2f;
-        }
-        else
-        {
-            if (mode != 2 && !firingState.doingAttack)
-                mode = 2;
+        //if (enemyHealth >= 2000)
+        //{
+        //    mode = 1;
+        //    sr.material.SetColor("_OutlineColor", colorMode1);
+        //    waitBetweenAttacks = 2f;
+        //}
+        //else
+        //{
+        //    if (mode != 2 && !firingState.doingAttack)
+        //        mode = 2;
 
-            sr.material.SetColor("_OutlineColor", colorMode2);
-            waitBetweenAttacks = 1.5f;
-        }
+        //    sr.material.SetColor("_OutlineColor", colorMode2);
+        //    waitBetweenAttacks = 1.5f;
+        //}
 
         if (isDead && stateMachine.currentState != deadState)
         {
@@ -109,5 +129,37 @@ public class Enemy14 : Entity
         {
             CancelInvoke();
         }
+    }
+
+    public void CreateIdleSwordsSounds()
+    {
+        idelSwordSoundKey1 = AudioManager.Instance.LoadSound(swordSound, transform, 0, true, true, 0.3f);
+        if (idelSwordSoundKey1.HasValue)
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(idelSwordSoundKey1.Value).transform.localPosition = new Vector3(-1.72f, -2.07f, 0);
+        idelSwordSoundKey2 = AudioManager.Instance.LoadSound(swordSound, transform, 0f, true, true, 0.3f);
+        if (idelSwordSoundKey2.HasValue)
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(idelSwordSoundKey2.Value).transform.localPosition = new Vector3(1.72f, -2.07f, 0);
+        idelSwordSoundKey3 = AudioManager.Instance.LoadSound(swordSound, transform, 0f, true, true, 0.3f);
+        if (idelSwordSoundKey3.HasValue)
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(idelSwordSoundKey3.Value).transform.localPosition = new Vector3(1.72f, -3.21f, 0);
+        idelSwordSoundKey4 = AudioManager.Instance.LoadSound(swordSound, transform, 0f, true, true, 0.3f);
+        if (idelSwordSoundKey4.HasValue)
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(idelSwordSoundKey4.Value).transform.localPosition = new Vector3(-1.72f, -3.21f, 0);
+    }
+
+    public void RemoveIdleSwords()
+    {
+
+        if (idelSwordSoundKey1.HasValue)
+            AudioManager.Instance.RemoveAudio(idelSwordSoundKey1.Value);
+        
+        if (idelSwordSoundKey2.HasValue)
+            AudioManager.Instance.RemoveAudio(idelSwordSoundKey2.Value);
+        
+        if (idelSwordSoundKey3.HasValue)
+            AudioManager.Instance.RemoveAudio(idelSwordSoundKey3.Value);
+        
+        if (idelSwordSoundKey4.HasValue)
+            AudioManager.Instance.RemoveAudio(idelSwordSoundKey4.Value);
     }
 }
