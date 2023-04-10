@@ -12440,6 +12440,7 @@ MonoBehaviour:
   - {fileID: 349023815}
   porTriggers: 0
   triggers: []
+  generalCombatAudio: {fileID: 0}
   boss: 0
   bossNumber: 0
   enemyBoss: {fileID: 0}
@@ -134410,15 +134411,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: startTime
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: startMesage
-      value: 
+      value: Dont worry traveler
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: mesajes.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: mesajes.Array.data[0]
@@ -134430,11 +134431,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: mesajes.Array.data[2]
-      value: 
+      value: Make sure to pickup the essence\n you get from killing enemies
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: mesajes.Array.data[3]
-      value: 
+      value: Check your potion status, if its half \nfull you can hold E to heal
+        yourself
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajesEnd.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajesInConversation.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajesInConversation.Array.data[1]
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: mesajesInConversation.Array.data[2]
