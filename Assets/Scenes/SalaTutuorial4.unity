@@ -119469,24 +119469,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: startTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: startMesage
-      value: 'You can press Right click once per room to clear away bullets '
+      value: 'You can press Right click once per\n room to clear away bullets '
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: mesajes.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: mesajes.Array.data[0]
-      value: Make sure you use it wisely!
+      value: 'You can press Right click once per\n room to clear away bullets '
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: mesajes.Array.data[1]
-      value: It will keep you out of trouble
+      value: Make sure you use it wisely!
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: mesajes.Array.data[2]
-      value: 
+      value: It will keep you out of trouble
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: mesajes.Array.data[3]
@@ -119497,8 +119501,12 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
+      propertyPath: mesajesInConversation.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641883606868083626, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: mesajesInConversation.Array.data[2]
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6107110160039755038, guid: f7ab359e0eead4a4a819a45b58ec176d, type: 3}
       propertyPath: m_RootOrder

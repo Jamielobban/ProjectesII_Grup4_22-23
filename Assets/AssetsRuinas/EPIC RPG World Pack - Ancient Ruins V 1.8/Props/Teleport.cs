@@ -85,9 +85,9 @@ public class Teleport : MonoBehaviour
     void enablePlayer()
     {
         player.enabled = true;
-        playerMov.disableDash = true;
-        playerMov.GetComponentInChildren<RightHand>().weaponEquiped = false;
-        playerMov.canMove = false;
+        playerMov.disableDash = false;
+        playerMov.GetComponentInChildren<RightHand>().weaponEquiped = true;
+        playerMov.canMove = true;
     }
     
     void enterTransition()
