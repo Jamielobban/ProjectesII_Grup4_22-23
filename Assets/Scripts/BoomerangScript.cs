@@ -51,7 +51,7 @@ public class BoomerangScript : MonoBehaviour
             aux.x = Mathf.Abs(this.transform.position.x - actualDestination.x);
             aux.y = Mathf.Abs(this.transform.position.y - actualDestination.y);
             aux.z = 0;
-            Vector3 error = new Vector3(0.5f, 0.5f, 0);
+            Vector3 error = new Vector3(1f, 1f, 0);
 
             if (aux.x <= error.x && aux.y <= error.y)
             {

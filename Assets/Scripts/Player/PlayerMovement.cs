@@ -378,25 +378,25 @@ public class PlayerMovement : MonoBehaviour
 
                 if (canMove && !isDead)
                 {
-                    if (Input.GetKey(KeyCode.Q))
+                    if (Input.GetButton("Heal") && currentHearts < maxHearts)
                     {
                         time += Time.deltaTime;
-                        if(potionsSystem.amountToFill > 50)
+                        if(potionsSystem.amountToFill >= 50)
                         {
                             CinemachineShake.Instance.ShakeCamera(5f, .2f);
                             potionsSystem.potionPrefab.transform.DOShakePosition(0.5f, 1f, 5, 45, false,false, ShakeRandomnessMode.Full);
-                        }
+                        }
+
                         if(time >= 1f && potionsSystem.amountToFill >= 50)
                         {
                             potionsSystem.amountToFill -= 50;                            PlayerPrefs.SetInt("Hearts", currentHearts);
-                            potionsSystem.CheckPotionStatus();
-                            Health();
+                            Health();                            potionsSystem.CheckPotionStatus();
+                        }                        if (Input.GetButtonUp("Heal") || time >= 1f)
+                        {                            potionsSystem.CheckPotionStatus();
+                            time = 0;
                         }
                     }
-                    if (Input.GetButtonUp("Heal") || time >= 1.5f)
-                    {
-                        time = 0;
-                    }
+
                     movement.x = Input.GetAxisRaw("Horizontal");
                     movement.y = Input.GetAxisRaw("Vertical");                    movement = Vector3.ClampMagnitude(movement, 1f);                    //Debug.Log(movement.magnitude);                    moveDir = new Vector3(movement.x, movement.y).normalized;
 

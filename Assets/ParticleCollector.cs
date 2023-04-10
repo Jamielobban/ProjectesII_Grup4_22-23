@@ -41,6 +41,7 @@ public class ParticleCollector : MonoBehaviour
             ParticleSystem.Particle p = particles[i];
             p.remainingLifetime = 0;
             potions.amountToFill++;
+            Debug.Log("I ate one");
             StartCoroutine(WaitForFlash());
             particles[i] = p;
         }
@@ -55,7 +56,7 @@ public class ParticleCollector : MonoBehaviour
     private IEnumerator WaitForFlash()
     {
         potions.FlashPotion();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         potions.CheckPotionStatus();
     }
 

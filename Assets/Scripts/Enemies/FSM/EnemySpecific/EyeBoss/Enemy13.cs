@@ -234,10 +234,22 @@ public class Enemy13 : Entity
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(stateMachine.currentState == firingState && mode == 3 && (firingState.doingShieldSpin || firingState.returningRest) && collision.CompareTag("Player"))
+        if(stateMachine != null)
         {
-            collision.GetComponent<PlayerMovement>().GetDamage(2);
+
+            if(stateMachine.currentState == firingState/* && mode == 3 && (firingState.doingShieldSpin || firingState.returningRest) && collision.CompareTag("Player")*/)
+            {
+                if(mode == 3 && (firingState.doingShieldSpin || firingState.returningRest))
+                {
+                    if (collision.CompareTag("Player"))
+                    {
+                         collision.GetComponent<PlayerMovement>().GetDamage(2);
+
+                    }
+                }
+            }
         }
+
     }
 
 }

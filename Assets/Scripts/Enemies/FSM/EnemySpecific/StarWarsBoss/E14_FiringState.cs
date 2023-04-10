@@ -114,7 +114,7 @@ public class E14_FiringState : FiringState
 
                 if (doingSwordMissiles && Time.time - lastTimeSwordMissiles >= timeInSwordMissiles && enemy.anim.GetBool("animationLoop") && !enemy.GetComponent<BoxCollider2D>().enabled)
                 {
-                    enemy.transform.position = enemy.posibleSpawnPoints[0];
+                    enemy.transform.position = enemy.posibleSpawnPoints[4];
                     enemy.GetComponent<BoxCollider2D>().enabled = true;
                     enemy.appearSoundKey = AudioManager.Instance.LoadSound(enemy.appearSound, enemy.transform);
                     enemy.anim.SetBool("animationLoop", false);

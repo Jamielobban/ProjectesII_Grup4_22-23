@@ -22,7 +22,10 @@ public class PotionSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (amountToFill > 100)
+        {
+            amountToFill = 100;
+        }
     }
 
     public void FlashPotion()
@@ -34,22 +37,31 @@ public class PotionSystem : MonoBehaviour
     public void CheckPotionStatus()
     {
         //Debug.Log("Checking");
-        if (amountToFill >= 75)
+        //if(amountToFill > 100)
+        //{
+        //    amountToFill = 100;
+        //}
+
+        if (amountToFill >= 99)
         {
 
             potion.SetPotionImage(PotionStatus.Full);
         }
-        else if (amountToFill >= 50)
+        else if (amountToFill >= 75)
         {
             potion.SetPotionImage(PotionStatus.ThreeQuarter);
         }
-        else if (amountToFill >= 25)
+        else if (amountToFill >= 50)
         {
             potion.SetPotionImage(PotionStatus.Half);
         }
-        else if (amountToFill >= 1)
+        else if (amountToFill >= 25)
         {
             potion.SetPotionImage(PotionStatus.Quarter);
+        }
+        else if(amountToFill < 25)
+        {
+            potion.SetPotionImage(PotionStatus.Empty);
         }
     }
 }
