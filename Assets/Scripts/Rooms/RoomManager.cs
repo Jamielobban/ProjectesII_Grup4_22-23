@@ -63,7 +63,7 @@ public class RoomManager : MonoBehaviour
 
         playerAudio = FindObjectOfType<PlayerMovement>();
         roomCompleteAudio = Resources.Load<AudioClip>("Sounds/Room/RoomComplete");
-        //generalCombatAudio = Resources.Load<AudioClip>("Sounds/GeneralCombat");
+        generalCombatAudio = Resources.Load<AudioClip>("Sounds/GeneralCombat");
         doorOpenAudio = Resources.Load<AudioClip>("Sounds/Door/DoorOpening");
         //Assets / Resources / Sounds / Door / DoorClosing.wav
         doorCloseAudio = Resources.Load<AudioClip>("Sounds/Door/DoorClosing");
@@ -111,9 +111,11 @@ public class RoomManager : MonoBehaviour
     {
         doorCloseAudioKey = AudioManager.Instance.LoadSound(doorCloseAudio,playerAudio.transform.position);
 
-        
-        generalCombatKey = AudioManager.Instance.LoadSound(generalCombatAudio, playerAudio.transform);
-        
+
+        if (!boss)
+        {
+            generalCombatKey = AudioManager.Instance.LoadSound(generalCombatAudio, playerAudio.transform);
+        }
 
         //Start music
         for (int i = 0; i < doors.Length; i++)
