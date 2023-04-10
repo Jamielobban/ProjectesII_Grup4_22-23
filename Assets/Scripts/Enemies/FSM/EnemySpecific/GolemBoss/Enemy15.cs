@@ -27,6 +27,25 @@ public class Enemy15 : Entity
     public GameObject boomerang;
     public GameObject rippleDamage;
 
+    public AudioClip gasSound;
+    public int? gasSoundKey;
+    public AudioClip boomerangSound;
+    public int? boomerangSoundKey;
+    public AudioClip groundSound;
+    public int? groundSoundKey;
+    public AudioClip explosion;
+    public int? explosionKey;
+    public AudioClip golemSounds;
+    public int? golemSoundsKey;
+    public AudioClip rockDeadSound;
+    public int? rockDeadSoundKey;
+
+    public AudioClip backThemeSound;
+    public int? backThemeKey;
+
+    float waitTimeSound = 0;
+    float startWaitSound = 0;
+
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -52,19 +71,23 @@ public class Enemy15 : Entity
 
         stateMachine.Initialize(firingState);
 
+        golemSoundsKey = AudioManager.Instance.LoadSound(golemSounds, this.transform, 0, false, true, 0.4f);
+
         mode = 1; //1
         waitBetweenAttacks = 2; //2
+
+        backThemeKey = AudioManager.Instance.LoadSound(backThemeSound, player.transform, 0, true, false, 0.5f);
     }
 
     public override void Update()
     {
         base.Update();
 
-        if (enemyHealth >= 2500)
+        if (enemyHealth >= 3750)
         {
             mode = 1;
             sr.material.SetColor("_OutlineColor", colorMode1);
-            waitBetweenAttacks = 2f;
+            waitBetweenAttacks = 0.7f;
         }
         else
         {
@@ -72,8 +95,21 @@ public class Enemy15 : Entity
                 mode = 2;
 
             sr.material.SetColor("_OutlineColor", colorMode2);
-            waitBetweenAttacks = 1.5f;
+            waitBetweenAttacks = 1f;
         }
+
+        if(waitTimeSound == 0)
+        {
+            waitTimeSound = Random.Range(6.5f, 8.5f);
+        }
+
+        if(Time.time - startWaitSound >= waitTimeSound)
+        {
+            golemSoundsKey = AudioManager.Instance.LoadSound(golemSounds, this.transform, 0, false, true, 0.4f);
+            startWaitSound = Time.time;
+
+        }
+
 
         if (isDead && stateMachine.currentState != deadState)
         {

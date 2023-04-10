@@ -15,7 +15,7 @@ public class BoomerangScript : MonoBehaviour
     float timeWhenThrowed;
     bool isGoing = true;
     Vector3 actualDestination;
-
+    
     private void OnEnable()
     {        
         travelTime = GetComponentInParent<Enemy15>().vectorToPlayer.magnitude / velocityOnGoPlayer;
@@ -23,6 +23,9 @@ public class BoomerangScript : MonoBehaviour
         isGoing = true;
 
         ThrowBoomerang();
+        enemy.GetComponent<Enemy15>().boomerangSoundKey = AudioManager.Instance.LoadSound(enemy.GetComponent<Enemy15>().boomerangSound, this.transform, 0, true);
+        if (enemy.GetComponent<Enemy15>().boomerangSoundKey.HasValue)
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.GetComponent<Enemy15>().boomerangSoundKey.Value).pitch = 3;
     }
 
     private void Update()

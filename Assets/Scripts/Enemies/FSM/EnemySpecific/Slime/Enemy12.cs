@@ -21,6 +21,9 @@ public class Enemy12 : Entity
     public float velocity = 2;
     public int zoneID;
 
+    public AudioClip jumpSound;
+    public int? jumpSoundKey;
+
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -62,5 +65,18 @@ public class Enemy12 : Entity
     protected override void GetDamage(float damageHit)
     {
         base.GetDamage(damageHit);
+    }
+
+    public void SearchFunction(string funcName)
+    {
+        if (this.gameObject == null || stateMachine.currentState == null || stateMachine.currentState == deadState)
+            return;
+        var exampleType = stateMachine.currentState.GetType();
+        var exampleMethod = exampleType.GetMethod(funcName);
+        try { exampleMethod.Invoke(stateMachine.currentState, null); } catch { /*Debug.Log(funcName); Debug.Log(stateMachine.currentState);*/ };
+        if (this.gameObject == null)
+        {
+            CancelInvoke();
+        }
     }
 }

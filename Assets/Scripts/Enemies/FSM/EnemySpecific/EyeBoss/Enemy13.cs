@@ -66,6 +66,9 @@ public class Enemy13 : Entity
     public AudioClip backThemeSound;
     public int? backThemeSoundKey;
 
+    public AudioClip deadSound;
+    public int? deadSoundKey;
+
 
 
     public override void FixedUpdate()
@@ -103,7 +106,10 @@ public class Enemy13 : Entity
         stateMachine.Initialize(idleState);
 
         mode = 1;//1
-        waitBetweenAttacks = 3f;        
+        waitBetweenAttacks = 3f;
+
+        backThemeSoundKey = AudioManager.Instance.LoadSound(backThemeSound, player.transform, 0, true, false, 0.5f);
+
 
         laserMaxSize = GetComponentInChildren<LineRenderer>().widthMultiplier;
         foreach(LineRenderer lr in GetComponentsInChildren<LineRenderer>()) {

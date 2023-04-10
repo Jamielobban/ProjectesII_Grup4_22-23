@@ -46,7 +46,9 @@ public class E14_FiringState : FiringState
     {
         base.Exit();
 
-        if(multipleSwords != null && multipleSwords.activeInHierarchy && multipleSwords.transform.parent != enemy.GetComponent<SpriteRenderer>().transform)
+        SpriteRenderer sr = enemy.GetComponent<SpriteRenderer>();
+
+        if (multipleSwords != null && multipleSwords.activeInHierarchy/* && multipleSwords.transform.parent != sr.transform*/)
         {
             GameObject.Destroy(multipleSwords);
         }
@@ -153,9 +155,9 @@ public class E14_FiringState : FiringState
             case 2:
                 if (!doingMultiSword && !doing4Waves && !doingSpawnNear && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
                 {
-                    int random = Random.Range(1, 3);//11
+                    int random = Random.Range(1, 11);//11
 
-                    if (random <= 2)//2
+                    if (random <= 3)//3
                     {
                         doingAttack = true;
                         doing4Waves = true;
@@ -182,7 +184,7 @@ public class E14_FiringState : FiringState
 
                         //idleSwords.SetActive(false);
                     }
-                    else if (random <= 5)
+                    else if (random <= 6)
                     {
                         doingAttack = true;
                         doingMultiSword = true;
@@ -319,29 +321,29 @@ public class E14_FiringState : FiringState
     public void GenerateFireWave()
     {
         GameObject waveSword1Left = GameObject.Instantiate(enemy.flameWave, new Vector3(-6.7f - 0.65f + enemy.transform.position.x, -4.756f + enemy.transform.position.y, 0), Quaternion.identity);
+        waveSword1Left.GetComponent<SwordForWaveAudio>().enemy = enemy;
         AudioManager.Instance.LoadSound(enemy.explosionSound, waveSword1Left.transform);
-
         waveSword1Left.GetComponent<SpawnObjectsInCircle>().id = 1;
         waveSword1Left.GetComponent<SpawnObjectsInCircle>().player = enemy.player;
-        GameObject waveSword1Right = GameObject.Instantiate(enemy.flameWave, new Vector3(6.7f + 0.65f + enemy.transform.position.x, -4.756f + enemy.transform.position.y, 0), Quaternion.identity);
-        AudioManager.Instance.LoadSound(enemy.explosionSound, waveSword1Right.transform);
 
+        GameObject waveSword1Right = GameObject.Instantiate(enemy.flameWave, new Vector3(6.7f + 0.65f + enemy.transform.position.x, -4.756f + enemy.transform.position.y, 0), Quaternion.identity);
+        waveSword1Right.GetComponent<SwordForWaveAudio>().enemy = enemy;
+        AudioManager.Instance.LoadSound(enemy.explosionSound, waveSword1Right.transform);
         waveSword1Right.GetComponent<SpawnObjectsInCircle>().id = 1;
         waveSword1Right.GetComponent<SpawnObjectsInCircle>().player = enemy.player;
-
-
     }
 
     public void GenerateFireWaveFar()
     {
         GameObject waveSword2Left = GameObject.Instantiate(enemy.flameWave, new Vector3(-7.789f - 0.85f + enemy.transform.position.x, -4.756f + enemy.transform.position.y, 0), Quaternion.identity);
-        AudioManager.Instance.LoadSound(enemy.explosionSound, waveSword2Left.transform);
-
+        waveSword2Left.GetComponent<SwordForWaveAudio>().enemy = enemy;
+        AudioManager.Instance.LoadSound(enemy.explosionSound, waveSword2Left.transform);      
         waveSword2Left.GetComponent<SpawnObjectsInCircle>().id = 2;
         waveSword2Left.GetComponent<SpawnObjectsInCircle>().player = enemy.player;
-        GameObject waveSword2Right = GameObject.Instantiate(enemy.flameWave, new Vector3(7.789f + 0.85f + enemy.transform.position.x, -4.756f + enemy.transform.position.y, 0), Quaternion.identity);
-        AudioManager.Instance.LoadSound(enemy.explosionSound, waveSword2Right.transform);
 
+        GameObject waveSword2Right = GameObject.Instantiate(enemy.flameWave, new Vector3(7.789f + 0.85f + enemy.transform.position.x, -4.756f + enemy.transform.position.y, 0), Quaternion.identity);
+        waveSword2Right.GetComponent<SwordForWaveAudio>().enemy = enemy;
+        AudioManager.Instance.LoadSound(enemy.explosionSound, waveSword2Right.transform);
         waveSword2Right.GetComponent<SpawnObjectsInCircle>().id = 2;
         waveSword2Right.GetComponent<SpawnObjectsInCircle>().player = enemy.player;
 

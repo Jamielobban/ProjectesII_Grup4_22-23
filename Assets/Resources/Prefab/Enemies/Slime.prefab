@@ -69,6 +69,7 @@ MonoBehaviour:
   error: {x: 0, y: 0, z: 0}
   velocity: 3
   zoneID: 0
+  jumpSound: {fileID: 8300000, guid: 9d0af1ee4e1bb9e4f955c2b31363def2, type: 3}
 --- !u!61 &6583828446436923349
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -159,6 +160,7 @@ GameObject:
   - component: {fileID: 4679310611135462508}
   - component: {fileID: 4679310611135462509}
   - component: {fileID: 4679310611135462515}
+  - component: {fileID: 6256287439142025763}
   m_Layer: 0
   m_Name: Sr
   m_TagString: Untagged
@@ -270,6 +272,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6256287439142025763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4679310611135462511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fae0a2b03236274e907a4142e6faee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9199927326740800180
 GameObject:
   m_ObjectHideFlags: 0

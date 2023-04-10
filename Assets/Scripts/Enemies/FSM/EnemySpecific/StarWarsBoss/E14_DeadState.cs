@@ -33,7 +33,10 @@ public class E14_DeadState : DeadState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        if(enemy.backThemeKey.HasValue)
+        AudioManager.Instance.RemoveAudio(enemy.backThemeKey.Value);
         GameObject deadParticles = GameObject.Instantiate(enemy.deadBlood, entity.transform.position, entity.transform.rotation);
+        AudioManager.Instance.LoadSound(enemy.deadSound, enemy.transform.position);
         GameObject.Destroy(enemy.gameObject);
     }
 }

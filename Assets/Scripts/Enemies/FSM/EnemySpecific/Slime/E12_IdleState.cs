@@ -38,4 +38,9 @@ public class E12_IdleState : IdleState
     {
         base.PhysicsUpdate();
     }
+
+    public void DoJump()
+    {
+        enemy.jumpSoundKey = AudioManager.Instance.LoadSound(enemy.jumpSound, enemy.transform, 0, false, true, 0.5f);
+    }
 }

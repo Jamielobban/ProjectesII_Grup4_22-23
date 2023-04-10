@@ -82,9 +82,7 @@ public class E13_FiringState : FiringState
 
     public override void Enter()
     {
-        base.Enter();
-
-        enemy.backThemeSoundKey = AudioManager.Instance.LoadSound(enemy.backThemeSound, enemy.player, 0, true, false);
+        base.Enter();        
 
         lineRenderers = enemy.GetComponentsInChildren<LineRenderer>();
         

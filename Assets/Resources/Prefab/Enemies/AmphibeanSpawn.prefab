@@ -7,13 +7,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6281430479799677975, guid: 7c0b98fff5b541f48b0b6104e6055483, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01f3b7542e0abcb4fa99e8a3fd3ce22f, type: 2}
     - target: {fileID: 1602158541302279488, guid: 7c0b98fff5b541f48b0b6104e6055483, type: 3}
       propertyPath: EnemyPrefab
       value: 
       objectReference: {fileID: 323605107101077886, guid: c0856e8da35548e4b863829af4ed3d4c, type: 3}
     - target: {fileID: 4575900913035887074, guid: 7c0b98fff5b541f48b0b6104e6055483, type: 3}
       propertyPath: m_Name
-      value: EnemySpawner
+      value: AmphibeanSpawn
       objectReference: {fileID: 0}
     - target: {fileID: 8990120376065898294, guid: 7c0b98fff5b541f48b0b6104e6055483, type: 3}
       propertyPath: m_RootOrder

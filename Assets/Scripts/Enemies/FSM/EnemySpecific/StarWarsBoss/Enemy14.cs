@@ -57,6 +57,8 @@ public class Enemy14 : Entity
     public int? idelSwordSoundKey3;
     public int? idelSwordSoundKey4;
 
+    public AudioClip backThemeSound;
+    public int? backThemeKey;
     //public int? slashBurningSoundKey;
 
     public override void Start()
@@ -69,7 +71,9 @@ public class Enemy14 : Entity
 
         stateMachine.Initialize(idleState);
 
-        mode = 2; //1
+        backThemeKey = AudioManager.Instance.LoadSound(backThemeSound, player.transform, 0, true, false, 0.5f);
+
+        mode = 1; //1
         waitBetweenAttacks = 2; //2
     }
 
@@ -77,20 +81,20 @@ public class Enemy14 : Entity
     {
         base.Update();
 
-        //if (enemyHealth >= 2000)
-        //{
-        //    mode = 1;
-        //    sr.material.SetColor("_OutlineColor", colorMode1);
-        //    waitBetweenAttacks = 2f;
-        //}
-        //else
-        //{
-        //    if (mode != 2 && !firingState.doingAttack)
-        //        mode = 2;
+        if (enemyHealth >= 4000)
+        {
+            mode = 1;
+            sr.material.SetColor("_OutlineColor", colorMode1);
+            waitBetweenAttacks = 2f;
+        }
+        else
+        {
+            if (mode != 2 && !firingState.doingAttack)
+                mode = 2;
 
-        //    sr.material.SetColor("_OutlineColor", colorMode2);
-        //    waitBetweenAttacks = 1.5f;
-        //}
+            sr.material.SetColor("_OutlineColor", colorMode2);
+            waitBetweenAttacks = 1.5f;
+        }
 
         if (isDead && stateMachine.currentState != deadState)
         {

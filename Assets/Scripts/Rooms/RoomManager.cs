@@ -110,7 +110,11 @@ public class RoomManager : MonoBehaviour
     void closeDoors()
     {
         doorCloseAudioKey = AudioManager.Instance.LoadSound(doorCloseAudio,playerAudio.transform.position);
+
+        
         generalCombatKey = AudioManager.Instance.LoadSound(generalCombatAudio, playerAudio.transform);
+        
+
         //Start music
         for (int i = 0; i < doors.Length; i++)
         {

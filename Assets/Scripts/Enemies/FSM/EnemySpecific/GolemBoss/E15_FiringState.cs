@@ -95,6 +95,7 @@ public class E15_FiringState : FiringState
 
                         doingPunch = true;
 
+                        enemy.groundSoundKey = AudioManager.Instance.LoadSound(enemy.groundSound, enemy.GetComponentInChildren<CircleCollider2D>().bounds.center, 0.7f);
 
                         lastTimePunch = Time.time;
                     }
@@ -110,6 +111,11 @@ public class E15_FiringState : FiringState
                         enemy.anim.SetBool("animationLoop", false);
 
                         doingGas = true;
+
+                        enemy.gasSoundKey = AudioManager.Instance.LoadSound(enemy.gasSound, enemy.firePoint, 0.5f);
+
+                        if (enemy.gasSoundKey.HasValue)
+                            AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.gasSoundKey.Value).pitch = 2;
 
                         lastTimeGas = Time.time;
                     }
@@ -136,7 +142,16 @@ public class E15_FiringState : FiringState
                     {
                         enemy.agent.enabled = true;
                     }
-                    enemy.agent.destination = enemy.player.transform.position + new Vector3(0,2,0);
+                    float xSpace;
+                    if(enemy.transform.localScale.x > 0)
+                    {
+                        xSpace = -2;
+                    }
+                    else
+                    {
+                        xSpace = 2;
+                    }
+                    enemy.agent.destination = enemy.player.transform.position + new Vector3(xSpace, 2,0);
                 }
                 else
                 {
@@ -198,6 +213,7 @@ public class E15_FiringState : FiringState
 
                         doingPunch = true;
 
+                        enemy.groundSoundKey = AudioManager.Instance.LoadSound(enemy.groundSound, enemy.GetComponentInChildren<CircleCollider2D>().bounds.center, 0.7f);
 
                         lastTimePunch = Time.time;
                     }
@@ -211,6 +227,11 @@ public class E15_FiringState : FiringState
                         enemy.anim.SetBool("boomerang", false);
                         enemy.anim.SetBool("gas", true);
                         enemy.anim.SetBool("animationLoop", false);
+
+                        enemy.gasSoundKey = AudioManager.Instance.LoadSound(enemy.gasSound, enemy.firePoint, 0.5f);
+
+                        if (enemy.gasSoundKey.HasValue)
+                            AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.gasSoundKey.Value).pitch = 2;
 
                         doingGas = true;
 
@@ -249,7 +270,8 @@ public class E15_FiringState : FiringState
                             enemy.anim.SetBool("animationLoop", false);
 
                             lastTimeProjectile = Time.time;
-                            
+
+                            enemy.explosionKey = AudioManager.Instance.LoadSound(enemy.explosion, enemy.transform, 0.3f);
                         }
 
                         
@@ -262,7 +284,16 @@ public class E15_FiringState : FiringState
                     {
                         enemy.agent.enabled = true;
                     }
-                    enemy.agent.destination = enemy.player.transform.position + new Vector3(0, 2, 0);
+                    float xSpace;
+                    if (enemy.transform.localScale.x > 0)
+                    {
+                        xSpace = -2;
+                    }
+                    else
+                    {
+                        xSpace = 2;
+                    }
+                    enemy.agent.destination = enemy.player.transform.position + new Vector3(xSpace, 2, 0);
                 }
                 else
                 {

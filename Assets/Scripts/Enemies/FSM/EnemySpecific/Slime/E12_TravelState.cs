@@ -50,4 +50,9 @@ public class E12_TravelState : TravelState
 
         enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, enemy.actualDestination, enemy.velocity * Time.deltaTime);
     }
+
+    public void DoJump()
+    {
+        enemy.jumpSoundKey = AudioManager.Instance.LoadSound(enemy.jumpSound, enemy.transform, 0, false, true, 0.5f);
+    }
 }
