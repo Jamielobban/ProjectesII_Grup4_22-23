@@ -26,6 +26,12 @@ public class WeaponGenerator : MonoBehaviour
     int currentWeapon;
     public static WeaponGenerator Instance { get; private set; }
 
+    bool canSwitchWeapon;
+
+    int? weaponChange;
+    AudioClip weaponChangeAudio;
+    Camera cam;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -42,9 +48,11 @@ public class WeaponGenerator : MonoBehaviour
 
     private void Start()
     {
+        
+        weaponChangeAudio = Resources.Load<AudioClip>("Sounds/WeaponChange");
         restartStates();
         weaponIndex = 0;
-
+        canSwitchWeapon = true;
         for (int i = 0; i < weaponsValues.Length; i++)
         {
             //Debug.Log(weaponsValues[i].WeaponName);
@@ -139,26 +147,35 @@ public class WeaponGenerator : MonoBehaviour
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponEquiped = true;
         }
     }
-    private void Update()
-    {
-        //Debug.Log(weaponIndexOrder.Count);
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            PlayerPrefs.DeleteAll();
-        }
-    }
+    //private void Update()
+    //{
+    //    //Debug.Log(weaponIndexOrder.Count);
+    //    if (Input.GetKeyDown(KeyCode.X))
+    //    {
+    //        PlayerPrefs.DeleteAll();
+    //    }
+    //}
     public bool SetWeapon(int indexChange, ref Weapon weaponInHand, ref Transform firePoint)
     {
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         switch (indexChange)
         {
             case -1:
                 if (weaponIndex <= 0)
                 {
+                    weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform);
                     weaponIndex = weaponIndexOrder.Count - 1;
                 }
                 else
                 {
-                    weaponIndex--;
+                    if (canSwitchWeapon)
+                    {
+                        
+                        weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform);
+                        StartCoroutine(WaitForWeaponSwitch());
+                        weaponIndex--;
+                    }
+                    //Debug.Log("Switch in generator");
                 }
                 break;
             case 0:
@@ -174,11 +191,18 @@ public class WeaponGenerator : MonoBehaviour
             case 1:
                 if (weaponIndex >= weaponIndexOrder.Count - 1)
                 {
+                    weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform);
                     weaponIndex = 0;
                 }
                 else
                 {
-                    weaponIndex++;
+                    if (canSwitchWeapon)
+                    {
+                         weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform);
+                        StartCoroutine(WaitForWeaponSwitch());
+                        weaponIndex++;
+                    }
+
                 }
                 break;
             default:
@@ -195,6 +219,13 @@ public class WeaponGenerator : MonoBehaviour
         return true;
     }
 
+
+    private IEnumerator WaitForWeaponSwitch()
+    {
+        canSwitchWeapon = false;
+        yield return new WaitForSeconds(0.4f);
+        canSwitchWeapon = true;
+    }
     public void EquipWeapon(string weaponName, ref Weapon weaponInHand, ref Transform firePoint)
     {
         for (int i = 0; i < weaponsValues.Length; i++)

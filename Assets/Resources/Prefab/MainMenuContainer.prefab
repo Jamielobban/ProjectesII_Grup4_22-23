@@ -229,12 +229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playZoom: {fileID: 0}
-  thisCam: {fileID: 0}
   prisonDoorOpen: {fileID: 0}
-  velocity: 0.005
-  acceleration: 0.00025
-  velocityZoomOut: 0.0025
-  accelerationZoomOut: 0.01
+  cameraZoom: {fileID: 0}
 --- !u!114 &7508404630810360669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,7 +419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5611702460088224634
 Transform:
   m_ObjectHideFlags: 0
@@ -9635,12 +9631,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playZoom: {fileID: 0}
-  thisCam: {fileID: 0}
   prisonDoorOpen: {fileID: 0}
-  velocity: 0.005
-  acceleration: 0.00025
-  velocityZoomOut: 0.0025
-  accelerationZoomOut: 0.01
+  cameraZoom: {fileID: 0}
 --- !u!114 &2868040071421146052
 MonoBehaviour:
   m_ObjectHideFlags: 0

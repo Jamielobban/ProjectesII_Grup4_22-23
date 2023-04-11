@@ -93,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     AudioClip playerDash;
-    AudioClip cantPress;
+    AudioClip cantPress;    AudioClip walking;
 
     public float dashTimer;
     public float dashTimer2;
@@ -109,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
     int? cantPressSoundKey;
     int? dashSoundKey;
     int? damageSoundKey;    int? parrySoundKey;
+    int? walkingSoundKey;
     [SerializeField] AudioClip parrySound;
 
     bool justRolled;
@@ -155,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerMask = LayerMask.NameToLayer("Player");
 
         playerDash = Resources.Load<AudioClip>("Sounds/Dash/PlayerDash");
+        walking = Resources.Load<AudioClip>("Sounds/WalkPlayer");
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
         parrySound = Resources.Load<AudioClip>("Sounds/PlayerParry/Parry");
         potionsSystem = FindObjectOfType<PotionSystem>();
@@ -369,7 +371,7 @@ public class PlayerMovement : MonoBehaviour
                 canBlit = true;
             }
         }
-
+        //Debug.Log(walkingSoundKey.HasValue);
         switch (state)
         {
             case State.Normal:
@@ -411,11 +413,20 @@ public class PlayerMovement : MonoBehaviour
                     }
                     if (moveDir.magnitude == 1)
                     {
-                        isMoving = true;
+                        isMoving = true;                        if (!walkingSoundKey.HasValue)
+                        {
+                            walkingSoundKey = AudioManager.Instance.LoadSound(walking, this.transform,0f,true,true,1f);
+                        }
+                        
                     }
                     else
                     {
-                        isMoving = false;
+                        isMoving = false;
+                        //walkingSoundKey.
+                        if (walkingSoundKey.HasValue)
+                        {
+                            AudioManager.Instance.RemoveAudio(walkingSoundKey.Value);
+                            walkingSoundKey = null;                        }
                     }
                     // Debug.Log(movement.x + "This is X axis");
                 }
@@ -582,7 +593,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Health()
     {
-        currentHearts +=1;
+        currentHearts +=2;
 
         if (currentHearts > maxHearts)
         {

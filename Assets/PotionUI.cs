@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PotionUI : MonoBehaviour
 {
-    public Sprite fullPotion, quarterPotion, halfPotion, threeQuarterPotion, emptyPotion, flashPotion;
+    public Sprite zero, ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, hundred, flash;
     Image potionImage;
     public PotionStatus _status;
     public PotionStatus _emptyStatus;
@@ -17,7 +17,7 @@ public class PotionUI : MonoBehaviour
     //public bool itsThisOne;
     private void Awake()
     {
-        _emptyStatus = PotionStatus.Empty;
+        _emptyStatus = PotionStatus.Zero;
         potionImage = GetComponent<Image>();
         playerPotion = FindObjectOfType<PlayerMovement>();
     }
@@ -37,33 +37,57 @@ public class PotionUI : MonoBehaviour
     {
         switch (status)
         {
-            case PotionStatus.Empty:
-                potionImage.sprite = emptyPotion;
+            case PotionStatus.Zero:
+                potionImage.sprite = zero;
                 //isEmpty = true;
                 _status = status;
                 break;
-            case PotionStatus.Half:
-                potionImage.sprite = halfPotion;
+            case PotionStatus.Ten:
+                potionImage.sprite = ten;
                 //wasHalf = true;
                 _status = status;
                 break;
-            case PotionStatus.Full:
-                potionImage.sprite = fullPotion;
+            case PotionStatus.Twenty:
+                potionImage.sprite = twenty;
                 // isEmpty = false;
                 //wasHalf = false;
 
                 _status = status;
                 break;
             case PotionStatus.Flash:
-                potionImage.sprite = flashPotion;
+                potionImage.sprite = flash;
                 _status = status;
                 break;
-            case PotionStatus.Quarter:
-                potionImage.sprite = quarterPotion;
+            case PotionStatus.Thirty:
+                potionImage.sprite = thirty;
                 _status = status;
                 break;
-            case PotionStatus.ThreeQuarter:
-                potionImage.sprite = threeQuarterPotion;
+            case PotionStatus.Forty:
+                potionImage.sprite = forty;
+                _status = status;
+                break;
+            case PotionStatus.Fifty:
+                potionImage.sprite = fifty;
+                _status = status;
+                break;
+            case PotionStatus.Sixty:
+                potionImage.sprite = sixty;
+                _status = status;
+                break;
+            case PotionStatus.Seventy:
+                potionImage.sprite = seventy;
+                _status = status;
+                break;
+            case PotionStatus.Eighty:
+                potionImage.sprite = eighty;
+                _status = status;
+                break;
+            case PotionStatus.Ninety:
+                potionImage.sprite = ninety;
+                _status = status;
+                break;
+            case PotionStatus.Hundred:
+                potionImage.sprite = hundred;
                 _status = status;
                 break;
         }
@@ -73,10 +97,16 @@ public class PotionUI : MonoBehaviour
 
 public enum PotionStatus
 {
-    Empty = 0,
-    Quarter = 1,
-    Half = 2,
-    ThreeQuarter = 3,
-    Full = 4,
-    Flash = 5
+    Zero = 0,
+    Ten = 1,
+    Twenty = 2,
+    Thirty = 3,
+    Forty = 4,
+    Fifty = 5,
+    Sixty = 6,
+    Seventy = 7,
+    Eighty = 8,
+    Ninety = 9,
+    Hundred = 10,
+    Flash = 11
 }

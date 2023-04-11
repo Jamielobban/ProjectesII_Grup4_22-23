@@ -50,7 +50,7 @@ public class AmmoUISystem : MonoBehaviour
         if (rightHand.weaponInHand.GetCurrentMagazines() >= 250)
         {
             //Symbol Infinite.setActive
-            Debug.Log("fULL AMMO");
+            //Debug.Log("fULL AMMO");
             infiniteAmmo.SetActive(true);
             magazineCounter.gameObject.SetActive(false);
         }

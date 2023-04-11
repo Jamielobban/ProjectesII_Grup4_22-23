@@ -23,7 +23,7 @@ public class OnButtonHover : MonoBehaviour
 
     public void OnMouseOver()
     {
-        Debug.Log("Mouse over");
+        //Debug.Log("Mouse over");
         hoverAudioKey = AudioManager.Instance.LoadSound(hoverAudio, cam.transform);
         //mat = GetComponent<Image>().material;
         //shineSequence = DOTween.Sequence();

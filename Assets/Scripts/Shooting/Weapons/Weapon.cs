@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class Weapon 
+public class Weapon
 {
-    
+
     private AudioClip nextWeapon;
 
 
@@ -36,6 +36,8 @@ public class Weapon
 
     public bool shotFired = false;
     float bulletPercentage;
+
+    bool canSwitch = true;
     public Weapon(Transform _firePoint, WeaponValues _data)
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -51,20 +53,20 @@ public class Weapon
         lowAmmo2 = Resources.Load<AudioClip>("Sounds/Weapons/LowAmmo2");
         switch (_data.mechanismType)
         {
-        case MechanismTypes.BOLT:
+            case MechanismTypes.BOLT:
                 weaponMechanism = new Repeticion();
-            break;
-        case MechanismTypes.AUTO:
+                break;
+            case MechanismTypes.AUTO:
                 weaponMechanism = new Automatica();
-            break;
-        case MechanismTypes.SEMIAUTO:
+                break;
+            case MechanismTypes.SEMIAUTO:
                 weaponMechanism = new Seamiautomatica();
                 break;
-        case MechanismTypes.FLOW:
+            case MechanismTypes.FLOW:
                 weaponMechanism = new Flow();
-            break;
-        default:
-            break;
+                break;
+            default:
+                break;
         }
     }
 
@@ -82,7 +84,7 @@ public class Weapon
         LogicUpdate();
 
         return returnValue;
-    }    
+    }
     public float GetReloadTimeInSec()
     {
         return data.reloadTimeInSec.RuntimeValue;
@@ -121,7 +123,7 @@ public class Weapon
     {
         //return data.
         return data.knockbackMinimum.InitialValue;
-    }    
+    }
 
     public bool GetReloadingState()
     {
@@ -140,26 +142,26 @@ public class Weapon
     public Sprite GetFlashSprite()
     {
         return data.flashAmmo;
-    }   
+    }
     private bool CheckShooting()
     {
-        
+
         if (!data.outOfAmmo.RuntimeValue && !data.reloading.RuntimeValue && Time.timeScale != 0)
         {
             if (!data.powerActive.RuntimeValue)
-            {                
+            {
                 if (weaponMechanism.Shoot(data.bulletTypePrefab, firePoint, data.fireRateinSec.RuntimeValue, data.shootSound, data.amplitudeGain.RuntimeValue, data.damageMultiplier.RuntimeValue))
                 {
                     bulletPercentage = (float)GetBulletsInMagazine() / (float)GetBulletsPerMagazine();
                     if (bulletPercentage < 0.4f)
                     {
                         lowAmmoKey = AudioManager.Instance.LoadSound(lowAmmo, player.transform);
-                        
+
                         Debug.Log("this is low ammo2");
                     }
                     if (bulletPercentage < 0.5f && bulletPercentage >= 0.4f)
                     {
-                        lowAmmoKey = AudioManager.Instance.LoadSound(lowAmmo2, player.transform,0f,false,false,0.25f);
+                        lowAmmoKey = AudioManager.Instance.LoadSound(lowAmmo2, player.transform, 0f, false, false, 0.25f);
 
                         Debug.Log("this is low ammoi");
                     }
@@ -167,12 +169,12 @@ public class Weapon
                     //Debug.Log("I shot");
                     LoadOrReloadWhenNeedIt();
                     return true;
-                }                
-            }                     
-            
+                }
+            }
+
         }
         return false;
-    }        
+    }
     public void SetWeaponHand(ref SpriteRenderer _sr)
     {
         _sr.sprite = data.weaponSprite;
@@ -184,21 +186,31 @@ public class Weapon
 
     private void LogicUpdate()
     {
-        if (data.reloading.RuntimeValue && Time.time - data.startReloading.RuntimeValue >= data.reloadTimeInSec.RuntimeValue +0.5f)
-        {           
+        if (data.reloading.RuntimeValue && Time.time - data.startReloading.RuntimeValue >= data.reloadTimeInSec.RuntimeValue + 0.5f)
+        {
             data.reloading.RuntimeValue = false;
         }
 
         if (Time.time - data.timelastPowerupExit.RuntimeValue >= 20 && !data.powerupAvailable.RuntimeValue)
         {
-            data.powerupAvailable.RuntimeValue = true;            
-        }       
+            data.powerupAvailable.RuntimeValue = true;
+        }
     }
 
-    
+    public void WeaponSwitchTimeout(float seconds)
+    {
+        float timeSwitch = 0;
+        canSwitch = false;
+        Debug.Log("Can no longer switch");
+        timeSwitch += Time.deltaTime;
+        if (timeSwitch >= seconds)
+        {
+            canSwitch = true;
+        }
+    }
 
     private int InputsUpdate()
-    {          
+    {
         if (Input.GetButtonDown("Reload") && data.bulletsInMagazine.RuntimeValue < data.bulletsInMagazine.InitialValue && !data.outOfAmmo.RuntimeValue && data.magazinesInWeapon.RuntimeValue > 0)
         {
             if (data.magazinesInWeapon.RuntimeValue > 0 && data.bulletsInMagazine.RuntimeValue > 0)
@@ -209,23 +221,28 @@ public class Weapon
                 data.reloading.RuntimeValue = true;
                 data.startReloading.RuntimeValue = Time.time;
             }
-           
-        }
-        else 
-        {
-            float wheelValue = Input.mouseScrollDelta.y;
-            if(wheelValue > 0)
-            {
-                return 1;
-            }
-            if (wheelValue < 0)
-            {
-                return -1;
-            }
-        }
 
+        }
+        else
+        {
+           
+                float wheelValue = Input.mouseScrollDelta.y;
+                if (wheelValue > 0)
+                {
+                    //Debug.Log("Switch up");
+                    return 1;
+                }
+                if (wheelValue < 0)
+                {
+                    //Debug.Log("Switch down");
+                    return -1;
+                }
+            //canSwitch = false;
+        }
         return 0;
-    }     
+    }
+
+    
 
     protected void LoadOrReloadWhenNeedIt()
     {

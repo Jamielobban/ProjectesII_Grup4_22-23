@@ -315,7 +315,7 @@ public class Menu : MonoBehaviour
     private IEnumerator WaitForLoadNewGame()
     {
         yield return new WaitForSeconds(3.0f);
-        Debug.Log("Load now");
+        //Debug.Log("Load now");
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("FirstTime", 2);
         SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));

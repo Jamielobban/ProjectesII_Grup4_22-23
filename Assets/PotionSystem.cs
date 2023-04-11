@@ -42,26 +42,54 @@ public class PotionSystem : MonoBehaviour
         //    amountToFill = 100;
         //}
 
-        if (amountToFill >= 99)
-        {
+            //if (amountToFill >= 99)
+            //{
 
-            potion.SetPotionImage(PotionStatus.Full);
-        }
-        else if (amountToFill >= 75)
+            //    potion.SetPotionImage(PotionStatus.Full);
+            //}
+        if (amountToFill >= 100)
         {
-            potion.SetPotionImage(PotionStatus.ThreeQuarter);
+            potion.SetPotionImage(PotionStatus.Hundred);
+        }
+        else if (amountToFill >= 90)
+        {
+            potion.SetPotionImage(PotionStatus.Ninety);
+        }
+        else if (amountToFill >= 80)
+        {
+            potion.SetPotionImage(PotionStatus.Eighty);
+        }
+        else if (amountToFill >= 70)
+        {
+            potion.SetPotionImage(PotionStatus.Seventy);
+        }
+        else if (amountToFill >= 60)
+        {
+            potion.SetPotionImage(PotionStatus.Sixty);
         }
         else if (amountToFill >= 50)
         {
-            potion.SetPotionImage(PotionStatus.Half);
+            potion.SetPotionImage(PotionStatus.Fifty);
         }
-        else if (amountToFill >= 25)
+        else if (amountToFill >= 40)
         {
-            potion.SetPotionImage(PotionStatus.Quarter);
+            potion.SetPotionImage(PotionStatus.Forty);
         }
-        else if(amountToFill < 25)
+        else if (amountToFill >= 30)
         {
-            potion.SetPotionImage(PotionStatus.Empty);
+            potion.SetPotionImage(PotionStatus.Thirty);
+        }
+        else if (amountToFill >= 20)
+        {
+            potion.SetPotionImage(PotionStatus.Twenty);
+        }
+        else if (amountToFill >= 10)
+        {
+            potion.SetPotionImage(PotionStatus.Ten);
+        }
+        else if(amountToFill >= 0)
+        {
+            potion.SetPotionImage(PotionStatus.Zero);
         }
     }
 }

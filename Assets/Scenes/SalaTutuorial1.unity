@@ -4673,6 +4673,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 1940199732044882279, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MuteButtonOn
+      objectReference: {fileID: 0}
     - target: {fileID: 2021500343749604572, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -4801,6 +4805,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1424014061}
+    - target: {fileID: 4074201899958224469, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SFXButtonOn
+      objectReference: {fileID: 0}
     - target: {fileID: 4670585402077883927, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -4840,6 +4848,10 @@ PrefabInstance:
     - target: {fileID: 5316087829814809855, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6290733960690344817, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MuteButtonOff
       objectReference: {fileID: 0}
     - target: {fileID: 6420652285652228920, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4896,6 +4908,10 @@ PrefabInstance:
     - target: {fileID: 7441084248130282717, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
       propertyPath: playerBlur
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557242282548593469, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SFXButtonOff
       objectReference: {fileID: 0}
     - target: {fileID: 7793642839845991813, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
       propertyPath: m_IsActive
