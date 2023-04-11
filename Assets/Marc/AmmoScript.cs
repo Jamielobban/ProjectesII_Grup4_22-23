@@ -36,8 +36,10 @@ public class AmmoScript : MonoBehaviour
         else if (!setupDone)
         {
             weaponGenerator = GameObject.FindGameObjectWithTag("WeaponGenerator");
-            int listSize = weaponGenerator.GetComponent<WeaponGenerator>().weaponIndexOrder.Count - 1;
-            int indexInValues = weaponGenerator.GetComponent<WeaponGenerator>().weaponIndexOrder[Random.Range(0, listSize)];
+            int listSize = weaponGenerator.GetComponent<WeaponGenerator>().weaponIndexOrder.Count;
+            if (listSize < 1)
+                return;
+            int indexInValues = weaponGenerator.GetComponent<WeaponGenerator>().weaponIndexOrder[Random.Range(1, listSize)];
             weaponAmmoName = weaponGenerator.GetComponent<WeaponGenerator>().weaponsValues[indexInValues].WeaponName;
             weaponAmmoSprite = weaponGenerator.GetComponent<WeaponGenerator>().weaponsValues[indexInValues].weaponSprite;
             sr.sprite = weaponAmmoSprite;
