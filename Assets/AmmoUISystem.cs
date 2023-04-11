@@ -110,7 +110,7 @@ public class AmmoUISystem : MonoBehaviour
         for (int i = rifleAmmoArray.Count - 1; i >= 0; i--)
         {
             rifleAmmoArray[i].transform.DOJump(rifleAmmoArray[i].transform.position, 10, 1, 0.3f, false);
-            yield return new WaitForSeconds(1f / (rightHand.weaponInHand.GetBulletsPerMagazine()) - 0.05f);
+            yield return new WaitForSeconds(1f / (rightHand.weaponInHand.GetBulletsPerMagazine()) - 0.075f);
         }
 
 

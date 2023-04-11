@@ -20,7 +20,7 @@ public class ParticleCollector : MonoBehaviour
     ParticleSystem.TriggerModule triggersBox;
     public BoxCollider2D boxToCollide;
 
-    private void Start()
+    private void Awake()
     {
         ps = GetComponent<ParticleSystem>();
         boxToCollide = GameObject.FindGameObjectWithTag("ParticleCollector").GetComponent<BoxCollider2D>();
@@ -60,12 +60,11 @@ public class ParticleCollector : MonoBehaviour
         potions.CheckPotionStatus();
     }
 
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("GanchoRecoger"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            // Debug.Log("Hitting the player");
+            Debug.Log("Hitting the player");
             ps.externalForces.AddInfluence(forceField);
             triggersBox.AddCollider(boxToCollide);
             //ps.velocityOverLifetime.enabled = false;

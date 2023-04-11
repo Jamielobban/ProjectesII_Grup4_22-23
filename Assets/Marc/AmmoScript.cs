@@ -38,6 +38,7 @@ public class AmmoScript : MonoBehaviour
             weaponGenerator = GameObject.FindGameObjectWithTag("WeaponGenerator");
             int listSize = weaponGenerator.GetComponent<WeaponGenerator>().weaponIndexOrder.Count;
             if (listSize < 1)
+                Debug.Log("asdasd");
                 return;
             int indexInValues = weaponGenerator.GetComponent<WeaponGenerator>().weaponIndexOrder[Random.Range(1, listSize)];
             weaponAmmoName = weaponGenerator.GetComponent<WeaponGenerator>().weaponsValues[indexInValues].WeaponName;
