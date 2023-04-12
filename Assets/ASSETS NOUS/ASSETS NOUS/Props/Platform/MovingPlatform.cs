@@ -39,11 +39,11 @@ public class MovingPlatform : MonoBehaviour
 
         if (points.Count > 0)
         {
-            if(!OnPlayerStay)
+            if (!OnPlayerStay)
                 transform.position = points[nextPosition].transform.position;
             else
             {
-                if((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 3)|| ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 0)))
+                if ((((PlayerPrefs.GetInt("Lado") + 2) % 4 == 3) || ((PlayerPrefs.GetInt("Lado") + 2) % 4 == 0)))
                 {
 
                     transform.position = points[points.Count - 1].transform.position;
@@ -70,7 +70,7 @@ public class MovingPlatform : MonoBehaviour
 
             if (Vector3.Distance(points[nextPosition].transform.position, transform.position) < 0.01f && !start)
             {
-     
+
                 if (loop)
                 {
                     nextPosition = (nextPosition + 1) % points.Count;
@@ -131,14 +131,14 @@ public class MovingPlatform : MonoBehaviour
                 if (currentWaitTime + waitTime < Time.time)
                 {
 
-                        if(!OnPlayerStay)
+                    if (!OnPlayerStay)
+                        transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
+                    else
+                    {
+                        if (this.transform.GetComponentInChildren<PlayerMovement>() != null && !end)
                             transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
-                        else
-                        {
-                            if (this.transform.GetComponentInChildren<PlayerMovement>() != null && !end)
-                                transform.position = Vector3.MoveTowards(transform.position, points[nextPosition].transform.position, velocity * Time.deltaTime);
 
-                        }
+                    }
 
                 }
             }
@@ -176,7 +176,7 @@ public class MovingPlatform : MonoBehaviour
                 isFall = true;
 
                 StartCoroutine(fallPlat(timeToFall));
-                StartCoroutine(a(timeToFall+1.5f));
+                StartCoroutine(a(timeToFall + 1.5f));
 
             }
         }
