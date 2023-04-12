@@ -157,13 +157,13 @@ public class Weapon
                     {
                         lowAmmoKey = AudioManager.Instance.LoadSound(lowAmmo, player.transform);
 
-                        Debug.Log("this is low ammo2");
+                        //Debug.Log("this is low ammo2");
                     }
                     if (bulletPercentage < 0.5f && bulletPercentage >= 0.4f)
                     {
                         lowAmmoKey = AudioManager.Instance.LoadSound(lowAmmo2, player.transform, 0f, false, false, 0.25f);
 
-                        Debug.Log("this is low ammoi");
+                        //Debug.Log("this is low ammoi");
                     }
                     shotFired = true;
                     //Debug.Log("I shot");

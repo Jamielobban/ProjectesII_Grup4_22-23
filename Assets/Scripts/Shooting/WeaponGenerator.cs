@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WeaponGenerator : MonoBehaviour
 {
@@ -147,14 +148,24 @@ public class WeaponGenerator : MonoBehaviour
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponEquiped = true;
         }
     }
-    //private void Update()
-    //{
-    //    //Debug.Log(weaponIndexOrder.Count);
-    //    if (Input.GetKeyDown(KeyCode.X))
-    //    {
-    //        PlayerPrefs.DeleteAll();
-    //    }
-    //}
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            LoadNextScene();
+        }
+    }
+
+
+    void LoadNextScene()
+    {
+        int i = PlayerPrefs.GetInt("indice",1);
+        PlayerPrefs.SetInt("indice",PlayerPrefs.GetInt("indice",0)+1);
+        //PlayerPrefs.SetInt("is",1);
+        SceneManager.LoadScene(i);
+
+    }
+
     public bool SetWeapon(int indexChange, ref Weapon weaponInHand, ref Transform firePoint)
     {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();

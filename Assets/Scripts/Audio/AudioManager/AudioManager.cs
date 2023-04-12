@@ -150,7 +150,11 @@ public class AudioManager : MonoBehaviour
         audioNameAndItsRange.Add("ArrowImpact", 2.5f);
         audioNameAndItsRange.Add("elevator", 1000f);
         audioNameAndItsRange.Add("slashVerd",15);
-        
+        //Eye boss
+        audioNameAndItsRange.Add("EyeBossLaserCharge", 50f);
+        audioNameAndItsRange.Add("EyeBossLaserHum", 20f);
+        audioNameAndItsRange.Add("EyeBossBigFatMan", 50f);
+        audioNameAndItsRange.Add("EyeBossSquelching", 50f);
     }
 
     private void Update()
@@ -172,7 +176,7 @@ public class AudioManager : MonoBehaviour
         {
             if(pair.Value.audioClipName == "DoorOpening") { 
             
-                Debug.Log(pair.Value.audioClipName);
+                //Debug.Log(pair.Value.audioClipName);
             }
             
         }

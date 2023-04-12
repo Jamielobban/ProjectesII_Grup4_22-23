@@ -90,7 +90,7 @@ public class ArrowTrap : Trampas
         {
             if (Vector3.Distance(list.transform.GetChild(i).transform.position, end.position) < 0.5f)
             {
-                arrowHitKey = AudioManager.Instance.LoadSound(arrowHit, list.transform.GetChild(i).transform.position, 0, false);
+                //arrowHitKey = AudioManager.Instance.LoadSound(arrowHit, list.transform.GetChild(i).transform.position, 0, false);
                 list.transform.GetChild(i).GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                 list.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Stop");
                 Destroy(list.transform.GetChild(i).gameObject.GetComponent<CircleCollider2D>());
@@ -100,7 +100,7 @@ public class ArrowTrap : Trampas
 
             if (list.transform.GetChild(i).gameObject == null)
             {
-                arrowHitKey = AudioManager.Instance.LoadSound(arrowHit, list.transform.GetChild(i).position, 0, false);
+                //arrowHitKey = AudioManager.Instance.LoadSound(arrowHit, list.transform.GetChild(i).position, 0, false);
 
             }
         }

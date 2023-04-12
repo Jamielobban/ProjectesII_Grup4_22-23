@@ -314,7 +314,7 @@ public class Menu : MonoBehaviour
     }
     private IEnumerator WaitForLoadNewGame()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(4.0f);
         //Debug.Log("Load now");
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("FirstTime", 2);
@@ -323,8 +323,8 @@ public class Menu : MonoBehaviour
 
     private IEnumerator WaitForLoad()
     {
-        yield return new WaitForSeconds(3.0f);
-        Debug.Log("Load now");
+        yield return new WaitForSeconds(4.0f);
+        //Debug.Log("Load now");
         PlayerPrefs.SetInt("isDead", 1);
         PlayerPrefs.SetInt("FirstTime", 2);
         SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
@@ -332,8 +332,8 @@ public class Menu : MonoBehaviour
 
     private IEnumerator WaitForInfiniteMode()
     {
-        yield return new WaitForSeconds(3.0f);
-        Debug.Log("Load now");
+        yield return new WaitForSeconds(4.0f);
+        //Debug.Log("Load now");
         SceneManager.LoadScene(12);
     }
     public void Credits()

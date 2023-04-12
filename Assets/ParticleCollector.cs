@@ -41,7 +41,7 @@ public class ParticleCollector : MonoBehaviour
             ParticleSystem.Particle p = particles[i];
             p.remainingLifetime = 0;
             potions.amountToFill++;
-            Debug.Log("I ate one");
+            //Debug.Log("I ate one");
             StartCoroutine(WaitForFlash());
             particles[i] = p;
         }
@@ -64,7 +64,7 @@ public class ParticleCollector : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Hitting the player");
+            //Debug.Log("Hitting the player");
             ps.externalForces.AddInfluence(forceField);
             triggersBox.AddCollider(boxToCollide);
             //ps.velocityOverLifetime.enabled = false;

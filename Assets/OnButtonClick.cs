@@ -62,7 +62,7 @@ public class OnButtonClick : MonoBehaviour
 
     private IEnumerator SetBoolTrueForDoor()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         prisonDoorOpen.SetBool("hasPressedPlay", true);
     }
     //private IEnumerator SetBoolForCameraZoom()
