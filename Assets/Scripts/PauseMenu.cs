@@ -45,7 +45,7 @@ public class PauseMenu : MonoBehaviour
             {
                 if (SettingThings.activeInHierarchy)
                 {
-                    Debug.Log("Now paused in if");
+                    //Debug.Log("Now paused in if");
                     ResumeButton.SetActive(true);
                     BackMainButton.SetActive(true);
                     OpenSettingsButton.SetActive(true);
@@ -57,13 +57,13 @@ public class PauseMenu : MonoBehaviour
                 {
                     MenuContainer.SetActive(false);
                     playerBlur.SetActive(false);
-                    Debug.Log("Now unpaused");
+                    //Debug.Log("Now unpaused");
                     Time.timeScale = 1;
                 }                
             }
             else
             {
-                Debug.Log("Now paused in else");
+                //Debug.Log("Now paused in else");
                 MenuContainer.SetActive(true);
                 SettingThings.SetActive(false);
                 BackPausedButton.SetActive(false);

@@ -419,7 +419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5611702460088224634
 Transform:
   m_ObjectHideFlags: 0
@@ -2946,7 +2946,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6837655513589005554}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: MuteButtonOn
+        m_MethodName: MuteButtonOn2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3726,6 +3726,10 @@ MonoBehaviour:
   RedOnMusic: {fileID: 6263263574492317546}
   GreenOnSFX: {fileID: 6368523349300855716}
   RedOnSFX: {fileID: 9045748350599683905}
+  GreenOnMusic2: {fileID: 7954983808956157319}
+  RedOnMusic2: {fileID: 1250700234785344961}
+  GreenOnSFX2: {fileID: 1947376605273111160}
+  RedOnSFX2: {fileID: 7159847794059535212}
   NewGameMenu: {fileID: 8307003089293684922}
   PlayedBeforeMenu: {fileID: 151373704754802899}
   NewButton2: {fileID: 1721234156758202411}
@@ -4344,7 +4348,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6837655513589005554}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: SFXButtonOff
+        m_MethodName: SFXButtonOff2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12949,7 +12953,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6837655513589005554}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: SFXButtonOn
+        m_MethodName: SFXButtonOn2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14539,7 +14543,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6837655513589005554}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: MuteButtonOff
+        m_MethodName: MuteButtonOff2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

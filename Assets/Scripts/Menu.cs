@@ -67,6 +67,15 @@ public class Menu : MonoBehaviour
     [SerializeField]
     GameObject RedOnSFX;
 
+    [SerializeField]
+    GameObject GreenOnMusic2;
+    [SerializeField]
+    GameObject RedOnMusic2;
+    [SerializeField]
+    GameObject GreenOnSFX2;
+    [SerializeField]
+    GameObject RedOnSFX2;
+
 
     [SerializeField]
     GameObject NewGameMenu;
@@ -477,6 +486,12 @@ public class Menu : MonoBehaviour
         GreenOnMusic.SetActive(true);
         RedOnMusic.SetActive(false);
     }
+    public void MuteButtonOn2()
+    {
+        MusicEnabledChangeOn();
+        GreenOnMusic2.SetActive(true);
+        RedOnMusic2.SetActive(false);
+    }
 
     public void MuteButtonOff()
     {
@@ -485,11 +500,24 @@ public class Menu : MonoBehaviour
         GreenOnMusic.SetActive(false);
     }
 
+    public void MuteButtonOff2()
+    {
+        MusicEnabledChangeOff();
+        RedOnMusic2.SetActive(true);
+        GreenOnMusic2.SetActive(false);
+    }
+
     public void SFXButtonOn()
     {
         SFXEnabledChangeOff();
         GreenOnSFX.SetActive(true);
         RedOnSFX.SetActive(false);
+    }
+    public void SFXButtonOn2()
+    {
+        SFXEnabledChangeOff();
+        GreenOnSFX2.SetActive(true);
+        RedOnSFX2.SetActive(false);
     }
 
     public void SFXButtonOff()
@@ -497,6 +525,13 @@ public class Menu : MonoBehaviour
         SFXEnabledChangeOn();
         GreenOnSFX.SetActive(false);
         RedOnSFX.SetActive(true);
+    }
+
+    public void SFXButtonOff2()
+    {
+        SFXEnabledChangeOn();
+        GreenOnSFX2.SetActive(false);
+        RedOnSFX2.SetActive(true);
     }
 
     public void MusicEnabledChangeOff()
