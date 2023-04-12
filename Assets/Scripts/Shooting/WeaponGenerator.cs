@@ -148,13 +148,13 @@ public class WeaponGenerator : MonoBehaviour
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>().weaponEquiped = true;
         }
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            LoadNextScene();
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.X))
+    //    {
+    //        LoadNextScene();
+    //    }
+    //}
 
 
     void LoadNextScene()
