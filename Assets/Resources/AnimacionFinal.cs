@@ -113,6 +113,7 @@ public class AnimacionFinal : MonoBehaviour
             player.GetComponentInChildren<RightHand>().weaponEquiped = false;
             playerMov.canMove = false;
             player.transform.GetChild(1).GetComponent<Animator>().SetTrigger("ExitRoom");
+            player.transform.GetChild(1).GetComponent<Animator>().SetBool("isMoving", false);
             caminar1 = true;
 
         }
