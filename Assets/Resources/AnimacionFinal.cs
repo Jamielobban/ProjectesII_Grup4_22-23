@@ -69,6 +69,7 @@ public class AnimacionFinal : MonoBehaviour
                 caminar3 = false;
 
                 player.transform.GetChild(1).GetComponent<Animator>().SetTrigger("EnterRoom");
+                player.transform.GetChild(1).GetComponent<Animator>().SetBool("isMoving",false);
                 Invoke("transicionFinal", 2);
             }
         }
@@ -85,7 +86,7 @@ public class AnimacionFinal : MonoBehaviour
         caminar2 = false;
         caminar3 = true;
         player.transform.GetChild(1).GetComponent<Animator>().SetTrigger("ExitRoom");
-
+        player.transform.GetChild(1).GetComponent<Animator>().SetBool("isMoving", false);
     }
     void caminar(int pos)
     {

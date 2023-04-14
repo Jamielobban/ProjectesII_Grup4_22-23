@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShotgunBullet : Bullet
 {
-    GameObject[] pelletsOnBullet = new GameObject[8];
+    GameObject[] pelletsOnBullet = new GameObject[6];
     GameObject[] pelletsOnBulletPU = new GameObject[12];
     GameObject pelletPrefab;
     GameObject powerupPelletPrefab;
@@ -51,10 +51,10 @@ public class ShotgunBullet : Bullet
         {
             Instantiate(bulletShell, rotationPoint.transform.position, Quaternion.identity);
             Instantiate(muzzleFlash, firePoint.transform.position, firePoint.transform.rotation);
-            for (int i = 0, grados = -15; i < pelletsOnBullet.Length; i++, grados += 3)
+            for (int i = 0, grados = -80; i < pelletsOnBullet.Length; i++, grados += 10)
             {
                 pelletsOnBullet[i] = GameObject.Instantiate(pelletPrefab, transform.position, transform.rotation);
-                pelletsOnBullet[i].transform.Rotate(0, 0, pelletsOnBullet[i].transform.rotation.z + Random.Range(-4,4));
+                pelletsOnBullet[i].transform.Rotate(0, 0, pelletsOnBullet[i].transform.rotation.z + Random.Range(-10,10));
 
                 //Transform originalFirePoint = this.transform;
                 //rb.AddForce(originalFirePoint.up * bulletSpeedMetresPerSec, ForceMode2D.Impulse);
@@ -81,7 +81,7 @@ public class ShotgunBullet : Bullet
             //pelletOnPowerUp.transform.localScale = new Vector3(0.1f, 0.1f, 1);
             pelletOnPowerUp.GetComponent<Rigidbody2D>().AddForce(pelletOnPowerUp.transform.up * -35, ForceMode2D.Impulse);
 
-            for (int i = 0, grados = -15; i < pelletsOnBulletPU.Length; i++, grados += 5)
+            for (int i = 0, grados = -25; i < pelletsOnBulletPU.Length; i++, grados += 5)
             {
                 pelletsOnBulletPU[i] = GameObject.Instantiate(pelletPrefab, transform.position, transform.rotation);
                 pelletsOnBulletPU[i].transform.Rotate(0, 0, pelletsOnBulletPU[i].transform.rotation.z + grados);

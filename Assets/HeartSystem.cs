@@ -65,8 +65,10 @@ public class HeartSystem : MonoBehaviour
                 emptyHeartToFlash = emptyHeartArray[0];
             }
         }
-
-        heartToChange = heartArray[heartArray.Count - 1];
+        if(heartArray.Count > 0)
+        {
+            heartToChange = heartArray[heartArray.Count - 1];
+        }
     }
 
     public void CreateEmptyHeart()
