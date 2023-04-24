@@ -14,10 +14,10 @@ public class E12_DeadState : DeadState
     {
         base.Enter();
 
-        if (!enemy.player.GetComponent<PlayerMovement>().infinito)
-            Object.Instantiate(stateData.bullets, enemy.transform.position, Quaternion.identity);
+        //if (!enemy.player.GetComponent<PlayerMovement>().infinito)
+        //    Object.Instantiate(stateData.bullets, enemy.transform.position, Quaternion.identity);
 
-        Object.Instantiate(stateData.orbes, enemy.transform.position, Quaternion.identity);
+        //Object.Instantiate(stateData.orbes, enemy.transform.position, Quaternion.identity);
 
     }
 
@@ -31,6 +31,8 @@ public class E12_DeadState : DeadState
         base.LogicUpdate();
 
         GameObject deadParticles = GameObject.Instantiate(stateData.deadParticles, entity.transform.position, entity.transform.rotation);
+        GameObject bloodParticles = GameObject.Instantiate(enemy.blood, entity.transform.position, entity.transform.rotation);
+        GameObject bloodParticles2 = GameObject.Instantiate(enemy.deadBlood, entity.transform.position, entity.transform.rotation);
         GameObject.Destroy(enemy.gameObject);
        
     }
