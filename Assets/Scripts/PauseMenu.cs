@@ -38,6 +38,8 @@ public class PauseMenu : MonoBehaviour
         playerBlur = GameObject.FindGameObjectWithTag("PlayerBlur");
         playerBlur.transform.localScale = new Vector3(4, 3, 1);
         playerBlur.SetActive(false);
+        unpaused = Resources.Load<AudioMixer>("Sounds/ZZMasterMixer").FindSnapshot("Unpaused");
+        paused = Resources.Load<AudioMixer>("Sounds/ZZMasterMixer").FindSnapshot("Paused");
     }
 
     // Update is called once per frame
@@ -63,7 +65,7 @@ public class PauseMenu : MonoBehaviour
                     playerBlur.SetActive(false);
                     //Debug.Log("Now unpaused");
                     Time.timeScale = 1;
-                    unpaused.TransitionTo(0.01f);
+                    unpaused.TransitionTo(0);
                 }                
             }
             else
@@ -79,7 +81,7 @@ public class PauseMenu : MonoBehaviour
                 GamePausedText.SetActive(true);
                 playerBlur.SetActive(true);
                 Time.timeScale = 0;
-                paused.TransitionTo(0.01f);
+                paused.TransitionTo(0);
             }
         }
 
@@ -98,7 +100,7 @@ public class PauseMenu : MonoBehaviour
         MenuContainer.SetActive(false);
         playerBlur.SetActive(false);
         Time.timeScale = 1;
-        unpaused.TransitionTo(0.01f);
+        unpaused.TransitionTo(0f);
     }
 
     public void GoToMain()
