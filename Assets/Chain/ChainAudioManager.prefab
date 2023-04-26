@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6409954666729781110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6409954666729781112}
+  - component: {fileID: 6409954666729781113}
+  m_Layer: 0
+  m_Name: ChainAudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6409954666729781112
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6409954666729781110}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.629835, y: -8.524181, z: 0.19371367}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6409954666729781113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6409954666729781110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b0b43717e3f6064e94a30932ab2e524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lavaAudios:
+  - {fileID: 8300000, guid: c43556b58fc748f4cbc165cb31b0d1a4, type: 3}
+  - {fileID: 8300000, guid: e2b9063f0cd09b8478cd45f31a9ed42c, type: 3}
+  - {fileID: 8300000, guid: b373317a39ca0744fb6127311e434f64, type: 3}
+  - {fileID: 8300000, guid: ec6fcc3844f3a9d4c92b489029fd5aef, type: 3}
+  audioToPlay: 0

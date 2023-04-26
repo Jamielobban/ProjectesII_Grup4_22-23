@@ -145,8 +145,8 @@ public class AudioManager : MonoBehaviour
         audioNameAndItsRange.Add("EnemyBulletWizard", 15);
         audioNameAndItsRange.Add("idle", 31);
         audioNameAndItsRange.Add("Candle Fire Flicker Sound Effect (mp3cut.net)", 10f);
-        audioNameAndItsRange.Add("TorchFire", 17f);
-        audioNameAndItsRange.Add("GotaSound", 35f);
+        audioNameAndItsRange.Add("TorchFire", 15f);
+        audioNameAndItsRange.Add("GotaSound", 28f);
         audioNameAndItsRange.Add("ArrowImpact", 2.5f);
         audioNameAndItsRange.Add("elevator", 1000f);
         audioNameAndItsRange.Add("slashVerd",15);
@@ -158,6 +158,14 @@ public class AudioManager : MonoBehaviour
         audioNameAndItsRange.Add("lavaNormal", 15);
         audioNameAndItsRange.Add("lavaPitchAgut", 15);
         audioNameAndItsRange.Add("lavaPitchGreu", 15);
+        audioNameAndItsRange.Add("chain2", 15);
+        audioNameAndItsRange.Add("chain3", 15);
+        audioNameAndItsRange.Add("chain4", 15);
+        audioNameAndItsRange.Add("chain5", 15);
+        audioNameAndItsRange.Add("dashSkull", 10);
+        audioNameAndItsRange.Add("skullDead", 13);
+        audioNameAndItsRange.Add("SpinSkull", 10);
+
     }
 
     private void Update()
