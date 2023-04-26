@@ -56,10 +56,11 @@ public class CamBosque : MonoBehaviour
             DOVirtual.Float(cam.m_Lens.OrthographicSize, 24.5f, 5, (value) => {
                 cam.m_Lens.OrthographicSize = value;
             });
-            DOVirtual.Float(col.a, 1, 10, (value) => {
+            DOVirtual.Float(col.a, 1, 10, (value) =>
+            {
                 col.a = value;
             });
-            square.GetComponent<SpriteRenderer>().material.DOFloat(0.138f, "_FadeAmount", 10);            
+            square.GetComponent<SpriteRenderer>().material.DOFloat(0.138f, "_FadeAmount", 10);
             transform.DOMove(new Vector3(11.3f, 90.2f, -10), 5);
             cam.transform.DOShakePosition(10);
             travelCenter = true;
