@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.Audio;
 public class RoomManager : MonoBehaviour
 {
     //public bool currentRoom = false;
+    private AudioMixer mixerMaster;
+    private AudioMixer mixerSFX;
+
     private PlayerMovement playerAudio;
 
     public GameObject roomEnemies;
@@ -115,6 +118,11 @@ public class RoomManager : MonoBehaviour
         if (!boss)
         {
             generalCombatKey = AudioManager.Instance.LoadSound(generalCombatAudio, playerAudio.transform);
+
+            mixerMaster = Resources.Load<AudioMixer>("Sounds/ZZMasterMixer");
+
+            if (generalCombatKey.HasValue)                
+                AudioManager.Instance.GetAudioFromDictionaryIfPossible(generalCombatKey.Value).outputAudioMixerGroup = mixerMaster.FindMatchingGroups("Music")[0];
         }
 
         //Start music

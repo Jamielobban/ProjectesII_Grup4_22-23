@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioPrefabScript : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class AudioPrefabScript : MonoBehaviour
     public BoolValue musciEnabled;
     public FloatValue sfxValue;
     public FloatValue musciValue;
+    public AudioMixerSnapshot unpaused;
+    public AudioMixerSnapshot paused;
+
 
     public float defaultSoundValue = 1;
     public bool amIsfx = true;
@@ -26,12 +30,13 @@ public class AudioPrefabScript : MonoBehaviour
     void Update()
     {        
 
+
         if (audioSource.isPlaying && !playing)
         {
             playing = true;            
         }
 
-        if(audioSource.isPlaying && gamePaused.RuntimeValue)
+        if(audioSource.isPlaying && gamePaused.RuntimeValue && amIsfx)
         {
             audioSource.Pause();
         }
@@ -46,7 +51,7 @@ public class AudioPrefabScript : MonoBehaviour
                     AudioManager.Instance.RemoveAudio(myId.Value);
                 }
             }
-            else if(!gamePaused.RuntimeValue)
+            else if(!gamePaused.RuntimeValue && amIsfx)
             {
                 audioSource.UnPause();
             }
