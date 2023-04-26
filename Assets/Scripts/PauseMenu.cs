@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class PauseMenu : MonoBehaviour
     BoolValue gamePaused;
     [SerializeField]
     GameObject playerBlur;
+
+    public AudioMixerSnapshot unpaused;
+    public AudioMixerSnapshot paused;
 
     void Awake()
     {
@@ -59,6 +63,7 @@ public class PauseMenu : MonoBehaviour
                     playerBlur.SetActive(false);
                     //Debug.Log("Now unpaused");
                     Time.timeScale = 1;
+                    unpaused.TransitionTo(0.01f);
                 }                
             }
             else
@@ -74,6 +79,7 @@ public class PauseMenu : MonoBehaviour
                 GamePausedText.SetActive(true);
                 playerBlur.SetActive(true);
                 Time.timeScale = 0;
+                paused.TransitionTo(0.01f);
             }
         }
 
@@ -92,6 +98,7 @@ public class PauseMenu : MonoBehaviour
         MenuContainer.SetActive(false);
         playerBlur.SetActive(false);
         Time.timeScale = 1;
+        unpaused.TransitionTo(0.01f);
     }
 
     public void GoToMain()
