@@ -8,16 +8,25 @@ public class Blood : MonoBehaviour
     AudioClip gotaSound;
 
     int? gotaSoundKey;
+
     // Start is called before the first frame update
+    [System.Obsolete]
     void Start()
     {
         StartCoroutine(RandomLoopAnimation());
         
     }
+
+    [System.Obsolete]
     private IEnumerator RandomLoopAnimation()
     {
         yield return new WaitForSeconds(Random.RandomRange(3,6));
-        //gotaSoundKey = AudioManager.Instance.LoadSound(gotaSound, this.transform, 0, false);
+        gotaSoundKey = AudioManager.Instance.LoadSound(gotaSound, this.transform, 0, false,true,1);
+        if (gotaSoundKey.HasValue)
+        {
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(gotaSoundKey.Value).pitch = Random.RandomRange(0, 5);
+
+        }
 
         this.GetComponent<Animator>().SetTrigger("Anim");
 

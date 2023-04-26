@@ -185,7 +185,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 22
   m_Sprite: {fileID: 1592892739, guid: 7005bf13eff026943a276527d29ad943, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -257,6 +257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4907007668257930733}
   - component: {fileID: 5886497925433811450}
+  - component: {fileID: 396854552883239612}
   m_Layer: 0
   m_Name: BlueFire
   m_TagString: Untagged
@@ -298,6 +299,19 @@ MonoBehaviour:
   soundsToPlay:
   - {fileID: 8300000, guid: 0f8699821570c814880c4251fa036798, type: 3}
   toLoop: 1
+--- !u!114 &396854552883239612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628646406358673275}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a9f72a36947f34b83b69a764ddb04b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  torch: {fileID: 8300000, guid: 0f8699821570c814880c4251fa036798, type: 3}
 --- !u!1 &5513809508274842440
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +385,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 22
   m_Sprite: {fileID: 1842303022, guid: 60bbc5df42aa9e8479425584fc3509b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -476,7 +490,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 22
   m_Sprite: {fileID: 211029024, guid: 32718ebbe42e44549b86d7ee1c3a64c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

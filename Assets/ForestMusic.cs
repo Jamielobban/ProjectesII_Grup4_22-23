@@ -11,11 +11,11 @@ public class ForestMusic : MonoBehaviour
     AudioClip forestAudio;
 
     [SerializeField]
-    PlayerMovement player;
+    Camera mainCam;
     void Start()
     {
-        player = FindObjectOfType<PlayerMovement>();
-        forestMusic = AudioManager.Instance.LoadSound(forestAudio, player.transform, 0f, true, false, 1);
+        mainCam = FindObjectOfType<Camera>();
+        forestMusic = AudioManager.Instance.LoadSound(forestAudio, mainCam.transform, 0f, true, false, 1);
     }
 
 }

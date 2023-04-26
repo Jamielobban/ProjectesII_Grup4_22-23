@@ -144,9 +144,9 @@ public class AudioManager : MonoBehaviour
         audioNameAndItsRange.Add("EnemyBulletWorm", 15);
         audioNameAndItsRange.Add("EnemyBulletWizard", 15);
         audioNameAndItsRange.Add("idle", 31);
-        audioNameAndItsRange.Add("Candle Fire Flicker Sound Effect (mp3cut.net)", 3.5f);
-        audioNameAndItsRange.Add("TorchFire", 8f);
-        audioNameAndItsRange.Add("GotaSound", 7f);
+        audioNameAndItsRange.Add("Candle Fire Flicker Sound Effect (mp3cut.net)", 10f);
+        audioNameAndItsRange.Add("TorchFire", 17f);
+        audioNameAndItsRange.Add("GotaSound", 35f);
         audioNameAndItsRange.Add("ArrowImpact", 2.5f);
         audioNameAndItsRange.Add("elevator", 1000f);
         audioNameAndItsRange.Add("slashVerd",15);
