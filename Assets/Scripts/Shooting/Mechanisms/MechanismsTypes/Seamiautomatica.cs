@@ -13,7 +13,7 @@ public class Seamiautomatica : Mechanism
         {
             GameObject bullet = GameObject.Instantiate(bulletTypePrefab, firePoint.position, firePoint.rotation);
             bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
-            shootSoundKey = AudioManager.Instance.LoadSound(shootSound, firePoint.position);
+            shootSoundKey = AudioManager.Instance.LoadSound(shootSound, firePoint.position, 0, false, true, MixerGroups.GUNSHOT);
             timeLastShoot = Time.time;            
             bullet.GetComponent<Bullet>().FireProjectile(/*firePoint*/);
             

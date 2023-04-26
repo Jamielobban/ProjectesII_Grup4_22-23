@@ -331,7 +331,7 @@ public class RoomManager : MonoBehaviour
     void endRoom()
     {
         openDoors();
-        roomCompleteKey = AudioManager.Instance.LoadSound(roomCompleteAudio, playerAudio.transform.position,0.5f,false,true,2);
+        roomCompleteKey = AudioManager.Instance.LoadSound(roomCompleteAudio, playerAudio.transform.position,0.5f,false,true,MixerGroups.OTHER,2);
         this.gameObject.tag = "Default";
 
         for(int i = 0; i < palancas.Length; i++)

@@ -15,7 +15,7 @@ public class PlaySoundAtStart : MonoBehaviour
     {
        for(int i = 0; i < soundsToPlay.Length; i++)
        {
-            var k = AudioManager.Instance.LoadSound(soundsToPlay[i], this.transform, 0, toLoop,true,1);
+            var k = AudioManager.Instance.LoadSound(soundsToPlay[i], this.transform, 0, toLoop,true, MixerGroups.SFX,1);
             if (k.HasValue)
             {
                 soundsToPlayKeys.Add(k);

@@ -17,7 +17,7 @@ public class ForestMusic : MonoBehaviour
     {
         mixerMaster = Resources.Load<AudioMixer>("Sounds/ZZMasterMixer");
         mainCam = FindObjectOfType<Camera>();
-        forestMusic = AudioManager.Instance.LoadSound(forestAudio, mainCam.transform, 0f, true, false, 1);
+        forestMusic = AudioManager.Instance.LoadSound(forestAudio, mainCam.transform, 0f, true, false, MixerGroups.MUSIC,1);
         if (forestMusic.HasValue)
             AudioManager.Instance.GetAudioFromDictionaryIfPossible(forestMusic.Value).outputAudioMixerGroup = mixerMaster.FindMatchingGroups("Music")[0];
     }

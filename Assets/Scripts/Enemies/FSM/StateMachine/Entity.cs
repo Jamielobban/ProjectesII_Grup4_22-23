@@ -208,7 +208,7 @@ public abstract class Entity : MonoBehaviour
         		
 
 		if (damageType == HealthStateTypes.NORMAL)
-			hitSoundKey = AudioManager.Instance.LoadSound(enemyData.hitSound, this.transform);
+			hitSoundKey = AudioManager.Instance.LoadSound(enemyData.hitSound, this.transform, 0, false, true, MixerGroups.HITMARKER);
 
 		if (damageType != HealthStateTypes.BURNED)
 		{

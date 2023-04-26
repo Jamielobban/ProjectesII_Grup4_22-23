@@ -21,6 +21,6 @@ public class LavaAudioManager : MonoBehaviour
         Debug.Log("Repeat");
         audioToPlay = Random.Range(0, lavaAudios.Length);
         positionToSpawn = Random.Range(0, positions.Length);
-        audioKey = AudioManager.Instance.LoadSound(lavaAudios[audioToPlay], positions[positionToSpawn], 0, false, true, 1);
+        audioKey = AudioManager.Instance.LoadSound(lavaAudios[audioToPlay], positions[positionToSpawn], 0, false, true, MixerGroups.ENVIRONMENT,1);
     }
 }

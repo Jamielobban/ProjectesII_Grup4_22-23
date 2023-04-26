@@ -148,7 +148,7 @@ public class CheckPoints : MonoBehaviour
 
                 //restAnimation.CloseBlackScreen();
                 blit.isResting = true;
-                restAudioKey = AudioManager.Instance.LoadSound(restAudio, playerTtransform.transform.position, 0, false, transform, 1);
+                restAudioKey = AudioManager.Instance.LoadSound(restAudio, playerTtransform.transform.position, 0, false, transform, MixerGroups.OTHER,1);
                 button.SetActive(false);
 
                 PlayerPrefs.SetInt("isDead", (false ? 1 : 0));

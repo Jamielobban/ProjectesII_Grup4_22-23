@@ -71,7 +71,7 @@ public class Enemy14 : Entity
 
         stateMachine.Initialize(idleState);
 
-        backThemeKey = AudioManager.Instance.LoadSound(backThemeSound, player.transform, 0, true, false, 0.5f);
+        backThemeKey = AudioManager.Instance.LoadSound(backThemeSound, player.transform, 0, true, false, MixerGroups.MUSIC,0.5f);
 
         mode = 1; //1
         waitBetweenAttacks = 2; //2
@@ -137,16 +137,16 @@ public class Enemy14 : Entity
 
     public void CreateIdleSwordsSounds()
     {
-        idelSwordSoundKey1 = AudioManager.Instance.LoadSound(swordSound, transform, 0, true, true, 0.3f);
+        idelSwordSoundKey1 = AudioManager.Instance.LoadSound(swordSound, transform, 0, true, true, MixerGroups.ENEMIES,0.3f);
         if (idelSwordSoundKey1.HasValue)
             AudioManager.Instance.GetAudioFromDictionaryIfPossible(idelSwordSoundKey1.Value).transform.localPosition = new Vector3(-1.72f, -2.07f, 0);
-        idelSwordSoundKey2 = AudioManager.Instance.LoadSound(swordSound, transform, 0f, true, true, 0.3f);
+        idelSwordSoundKey2 = AudioManager.Instance.LoadSound(swordSound, transform, 0f, true, true, MixerGroups.ENEMIES, 0.3f);
         if (idelSwordSoundKey2.HasValue)
             AudioManager.Instance.GetAudioFromDictionaryIfPossible(idelSwordSoundKey2.Value).transform.localPosition = new Vector3(1.72f, -2.07f, 0);
-        idelSwordSoundKey3 = AudioManager.Instance.LoadSound(swordSound, transform, 0f, true, true, 0.3f);
+        idelSwordSoundKey3 = AudioManager.Instance.LoadSound(swordSound, transform, 0f, true, true, MixerGroups.ENEMIES, 0.3f);
         if (idelSwordSoundKey3.HasValue)
             AudioManager.Instance.GetAudioFromDictionaryIfPossible(idelSwordSoundKey3.Value).transform.localPosition = new Vector3(1.72f, -3.21f, 0);
-        idelSwordSoundKey4 = AudioManager.Instance.LoadSound(swordSound, transform, 0f, true, true, 0.3f);
+        idelSwordSoundKey4 = AudioManager.Instance.LoadSound(swordSound, transform, 0f, true, true, MixerGroups.ENEMIES, 0.3f);
         if (idelSwordSoundKey4.HasValue)
             AudioManager.Instance.GetAudioFromDictionaryIfPossible(idelSwordSoundKey4.Value).transform.localPosition = new Vector3(-1.72f, -3.21f, 0);
     }

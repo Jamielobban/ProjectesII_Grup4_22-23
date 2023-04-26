@@ -415,7 +415,7 @@ public class PlayerMovement : MonoBehaviour
                     {
                         isMoving = true;                        if (!walkingSoundKey.HasValue)
                         {
-                            walkingSoundKey = AudioManager.Instance.LoadSound(walking, this.transform,0f,true,true,1f);
+                            walkingSoundKey = AudioManager.Instance.LoadSound(walking, this.transform,0f,true,true,MixerGroups.PLAYER,1f);
                         }
                         
                     }
@@ -543,7 +543,7 @@ public class PlayerMovement : MonoBehaviour
                 currentHearts = 0;
             }
             GameObject.Instantiate(floorBlood, this.transform.position, this.transform.rotation);
-            damageSoundKey = AudioManager.Instance.LoadSound(damageSound, this.gameObject.transform);
+            damageSoundKey = AudioManager.Instance.LoadSound(damageSound, this.gameObject.transform, 0, false, true, MixerGroups.HITMARKER);
             //healthBar.SetHealth(currentHealth);
         }
     }

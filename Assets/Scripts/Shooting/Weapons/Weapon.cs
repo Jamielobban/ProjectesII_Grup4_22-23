@@ -155,13 +155,13 @@ public class Weapon
                     bulletPercentage = (float)GetBulletsInMagazine() / (float)GetBulletsPerMagazine();
                     if (bulletPercentage < 0.4f)
                     {
-                        lowAmmoKey = AudioManager.Instance.LoadSound(lowAmmo, player.transform);
+                        lowAmmoKey = AudioManager.Instance.LoadSound(lowAmmo, player.transform, 0f, false, false, MixerGroups.GUNSHOT, 1);
 
                         //Debug.Log("this is low ammo2");
                     }
                     if (bulletPercentage < 0.5f && bulletPercentage >= 0.4f)
                     {
-                        lowAmmoKey = AudioManager.Instance.LoadSound(lowAmmo2, player.transform, 0f, false, false, 0.25f);
+                        lowAmmoKey = AudioManager.Instance.LoadSound(lowAmmo2, player.transform, 0f, false, false, MixerGroups.GUNSHOT,0.25f);
 
                         //Debug.Log("this is low ammoi");
                     }
@@ -252,13 +252,13 @@ public class Weapon
         {
             if(data.magazinesInWeapon.RuntimeValue == 0)
             {
-                outOfAmmoKey = AudioManager.Instance.LoadSound(outOfAmmo, player.transform);
+                outOfAmmoKey = AudioManager.Instance.LoadSound(outOfAmmo, player.transform, 0, false, true, MixerGroups.OTHER);
                 data.outOfAmmo.RuntimeValue = true;
             }
             else
             {
                 outOfAmmoKey = AudioManager.Instance.LoadSound(outOfAmmo, player.transform);
-                reloadKeySound = AudioManager.Instance.LoadSound(data.reloadSound, player.transform, 0.5f, false);
+                reloadKeySound = AudioManager.Instance.LoadSound(data.reloadSound, player.transform, 0.5f, false, true, MixerGroups.OTHER);
                 data.bulletsInMagazine.RuntimeValue = data.bulletsInMagazine.InitialValue;
                 data.magazinesInWeapon.RuntimeValue--;
                 data.startReloading.RuntimeValue = Time.time;

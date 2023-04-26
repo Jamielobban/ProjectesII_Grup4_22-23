@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class AudioManager : MonoBehaviour
     const float maxDifferenceToBePlayed = 0.01f;
     
     Dictionary<string, float> audioNameAndItsRange = new Dictionary<string, float>();
+    
     public class AudioInfo : MonoBehaviour
     {
         public string audioClipName;        
@@ -22,8 +24,16 @@ public class AudioManager : MonoBehaviour
         private float timeDelayed;
         private bool clipHasStarted = false;
 
-        public AudioInfo(AudioClip clip, float creationTime, Transform parent, GameObject audioSourcePrefab, float maxDistance = 25,float delay = 0f, bool loop = false, bool isSFX = true, float volume = 1)
+        private AudioMixer mixerMaster;
+        private AudioMixer mixerSFX;        
+        private AudioMixer mixerImportantSFX;        
+
+        public AudioInfo(AudioClip clip, float creationTime, Transform parent, GameObject audioSourcePrefab, float maxDistance = 25,float delay = 0f, bool loop = false, bool isSFX = true, MixerGroups myGroup = MixerGroups.SFX,float volume = 1)
         {
+            mixerMaster = Resources.Load<AudioMixer>("Sounds/ZZMasterMixer");
+            mixerSFX = Resources.Load<AudioMixer>("Sounds/ZZSFXMicer");
+            mixerImportantSFX = Resources.Load<AudioMixer>("Sounds/ZZImportantSFX");
+
             thisTime = Time.time;
             timeDelayed = delay;
 
@@ -31,38 +41,41 @@ public class AudioManager : MonoBehaviour
 
             audioSorcePrefabClone.GetComponent<AudioPrefabScript>().defaultSoundValue = volume;
             audioSorcePrefabClone.GetComponent<AudioPrefabScript>().amIsfx = isSFX;
-            audioSorcePrefabClone.GetComponent<AudioPrefabScript>().myId = audioSorcePrefabClone.GetInstanceID();
-
-
+            audioSorcePrefabClone.GetComponent<AudioPrefabScript>().myId = audioSorcePrefabClone.GetInstanceID();            
 
             audioSource = audioSorcePrefabClone.GetComponent<AudioSource>();
 
+            switch (myGroup)
+            {
+                case MixerGroups.ENEMIES:
+                    audioSource.outputAudioMixerGroup = mixerSFX.FindMatchingGroups("Enemies")[0];
+                    break;
+                case MixerGroups.GUNSHOT:
+                    audioSource.outputAudioMixerGroup = mixerImportantSFX.FindMatchingGroups("GunShot")[0];
+                    break;
+                case MixerGroups.MUSIC:
+                    audioSource.outputAudioMixerGroup = mixerMaster.FindMatchingGroups("Music")[0];
+                    break;
+                case MixerGroups.PLAYER:
+                    audioSource.outputAudioMixerGroup = mixerSFX.FindMatchingGroups("Player")[0];
+                    break;
+                case MixerGroups.SFX:
+                    audioSource.outputAudioMixerGroup = mixerMaster.FindMatchingGroups("SoundEffects")[0];
+                    break;
+                case MixerGroups.ENVIRONMENT:
+                    audioSource.outputAudioMixerGroup = mixerSFX.FindMatchingGroups("Environment")[0];
+                    break;
+                case MixerGroups.HITMARKER:
+                    audioSource.outputAudioMixerGroup = mixerImportantSFX.FindMatchingGroups("Hitmarker")[0];
+                    break;
+                case MixerGroups.OTHER:
+                    audioSource.outputAudioMixerGroup = mixerImportantSFX.FindMatchingGroups("Other")[0];
+                    break;
+            }
+
             audioSource.maxDistance = maxDistance;
 
-            audioSource.loop = loop;
-
-            //if (isSFX)
-            //{
-            //    if (audioSorcePrefabClone.GetComponent<AudioPrefabScript>().sfxEnabled.RuntimeValue)
-            //    {
-            //        audioSource.volume = volume * audioSorcePrefabClone.GetComponent<AudioPrefabScript>().sfxValue.RuntimeValue;
-            //    }
-            //    else
-            //    {
-            //        audioSource.volume = 0;
-            //    }
-            //}
-            //else
-            //{
-            //    if (audioSorcePrefabClone.GetComponent<AudioPrefabScript>().musciEnabled.RuntimeValue)
-            //    {
-            //        audioSource.volume = volume * audioSorcePrefabClone.GetComponent<AudioPrefabScript>().musciValue.RuntimeValue;
-            //    }
-            //    else
-            //    {
-            //        audioSource.volume = 0;
-            //    }
-            //}
+            audioSource.loop = loop;            
 
             audioSource.clip = clip;
             audioClipName = clip.name;
@@ -72,8 +85,12 @@ public class AudioManager : MonoBehaviour
             audioSource.PlayDelayed(delay);
         }
 
-        public AudioInfo(AudioClip clip, float creationTime, Vector3 position, GameObject audioSourcePrefab, float maxDistance = 25, float delay = 0f, bool loop = false, bool isSFX = true, float volume = 1)
+        public AudioInfo(AudioClip clip, float creationTime, Vector3 position, GameObject audioSourcePrefab, float maxDistance = 25, float delay = 0f, bool loop = false, bool isSFX = true, MixerGroups myGroup = MixerGroups.SFX, float volume = 1)
         {
+            mixerMaster = Resources.Load<AudioMixer>("Sounds/ZZMasterMixer");
+            mixerSFX = Resources.Load<AudioMixer>("Sounds/ZZSFXMicer");
+            mixerImportantSFX = Resources.Load<AudioMixer>("Sounds/ZZImportantSFX");
+
             thisTime = Time.time;
             timeDelayed = delay;
 
@@ -81,36 +98,41 @@ public class AudioManager : MonoBehaviour
 
             audioSorcePrefabClone.GetComponent<AudioPrefabScript>().defaultSoundValue = volume;
             audioSorcePrefabClone.GetComponent<AudioPrefabScript>().amIsfx = isSFX;
-            audioSorcePrefabClone.GetComponent<AudioPrefabScript>().myId = audioSorcePrefabClone.GetInstanceID();
+            audioSorcePrefabClone.GetComponent<AudioPrefabScript>().myId = audioSorcePrefabClone.GetInstanceID();           
 
             audioSource = audioSorcePrefabClone.GetComponent<AudioSource>();
 
+            switch (myGroup)
+            {
+                case MixerGroups.ENEMIES:
+                    audioSource.outputAudioMixerGroup = mixerSFX.FindMatchingGroups("Enemies")[0];
+                    break;
+                case MixerGroups.GUNSHOT:
+                    audioSource.outputAudioMixerGroup = mixerImportantSFX.FindMatchingGroups("GunShot")[0];
+                    break;
+                case MixerGroups.MUSIC:
+                    audioSource.outputAudioMixerGroup = mixerMaster.FindMatchingGroups("Music")[0];
+                    break;
+                case MixerGroups.PLAYER:
+                    audioSource.outputAudioMixerGroup = mixerSFX.FindMatchingGroups("Player")[0];
+                    break;
+                case MixerGroups.SFX:
+                    audioSource.outputAudioMixerGroup = mixerMaster.FindMatchingGroups("SoundEffects")[0];
+                    break;
+                case MixerGroups.ENVIRONMENT:
+                    audioSource.outputAudioMixerGroup = mixerSFX.FindMatchingGroups("Environment")[0];
+                    break;
+                case MixerGroups.HITMARKER:
+                    audioSource.outputAudioMixerGroup = mixerImportantSFX.FindMatchingGroups("Hitmarker")[0];
+                    break;
+                case MixerGroups.OTHER:
+                    audioSource.outputAudioMixerGroup = mixerImportantSFX.FindMatchingGroups("Other")[0];
+                    break;
+            }
+
             audioSource.maxDistance = maxDistance;
 
-            audioSource.loop = loop;
-
-            //if (isSFX)
-            //{
-            //    if (audioSorcePrefabClone.GetComponent<AudioPrefabScript>().sfxEnabled.RuntimeValue)
-            //    {
-            //        audioSource.volume = volume * audioSorcePrefabClone.GetComponent<AudioPrefabScript>().sfxValue.RuntimeValue;
-            //    }
-            //    else
-            //    {
-            //        audioSource.volume = 0;
-            //    }
-            //}
-            //else
-            //{
-            //    if (audioSorcePrefabClone.GetComponent<AudioPrefabScript>().musciEnabled.RuntimeValue)
-            //    {
-            //        audioSource.volume = volume * audioSorcePrefabClone.GetComponent<AudioPrefabScript>().musciValue.RuntimeValue;
-            //    }
-            //    else
-            //    {
-            //        audioSource.volume = 0;
-            //    }
-            //}
+            audioSource.loop = loop;            
 
             audioSource.clip = clip;
             audioClipName = clip.name;
@@ -121,10 +143,7 @@ public class AudioManager : MonoBehaviour
 
         }
         
-    }
-
-    //[SerializeField] AudioSource sfxAudioSource, musicAudioSource, sfxLoop;
-
+    }    
 
     Dictionary<int, AudioInfo> audiosPlaying = new Dictionary<int, AudioInfo>();  
     
@@ -140,6 +159,8 @@ public class AudioManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
         }
+
+         
 
         audioNameAndItsRange.Add("EnemyBulletWorm", 15);
         audioNameAndItsRange.Add("EnemyBulletWizard", 15);
@@ -166,6 +187,7 @@ public class AudioManager : MonoBehaviour
         audioNameAndItsRange.Add("skullDead", 13);
         audioNameAndItsRange.Add("SpinSkull", 10);
 
+        
     }
 
     private void Update()
@@ -193,7 +215,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public int? LoadSound(AudioClip clip, Vector3 position, float delay = 0f, bool loop = false, bool isSFX = true, float volume = 1)
+    public int? LoadSound(AudioClip clip, Vector3 position, float delay = 0f, bool loop = false, bool isSFX = true, MixerGroups myGroup = MixerGroups.SFX, float volume = 1)
     {
         if(!CheckIfShouldPlay(clip, delay))
         {
@@ -211,7 +233,7 @@ public class AudioManager : MonoBehaviour
             range = 25;
         }
 
-        AudioInfo audioInfo = new AudioInfo(clip, Time.time, position, audioSourcePrefab, range, delay, loop, isSFX, volume);
+        AudioInfo audioInfo = new AudioInfo(clip, Time.time, position, audioSourcePrefab, range, delay, loop, isSFX, myGroup, volume);
 
         audioInfo.audioSorcePrefabClone.GetComponent<AudioPrefabScript>().myId = audioInfo.audioSorcePrefabClone.GetInstanceID();
         audiosPlaying.Add(audioInfo.audioSorcePrefabClone.GetInstanceID(), audioInfo);
@@ -219,7 +241,7 @@ public class AudioManager : MonoBehaviour
         return audioInfo.audioSorcePrefabClone.GetInstanceID();
     }
 
-    public int? LoadSound(AudioClip clip, Transform parent, float delay = 0f, bool loop = false, bool isSFX = true, float volume = 1)
+    public int? LoadSound(AudioClip clip, Transform parent, float delay = 0f, bool loop = false, bool isSFX = true, MixerGroups myGroup = MixerGroups.SFX, float volume = 1)
     {
         if (!CheckIfShouldPlay(clip, delay))
         {
@@ -239,7 +261,7 @@ public class AudioManager : MonoBehaviour
             range = 25;
         }
 
-        AudioInfo audioInfo = new AudioInfo(clip, Time.time, parent, audioSourcePrefab, range, delay, loop, isSFX, volume);
+        AudioInfo audioInfo = new AudioInfo(clip, Time.time, parent, audioSourcePrefab, range, delay, loop, isSFX, myGroup, volume);
 
         audioInfo.audioSorcePrefabClone.GetComponent<AudioPrefabScript>().myId = audioInfo.audioSorcePrefabClone.GetInstanceID();
         audiosPlaying.Add(audioInfo.audioSorcePrefabClone.GetInstanceID(), audioInfo);

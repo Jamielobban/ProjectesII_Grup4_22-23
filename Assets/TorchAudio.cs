@@ -9,9 +9,9 @@ public class TorchAudio : MonoBehaviour
     [SerializeField] AudioClip torch;
     void Start()
     {
-        audiokey = AudioManager.Instance.LoadSound(torch, this.transform, 0, true, true, 1);
-        audiokey = AudioManager.Instance.LoadSound(torch, this.transform, 0, true, true, 1);
-        audiokey = AudioManager.Instance.LoadSound(torch, this.transform, 0, true, true, 1);
+        audiokey = AudioManager.Instance.LoadSound(torch, this.transform, 0, true, true, MixerGroups.ENVIRONMENT,1);
+        audiokey = AudioManager.Instance.LoadSound(torch, this.transform, 0, true, true, MixerGroups.ENVIRONMENT, 1);
+        audiokey = AudioManager.Instance.LoadSound(torch, this.transform, 0, true, true, MixerGroups.ENVIRONMENT, 1);
     }
 
     // Update is called once per frame

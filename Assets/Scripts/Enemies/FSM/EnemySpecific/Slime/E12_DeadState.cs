@@ -42,6 +42,6 @@ public class E12_DeadState : DeadState
 
     public void DoJump()
     {
-        enemy.jumpSoundKey = AudioManager.Instance.LoadSound(enemy.jumpSound, enemy.transform, 0, false, true, 0.5f);
+        enemy.jumpSoundKey = AudioManager.Instance.LoadSound(enemy.jumpSound, enemy.transform, 0, false, true, MixerGroups.ENEMIES,0.5f);
     }
 }

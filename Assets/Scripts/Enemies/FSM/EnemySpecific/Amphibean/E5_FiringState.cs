@@ -29,7 +29,7 @@ public class E5_FiringState : FiringState
     {
         base.Enter();
 
-        attackSoundsKey = AudioManager.Instance.LoadSound(stateData.attackSounds, enemy.GetComponent<Entity>().transform, 0, true, true, 0.4f);
+        attackSoundsKey = AudioManager.Instance.LoadSound(stateData.attackSounds, enemy.GetComponent<Entity>().transform, 0, true, true, MixerGroups.ENEMIES,0.4f);
         //if (attackSoundsKey.HasValue)
         //{
         //    AudioManager.Instance.GetAudioFromDictionaryIfPossible(attackSoundsKey.Value).volume = 0.4f;
@@ -203,7 +203,7 @@ public class E5_FiringState : FiringState
                 fireBreathStarted = false;
                 enemy.flamesAreOn = false;
 
-                attackSoundsKey = AudioManager.Instance.LoadSound(stateData.attackSounds, enemy.GetComponent<Entity>().transform, 0, true, true, 0.4f);
+                attackSoundsKey = AudioManager.Instance.LoadSound(stateData.attackSounds, enemy.GetComponent<Entity>().transform, 0, true, true, MixerGroups.ENEMIES,0.4f);
                 //if (attackSoundsKey.HasValue)
                 //{
                 //    AudioManager.Instance.GetAudioFromDictionaryIfPossible(attackSoundsKey.Value).volume = 0.4f;

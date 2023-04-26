@@ -20,6 +20,6 @@ public class ChainAudioManager : MonoBehaviour
     {
         Debug.Log("Repeat");
         audioToPlay = Random.Range(0, lavaAudios.Length);
-        audioKey = AudioManager.Instance.LoadSound(lavaAudios[audioToPlay], this.transform, 0, false, true, 1);
+        audioKey = AudioManager.Instance.LoadSound(lavaAudios[audioToPlay], this.transform, 0, false, true, MixerGroups.ENVIRONMENT,1);
     }
 }

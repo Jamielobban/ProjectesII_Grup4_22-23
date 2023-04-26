@@ -71,12 +71,12 @@ public class Enemy15 : Entity
 
         stateMachine.Initialize(firingState);
 
-        golemSoundsKey = AudioManager.Instance.LoadSound(golemSounds, this.transform, 0, false, true, 0.4f);
+        golemSoundsKey = AudioManager.Instance.LoadSound(golemSounds, this.transform, 0, false, true, MixerGroups.ENEMIES,0.4f);
 
         mode = 1; //1
         waitBetweenAttacks = 2; //2
 
-        backThemeKey = AudioManager.Instance.LoadSound(backThemeSound, player.transform, 0, true, false, 0.5f);
+        backThemeKey = AudioManager.Instance.LoadSound(backThemeSound, player.transform, 0, true, false, MixerGroups.MUSIC,0.5f);
     }
 
     public override void Update()
@@ -105,7 +105,7 @@ public class Enemy15 : Entity
 
         if(Time.time - startWaitSound >= waitTimeSound)
         {
-            golemSoundsKey = AudioManager.Instance.LoadSound(golemSounds, this.transform, 0, false, true, 0.4f);
+            golemSoundsKey = AudioManager.Instance.LoadSound(golemSounds, this.transform, 0, false, true, MixerGroups.ENEMIES,0.4f);
             startWaitSound = Time.time;
 
         }

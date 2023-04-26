@@ -108,7 +108,7 @@ public class Enemy13 : Entity
         mode = 1;//1
         waitBetweenAttacks = 3f;
 
-        backThemeSoundKey = AudioManager.Instance.LoadSound(backThemeSound, player.transform, 0, true, false, 0.5f);
+        backThemeSoundKey = AudioManager.Instance.LoadSound(backThemeSound, player.transform, 0, true, false, MixerGroups.MUSIC,0.5f);
 
 
         laserMaxSize = GetComponentInChildren<LineRenderer>().widthMultiplier;

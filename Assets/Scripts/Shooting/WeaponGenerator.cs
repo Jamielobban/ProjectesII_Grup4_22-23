@@ -174,7 +174,7 @@ public class WeaponGenerator : MonoBehaviour
             case -1:
                 if (weaponIndex <= 0)
                 {
-                    weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform);
+                    weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform, 0, false, true, MixerGroups.OTHER);
                     weaponIndex = weaponIndexOrder.Count - 1;
                 }
                 else
@@ -182,7 +182,7 @@ public class WeaponGenerator : MonoBehaviour
                     if (canSwitchWeapon)
                     {
                         
-                        weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform);
+                        weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform, 0, false, true, MixerGroups.OTHER);
                         StartCoroutine(WaitForWeaponSwitch());
                         weaponIndex--;
                     }
@@ -202,14 +202,14 @@ public class WeaponGenerator : MonoBehaviour
             case 1:
                 if (weaponIndex >= weaponIndexOrder.Count - 1)
                 {
-                    weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform);
+                    weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform, 0, false, true, MixerGroups.OTHER);
                     weaponIndex = 0;
                 }
                 else
                 {
                     if (canSwitchWeapon)
                     {
-                         weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform);
+                         weaponChange = AudioManager.Instance.LoadSound(weaponChangeAudio, cam.transform, 0, false, true, MixerGroups.OTHER);
                         StartCoroutine(WaitForWeaponSwitch());
                         weaponIndex++;
                     }

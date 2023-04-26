@@ -29,7 +29,7 @@ public class SineTrap : MonoBehaviour
         nextPosition = 0;
         transform.position = points[nextPosition].transform.position;
 
-        engineSoundKey = AudioManager.Instance.LoadSound(engineSound, this.transform, 0, true, true, 0.8f);
+        engineSoundKey = AudioManager.Instance.LoadSound(engineSound, this.transform, 0, true, true, MixerGroups.ENVIRONMENT,0.8f);
         //if (engineSoundKey.HasValue)
         //{
         //    AudioManager.Instance.GetAudioFromDictionaryIfPossible(engineSoundKey.Value).volume = 0.85f;

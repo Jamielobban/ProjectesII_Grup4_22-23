@@ -478,8 +478,8 @@ public class E14_FiringState : FiringState
         a2Swords = GameObject.Instantiate(enemy.attack2Swords, enemy.GetComponentInChildren<SpriteRenderer>().transform);
         enemy.agent.enabled = true;
 
-        enemy.slashSoundKey = AudioManager.Instance.LoadSound(enemy.slashSound, a2Swords.transform, 0, false, true, 0.7f);
-        enemy.slashSoundKey = AudioManager.Instance.LoadSound(enemy.slashSound, a2Swords.transform, 0.5f, false, true, 0.7f);
+        enemy.slashSoundKey = AudioManager.Instance.LoadSound(enemy.slashSound, a2Swords.transform, 0, false, true, MixerGroups.ENEMIES,0.7f);
+        enemy.slashSoundKey = AudioManager.Instance.LoadSound(enemy.slashSound, a2Swords.transform, 0.5f, false, true, MixerGroups.ENEMIES,0.7f);
     }
 
     public void StartAttackMissiles()
