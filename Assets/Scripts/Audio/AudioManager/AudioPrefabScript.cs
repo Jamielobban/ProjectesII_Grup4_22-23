@@ -13,8 +13,7 @@ public class AudioPrefabScript : MonoBehaviour
     public BoolValue musciEnabled;
     public FloatValue sfxValue;
     public FloatValue musciValue;
-    public AudioMixerSnapshot unpaused;
-    public AudioMixerSnapshot paused;
+    
 
 
     public float defaultSoundValue = 1;
