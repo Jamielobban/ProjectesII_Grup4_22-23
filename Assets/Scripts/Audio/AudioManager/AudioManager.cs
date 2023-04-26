@@ -155,6 +155,9 @@ public class AudioManager : MonoBehaviour
         audioNameAndItsRange.Add("EyeBossLaserHum", 20f);
         audioNameAndItsRange.Add("EyeBossBigFatMan", 50f);
         audioNameAndItsRange.Add("EyeBossSquelching", 50f);
+        audioNameAndItsRange.Add("lavaNormal", 15);
+        audioNameAndItsRange.Add("lavaPitchAgut", 15);
+        audioNameAndItsRange.Add("lavaPitchGreu", 15);
     }
 
     private void Update()
