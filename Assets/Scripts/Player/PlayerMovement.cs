@@ -133,7 +133,17 @@ public class PlayerMovement : MonoBehaviour
     bool godMode;
     public bool isHit;
     private void Awake()
-    {        if (!infinito)            currentHearts = PlayerPrefs.GetInt("Hearts", maxHearts);
+    {
+
+        RightHand generator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RightHand>();
+
+        if (generator != null)
+        {
+            generator.EquipWeaponModoInfinito("Sniper");
+            generator.EquipWeaponModoInfinito("Metralleta");
+            generator.EquipWeaponModoInfinito("Shotgun");
+            generator.EquipWeaponModoInfinito("Pistol");
+        }        if (!infinito)            currentHearts = PlayerPrefs.GetInt("Hearts", maxHearts);
         else
             currentHearts = maxHearts;
         healthUI = FindObjectOfType<HeartSystem>();
