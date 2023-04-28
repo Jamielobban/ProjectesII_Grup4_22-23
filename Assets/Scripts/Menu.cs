@@ -107,6 +107,10 @@ public class Menu : MonoBehaviour
     [SerializeField]
     GameObject Infinity2;
 
+    private void Awake()
+    {
+        PlayerPrefs.DeleteAll();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -270,6 +274,36 @@ public class Menu : MonoBehaviour
         // SceneManager.LoadScene(1);
     }
 
+    public void EntregaMusicaFromContinue()
+    {
+        NewButton2.GetComponentInChildren<Button>().interactable = false;
+        LoadButton2.GetComponentInChildren<Button>().interactable = false;
+        CreditsButton2.GetComponentInChildren<Button>().interactable = false;
+        SettingsButton2.GetComponentInChildren<Button>().interactable = false;
+        Infinity2.GetComponentInChildren<Button>().interactable = false;
+        ExitButton2.GetComponentInChildren<Button>().interactable = false;
+        GameName.SetActive(false);
+
+        StartCoroutine(WaitForEntregaMusica());
+
+        //PlayerPrefs.DeleteAll();        
+        // SceneManager.LoadScene(1);
+    }
+
+    public void EntregaMusicaFromNew()
+    {
+        PlayButton.GetComponentInChildren<Button>().interactable = false;
+        SettingsButton.GetComponentInChildren<Button>().interactable = false;
+        CreditsButton.GetComponentInChildren<Button>().interactable = false;
+        InfiniteModeButton.GetComponentInChildren<Button>().interactable = false;
+        ExitButton.GetComponentInChildren<Button>().interactable = false;
+        GameName.SetActive(false);
+        Debug.Log("On clicker");
+        StartCoroutine(WaitForEntregaMusica());
+
+        //PlayerPrefs.DeleteAll();        
+        // SceneManager.LoadScene(1);
+    }
     public void CreditsFromLoadGame()
     {
         LoadButton2.SetActive(false);
@@ -327,7 +361,8 @@ public class Menu : MonoBehaviour
         //Debug.Log("Load now");
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("FirstTime", 2);
-        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
+        //SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
+        SceneManager.LoadScene(59);
     }
 
     private IEnumerator WaitForLoad()
@@ -336,7 +371,8 @@ public class Menu : MonoBehaviour
         //Debug.Log("Load now");
         PlayerPrefs.SetInt("isDead", 1);
         PlayerPrefs.SetInt("FirstTime", 2);
-        SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
+        //SceneManager.LoadScene(PlayerPrefs.GetInt("IDScene", 1));
+        //SceneManager.LoadScene(59);
     }
 
     private IEnumerator WaitForInfiniteMode()
@@ -345,6 +381,15 @@ public class Menu : MonoBehaviour
         //Debug.Log("Load now");
         SceneManager.LoadScene(12);
     }
+
+
+    private IEnumerator WaitForEntregaMusica()
+    {
+        yield return new WaitForSeconds(4.0f);
+        Debug.Log("Load now");
+        SceneManager.LoadScene(59);
+    }
+
     public void Credits()
     {
         PlayButton.SetActive(false);
