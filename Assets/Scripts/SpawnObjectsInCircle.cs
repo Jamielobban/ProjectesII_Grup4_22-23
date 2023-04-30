@@ -22,6 +22,15 @@ public class SpawnObjectsInCircle : MonoBehaviour
     public bool increaseRadius;
     public bool doScaleOnSpawn;
     public bool spawnsDone;
+    public bool startWithRandomAngle = false;
+    float randomAngle = 0;
+    private void OnEnable()
+    {
+        if (startWithRandomAngle)
+            randomAngle = Random.Range(0f, 90f);
+
+        Debug.Log(randomAngle);
+    }
 
     void Start()
     {
@@ -35,7 +44,7 @@ public class SpawnObjectsInCircle : MonoBehaviour
         float radius = circleCollider.radius * transform.localScale.x;
 
         // Obtener la posición del objeto en la escena
-        Vector2 position = transform.position;
+        Vector2 position = transform.position;       
 
         // Obtener el ángulo de separación para cada instancia
         float angleStep = 90f / objectPerQuadrant;
@@ -49,13 +58,13 @@ public class SpawnObjectsInCircle : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             // Calcular el ángulo inicial del cuadrante actual
-            float startAngle = i * 90f;
+            float startAngle = i * 90f ;
 
             // Iterar sobre el número de instancias por cuadrante
             for (int j = 0; j < objectPerQuadrant; j++)
             {
                 // Calcular el ángulo de la instancia actual
-                float angle = startAngle + j * angleStep;
+                float angle = startAngle + j * angleStep ;
 
                 // Calcular la posición de la instancia actual
                 Vector2 spawnPosition = position + new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)) * radius;

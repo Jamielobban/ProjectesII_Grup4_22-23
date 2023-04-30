@@ -25,14 +25,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2845016738478051137}
   m_LocalRotation: {x: 0, y: 0, z: -0.9110439, w: 0.41230953}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 0.5600001, y: 0.56, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7283335886372679686}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -41.3}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -131.3}
 --- !u!114 &6007391717650794209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f417e6110491a94a99a2bddba3604cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyTime: 6
+  destroyTime: 15
 --- !u!1 &7283335886372681184
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,9 +58,10 @@ GameObject:
   - component: {fileID: 7283335886372678435}
   - component: {fileID: 7283335886372678463}
   - component: {fileID: 7002700603893967713}
-  m_Layer: 0
+  - component: {fileID: 1569326814651862086}
+  m_Layer: 10
   m_Name: GasPS
-  m_TagString: Untagged
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,14 +73,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7283335886372681184}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.04452279, y: 0.70570374, z: -0.04452279, w: 0.70570374}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.56, y: 0.56, z: 1.0000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7671800534863014684}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 7.22, y: 90, z: 0}
 --- !u!198 &7283335886372678435
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -163,7 +164,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 15
       minScalar: 3
       maxCurve:
         serializedVersion: 2
@@ -216,7 +217,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 35
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4870,5 +4871,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2df629a21a1f6de4da1fad8eef5f2dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1569326814651862086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7283335886372681184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6b06ecf1aa8f2498e9d298ceaab651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

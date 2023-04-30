@@ -9,6 +9,7 @@ public class ParticlesHitPlayer : MonoBehaviour
     {
         if (other.CompareTag("Player") && (lastHitTime == 0 || Time.time - lastHitTime >= 0.35f)) 
         {
+            Debug.Log("OnParticleeeeeeee");
             other.GetComponent<PlayerMovement>().GetDamage(2);
             lastHitTime = Time.time;
         }
