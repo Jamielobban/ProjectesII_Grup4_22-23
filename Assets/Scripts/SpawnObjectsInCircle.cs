@@ -58,7 +58,7 @@ public class SpawnObjectsInCircle : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             // Calcular el ángulo inicial del cuadrante actual
-            float startAngle = i * 90f ;
+            float startAngle = i * 90f + randomAngle;
 
             // Iterar sobre el número de instancias por cuadrante
             for (int j = 0; j < objectPerQuadrant; j++)

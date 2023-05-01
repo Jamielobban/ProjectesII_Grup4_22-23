@@ -30,6 +30,7 @@ public class E15_FiringState : FiringState
 
     int timesFeed = 0;
     int timesFeedPunch = 0;
+    int timesFeedGas = 0;
 
     public bool playerInsidepunchArea;
     public bool playerInsideGasArea;
@@ -80,10 +81,36 @@ public class E15_FiringState : FiringState
                 if (!doingBoomerang && !doingGas && !doingPunch && Time.time - enemy.lastTimeExitState >= enemy.waitBetweenAttacks)
                 {
 
-                    if (playerInsidepunchArea)
+                    if (timesFeedGas <= 2 && timesFeedPunch == 0)
+                    {
+                        if (Time.time - lastTimeGas >= 5)
+                        {
+                            doingAttack = true;
+                            doingBoomerang = false;
+
+                            enemy.anim.SetBool("idle", false);
+                            enemy.anim.SetBool("fire", true);
+                            enemy.anim.SetBool("boomerang", false);
+                            enemy.anim.SetBool("gas", true);
+                            enemy.anim.SetBool("animationLoop", false);
+                            timesFeedGas++;
+                            doingGas = true;
+
+                            enemy.gasSoundKey = AudioManager.Instance.LoadSound(enemy.gasSound, enemy.firePoint, 0.5f);
+
+                            if (enemy.gasSoundKey.HasValue)
+                                AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.gasSoundKey.Value).pitch = 2;
+
+                            lastTimeGas = Time.time;
+                        }
+
+                    }
+                    else if (timesFeedPunch < 2)
                     {
                         doingAttack = true;
 
+                        timesFeedGas = 0;
+                        timesFeedPunch++;
 
                         doingBoomerang = false;
                         enemy.anim.SetBool("boomerang", false);
@@ -99,31 +126,13 @@ public class E15_FiringState : FiringState
                         enemy.groundSoundKey = AudioManager.Instance.LoadSound(enemy.groundSound, enemy.GetComponentInChildren<CircleCollider2D>().bounds.center, 0.7f);
 
                         lastTimePunch = Time.time;
-                    }
-                    else if (playerInsideGasArea)
-                    {
-                        doingAttack = true;
-                        doingBoomerang = false;
-
-                        enemy.anim.SetBool("idle", false);
-                        enemy.anim.SetBool("fire", true);
-                        enemy.anim.SetBool("boomerang", false);
-                        enemy.anim.SetBool("gas", true);
-                        enemy.anim.SetBool("animationLoop", false);
-
-                        doingGas = true;
-
-                        enemy.gasSoundKey = AudioManager.Instance.LoadSound(enemy.gasSound, enemy.firePoint, 0.5f);
-
-                        if (enemy.gasSoundKey.HasValue)
-                            AudioManager.Instance.GetAudioFromDictionaryIfPossible(enemy.gasSoundKey.Value).pitch = 2;
-
-                        lastTimeGas = Time.time;
-                    }
+                    }                    
                     else
                     {
                         doingAttack = true;
                         doingBoomerang = true;
+
+                        timesFeedPunch = 0;
 
                         enemy.anim.SetBool("idle", false);
                         enemy.anim.SetBool("fire", true);
@@ -348,7 +357,7 @@ public class E15_FiringState : FiringState
 
     public void DoGas()
     {
-        Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaa");
+        //Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaa");
         enemy.firePoint.localPosition = new Vector3(1.65f, 0.16f, 0);
         gasInstance = GameObject.Instantiate(enemy.gas, enemy.firePoint.position, enemy.gas.transform.rotation);
     }

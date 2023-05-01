@@ -124,7 +124,7 @@ public class Enemy15 : Entity
 
     public void SearchFunction(string funcName)
     {
-        Debug.Log("aquisiiiiiiiiiiiiiiiiiii");
+       // Debug.Log("aquisiiiiiiiiiiiiiiiiiii");
 
         if (this.gameObject == null || stateMachine.currentState == null || stateMachine.currentState == deadState)
             return;

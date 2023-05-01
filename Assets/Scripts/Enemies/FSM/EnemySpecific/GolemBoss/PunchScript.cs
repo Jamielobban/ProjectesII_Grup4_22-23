@@ -15,7 +15,7 @@ public class PunchScript : MonoBehaviour
     void OnEnable()
     {
         startTime = Time.time;
-        GameObject crackManagerInstance = GameObject.Instantiate(crackManager, /*topParent.position + */this.transform.position, Random.rotation);
+        GameObject crackManagerInstance = GameObject.Instantiate(crackManager, this.transform.position, Quaternion.identity);
         crackManagerInstance.GetComponentInChildren<SpawnObjectsInCircle>().player = GetComponentInParent<Enemy15>().player;
     }
     
