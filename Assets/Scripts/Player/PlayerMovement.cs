@@ -85,7 +85,10 @@ public class PlayerMovement : MonoBehaviour
 
     public float angle;
 
-
+    [SerializeField]
+    AudioClip sonidoFuente;
+    [SerializeField]
+    Vector3 fuentePos;
 
     public AudioClip damageSound;
 
@@ -230,6 +233,12 @@ public class PlayerMovement : MonoBehaviour
         cantPress = Resources.Load<AudioClip>("Sounds/CantPress/cantPressSound");
         parrySound = Resources.Load<AudioClip>("Sounds/PlayerParry/Parry");
         potionsSystem = FindObjectOfType<PotionSystem>();
+    }
+
+    private void OnEnable()
+    {
+        if(SceneManager.GetActiveScene().name == "Bosque")
+            AudioManager.Instance.LoadSound(sonidoFuente, fuentePos, 0, true);
     }
 
     public void Reaparecer()
