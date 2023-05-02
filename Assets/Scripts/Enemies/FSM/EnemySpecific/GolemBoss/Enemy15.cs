@@ -15,6 +15,7 @@ public class Enemy15 : Entity
     [SerializeField]
     private D_IdleState idleStateData;
 
+    public Transform cam;
 
     public int mode = 1; //1
     public float waitBetweenAttacks = 2; //2
@@ -82,6 +83,8 @@ public class Enemy15 : Entity
     public override void Update()
     {
         base.Update();
+
+
 
         if (enemyHealth >= 3750)
         {

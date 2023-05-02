@@ -10,10 +10,14 @@ public class EnemyProjectile : MonoBehaviour
     public bool movePlayer = false;
     int? projectileSoundKey;
     public GameObject hangPlayer;
+    public float volume = 1;
     
     private void Start()
     {
-        projectileSoundKey = AudioManager.Instance.LoadSound(bulletData.projectileSound, this.transform, 0, true);
+        if(bulletData.projectileSounds.Length == 0)
+            projectileSoundKey = AudioManager.Instance.LoadSound(bulletData.projectileSound, this.transform, 0, true, true, volume);
+        else
+            projectileSoundKey = AudioManager.Instance.LoadSound(bulletData.projectileSounds[Random.Range(0, bulletData.projectileSounds.Length)], this.transform, 0, true);
         Destroy(this.gameObject, 50f);
     }
 

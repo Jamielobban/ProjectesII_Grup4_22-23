@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using Cinemachine;
 public class E15_FiringState : FiringState
 {
     Enemy15 enemy;
@@ -386,6 +386,8 @@ public class E15_FiringState : FiringState
 
     public void SpawnRipple()
     {
+        //enemy.cam.transform.DOShakePosition(200);
+        CinemachineShake.Instance.ShakeCamera(30f, .2f);
         enemy.rippleDamage.SetActive(true);
     }
 

@@ -155,6 +155,11 @@ public class AudioManager : MonoBehaviour
         audioNameAndItsRange.Add("EyeBossLaserHum", 20f);
         audioNameAndItsRange.Add("EyeBossBigFatMan", 50f);
         audioNameAndItsRange.Add("EyeBossSquelching", 50f);
+        audioNameAndItsRange.Add("gC1", 17);
+        audioNameAndItsRange.Add("gC2", 17);
+        audioNameAndItsRange.Add("gC3", 17);
+        audioNameAndItsRange.Add("gC4", 17);
+
     }
 
     private void Update()
@@ -291,7 +296,7 @@ public class AudioManager : MonoBehaviour
 
     private bool CheckIfShouldPlay(AudioClip clip, float delay)
     {
-        if(clip.name == "Attack2" || clip.name == "TurretAttackBo" || clip.name == "ArrowImpact" || clip.name == "skeletonShield" || clip.name == "Hitmarker")
+        if(clip.name == "Attack2" || clip.name == "TurretAttackBo" || clip.name == "ArrowImpact" || clip.name == "skeletonShield" || clip.name == "Hitmarker" || clip.name == "gC1" || clip.name == "gC2" || clip.name == "gC3" || clip.name == "gC4")
         {
             return audiosPlaying.Where(aI => aI.Value.audioSorcePrefabClone != null && aI.Value.audioSorcePrefabClone.GetComponent<AudioSource>().clip.name == clip.name && (Mathf.Abs(aI.Value.startSoundTime - (Time.time + delay)) <= maxDifferenceToBePlayed)).ToList().Count == 0;
         }
