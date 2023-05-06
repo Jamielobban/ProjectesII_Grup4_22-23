@@ -24,7 +24,7 @@ public class PotionUI : MonoBehaviour
     {
         if (moving)
         {
-            myUIObjectTransform.DOScale(new Vector3(1.35f, 1.35f, 1f), 0.3f).SetLoops(-1, LoopType.Yoyo);
+            myUIObjectTransform.DOScale(new Vector3(1.05f, 1.05f, 1f), 0.3f).SetLoops(-1, LoopType.Yoyo);
         }
     }
 
@@ -44,7 +44,7 @@ public class PotionUI : MonoBehaviour
             if (!moving)
             {
                 moving = true;
-                myUIObjectTransform.DOScale(new Vector3(1.35f, 1.35f, 1f), 0.3f).SetLoops(-1, LoopType.Yoyo);
+                myUIObjectTransform.DOScale(new Vector3(1.05f, 1.05f, 1f), 0.3f).SetLoops(-1, LoopType.Yoyo);
             }
         }
         else
