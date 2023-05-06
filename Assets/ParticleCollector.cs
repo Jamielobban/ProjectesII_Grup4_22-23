@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.ParticleSystemJobs;
+using DG.Tweening;
 public class ParticleCollector : MonoBehaviour
 {
     public ParticleSystem ps;
-
+    public AudioClip[] orbsAudios;
     public List<ParticleSystem.Particle> particles = new List<ParticleSystem.Particle>();
+
+    int? lastAudioKey;
+    int? lastAudioKey2;
+    int? lastAudioKey3;
+    int? lastAudioKey4;
 
     [SerializeField] PotionSystem potions;
     int number;
@@ -46,7 +52,7 @@ public class ParticleCollector : MonoBehaviour
             particles[i] = p;
         }
 
-        if (ps.particleCount == 0)
+        if (ps.particleCount == 0 && lastAudioKey.HasValue && AudioManager.Instance.GetAudioFromDictionaryIfPossible(lastAudioKey4.Value) == null)
         {
             Destroy(this.gameObject, 0.5f);
         }
@@ -70,6 +76,18 @@ public class ParticleCollector : MonoBehaviour
             //ps.velocityOverLifetime.enabled = false;
             limitVelocityOverLifetime.dampen = 0;
             limitVelocityOverLifetime.drag = 0;
+
+            lastAudioKey = AudioManager.Instance.LoadSound(orbsAudios[Random.Range(0, orbsAudios.Length)], other.transform, 0, false, true, 0.5f);
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(lastAudioKey.Value).DOFade(0, AudioManager.Instance.GetAudioFromDictionaryIfPossible(lastAudioKey.Value).clip.length);
+
+            lastAudioKey2 = AudioManager.Instance.LoadSound(orbsAudios[Random.Range(0, orbsAudios.Length)], other.transform, 0.15f, false, true, 0.5f);
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(lastAudioKey2.Value).DOFade(0, AudioManager.Instance.GetAudioFromDictionaryIfPossible(lastAudioKey2.Value).clip.length);
+
+            lastAudioKey3 = AudioManager.Instance.LoadSound(orbsAudios[Random.Range(0, orbsAudios.Length)], other.transform, 0.30f, false, true, 0.5f);
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(lastAudioKey3.Value).DOFade(0, AudioManager.Instance.GetAudioFromDictionaryIfPossible(lastAudioKey3.Value).clip.length);
+
+            lastAudioKey4 = AudioManager.Instance.LoadSound(orbsAudios[0], other.transform, 0.45f, false, true, 0.5f);            
+            AudioManager.Instance.GetAudioFromDictionaryIfPossible(lastAudioKey4.Value).DOFade(0, AudioManager.Instance.GetAudioFromDictionaryIfPossible(lastAudioKey4.Value).clip.length);
             myRb.enabled = false;
         }
     }

@@ -5034,6 +5034,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8621983244873664368, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621983244873664368, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cc5edc7da4c78740ba38d9be2517237, type: 3}
 --- !u!114 &329872236 stripped
@@ -26233,7 +26241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1207258175821073523, guid: 836c2f3b78181de4881835065b3d5c47, type: 3}
       propertyPath: m_RootOrder
-      value: 33
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 1207258175821073523, guid: 836c2f3b78181de4881835065b3d5c47, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26644,7 +26652,7 @@ Transform:
   - {fileID: 1557309192}
   - {fileID: 1593087041}
   m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1099162084
 PrefabInstance:
@@ -26732,7 +26740,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 32
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1110732387
 PrefabInstance:
@@ -133163,7 +133171,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1977565602}
   - component: {fileID: 1977565598}
-  - component: {fileID: 1977565601}
   - component: {fileID: 1977565600}
   - component: {fileID: 1977565599}
   m_Layer: 0
@@ -133283,14 +133290,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!81 &1977565601
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1977565597}
-  m_Enabled: 1
 --- !u!4 &1977565602
 Transform:
   m_ObjectHideFlags: 0
@@ -133471,7 +133470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1207258175821073523, guid: 836c2f3b78181de4881835065b3d5c47, type: 3}
       propertyPath: m_RootOrder
-      value: 34
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 1207258175821073523, guid: 836c2f3b78181de4881835065b3d5c47, type: 3}
       propertyPath: m_LocalPosition.x

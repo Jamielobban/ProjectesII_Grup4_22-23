@@ -30,6 +30,10 @@ public class PlayerMovement : MonoBehaviour
     public float knockbackMinimum;
     public bool knockbackSet;
 
+    public AudioClip healthRestored;
+    public AudioClip healSound;
+    bool isHealing;
+    int? healKey;
 
     public int maxHearts;
     public int currentHearts;
@@ -399,6 +403,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //AudioManager.Instance.SetMusicTime(AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time);
+        
 
         if (Input.GetKeyDown(KeyCode.L)){
             godMode = true;
@@ -629,16 +634,17 @@ public class PlayerMovement : MonoBehaviour
 
                 if (canMove && !isDead)
 
-                {
-
+                {                    
                     if (Input.GetButton("Heal") && currentHearts < maxHearts)
                     {
-
+                        
                         time += Time.deltaTime;
-
                         if(potionsSystem.amountToFill >= 50)
-
                         {
+                            if (!isHealing)
+                                healKey = AudioManager.Instance.LoadSound(healSound, this.transform);
+
+                            isHealing = true;
 
                             CinemachineShake.Instance.ShakeCamera(5f, .2f);
 
@@ -653,20 +659,33 @@ public class PlayerMovement : MonoBehaviour
                             potionsSystem.amountToFill -= 50;
 
                             PlayerPrefs.SetInt("Hearts", currentHearts);
-
+                            AudioManager.Instance.LoadSound(healthRestored, this.transform);
                             Health();
                             potionsSystem.CheckPotionStatus();
-                            time = 0;
+                            time = 0;                            
+
+                            isHealing = false;
 
                         }
                         if (Input.GetButtonUp("Heal") || time >= 1f)
 
-                        {
+                        {                            
                             potionsSystem.CheckPotionStatus();
                             time = 0;
+                            isHealing = false;
 
                         }
 
+                    }
+
+                    if (isHealing)
+                    {
+                        if (Input.GetButtonUp("Heal")){
+                            isHealing = false;
+                            time = 0;
+                            if(healKey.HasValue)
+                                AudioManager.Instance.RemoveAudio(healKey.Value);
+                        }
                     }
 
 

@@ -2,19 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class PotionUI : MonoBehaviour
 {
+    public RectTransform myUIObjectTransform;
     public Sprite zero, ten, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, hundred, flash;
     Image potionImage;
     public PotionStatus _status;
     public PotionStatus _emptyStatus;
+    bool moving = true;
 
     [SerializeField] PlayerMovement playerPotion;
     //public bool wasHalf;
     //public bool isFullHeart;
     //public bool isEmpty;
     //public bool itsThisOne;
+
+    private void Start()
+    {
+        if (moving)
+        {
+            myUIObjectTransform.DOScale(new Vector3(1.35f, 1.35f, 1f), 0.3f).SetLoops(-1, LoopType.Yoyo);
+        }
+    }
+
     private void Awake()
     {
         _emptyStatus = PotionStatus.Zero;
@@ -24,14 +37,25 @@ public class PotionUI : MonoBehaviour
 
     private void Update()
     {
-        //if(isEmpty && wasHalf)
-        //{
-        //    Debug.Log("Play Animation");
-        //    //itsThisOne = true; 
-        //    //wasHalf = false;
-        //    //
-        //    //GetComponent<Animator>().enabled = true;
-        //}
+        Debug.Log(_status);
+        Debug.Log(moving);
+        if (_status >= PotionStatus.Fifty)
+        {
+            if (!moving)
+            {
+                moving = true;
+                myUIObjectTransform.DOScale(new Vector3(1.35f, 1.35f, 1f), 0.3f).SetLoops(-1, LoopType.Yoyo);
+            }
+        }
+        else
+        {
+            if (moving)
+            {
+                moving = false;
+                myUIObjectTransform.DOKill();
+                myUIObjectTransform.localScale = Vector3.one;
+            }
+        }
     }
     public void SetPotionImage(PotionStatus status)
     {

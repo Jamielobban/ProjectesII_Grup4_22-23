@@ -18816,7 +18816,12 @@ MonoBehaviour:
   - {fileID: 1604416281}
   - {fileID: 1221452955}
   - {fileID: 433483807}
-  idRoom: 0
+  porTriggers: 0
+  triggers: []
+  generalCombatAudio: {fileID: 0}
+  boss: 0
+  bossNumber: 0
+  enemyBoss: {fileID: 0}
 --- !u!4 &1343065256
 Transform:
   m_ObjectHideFlags: 0
@@ -93164,6 +93169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSourcePrefab: {fileID: 2195634957759835354, guid: df3b2f83a6ab9474eba24847694b9af0, type: 3}
+  musicTime: {fileID: 0}
 --- !u!1 &1846307807
 GameObject:
   m_ObjectHideFlags: 0
@@ -94492,7 +94498,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1977565602}
   - component: {fileID: 1977565598}
-  - component: {fileID: 1977565601}
   - component: {fileID: 1977565600}
   - component: {fileID: 1977565599}
   m_Layer: 0
@@ -94612,14 +94617,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!81 &1977565601
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1977565597}
-  m_Enabled: 1
 --- !u!4 &1977565602
 Transform:
   m_ObjectHideFlags: 0
