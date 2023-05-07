@@ -185,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
 
     float time = 0;
 
-
+    CircleTransition trans;
 
     [SerializeField] PotionSystem potionsSystem;
 
@@ -208,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
 
         StartCoroutine(guardarPosicion());
 
-
+        trans = FindObjectOfType<CircleTransition>();
 
         lastPositionSave = this.transform.position;
 
@@ -403,7 +403,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //AudioManager.Instance.SetMusicTime(AudioManager.Instance.GetAudioFromDictionaryIfPossible(backThemeKey.Value).time);
-        
+        if(currentHearts <= 0)
+        {
+            trans.CloseBlackScreen();
+        }
 
         if (Input.GetKeyDown(KeyCode.L)){
             godMode = true;

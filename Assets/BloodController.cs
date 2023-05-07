@@ -24,10 +24,10 @@ public class BloodController : MonoBehaviour
         foreach (PlayerMovement player in players)
         {
             Debug.Log(player.currentHearts);
-            if (player.currentHearts <= 0)
-            {
-                trans.CloseBlackScreen();
-            }
+            //if (player.currentHearts <= 0)
+            //{
+            //    trans.CloseBlackScreen();
+            //}
            player.TakeDamage(damage);
            player.healthUI.DrawHearts();
         }

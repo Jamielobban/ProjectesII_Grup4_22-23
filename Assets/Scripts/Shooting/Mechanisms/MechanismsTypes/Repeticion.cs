@@ -20,7 +20,7 @@ public class Repeticion : Mechanism
                 bullet.GetComponent<Bullet>().FireProjectile(/*firePoint*/);
 
                 bullet.GetComponent<Bullet>().ApplyMultiplierToDamage(damageMultiplier);
-                shootSoundKey = AudioManager.Instance.LoadSound(shootSound, firePoint.transform.position);
+                shootSoundKey = AudioManager.Instance.LoadSound(shootSound, firePoint.GetComponentInParent<Transform>());
                 timeLastShoot = Time.time;
 
 
