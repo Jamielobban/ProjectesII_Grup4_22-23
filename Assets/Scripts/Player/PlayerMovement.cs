@@ -257,7 +257,7 @@ public class PlayerMovement : MonoBehaviour
 
     {
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.5f);
 
 
 
