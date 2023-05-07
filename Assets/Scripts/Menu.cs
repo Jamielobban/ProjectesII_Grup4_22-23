@@ -402,6 +402,33 @@ public class Menu : MonoBehaviour
         //CreditThings.SetActive(false);
     }
 
+    public void BackToStartingMenuFromSettings()
+    {
+        //PlayButton.SetActive(true);
+        //CreditsButton.SetActive(true);
+        //ExitButton.SetActive(true);
+        //SettingsButton.SetActive(true);
+
+        //BackButtonCredits.SetActive(false);
+        StartCoroutine(WaitForSettingsMenu());
+        StartCoroutine(SetObjectInactive(SettingsThings));
+        //CreditThings.SetActive(false);
+    }
+
+    public void BackToStartingMenuFromSettings2()
+    {
+        //PlayButton.SetActive(true);
+        //CreditsButton.SetActive(true);
+        //ExitButton.SetActive(true);
+        //SettingsButton.SetActive(true);
+
+        //BackButtonCredits.SetActive(false);
+        StartCoroutine(WaitForSettingsMenu2());
+        StartCoroutine(SetObjectInactive(Settings2));
+        //CreditThings.SetActive(false);
+    }
+
+
     public void BackToStartingMenuFromCredits2()
     {
         //PlayButton.SetActive(true);
@@ -428,6 +455,33 @@ public class Menu : MonoBehaviour
         BackButtonCredits.SetActive(false);
     }
 
+
+    private IEnumerator WaitForSettingsMenu()
+    {
+        yield return new WaitForSeconds(0.4f);
+        PlayButton.SetActive(true);
+        CreditsButton.SetActive(true);
+        GameName.SetActive(true);
+        ExitButton.SetActive(true);
+        SettingsButton.SetActive(true);
+        InfiniteModeButton.SetActive(true);
+
+        BackButtonSettings.SetActive(false);
+    }
+
+    private IEnumerator WaitForSettingsMenu2()
+    {
+        yield return new WaitForSeconds(0.4f);
+        NewButton2.SetActive(true);
+        LoadButton2.SetActive(true);
+        CreditsButton2.SetActive(true);
+        ExitButton2.SetActive(true);
+        SettingsButton2.SetActive(true);
+        GameName.SetActive(true);
+        Infinity2.SetActive(true);
+
+        BackFromSettings2.SetActive(false);
+    }
     private IEnumerator WaitForCreditsToMenu2()
     {
         yield return new WaitForSeconds(0.4f);
@@ -447,32 +501,32 @@ public class Menu : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void BackToStartingMenuFromSettings()
-    {
-        PlayButton.SetActive(true);
-        CreditsButton.SetActive(true);
-        ExitButton.SetActive(true);
-        GameName.SetActive(true);
-        SettingsButton.SetActive(true);
-        InfiniteModeButton.SetActive(true);
+    ////public void BackToStartingMenuFromSettings()
+    ////{
+    ////    PlayButton.SetActive(true);
+    ////    CreditsButton.SetActive(true);
+    ////    ExitButton.SetActive(true);
+    ////    GameName.SetActive(true);
+    ////    SettingsButton.SetActive(true);
+    ////    InfiniteModeButton.SetActive(true);
 
-        BackButtonSettings.SetActive(false);
-        SettingsThings.SetActive(false);
-    }
+    ////    BackButtonSettings.SetActive(false);
+    ////    SettingsThings.SetActive(false);
+    ////}
 
-    public void BackToStartingMenuFromSettings2()
-    {
-        NewButton2.SetActive(true);
-        LoadButton2.SetActive(true);
-        CreditsButton2.SetActive(true);
-        ExitButton2.SetActive(true);
-        SettingsButton2.SetActive(true);
-        GameName.SetActive(true);    
-        Infinity2.SetActive(true);
+    ////public void BackToStartingMenuFromSettings2()
+    ////{
+    ////    NewButton2.SetActive(true);
+    ////    LoadButton2.SetActive(true);
+    ////    CreditsButton2.SetActive(true);
+    ////    ExitButton2.SetActive(true);
+    ////    SettingsButton2.SetActive(true);
+    ////    GameName.SetActive(true);    
+    ////    Infinity2.SetActive(true);
 
-        BackFromSettings2.SetActive(false);
-        Settings2.SetActive(false);
-    }
+    ////    BackFromSettings2.SetActive(false);
+    ////    Settings2.SetActive(false);
+    ////}
 
     public void MusicEnabledChangeOn()
     {
